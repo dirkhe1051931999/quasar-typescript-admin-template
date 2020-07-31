@@ -1,0 +1,13 @@
+{
+  "policy": "https://www.github.com/dirkhe1051931999",
+  "title": "Quasar admin",
+  "errorLog": ["production"],
+  "logUrl": "/",
+  "pro": "",
+  "devServerPort": 9002,
+  "mockServerPort": 9004,
+  "adminName": ["admin"],
+  "errorCode": [],
+  "succCode": [],
+  "defaultErrorMsg": "Network Error, please contact engineer"
+}

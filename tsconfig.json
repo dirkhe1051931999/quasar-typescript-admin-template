@@ -1,0 +1,21 @@
+{
+  "extends": "@quasar/app/tsconfig-preset",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // 允许索引
+    "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

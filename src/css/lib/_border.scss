@@ -1,0 +1,94 @@
+@import '../quasar.variables.scss';
+/*
+  border
+*/
+.border {
+  border: 1px solid $color-border;
+}
+
+// vertical
+.b-v {
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+}
+
+// horizontal
+.b-h {
+  border-left: 1px solid $color-border;
+  border-right: 1px solid $color-border;
+}
+
+// border double
+.b-double {
+  border: double $color-border;
+}
+
+.b-w-thin {
+  position: relative;
+  &::after {
+    content: '';
+    border: 1px solid $color-border;
+    transform: scaleY(0.5);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -50%;
+    bottom: -50%;
+  }
+}
+
+.b-round {
+  border-radius: 50%;
+}
+
+.b-none {
+  border: none;
+}
+
+@each $side in left, right, top, bottom {
+  .b-#{str-slice($side, 0, 1)} {
+    border-#{$side}: 1px solid $color-border;
+  }
+  .b-#{$side} {
+    border-#{$side}: 1px solid $color-border;
+  }
+}
+
+// border-style
+@each $style in dotted, dashed {
+  .border-#{$style} {
+    border: 1px $style $color-border;
+  }
+  .b-v-#{$style} {
+    border-top: 1px $style $color-border;
+    border-bottom: 1px $style $color-border;
+  }
+  .b-h-#{$style} {
+    border-left: 1px $style $color-border;
+    border-right: 1px $style $color-border;
+  }
+  @each $side in left, right, top, bottom {
+    .b-#{str-slice($side, 0, 1)}-#{$style} {
+      border-#{$side}: 1px $style $color-border;
+    }
+  }
+}
+
+@for $size from 0 through $border-width-through {
+  .b-#{$size} {
+    border-width: #{$size}px;
+  }
+}
+
+@for $size from 0 through $border-radius-through {
+  .b-radius-#{$size},
+  .b-r-#{$size} {
+    border-radius: #{$size}px;
+  }
+}
+
+@each $name, $color in $border-colors {
+  .b-#{$name} {
+    border-color: $color;
+  }
+}

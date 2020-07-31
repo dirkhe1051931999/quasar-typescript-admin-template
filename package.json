@@ -1,0 +1,73 @@
+{
+  "name": "quasar-template",
+  "version": "0.0.1",
+  "description": "A Quasar Framework app",
+  "productName": " ",
+  "author": "hejian",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.ts,.vue ./",
+    "dev": "quasar dev",
+    "serve": "nodemon ./mock/index.js",
+    "build": "quasar build"
+  },
+  "dependencies": {
+    "@antv/g2plot": "^1.1.15",
+    "@quasar/extras": "^1.0.0",
+    "axios": "^0.18.1",
+    "core-js": "^3.6.5",
+    "js-cookie": "^2.2.1",
+    "lodash": "^4.17.19",
+    "marked": "^1.1.1",
+    "quasar": "^1.0.0",
+    "ts-md5": "^1.2.7",
+    "vue-class-component": "^7.2.2",
+    "vue-count-to": "^1.0.13",
+    "vue-i18n": "^8.0.0",
+    "vue-json-editor": "^1.4.2",
+    "vue-property-decorator": "^8.3.0",
+    "vuex-module-decorators": "^0.17.0"
+  },
+  "devDependencies": {
+    "@quasar/app": "^2.0.0",
+    "@types/lodash": "^4.14.158",
+    "@types/node": "^10.17.15",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "@vue/cli-plugin-babel": "^4.2.2",
+    "@vue/cli-plugin-eslint": "^4.2.2",
+    "@vue/cli-plugin-router": "^4.2.3",
+    "@vue/cli-plugin-typescript": "^4.2.2",
+    "@vue/cli-plugin-vuex": "^4.2.2",
+    "@vue/cli-service": "^4.2.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "autoprefixer": "^9.8.5",
+    "babel-eslint": "^10.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.2.0",
+    "css-loader": "^3.6.0",
+    "devtron": "^1.4.0",
+    "electron": "^9.1.2",
+    "electron-debug": "^3.1.0",
+    "electron-devtools-installer": "^3.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-vue": "^6.1.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^9.0.2",
+    "webpack-manifest-plugin": "^2.2.0",
+    "workbox-webpack-plugin": "^5.1.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    ">1%"
+  ],
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
