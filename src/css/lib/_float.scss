@@ -1,0 +1,21 @@
+/**
+ *  float
+ *  use:  clearfixed pull-left
+ */
+.clearfixed {
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}

@@ -1,0 +1,10 @@
+@import '../quasar.variables.scss';
+/**
+ *  text-color
+ *  use: text-red
+ */
+@each $name, $color in $text-colors {
+  .text-#{$name} {
+    color: $color;
+  }
+}

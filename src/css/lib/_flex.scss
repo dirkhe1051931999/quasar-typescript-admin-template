@@ -1,0 +1,103 @@
+/**
+ *  flex
+ *  use: flex flex-column  j-start
+ */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// justify-content
+.j-start {
+  justify-content: flex-start;
+}
+.j-end {
+  justify-content: flex-end;
+}
+.j-center {
+  justify-content: center;
+}
+.j-between {
+  justify-content: space-between;
+}
+.j-around {
+  justify-content: space-around;
+}
+
+// align-items
+.a-start {
+  align-items: flex-start;
+}
+
+.a-center {
+  align-items: center;
+}
+
+.a-end {
+  align-items: flex-end;
+}
+
+// flex-wrap
+@each $type in nowrap, wrap, wrap-reverse {
+  .flex-#{$type} {
+    flex-wrap: $type;
+  }
+}
+
+// flex
+@each $size in 1, 2, 3 {
+  .flex-#{$size} {
+    flex: $size;
+  }
+}
+
+// flex-shrink
+@for $i from 0 through 3 {
+  .flex-s-#{$i} {
+    flex-shrink: $i;
+  }
+}
+
+// flex-grow
+@for $i from 0 through 3 {
+  .flex-g-#{$i} {
+    flex-grow: $i;
+  }
+}
+
+// align-content
+.a-c-start {
+  align-content: flex-start;
+}
+.a-c-end {
+  align-content: flex-end;
+}
+.a-c-center {
+  align-content: center;
+}
+.a-c-between {
+  align-content: space-between;
+}
+.a-c-around {
+  align-content: space-around;
+}
+.a-c-stretch {
+  align-content: stretch;
+}
+
+// align-self
+.a-s-start {
+  align-self: flex-start;
+}
+.a-s-end {
+  align-self: flex-end;
+}
+@each $type in auto, center, baseline, stretch {
+  .a-s-#{$type} {
+    align-self: $type;
+  }
+}

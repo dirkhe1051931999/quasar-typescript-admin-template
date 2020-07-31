@@ -1,0 +1,256 @@
+[2020-07-29T10:25:28.479] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:25:28.481] [INFO] cheese - 响应时间为:0.003s
+[2020-07-29T10:25:28.588] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:25:41.917] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:27:29.899] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:27:32.476] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:27:35.165] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:27:35.165] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:27:35.274] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:33:02.714] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:33:04.521] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:33:06.678] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:33:06.678] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:33:06.779] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:33:17.604] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:35:25.099] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:35:45.057] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:35:57.227] [ERROR] cheese - 发生错误:POST-> /mock-api/v1/user/info-> 200: TypeError: Cannot destructure property 'roles' of 'cur' as it is undefined.
+    at getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/models/user.js:74:9)
+    at _getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/control/user.js:12:65)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:368:16
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:34:12
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:373:31)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:429:12)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+[2020-07-29T10:35:57.227] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:36:41.257] [ERROR] cheese - 发生错误:POST-> /mock-api/v1/user/info-> 200: TypeError: Cannot destructure property 'roles' of 'cur' as it is undefined.
+    at getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/models/user.js:74:9)
+    at _getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/control/user.js:12:65)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:368:16
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:34:12
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:373:31)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:429:12)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+[2020-07-29T10:36:41.258] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:36:50.551] [ERROR] cheese - 发生错误:POST-> /mock-api/v1/user/info-> 200: TypeError: Cannot destructure property 'roles' of 'cur' as it is undefined.
+    at getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/models/user.js:74:9)
+    at _getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/control/user.js:12:65)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:368:16
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:34:12
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:373:31)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:429:12)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+[2020-07-29T10:36:50.551] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:37:19.291] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:37:19.292] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:37:24.202] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:37:24.202] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:42:55.655] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:42:55.655] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:43:19.325] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:43:19.326] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:43:29.990] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:43:29.992] [INFO] cheese - 响应时间为:0.002s
+[2020-07-29T10:43:39.829] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:43:39.829] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:43:50.110] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:43:50.110] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:44:21.019] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:44:21.020] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:44:33.954] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:44:33.955] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T10:46:48.546] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:46:48.546] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:47:30.251] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:47:30.251] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:47:30.363] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":""}
+[2020-07-29T10:47:30.363] [ERROR] cheese - 发生错误:POST-> /mock-api/v1/user/info-> 200: TypeError: Cannot destructure property 'roles' of 'cur' as it is undefined.
+    at getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/models/user.js:74:9)
+    at _getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/control/user.js:12:65)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:368:16
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:34:12
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:373:31)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:429:12)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+[2020-07-29T10:47:30.363] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:47:53.908] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:47:53.909] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:47:54.015] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":""}
+[2020-07-29T10:47:54.016] [ERROR] cheese - 发生错误:POST-> /mock-api/v1/user/info-> 200: TypeError: Cannot destructure property 'roles' of 'cur' as it is undefined.
+    at getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/models/user.js:74:9)
+    at _getUserInfo (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/app/control/user.js:12:65)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:368:16
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at /Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:34:12
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:373:31)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-router/lib/router.js:429:12)
+    at dispatch (/Users/hejian/fe-hejian/quasar-typescript-admin-template/mock/node_modules/koa-compose/index.js:42:32)
+[2020-07-29T10:47:54.016] [INFO] cheese - 响应时间为:0.002s
+[2020-07-29T10:49:00.248] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:49:00.248] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:49:00.354] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:49:00.354] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:53:00.668] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:53:00.668] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:53:37.110] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:53:37.110] [INFO] cheese - 响应时间为:0s
+[2020-07-29T10:58:26.085] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T10:58:26.085] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:12:33.423] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:12:33.424] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T11:12:33.534] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:12:33.534] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:13:01.775] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:13:01.776] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T11:13:40.040] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:13:40.041] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T11:14:20.312] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:14:20.312] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:16:27.889] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:16:27.889] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:17:54.215] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:17:54.215] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:18:54.242] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:18:54.242] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:19:22.586] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:19:22.586] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:20:00.666] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:20:00.666] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:21:30.451] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:21:30.452] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:22:06.490] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:22:06.490] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:22:57.072] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:22:57.072] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:41:51.794] [INFO] cheese - 响应时间为:0.005s
+[2020-07-29T11:41:55.349] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:41:55.349] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:42:07.926] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:42:07.927] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T11:42:08.032] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:42:08.032] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:44:52.241] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:44:52.242] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T11:46:41.169] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:46:41.169] [INFO] cheese - 响应时间为:0s
+[2020-07-29T11:46:59.395] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T11:46:59.395] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:16:59.509] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:16:59.509] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T14:16:59.614] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:16:59.614] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:17:31.978] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:17:31.978] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:33:21.323] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:33:21.326] [INFO] cheese - 响应时间为:0.004s
+[2020-07-29T14:33:21.427] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:33:21.427] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:33:30.824] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:33:30.824] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T14:43:38.441] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:43:38.442] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T14:43:47.219] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:43:47.219] [INFO] cheese - 响应时间为:0.003s
+[2020-07-29T14:45:23.979] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:45:23.979] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:49:22.794] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:49:22.794] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:49:22.903] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:49:22.903] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:52:44.728] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:52:44.728] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:52:55.882] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:52:55.882] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:53:28.964] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:53:28.964] [INFO] cheese - 响应时间为:0s
+[2020-07-29T14:53:57.037] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T14:53:57.037] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:00:28.060] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:00:28.062] [INFO] cheese - 响应时间为:0.003s
+[2020-07-29T15:00:41.344] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:00:41.344] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:00:44.063] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:00:44.063] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:02:03.933] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:02:03.933] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:02:37.677] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:02:37.679] [INFO] cheese - 响应时间为:0.002s
+[2020-07-29T15:05:23.858] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:05:23.858] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:05:23.967] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:05:23.967] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:09:10.346] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:09:10.346] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:09:16.200] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:09:16.201] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:09:46.590] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:09:46.590] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:14:03.822] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:14:03.822] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:21:18.145] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:21:18.145] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:21:18.260] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:21:18.260] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:21:43.579] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:21:43.579] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:23:12.012] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:23:12.012] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:23:18.292] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:23:18.293] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:27:37.361] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:27:37.361] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:27:47.074] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:27:47.074] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:28:04.705] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:28:04.705] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:30:34.285] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:30:34.286] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:30:47.655] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:30:47.655] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:31:09.066] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:31:09.067] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:44:08.094] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:44:08.094] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:44:15.695] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:44:15.695] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:50:24.797] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:50:24.797] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:50:24.908] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:50:24.908] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:52:55.631] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:52:55.631] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:53:30.590] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:53:30.590] [INFO] cheese - 响应时间为:0s
+[2020-07-29T15:56:04.260] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:56:04.261] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T15:56:38.731] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T15:56:38.733] [INFO] cheese - 响应时间为:0.003s
+[2020-07-29T16:02:57.981] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:02:57.982] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T16:03:09.355] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:03:09.355] [INFO] cheese - 响应时间为:0s
+[2020-07-29T16:03:32.022] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:03:32.023] [INFO] cheese - 响应时间为:0s
+[2020-07-29T16:06:08.778] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:06:08.780] [INFO] cheese - 响应时间为:0.003s
+[2020-07-29T16:06:08.885] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:06:08.886] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T16:10:29.041] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:10:29.042] [INFO] cheese - 响应时间为:0.001s
+[2020-07-29T16:13:42.283] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin"}
+[2020-07-29T16:13:42.285] [INFO] cheese - 响应时间为:0.003s

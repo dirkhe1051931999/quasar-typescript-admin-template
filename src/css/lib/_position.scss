@@ -1,0 +1,25 @@
+@import '../quasar.variables.scss';
+/**
+ *  position
+ *  use:  fixed left-10
+ */
+@each $type in static, relative, absolute, fixed, sticky {
+  .#{$type} {
+    position: $type;
+  }
+}
+
+@each $size in $box-sizes {
+  @each $side in top, right, bottom, left {
+    .#{$side}-#{$size} {
+      #{$side}: #{$size}px;
+    }
+  }
+}
+@each $size in $box-sizes {
+  @each $side in top, right, bottom, left {
+    .#{$side}-p-#{$size} {
+      #{$side}: #{$size}#{'%'};
+    }
+  }
+}

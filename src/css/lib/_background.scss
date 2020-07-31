@@ -1,0 +1,10 @@
+@import '../quasar.variables.scss';
+/*
+  background-color
+  use: bg-red
+*/
+@each $name, $color in $bg-colors {
+  .bg-#{$name} {
+    background-color: $color;
+  }
+}

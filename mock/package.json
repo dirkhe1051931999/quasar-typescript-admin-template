@@ -1,0 +1,30 @@
+{
+  "name": "mock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-multer": "^1.0.2",
+    "koa-parameter": "^3.0.1",
+    "koa-router": "^8.0.8",
+    "koa-static": "^5.0.0",
+    "log4js": "^6.2.0",
+    "cors": "^2.8.5",
+    "apidoc": "^0.20.1",
+    "axios": "^0.19.2",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0"
+  }
+}

@@ -1,0 +1,82 @@
+.app-container {
+  padding: 20px;
+}
+// 可点击的link
+.link-type,
+.link-type:focus {
+  color: $blue;
+  cursor: pointer;
+}
+.link-type:hover {
+  color: $medium-blue;
+  text-decoration: underline;
+}
+// 可点击的delete
+.delete-type,
+.delete-type:focus {
+  color: $red;
+  cursor: pointer;
+}
+.delete-type:hover {
+  color: $light-red;
+  text-decoration: underline;
+}
+// explanation
+.eg {
+  color: $color-desc;
+  font-size: 12px;
+  line-height: 1;
+  display: inline-block;
+  font-weight: normal;
+}
+// 点点点
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.line-1 {
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background-color: $color-border;
+}
+.small-font {
+  font-size: 9px;
+  transform: scale(0.75);
+  -webkit-transform-origin-x: 0;
+  display: inline-block;
+}
+.border-red {
+  border: solid 1px $red;
+}
+.shadow-hover {
+  &:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+}
+.disabled-lock {
+  &:disabled {
+    background-color: #f5f7fa;
+    border-color: #dfe4ed;
+    color: #c0c4cc;
+    cursor: not-allowed;
+  }
+}
+.lock-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.8);
+  left: 0;
+  top: 0;
+}
+.border-box {
+  box-sizing: border-box;
+}
+.absoulte-right-h-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2px;
+}
