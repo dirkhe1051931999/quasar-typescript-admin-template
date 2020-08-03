@@ -61,6 +61,13 @@ axios.interceptors.response.use(
   (error: any) => {
     console.info(error);
     UserModule.SET_LOGIN_LOADING(false);
+    if (error.config.url.includes('/login')) {
+      Notify.create({
+        message: DEFAULT_ERRORMSG,
+        type: 'negative',
+      });
+    }
+    return Promise.reject('error');
   },
 );
 

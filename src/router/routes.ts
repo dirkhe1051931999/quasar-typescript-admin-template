@@ -276,6 +276,24 @@ export const constantRoutes: RouteConfig[] = [
       },
     ],
   },
+  {
+    path: '/convert',
+    component: Layout,
+    meta: {
+      title: 'convert',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'Convert',
+        meta: {
+          title: 'convert',
+          icon: 'code',
+        },
+        component: () => import(/* webpackChunkName: "convert" */ 'pages/convert/index.vue'),
+      },
+    ],
+  },
 ];
 /**
  * 有权限限制

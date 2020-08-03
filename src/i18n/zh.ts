@@ -31,6 +31,7 @@ export default {
     spinners: '加载',
     notice: '提示',
     transfer: '穿梭框',
+    convert: 'style转css',
   },
   layouts: {
     profile: '个人中心',

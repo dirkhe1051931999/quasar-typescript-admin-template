@@ -17,5 +17,6 @@
     "paths": {
       "@/*": ["src/*"]
     }
-  }
+  },
+  "include": ["src/utils/cssConvert.js"]
 }
