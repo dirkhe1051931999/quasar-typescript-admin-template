@@ -11,6 +11,8 @@
 
 ```bash
 npm install
+# for mock server
+npm install nodemon
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
