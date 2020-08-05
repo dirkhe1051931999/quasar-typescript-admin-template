@@ -86,7 +86,15 @@ export default class extends Vue {
         UserModule.SET_LOGIN_LOADING(false);
         this.$q.notify({
           message: `${this.$i18n.tc('messages.success')}`,
-          type: 'positive',
+          color: 'primary',
+          multiLine: true,
+          icon: 'mood',
+          actions: [
+            {
+              label: 'Close',
+              color: 'white',
+            },
+          ],
         });
       }, 1000);
     }, 1000);

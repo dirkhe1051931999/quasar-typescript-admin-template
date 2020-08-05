@@ -21,7 +21,15 @@ export default class extends Vue {
         this.$q.notify({
           message: this.loremipsum,
           caption: date.formatDate(Date.now(), 'YYYY-MM-DDTHH:mm:ss.SSSZ'),
-          type: 'info',
+          color: 'primary',
+          multiLine: true,
+          icon: 'mood',
+          actions: [
+            {
+              label: 'Close',
+              color: 'white',
+            },
+          ],
         });
       })
       .catch(() => {

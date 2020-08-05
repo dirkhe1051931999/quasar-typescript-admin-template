@@ -15,20 +15,10 @@
         class="bg-primary text-white shadow-1 rounded-borders"
       >
         <q-carousel-slide name="style" class="column no-wrap flex-center">
-          <q-icon name="style" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
+          <img src="/p1.png" alt />
         </q-carousel-slide>
         <q-carousel-slide name="tv" class="column no-wrap flex-center">
-          <q-icon name="live_tv" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
-        </q-carousel-slide>
-        <q-carousel-slide name="layers" class="column no-wrap flex-center">
-          <q-icon name="layers" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
-        </q-carousel-slide>
-        <q-carousel-slide name="map" class="column no-wrap flex-center">
-          <q-icon name="terrain" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
+          <img src="/p2.png" alt />
         </q-carousel-slide>
       </q-carousel>
 
@@ -49,20 +39,10 @@
         class="bg-purple text-white shadow-1 rounded-borders"
       >
         <q-carousel-slide name="style" class="column no-wrap flex-center">
-          <q-icon name="style" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
+          <img src="/p1.png" alt />
         </q-carousel-slide>
         <q-carousel-slide name="tv" class="column no-wrap flex-center">
-          <q-icon name="live_tv" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
-        </q-carousel-slide>
-        <q-carousel-slide name="layers" class="column no-wrap flex-center">
-          <q-icon name="layers" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
-        </q-carousel-slide>
-        <q-carousel-slide name="map" class="column no-wrap flex-center">
-          <q-icon name="terrain" size="56px" />
-          <div class="q-mt-md text-center">{{ lorem }}</div>
+          <img src="/p2.png" alt />
         </q-carousel-slide>
       </q-carousel>
     </div>

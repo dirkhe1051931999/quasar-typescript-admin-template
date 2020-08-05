@@ -40,7 +40,7 @@
           <q-page-sticky expand position="top">
             <q-toolbar class="bg-accent text-white">
               <q-avatar>
-                <img src="~assets/avatar.png" />
+                <img src="~assets/slogo.png" />
               </q-avatar>
               <q-toolbar-title>Page Title</q-toolbar-title>
             </q-toolbar>

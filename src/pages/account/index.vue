@@ -1,12 +1,5 @@
 <template>
   <div>
-    <q-chip>
-      <q-avatar>
-        <img src="~assets/avatar.png" v-if="!adminName.includes(username)" />
-        <img :src="avatar" alt v-else />
-      </q-avatar>
-      {{username}}
-    </q-chip>
     <Construction />
   </div>
 </template>

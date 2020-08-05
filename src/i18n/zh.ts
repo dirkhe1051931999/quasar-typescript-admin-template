@@ -31,7 +31,10 @@ export default {
     spinners: '加载',
     notice: '提示',
     transfer: '穿梭框',
-    convert: 'style转css',
+    convert: 'less转css',
+    dialog: '弹窗',
+    profile: '个人中心',
+    parallax: '视差',
   },
   layouts: {
     profile: '个人中心',
