@@ -132,3 +132,7 @@
 [2020-08-05T17:38:01.768] [INFO] cheese - 响应时间为:0s
 [2020-08-05T17:45:50.149] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin","password":"123456","meta":{"signature":"0c2756539cd470eb8cd94d2df789d571","_":"1596620750125"}}
 [2020-08-05T17:45:50.150] [INFO] cheese - 响应时间为:0.001s
+[2020-08-05T17:53:33.974] [INFO] cheese - 请求参数:POST /mock-api/v1/user/login  ,接受到的参数:===>{"username":"admin","password":"123456"}
+[2020-08-05T17:53:33.974] [INFO] cheese - 响应时间为:0s
+[2020-08-05T17:53:34.184] [INFO] cheese - 请求参数:POST /mock-api/v1/user/info  ,接受到的参数:===>{"username":"admin","meta":{"signature":"82ded9bdfe6a3e6638729f2377d7b6dc","_":"1596621214173"}}
+[2020-08-05T17:53:34.185] [INFO] cheese - 响应时间为:0.001s
