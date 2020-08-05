@@ -43,21 +43,15 @@
               </q-avatar>
             </template>
             <q-list>
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup @click="toProfile">
                 <q-item-section>
-                  <q-item-label>
-                    <q-icon name="account_circle" />
-                    {{$t('layouts.profile')}}
-                  </q-item-label>
+                  <q-item-label>{{$t('layouts.profile')}}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator inset spaced />
               <q-item clickable v-close-popup @click="logOut">
                 <q-item-section>
-                  <q-item-label>
-                    <q-icon name="error" />
-                    {{$t('layouts.logout')}}
-                  </q-item-label>
+                  <q-item-label>{{$t('layouts.logout')}}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -114,7 +108,6 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { colors } from 'quasar';
 import Sidebaritem from './components/sidebaritem.vue';
 import { AppModule } from '../store/modules/app';
 import { UserModule } from '../store/modules/user';
@@ -123,6 +116,7 @@ import { PermissionModule } from '../store/modules/permission';
 import { TagsViewModule, ITagView } from '@/store/modules/tags';
 import { RouteRecord, Route, RouteConfig } from 'vue-router';
 import path from 'path';
+import { colors } from 'quasar';
 @Component({
   name: 'Layouts',
   components: {
@@ -246,13 +240,25 @@ export default class extends Vue {
   private checkLang(value: string) {
     AppModule.SET_LANGUAGE(value);
     this.$q.notify({
+      color: 'primary',
+      multiLine: true,
+      icon: 'mood',
+      actions: [
+        {
+          label: 'Close',
+          color: 'white',
+        },
+      ],
       message: `${this.$i18n.tc('messages.success')}`,
-      type: 'positive',
     });
   }
   private toHome() {
     this.$router.push({ path: '/' });
   }
+  private toProfile() {
+    this.$router.push({ path: '/profile/index' });
+  }
+  created() {}
 }
 </script>
 <style lang="scss">

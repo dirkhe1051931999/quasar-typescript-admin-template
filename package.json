@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "dev": "quasar dev",
-    "serve": "nodemon ./mock/index.js",
+    "server": "nodemon ./mock/index.js",
     "build": "quasar build"
   },
   "dependencies": {

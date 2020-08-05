@@ -1,8 +1,8 @@
+import  settings  from '../settings.json';
+import { UserModule } from './../store/modules/user';
 import { AppModule } from './../store/modules/app';
 import { msg } from './msg';
-import { UserModule } from '@/store/modules/user';
 import axios from 'axios';
-import settings from '@/settings.json';
 import qs from 'qs';
 import { Md5 } from 'ts-md5';
 import { Notify } from 'quasar';
@@ -37,7 +37,15 @@ axios.interceptors.request.use(
     console.log(error);
     Notify.create({
       message: error,
-      type: 'negative',
+      color: 'negative',
+      multiLine: true,
+      icon: 'mood_bad',
+      actions: [
+        {
+          label: 'Close',
+          color: 'white',
+        },
+      ],
     });
     Promise.reject(error);
   },
@@ -51,7 +59,15 @@ axios.interceptors.response.use(
       const msgText = msg[code] ? msg[code][AppModule.language === 'en' ? 1 : 0] : DEFAULT_ERRORMSG;
       Notify.create({
         message: msgText,
-        type: 'negative',
+        color: 'negative',
+        multiLine: true,
+        icon: 'mood_bad',
+        actions: [
+          {
+            label: 'Close',
+            color: 'white',
+          },
+        ],
       });
       UserModule.SET_LOGIN_LOADING(false);
       return Promise.reject('error');
@@ -64,7 +80,15 @@ axios.interceptors.response.use(
     if (error.config.url.includes('/login')) {
       Notify.create({
         message: DEFAULT_ERRORMSG,
-        type: 'negative',
+        color: 'negative',
+        multiLine: true,
+        icon: 'mood_bad',
+        actions: [
+          {
+            label: 'Close',
+            color: 'white',
+          },
+        ],
       });
     }
     return Promise.reject('error');

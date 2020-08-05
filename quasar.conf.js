@@ -68,9 +68,7 @@ module.exports = configure(function(ctx) {
                 fileName: 'list.json',
               }),
               new webpack.BannerPlugin({
-                banner:
-                  'design: hejian\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\ndate: ' +
-                  new Date().toLocaleString(),
+                banner: 'design: hejian\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\ndate: ' + new Date().toLocaleString(),
                 raw: false,
               }),
               new MiniCssExtractPlugin({
@@ -125,10 +123,8 @@ module.exports = configure(function(ctx) {
           position: 'top',
         },
         notify: {
-          position: 'top',
+          position: 'bottom-right',
           timeout: 2500,
-          textColor: 'white',
-          actions: [{ icon: 'close', color: 'white' }],
         },
       },
       // Possible values for "importStrategy":
@@ -157,7 +153,7 @@ module.exports = configure(function(ctx) {
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#0080ff',
         icons: [
           {
             src: 'icons/icon-128x128.png',

@@ -3,13 +3,13 @@ $black: #323232;
 $light-black: #5d5d5d;
 $white: #ffffff;
 $light-white: #f5f5f5;
-$blue: #1976d2;
-$medium-blue: #498dd1;
-$light-blue: #e3f2ff;
-$red: #c03639;
-$light-red: #f56c6c;
-$pink: #e65d6e;
-$green: #30b08f;
+$blue: #0080ff;
+$medium-blue: #03a6ff;
+$light-blue: #a3daff;
+$red: #cf2a2a;
+$light-red: #f1404b;
+$pink: #fd999a;
+$green: #3ac569;
 $tiffany: #4ab7bd;
 $yellow: #fec171;
 $panGreen: #30b08f;
@@ -36,13 +36,6 @@ $menuBg: #304156;
 $menuText: #bfcbd9;
 $menuActiveText: #409eff;
 
-// // The :export directive is the magic sauce for webpack
-// // https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
-:export {
-  menuBg: $menuBg;
-  menuText: $menuText;
-  menuActiveText: $menuActiveText;
-}
 // 边框颜色
 $border-colors: (
   'white': $white,

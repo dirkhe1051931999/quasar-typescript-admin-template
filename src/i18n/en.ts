@@ -31,7 +31,10 @@ export default {
     spinners: 'Spinners',
     notice: 'Notice',
     transfer: 'Transfer',
-    convert:'Convert',
+    convert: 'Convert',
+    dialog: 'Dialog',
+    profile: 'Profile',
+    parallax: 'Parallax',
   },
   layouts: {
     profile: 'Profile',
