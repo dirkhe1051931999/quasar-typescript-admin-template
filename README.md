@@ -1,11 +1,11 @@
 ## :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
 - app
-  ![](https://ftp.bmp.ovh/imgs/2020/07/5c68dc2da73c5950.png)
+  <img src="https://ftp.bmp.ovh/imgs/2020/07/5c68dc2da73c5950.png" width="300px">
 - electron
-  ![](https://ftp.bmp.ovh/imgs/2020/07/98a1f290ff67b085.jpg)
+  <img src="https://ftp.bmp.ovh/imgs/2020/07/98a1f290ff67b085.jpg" width="800px">
 - pwa
-  ![](https://ftp.bmp.ovh/imgs/2020/07/9a75635faccdaae7.jpg)
+  <img src="https://ftp.bmp.ovh/imgs/2020/08/8422c140573f8737.jpg" width="800px">
 
 ## Install the dependencies
 
