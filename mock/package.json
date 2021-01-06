@@ -20,7 +20,7 @@
     "log4js": "^6.2.0",
     "cors": "^2.8.5",
     "apidoc": "^0.20.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
