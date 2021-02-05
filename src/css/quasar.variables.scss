@@ -5,7 +5,8 @@ $white: #ffffff;
 $light-white: #f5f5f5;
 $blue: #0080ff;
 $medium-blue: #03a6ff;
-$light-blue: #a3daff;
+$light-blue: #1976d2;
+$small-blue: rgba(25, 118, 210, 0.093);
 $red: #cf2a2a;
 $light-red: #f1404b;
 $pink: #fd999a;
@@ -49,6 +50,7 @@ $border-colors: (
 ) !default;
 
 $bg-colors: (
+  'small-blue': $small-blue,
   'light-blue': $light-blue,
   'white': $white,
   'black': $black,
@@ -115,6 +117,7 @@ $box-sizes: (
   45,
   50,
   60,
+  70,
   80,
   100,
   130
@@ -133,4 +136,4 @@ $line-height-px-through: 100 !default;
 $border-width-through: 20 !default;
 $border-radius-through: 20 !default;
 // width height
-$sizes2: (32, 36, 40, 44, 47, 50, 60, 70, 80, 90, 100, 120, 130, 150, 170, 200, 220, 250, 300, 370, 400, 500, 600, 800, 1000, 1200) !default;
+$sizes2: (32, 36, 40, 44, 47, 48, 50, 60, 70, 80, 90, 100, 120, 130, 150, 170, 200, 220, 250, 300, 370, 400, 500, 600, 800, 1000, 1200) !default;

@@ -68,8 +68,8 @@ module.exports = configure(function(ctx) {
                 fileName: 'list.json',
               }),
               new webpack.BannerPlugin({
-                banner: 'design: hejian\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\ndate: ' + new Date().toLocaleString(),
-                raw: false,
+                banner: 'design: hejian\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\nv: ' + 'v.' + new Date(),
+                raw: true,
               }),
               new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

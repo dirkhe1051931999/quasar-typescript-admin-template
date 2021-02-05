@@ -4,47 +4,31 @@
       :fullscreen="$q.fullscreen.isActive"
       :grid="grid"
       :data="data"
-      separator="cell"
       color="primary"
       square
       row-key="name"
       selection="multiple"
       :selected.sync="selected"
-      no-data-label="No Data"
+      no-data-label="No data"
       :columns="columns"
-      :pagination.sync="pagination"
-      :loading="loading"
-      loading-label="Loading..."
-      :rows-per-page-options="[10,20,50]"
+      :pagination.sync="paginationParams"
+      hide-pagination
+      :loading="tableLoading"
     >
+      <template v-slot:loading>
+        <q-inner-loading showing color="primary" />
+      </template>
       <template v-slot:top>
-        <q-select
-          outlined
-          dense
-          value="Twitter"
-          :options="['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle']"
-          :options-dense="false"
-          class="w-200 m-r-10"
-        >
-          <template v-slot:prepend>
-            <q-icon name="filter_alt" />
-          </template>
-        </q-select>
-        <q-input outlined debounce="300" label="Search" dense class="m-r-10">
-          <template v-slot:prepend>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-        <q-btn color="primary" icon="touch_app" label="Confirm" />
+        Table
         <q-space />
         <q-btn
           flat
           stretch
           @click="$q.fullscreen.toggle()"
           :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-          :label="$q.fullscreen.isActive?'fullscreen_exit':'fullscreen'"
+          :label="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
         ></q-btn>
-        <q-btn flat stretch @click="grid=!grid" :icon="grid?'grid_off':'grid_on'" label="grid"></q-btn>
+        <q-btn flat stretch @click="grid = !grid" :icon="grid ? 'grid_off' : 'grid_on'" label="grid"></q-btn>
       </template>
       <template v-slot:no-data="{ icon, message, filter }">
         <div class="full-width row flex-center text-primary q-gutter-sm">
@@ -61,7 +45,7 @@
             </q-card-section>
             <q-separator />
             <q-list dense>
-              <q-item v-for="col in props.cols.filter(col => col.name !== 'desc')" :key="col.name">
+              <q-item v-for="col in props.cols.filter((col) => col.name !== 'desc')" :key="col.name">
                 <q-item-section>
                   <q-item-label>{{ col.label }}</q-item-label>
                 </q-item-section>
@@ -96,6 +80,9 @@
         </q-tr>
       </template>
     </q-table>
+    <div class="row justify-end q-mt-md">
+      <q-pagination v-model="paginationParams.page" :max="pagesNumber" :input="true"></q-pagination>
+    </div>
   </div>
 </template>
 
@@ -106,16 +93,41 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
   name: 'Index',
 })
 export default class extends Vue {
-  private loading = false;
+  get pagesNumber() {
+    return Math.ceil(this.paginationParams.rowsNumber / this.paginationParams.rowsPerPage);
+  }
+  private tableLoading = false;
   private grid = false;
   private selected = [];
-  @Watch('pagination', { deep: true })
-  onchange(newVal: any) {}
+
+  private columns = [
+    {
+      name: 'name',
+      label: 'Dessert (100g serving)',
+      align: 'left',
+      field: (row: any) => row.name,
+      format: (val: string) => `${val}`,
+    },
+    { name: 'calories', align: 'center', label: 'Calories', field: 'calories' },
+    { name: 'fat', label: 'Fat (g)', field: 'fat' },
+    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
+    { name: 'protein', label: 'Protein (g)', field: 'protein' },
+    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
+    { name: 'calcium', label: 'Calcium (%)', field: 'calcium' },
+    { name: 'iron', label: 'Iron (%)', field: 'iron' },
+    { name: 'option', label: 'option' },
+  ];
+  private data: any[] = [];
+  private paginationParams = {
+    descending: false,
+    page: 1,
+    rowsPerPage: 10,
+    rowsNumber: 0,
+  };
   created() {
-    this.loading = true;
+    this.tableLoading = true;
     setTimeout(() => {
-      this.loading = false;
-      this.pagination.rowsNumber = 100;
+      this.tableLoading = false;
       this.data = [
         {
           name: 'Frozen Yogurt',
@@ -180,30 +192,6 @@ export default class extends Vue {
       ];
     }, 1000);
   }
-  private columns = [
-    {
-      name: 'name',
-      label: 'Dessert (100g serving)',
-      align: 'left',
-      field: (row: any) => row.name,
-      format: (val: string) => `${val}`,
-    },
-    { name: 'calories', align: 'center', label: 'Calories', field: 'calories' },
-    { name: 'fat', label: 'Fat (g)', field: 'fat' },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium' },
-    { name: 'iron', label: 'Iron (%)', field: 'iron' },
-    { name: 'option', label: 'option' },
-  ];
-  private data: any[] = [];
-  private pagination = {
-    descending: false,
-    page: 1,
-    rowsPerPage: 10,
-    rowsNumber: 0,
-  };
 }
 </script>
 

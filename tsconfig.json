@@ -1,5 +1,4 @@
 {
-  "extends": "@quasar/app/tsconfig-preset",
   "compilerOptions": {
     "baseUrl": ".",
     "experimentalDecorators": true,
@@ -13,10 +12,12 @@
     "allowSyntheticDefaultImports": true,
     // 允许索引
     "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["*", "src/*"]
     }
   },
-  "include": ["src/utils/cssConvert.js"]
+  "include": ["src/utils/cssConvert.js", "src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
 }

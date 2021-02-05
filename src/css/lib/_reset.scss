@@ -1,4 +1,14 @@
 // reset 初始化浏览器样式
+@font-face {
+  font-family: 'NotoSansSC';
+  src: url('../assets/font/NotoSansSC.woff') format('woff'), url('../assets/font/NotoSansSC.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'password';
+  src: url('../assets/font/password.ttf') format('truetype');
+}
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -17,7 +27,7 @@ body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  font-family: PingFangHK-Regular, sans-serif;
+  font-family: NotoSansSC;
   font-size: 14px;
   line-height: 1.2;
   color: #323232;
@@ -383,4 +393,11 @@ canvas {
  */
 #app {
   height: 100%;
+}
+input {
+  &::placeholder {
+    font-family: 'NotoSansSC';
+    font-size: 12px;
+    color: #97a8be !important;
+  }
 }
