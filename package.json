@@ -15,7 +15,7 @@
     "@antv/g2plot": "^1.1.15",
     "@quasar/extras": "^1.0.0",
     "@types/codemirror": "0.0.97",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-plugin-prismjs": "^2.0.1",
     "codemirror": "^5.56.0",
     "core-js": "^3.6.5",
