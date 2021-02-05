@@ -14,7 +14,6 @@ import { UserModule } from '@/store/modules/user';
 import { LoadingBar } from 'quasar';
 const getPageTitle = (key: string) => {
   const hasKey = i18n.te(`routes.${key}`);
-  console.log(hasKey);
   if (hasKey) {
     const pageName = i18n.t(`routes.${key}`);
     return `${pageName} - ${settings.title}`;

@@ -5,8 +5,7 @@
         <slot />
       </div>
     </div>
-    <img :src="image" alt class="pan-thumb" v-if="username === 'admin'" />
-    <img src="~@/assets/avatar2.jpg" alt class="pan-thumb" v-else />
+    <img src="~@/assets/avatar2.jpg" alt class="pan-thumb" />
   </div>
 </template>
 

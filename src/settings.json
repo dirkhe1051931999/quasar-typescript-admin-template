@@ -6,6 +6,8 @@
   "pro": "",
   "devServerPort": 9002,
   "mockServerPort": 9004,
+  "showSideBarLogo": true,
+  "showFooter": true,
   "adminName": ["admin"],
   "errorCode": [],
   "succCode": [],

@@ -6,3 +6,5 @@ declare namespace NodeJS {
   }
 }
 
+declare module 'prismjs';
+declare module 'less'

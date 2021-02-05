@@ -1,10 +1,10 @@
 <template>
   <div>
-    <q-select outlined v-model="type" :options="['less','scss']" :label="`${type} to css`" />
+    <q-select outlined v-model="type" :options="['less', 'scss']" :label="`${type} to css`" />
     <q-splitter :value="50" class="relative">
       <template v-slot:before>
         <div class="q-pa-md">
-          <div class="text-h4 q-mb-md">{{type}}</div>
+          <div class="text-h4 q-mb-md">{{ type }}</div>
           <textarea name="less" id="source" v-model="style"></textarea>
         </div>
       </template>
@@ -29,6 +29,7 @@ import '@/utils/cssConvert';
 import CodeMirror from 'codeMirror';
 const lessStr = `@width:500px;@height:300px;@font_size:12px;textarea {width:@width;height:@height;font-size:@font_size;}`;
 const scssStr = '';
+const less = window['less'];
 @Component
 export default class extends Vue {
   private type = 'less';

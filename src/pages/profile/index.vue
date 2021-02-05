@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row a-center j-center m-t-20">
-      <PanThumb :image="avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+      <PanThumb  :height="'100px'" :width="'100px'" :hoverable="false">
         <div>Hello</div>Admin
       </PanThumb>
     </div>

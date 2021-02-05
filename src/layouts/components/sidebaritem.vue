@@ -1,6 +1,6 @@
 <template>
   <div v-if="!route.meta || !route.meta.hidden" class="sidebar-item">
-    <q-list class="q-list text-black2" v-if="!route.children || route.children.length===1">
+    <q-list class="q-list text-black2" v-if="!route.children || route.children.length === 1">
       <q-expansion-item
         :to="resolvePath(route)"
         :icon="iconName(route)"
@@ -8,7 +8,7 @@
         :label="label(route)"
         class="theOnlyOneChild"
         :caption="resolvePath(route)"
-        :active-class="$route.path===resolvePath(route)?'bg-light-blue text-primary':'text-black2'"
+        :active-class="$route.path === resolvePath(route) ? 'bg-small-blue text-light-blue active-tab' : 'text-black2'"
       ></q-expansion-item>
     </q-list>
     <q-list class="q-list" v-else>
@@ -20,7 +20,7 @@
           v-model="opened"
           :ref="route.meta.title"
         >
-          <Sidebaritem v-for="(item,index) in route.children" :route="item" :key="index" :basePath="route.path" />
+          <Sidebaritem v-for="(item, index) in route.children" :route="item" :key="index" :basePath="route.path" />
         </q-expansion-item>
       </template>
     </q-list>
@@ -75,6 +75,15 @@ export default class extends Vue {
 <style  lang='scss'>
 .sidebar-item {
   .q-list {
+    .active-tab::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 100%;
+      background: $light-blue;
+      top: 0;
+      right: 0;
+    }
     .q-item__section--avatar {
       padding-right: 0;
     }

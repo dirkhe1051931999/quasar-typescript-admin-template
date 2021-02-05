@@ -1,33 +1,33 @@
 <template>
-  <div class="animated fadeIn" style="height:100%">
+  <div class="animated fadeIn" style="height: 100%">
     <q-layout view="hHh Lpr lff">
       <!-- header -->
       <q-header elevated class="bg-white text-white">
         <q-toolbar class="bg-primary">
-          <q-btn dense flat round :icon="drawerLeft?'menu_open':'menu'" @click="set_left_darwer_open" />
+          <q-btn dense flat round :icon="drawerLeft ? 'menu_open' : 'menu'" @click="set_left_darwer_open" />
           <q-toolbar-title class="row a-center">
             <q-breadcrumbs active-color="white" separator-color="white" class="fs-14 h-16" :key="+new Date()">
-              <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route,index) in breadcrumbs" :key="index" />
+              <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route, index) in breadcrumbs" :key="index" />
             </q-breadcrumbs>
           </q-toolbar-title>
           <q-btn-dropdown stretch flat align="center" label="v0.0.0.1"></q-btn-dropdown>
           <q-separator dark vertical />
           <q-btn stretch flat icon="refresh" @click="refreshCurPage">
-            <q-tooltip>{{$t('tip.refreshCurPage')}}</q-tooltip>
+            <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
           </q-btn>
           <q-separator dark vertical />
           <q-btn stretch flat @click="$q.fullscreen.toggle()" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'">
-            <q-tooltip>{{!$q.fullscreen.isActive?`${$t('tip.fullscreen')}`:`${$t('tip.cancelFullscreen')}`}}</q-tooltip>
+            <q-tooltip>{{ !$q.fullscreen.isActive ? `${$t('tip.fullscreen')}` : `${$t('tip.cancelFullscreen')}` }}</q-tooltip>
           </q-btn>
           <q-separator dark vertical />
           <q-btn-dropdown stretch flat align="center" icon="font_download">
             <q-list>
-              <q-item :clickable="lang==='zh'" v-close-popup="lang==='zh'" :disable="lang==='en'" @click="checkLang('en')">
+              <q-item :clickable="lang === 'zh'" v-close-popup="lang === 'zh'" :disable="lang === 'en'" @click="checkLang('en')">
                 <q-item-section>
                   <q-item-label>English</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item v-close-popup="lang==='en'" :disable="lang==='zh'" :clickable="lang==='en'" @click="checkLang('zh')">
+              <q-item v-close-popup="lang === 'en'" :disable="lang === 'zh'" :clickable="lang === 'en'" @click="checkLang('zh')">
                 <q-item-section>
                   <q-item-label>中文</q-item-label>
                 </q-item-section>
@@ -38,20 +38,19 @@
           <q-btn-dropdown stretch flat align="center">
             <template v-slot:label>
               <q-avatar class="m-r-10">
-                <img src="~assets/avatar.png" v-if="!adminName.includes(username)" />
-                <img :src="avatar" alt v-else />
+                <img src="~assets/avatar2.jpg" />
               </q-avatar>
             </template>
             <q-list>
               <q-item clickable v-close-popup @click="toProfile">
                 <q-item-section>
-                  <q-item-label>{{$t('layouts.profile')}}</q-item-label>
+                  <q-item-label>{{ $t('layouts.profile') }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator inset spaced />
               <q-item clickable v-close-popup @click="logOut">
                 <q-item-section>
-                  <q-item-label>{{$t('layouts.logout')}}</q-item-label>
+                  <q-item-label>{{ $t('layouts.logout') }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -59,37 +58,42 @@
         </q-toolbar>
       </q-header>
       <!-- left -->
-      <q-drawer v-model="drawerLeft" show-if-above side="left" :width="250" :breakpoint="700" bordered content-class="text-black2" class="h-p-100">
+      <q-drawer v-model="drawerLeft" show-if-above side="left" :width="250" :breakpoint="700" bordered content-class="text-black2" class="h-full">
         <q-scroll-area class="fit">
-          <div class="row p-16 a-center fs-20 text-bold cursor-pointer" @click="toHome">
+          <div class="row p-16 a-center fs-20 text-bold cursor-pointer" @click="toHome" v-if="showSideBarLogo">
             <img src="~assets/slogo.png" class="sidebar-slogo" />
-            <span class="m-l-5 ellipsis w-170">{{slogoTitle}}</span>
+            <span class="m-l-5 ellipsis w-170">{{ slogoTitle }}</span>
           </div>
-          <Sidebaritem v-for="(item,index) in routes" :route="item" :key="index" :base-path="item.path" ref="sidebaritem" />
+          <Sidebaritem v-for="(item, index) in routes" :route="item" :key="index" :base-path="item.path" ref="sidebaritem" />
         </q-scroll-area>
       </q-drawer>
       <!-- container -->
       <q-page-container>
-        <div class="h-47 layout-header-label bg-white text-black2 p-t-10 m-l-15 m-r-15">
+        <div class="h-48 layout-header-label bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom" :style="drawerLeft ? 'left:250px' : ''">
           <div class="q-gutter-sm row no-wrap scroll">
             <router-link
-              v-for="(tag,index) in visitedViews"
+              v-for="(tag, index) in visitedViews"
               :key="index"
               ref="tag"
-              :class="['bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20',isActive(tag)? 'text-white bg-blue p-r-10':'']"
+              :class="['bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20', isActive(tag) ? 'text-light-blue  p-r-10' : '']"
               :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
               tag="div"
               v-ripple
             >
-              <span>{{$t(`routes.${tag.meta.title}`)}}</span>
+              <span>{{ $t(`routes.${tag.meta.title}`) }}</span>
               <q-icon name="close" right @click.native.prevent="closeTag(tag)"></q-icon>
+              <q-menu touch-position context-menu>
+                <q-list dense>
+                  <q-item clickable v-close-popup>
+                    <q-item-section @click="closeAll"> 关闭所有 </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
             </router-link>
           </div>
-          <q-icon class="text-primary fs-20" name="close" @click.native.prevent="closeAll()" v-show="visitedViews.length>1"></q-icon>
         </div>
-        <div class="line-1"></div>
         <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-          <q-page class="q-pa-md" :key="key">
+          <q-page class="m-t-70 p-l-20 p-r-20 p-b-20" :key="key">
             <router-view v-if="refreshPage" />
             <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
               <q-btn fab icon="keyboard_arrow_up" color="blue-8" />
@@ -98,9 +102,8 @@
         </transition-group>
       </q-page-container>
       <!-- footer -->
-
-      <q-footer class="bg-white text-center fs-12 text-gray row a-center j-center p-b-5">
-        <a :href="policy" target="_blank">{{policy}}</a>
+      <q-footer class="bg-white text-center fs-12 text-gray row a-center j-center p-b-5" v-if="showFooter">
+        <a :href="policy" target="_blank">{{ policy }}</a>
       </q-footer>
     </q-layout>
   </div>
@@ -115,8 +118,6 @@ import settings from '@/settings.json';
 import { PermissionModule } from '../store/modules/permission';
 import { TagsViewModule, ITagView } from '@/store/modules/tags';
 import { RouteRecord, Route, RouteConfig } from 'vue-router';
-import path from 'path';
-import { colors } from 'quasar';
 @Component({
   name: 'Layouts',
   components: {
@@ -162,6 +163,8 @@ export default class extends Vue {
   private policy = settings.policy;
   private slogoTitle = settings.title;
   private adminName = settings.adminName;
+  private showSideBarLogo = settings.showSideBarLogo;
+  private showFooter = settings.showFooter;
   private breadcrumbs: any[] = [];
   private isActive(route: ITagView) {
     return route.path === this.$route.path;
@@ -189,6 +192,18 @@ export default class extends Vue {
   private async logOut() {
     await UserModule.LogOut();
     this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    this.$q.notify({
+      color: 'primary',
+      multiLine: true,
+      icon: 'mood',
+      actions: [
+        {
+          label: 'Close',
+          color: 'white',
+        },
+      ],
+      message: `Sign out successfully`,
+    });
   }
   private addTags() {
     TagsViewModule.addView(this.$route);
@@ -208,15 +223,12 @@ export default class extends Vue {
         last = this.visitedViews[this.visitedViews.length - 1];
       }
     } else {
-      // 如果剩1个
-      if (this.$route.fullPath === view.fullPath) return;
-      TagsViewModule.delView(view);
-      this.$router.push('/');
+      this.closeAll();
     }
   }
   private closeAll() {
     TagsViewModule.delAllViews();
-    this.$router.push('/');
+    this.$router.push('/').catch((err) => 0);
   }
   private moveToCurrentTag() {
     this.$nextTick(() => {
@@ -253,6 +265,9 @@ export default class extends Vue {
     });
   }
   private toHome() {
+    if (this.$route.name === 'Dashboard') {
+      return;
+    }
     this.$router.push({ path: '/' });
   }
   private toProfile() {
@@ -287,5 +302,18 @@ export default class extends Vue {
 .sidebar-slogo {
   width: 32px;
   height: 32px;
+}
+</style>
+<style scoped lang="scss">
+.visited {
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+  left: 0;
+  // box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  .close-all {
+    position: fixed;
+    right: 0;
+  }
 }
 </style>
