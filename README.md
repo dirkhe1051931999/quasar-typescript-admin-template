@@ -1,13 +1,11 @@
 ## :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
-  <img src="http://inews.gtimg.com/newsapp_ls/0/13136928197/0" >
+  <img src="https://z3.ax1x.com/2021/05/14/grMoSU.png" >
 
 ## Install the dependencies
 
 ```bash
 npm install
-# for mock server
-npm install nodemon
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)

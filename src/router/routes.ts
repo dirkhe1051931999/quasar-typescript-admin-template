@@ -1,9 +1,9 @@
-import VueRouter, { RouteConfig } from 'vue-router';
+import {RouteConfig} from 'vue-router';
 import Layout from '@/layouts/index.vue';
 /*
   name:'router-name'             the name field is required when using <keep-alive>, it should also match its component's name property
                                  detail see : https://vuejs.org/v2/guide/components-dynamic-async.html#keep-alive-with-Dynamic-Components
-  redirect:                      
+  redirect:
   meta: {
     pagePermissionId              页面权限的id, -1就是管理员才有的权限
     modify                        是否可编辑
@@ -95,6 +95,15 @@ export const constantRoutes: RouteConfig[] = [
           icon: 'airline_seat_legroom_extra',
         },
         component: () => import(/* webpackChunkName: "line" */ 'pages/charts/line.vue'),
+      },
+      {
+        path: 'relationship',
+        name: 'Relationship',
+        meta: {
+          title: 'relationship',
+          icon: 'airline_seat_legroom_extra',
+        },
+        component: () => import(/* webpackChunkName: "line" */ 'pages/charts/relationship.vue'),
       },
     ],
   },

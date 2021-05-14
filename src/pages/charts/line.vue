@@ -5,8 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { Line } from '@antv/g2plot';
+import {Component, Vue} from 'vue-property-decorator';
+import {Line} from '@antv/g2plot';
+
 @Component({
   name: 'Line2',
 })
