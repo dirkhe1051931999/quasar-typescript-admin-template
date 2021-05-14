@@ -2,8 +2,8 @@
   <div class="animated fadeIn" style="height: 100%">
     <q-layout view="hHh Lpr lff">
       <!-- header -->
-      <q-header elevated class="bg-white text-white">
-        <q-toolbar class="bg-primary">
+      <q-header>
+        <q-toolbar>
           <q-btn dense flat round :icon="drawerLeft ? 'menu_open' : 'menu'" @click="set_left_darwer_open" />
           <q-toolbar-title class="row a-center">
             <q-breadcrumbs active-color="white" separator-color="white" class="fs-14 h-16" :key="+new Date()">
@@ -67,7 +67,7 @@
           <Sidebaritem v-for="(item, index) in routes" :route="item" :key="index" :base-path="item.path" ref="sidebaritem" />
         </q-scroll-area>
       </q-drawer>
-      <!-- container -->
+      <!-- 顶部导航 -->
       <q-page-container>
         <div class="h-48 layout-header-label bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom" :style="drawerLeft ? 'left:250px' : ''">
           <div class="q-gutter-sm row no-wrap scroll">
@@ -92,14 +92,14 @@
             </router-link>
           </div>
         </div>
-        <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-          <q-page class="m-t-70 p-l-20 p-r-20 p-b-20" :key="key">
-            <router-view v-if="refreshPage" />
-            <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-              <q-btn fab icon="keyboard_arrow_up" color="blue-8" />
-            </q-page-scroller>
-          </q-page>
-        </transition-group>
+        <!-- content -->
+        <div class="m-t-70 p-l-20 p-r-20 p-b-20" :key="key">
+          <router-view v-if="refreshPage" />
+          <!-- 回到顶部 -->
+          <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+            <q-btn fab icon="keyboard_arrow_up" color="blue-8" />
+          </q-page-scroller>
+        </div>
       </q-page-container>
       <!-- footer -->
       <q-footer class="bg-white text-center fs-12 text-gray row a-center j-center p-b-5" v-if="showFooter">
@@ -171,10 +171,6 @@ export default class extends Vue {
   }
   private getBreadcrumb() {
     let matched = this.$route.matched.filter((item) => item.meta && item.meta.title);
-    const first = matched[0];
-    if (!this.isDashboard(first)) {
-      matched = [{ path: '/', meta: { title: 'dashboard' } } as RouteRecord].concat(matched);
-    }
     this.breadcrumbs = matched.filter((item) => {
       return item.meta && item.meta.title && item.meta.breadcrumb !== false;
     });
@@ -310,7 +306,6 @@ export default class extends Vue {
   width: 100%;
   z-index: 10000;
   left: 0;
-  // box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   .close-all {
     position: fixed;
     right: 0;

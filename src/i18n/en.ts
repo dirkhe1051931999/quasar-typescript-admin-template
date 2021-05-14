@@ -35,6 +35,7 @@ export default {
     dialog: 'Dialog',
     profile: 'Profile',
     parallax: 'Parallax',
+    relationship: "Relationship"
   },
   layouts: {
     profile: 'Profile',
