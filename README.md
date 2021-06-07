@@ -1,4 +1,6 @@
-## :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
+### ADMIN template
+
+#### :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
   <img src="https://z3.ax1x.com/2021/05/14/grMoSU.png" >
 
@@ -14,7 +16,7 @@ npm install
 # server
 npm run server
 # spa
-quasar dev
+npm run dev
 # electron
 quasar dev -m electron
 # pwa

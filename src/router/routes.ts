@@ -1,4 +1,4 @@
-import {RouteConfig} from 'vue-router';
+import { RouteConfig } from 'vue-router';
 import Layout from '@/layouts/index.vue';
 /*
   name:'router-name'             the name field is required when using <keep-alive>, it should also match its component's name property
@@ -19,7 +19,12 @@ import Layout from '@/layouts/index.vue';
 export const constantRoutes: RouteConfig[] = [
   {
     path: '*',
-    redirect: '/dashboard',
+    redirect: '/404',
+    meta: { hidden: true },
+  },
+  {
+    path: '/404',
+    component: () => import(/* webpackChunkName: "404" */ 'pages/404/index.vue'),
     meta: { hidden: true },
   },
   {
