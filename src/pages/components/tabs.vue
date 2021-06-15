@@ -34,7 +34,7 @@
         <q-tab name="addressbook" icon="people" label="Address Book" />
       </q-tabs>
     </div>
-    <q-card class="my-card m-t-30">
+    <q-card class="m-t-30">
       <div class="row a-center j-between p-10">
         <q-splitter v-model="splitterModel" class="w-p-48">
           <template v-slot:before>

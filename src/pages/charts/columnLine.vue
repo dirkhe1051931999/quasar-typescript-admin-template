@@ -42,12 +42,12 @@ export default class extends Vue {
     const columnLine = new ColumnLine(document.getElementById('container1'), {
       title: {
         visible: true,
-        text: '柱线混合图',
+        text: 'Mixed bar chart',
         alignTo: 'middle',
       },
       description: {
         visible: true,
-        text: '配置多折线',
+        text: 'Configure polyline',
         alignTo: 'middle',
       },
       data: [uvData, transformData],

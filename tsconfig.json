@@ -15,21 +15,9 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "paths": {
-      "@/*": [
-        "*",
-        "src/*"
-      ]
+      "@/*": ["*", "src/*"]
     }
   },
-  "include": [
-    "src/utils/cssConvert.js",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
 }

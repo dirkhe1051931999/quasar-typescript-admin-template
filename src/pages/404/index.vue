@@ -1,5 +1,5 @@
 <template>
-  <div class="p-20 text-center">你没有页面权限</div>
+  <div class="p-20 text-center">You don't have page permissions</div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
@@ -8,6 +8,8 @@ import { Component, Vue } from 'vue-property-decorator';
   name: 'page404',
 })
 export default class extends Vue {
-  created() {}
+  created() {
+    this.$router.push('/dashboard')
+  }
 }
 </script>

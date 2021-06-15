@@ -51,6 +51,7 @@ module.exports = configure(function(ctx) {
       analyze: false,
       // Options below are automatically set depending on the env, set them if you want to override
       extractCSS: false,
+      distDir: ctx.modeName === 'spa' ? 'dist' : `dist/${ctx.modeName}`,
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg) {
         // linting is slow in TS projects, we execute it only for production builds
@@ -68,8 +69,8 @@ module.exports = configure(function(ctx) {
                 fileName: 'list.json',
               }),
               new webpack.BannerPlugin({
-                banner: 'design: hejian\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\nv: ' + 'v.' + new Date(),
-                raw: true,
+                banner: 'design: redteamobile.com\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\n_: ' + new Date().toLocaleString(),
+                raw: false,
               }),
               new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -117,6 +118,11 @@ module.exports = configure(function(ctx) {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
       config: {
+        brand: {
+          negative: '#e93030',
+          // primary: '#009D8D',
+          black: '#252631',
+        },
         loadingBar: {
           color: 'primary',
           size: '4px',

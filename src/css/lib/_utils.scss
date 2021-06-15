@@ -80,3 +80,35 @@
   transform: translateY(-50%);
   right: 2px;
 }
+.in-table-link-button {
+  display: inline-block;
+  text-align: center;
+  width: 68px;
+  line-height: 26px;
+  color: $blue;
+  cursor: pointer;
+  height: 26px;
+  background: $track_blue;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+.in-table-link-button:hover {
+  background: $blue;
+  color: $white;
+}
+.in-table-delete-button {
+  display: inline-block;
+  text-align: center;
+  width: 68px;
+  line-height: 26px;
+  color: $red;
+  cursor: pointer;
+  height: 27px;
+  border: solid 1px $track_pink;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+.in-table-delete-button:hover {
+  background: $red;
+  color: $white;
+}
