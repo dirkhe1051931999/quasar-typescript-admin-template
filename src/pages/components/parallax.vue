@@ -1,32 +1,44 @@
 <template>
   <div class="w-full h-full relative">
-    <q-card class="my-card">
-      <img src="/p1.png" />
-
+    <q-card class="l-h-2">
       <q-card-section>Lorem ipsum dolor sit amet, consectetur adipiscing elit</q-card-section>
+      <q-card-section>
+        How to Start Coding in 2021 | Learn How To Code On Your Own. In this video, I am sharing with you some of the best resources out there to
+        start learning how to code. There are so many different paths you can take now to learn how to code and also become a Software Developer.
+      </q-card-section>
     </q-card>
-    <q-parallax>
+    <q-parallax :height="250" :speed="0.8">
       <template v-slot:media>
-        <img src="/p2.png" class="absolute" />
+        <img src="https://cdn.quasar.dev/img/parallax1.jpg" />
       </template>
-      <template v-slot:content="scope">
-        <div
-          class="absolute column items-center"
-          :style="{
-            opacity: 0.45 + (1 - scope.percentScrolled) * 0.55,
-            top: (scope.percentScrolled * 60) + '%',
-            left: 0,
-            right: 0
-          }"
-        >
-          <div class="text-h3 text-primary text-center">Quasar Framework</div>
-          <div class="text-h6 text-dark text-center">v{{ $q.version }}</div>
-        </div>
-      </template>
+      <h1 class="text-white">Docks</h1>
     </q-parallax>
-    <q-video src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" />
-    <q-chat-message name="me" avatar="p2.ong" :text="['hey, how are you?']" stamp="7 minutes ago" sent bg-color="amber-7" />
-    <q-chat-message name="me" avatar="/p1.png" :text="['hey, how are you?']" stamp="7 minutes ago" sent bg-color="amber-7" />
+    <q-video src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0" class="h-300 m-t-100 m-b-100" />
+    <q-chat-message
+      name="mayuko "
+      avatar="https://yt3.ggpht.com/ytc/AAUvwnivjbUJ86-ZYW6puGnhv0Rey-osg2TL00CF-sEXXw=s48-c-k-c0x00ffffff-no-rj"
+      :text="['coming man!']"
+      stamp="10 minutes ago"
+      sent
+      class="m-b-50"
+    />
+    <q-chat-message
+      name="mayuko "
+      avatar="https://yt3.ggpht.com/ytc/AAUvwnivjbUJ86-ZYW6puGnhv0Rey-osg2TL00CF-sEXXw=s48-c-k-c0x00ffffff-no-rj"
+      sent
+      :text="[
+        'my youtube home page is  <a class=link-type target=_blank href=https://www.youtube.com/channel/UCEDkO7wshcDZ7UZo17rPkzQ>https://www.youtube.com/channel/UCEDkO7wshcDZ7UZo17rPkzQ</a>',
+      ]"
+      stamp="7 minutes ago"
+      class="m-b-100"
+    />
+    <q-chat-message
+      name="老梁 "
+      avatar="https://yt3.ggpht.com/ytc/AAUvwnhN0MMUQXUaqFJoHXyZN4PuGA4SvIHShPO0SidJ=s88-c-k-c0x00ffffff-no-rj"
+      :text="['uhhh~', 'nice to meet you!']"
+      stamp="5 minutes ago"
+      class="m-b-100"
+    />
   </div>
 </template>
 

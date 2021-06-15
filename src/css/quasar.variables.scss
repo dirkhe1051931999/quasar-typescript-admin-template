@@ -1,27 +1,38 @@
 // Base color
-$black: #323232;
-$light-black: #5d5d5d;
+// 白色
 $white: #ffffff;
 $light-white: #f5f5f5;
-$blue: #0080ff;
+// 黑色
+$black: #252631;
+$light-black: #5d5d5d;
+// 红色
+$red: #cf2a2a;
+$light-red: #f1404b;
+// 绿色
+$green: #009d8d;
+$medium-green: #027267;
+$track_green: #def3f1;
+$active-sidebar-color: #009888;
+$tiffany: #4ab7bd;
+$panGreen: #30b08f;
+// 蓝色
+$blue: #1875f0;
+$track_blue: #d0e3fc;
 $medium-blue: #03a6ff;
 $light-blue: #1976d2;
 $small-blue: rgba(25, 118, 210, 0.093);
-$red: #cf2a2a;
-$light-red: #f1404b;
-$pink: #fd999a;
-$green: #3ac569;
-$tiffany: #4ab7bd;
-$yellow: #fec171;
-$panGreen: #30b08f;
+//粉色
+$pink: #fe5578;
+$track_pink: #fedde4;
+//黄色
+$yellow: #feca57;
+$track_yellow: #fdf4dc;
+// 灰色
 $gray: #889aa4;
-
-// border
 $color-border: #dfe6ec;
-// desc
 $color-desc: #97a8be;
-// shadow
 $color-shadow: rgba(0, 0, 0, 0.5);
+$bg_gray: #fafafb;
 // Login page
 $loginCursorColor: #fff;
 $loginButton: #324157;
@@ -36,7 +47,6 @@ $subMenuActiveText: #f4f4f5;
 $menuBg: #304156;
 $menuText: #bfcbd9;
 $menuActiveText: #409eff;
-
 // 边框颜色
 $border-colors: (
   'white': $white,
@@ -48,16 +58,21 @@ $border-colors: (
   'red': $red,
   'desc': $color-desc,
 ) !default;
-
 $bg-colors: (
-  'small-blue': $small-blue,
-  'light-blue': $light-blue,
   'white': $white,
   'black': $black,
   'gray': $gray,
+  'light-gray': $bg_gray,
   'green': $green,
+  'track_green': $track_green,
   'blue': $blue,
+  'small-blue': $small-blue,
+  'light-blue': $light-blue,
+  'track_blue': $track_blue,
   'yellow': $yellow,
+  'track_yellow': $track_yellow,
+  'pink': $pink,
+  'track_pink': $track_pink,
   'red': $red,
   'desc': $color-desc,
   'bug1': #e93030,
@@ -67,19 +82,21 @@ $bg-colors: (
 ) !default;
 // 文本颜色
 $text-colors: (
+  'active-sidebar-color': $active-sidebar-color,
   'light-blue': $light-blue,
   'white': $white,
-  'black2': $black,
+  'black': $black,
   'gray': $gray,
   'green': $green,
+  'medium-green': $medium-green,
   'blue': $blue,
   'yellow': $yellow,
   'red': $red,
   'desc': $color-desc,
   'light-black': $light-black,
-  'bug1': #e93030,
+  'bug1': $red,
   'bug2': #f28500,
-  'bug3': #e6b800,
+  'bug3': $yellow,
   'bug4': $blue,
 ) !default;
 // for padding margin
@@ -110,6 +127,8 @@ $box-sizes: (
   15,
   16,
   20,
+  22,
+  24,
   25,
   30,
   35,
@@ -136,4 +155,34 @@ $line-height-px-through: 100 !default;
 $border-width-through: 20 !default;
 $border-radius-through: 20 !default;
 // width height
-$sizes2: (32, 36, 40, 44, 47, 48, 50, 60, 70, 80, 90, 100, 120, 130, 150, 170, 200, 220, 250, 300, 370, 400, 500, 600, 800, 1000, 1200) !default;
+$sizes2: (
+  32,
+  36,
+  40,
+  44,
+  47,
+  48,
+  50,
+  60,
+  70,
+  80,
+  90,
+  100,
+  120,
+  130,
+  145,
+  150,
+  170,
+  200,
+  220,
+  250,
+  300,
+  320,
+  370,
+  400,
+  500,
+  600,
+  800,
+  1000,
+  1200
+) !default;

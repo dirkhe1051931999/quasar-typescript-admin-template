@@ -1,39 +1,34 @@
 <template>
-  <div class="login-container relative w-full h-full">
-    <img src="~@/assets/login-bg.jpg" alt class="absolute left-0 top-0 w-full h-full" />
-    <div :class="['row j-end  a-center window-height',!$q.platform.is.mobile?'p-100':'p-20']">
-      <q-card :class="['my-card ',!$q.platform.is.mobile?'w-p-28':'w-full']">
-        <q-card-section>
-          <h3 class="text-subtitle2 text-center fs-20 relative">{{PrdTitle}}</h3>
-          <span class="sub"></span>
-        </q-card-section>
-        <q-card-section class="col justify-center p-b-20">
-          <q-input v-model="username" type="text" label="Username" class="m-b-10" />
-          <q-input v-model="password" type="password" label="Password" class="m-b-10" />
-          <div class="row a-center text-primary fs-14 j-end m-t-20 cursor-pointer">
-            <span>修改密码</span>
-            <q-icon name="keyboard_arrow_right" class="fs-18" />
-          </div>
-          <q-btn
-            color="primary"
-            icon="login"
-            label="Login"
-            @click.prevent="handLogin"
-            class="w-full m-t-20 h-44"
-            :loading="loginLoading"
-            :disable="loginLoading"
-          />
-        </q-card-section>
-      </q-card>
-    </div>
+  <div class="login-container relative window-height w-full">
+    <img src="~@/assets/login-bg.jpg" alt class="absolute left-0 top-0 window-height w-full" />
+    <q-card class="login-card">
+      <q-card-section>
+        <h3 class="text-center fs-20">{{ PrdTitle }}</h3>
+      </q-card-section>
+      <q-card-section class="col justify-center">
+        <q-input v-model="username" type="text" label="Username" :rules="[(val) => !!val || 'required']" />
+        <q-input v-model="password" type="password" label="Password" :rules="[(val) => !!val || 'required']" />
+      </q-card-section>
+      <q-card-section class="text-primary text-right">
+        <span class="cursor-pointer">Change your Password?</span>
+      </q-card-section>
+      <q-card-actions>
+        <q-btn
+          color="primary"
+          icon="login"
+          label="Login"
+          @click.prevent="handLogin"
+          class="w-full h-50"
+          :loading="loginLoading"
+          :disable="loginLoading"
+        />
+      </q-card-actions>
+    </q-card>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { AddressbarColor } from 'quasar';
-import { setToken } from '../../utils/cookies';
-import axios from '../../utils/request';
 import { UserModule } from '../../store/modules/user';
 import { Dictionary } from 'vue-router/types/router';
 import { Route } from 'vue-router';
@@ -103,13 +98,12 @@ export default class extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.sub {
-  width: 30px;
-  height: 4px;
-  background: $blue;
+.login-card {
+  width: 500px;
+  height: 400px;
   position: absolute;
   left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 0);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

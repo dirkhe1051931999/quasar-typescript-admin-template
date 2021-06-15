@@ -79,7 +79,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'ColumnLine',
         meta: {
           title: 'columnLine',
-          icon: 'ac_unit',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "columnLine" */ 'pages/charts/columnLine.vue'),
       },
@@ -88,7 +88,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Funnel',
         meta: {
           title: 'funnel',
-          icon: 'account_balance_wallet',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "funnel" */ 'pages/charts/funnel.vue'),
       },
@@ -97,7 +97,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Line',
         meta: {
           title: 'line',
-          icon: 'airline_seat_legroom_extra',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "line" */ 'pages/charts/line.vue'),
       },
@@ -106,7 +106,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Relationship',
         meta: {
           title: 'relationship',
-          icon: 'airline_seat_legroom_extra',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "line" */ 'pages/charts/relationship.vue'),
       },
@@ -122,7 +122,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Editer',
         meta: {
           title: 'editer',
-          icon: 'airline_seat_individual_suite',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "editer" */ 'pages/components/editer.vue'),
       },
@@ -131,7 +131,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Md',
         meta: {
           title: 'md',
-          icon: 'android',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "md" */ 'pages/components/md.vue'),
       },
@@ -140,7 +140,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Splitter',
         meta: {
           title: 'splitter',
-          icon: 'archive',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "splitter" */ 'pages/components/splitter.vue'),
       },
@@ -149,7 +149,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'JsonEditor',
         meta: {
           title: 'jsonEditor',
-          icon: 'av_timer',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "jsonEditor" */ 'pages/components/jsonEditor.vue'),
       },
@@ -158,7 +158,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Tabs',
         meta: {
           title: 'tabs',
-          icon: 'attach_file',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "tabs" */ 'pages/components/tabs.vue'),
       },
@@ -167,7 +167,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Sticky',
         meta: {
           title: 'sticky',
-          icon: 'assistant_photo',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "sticky" */ 'pages/components/sticky.vue'),
       },
@@ -176,7 +176,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Dialog',
         meta: {
           title: 'dialog',
-          icon: 'developer_board',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "dialog" */ 'pages/components/dialog.vue'),
       },
@@ -185,7 +185,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Carousel',
         meta: {
           title: 'carousel',
-          icon: 'burst_mode',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "carousel" */ 'pages/components/carousel.vue'),
       },
@@ -194,7 +194,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'ColorPicker',
         meta: {
           title: 'colorPicker',
-          icon: 'autorenew',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "colorPicker" */ 'pages/components/colorPicker.vue'),
       },
@@ -203,7 +203,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Skeleton',
         meta: {
           title: 'skeleton',
-          icon: 'assignment_returned',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "skeleton" */ 'pages/components/skeleton.vue'),
       },
@@ -212,7 +212,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Spinners',
         meta: {
           title: 'spinners',
-          icon: 'blur_linear',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "spinners" */ 'pages/components/spinners.vue'),
       },
@@ -221,7 +221,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Notice',
         meta: {
           title: 'notice',
-          icon: 'brightness_7',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "notice" */ 'pages/components/notice.vue'),
       },
@@ -230,7 +230,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Transfer',
         meta: {
           title: 'transfer',
-          icon: 'bubble_chart',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "notice" */ 'pages/components/transfer.vue'),
       },
@@ -239,7 +239,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Parallax',
         meta: {
           title: 'parallax',
-          icon: 'remove_red_eye',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "notice" */ 'pages/components/parallax.vue'),
       },
@@ -247,8 +247,8 @@ export const constantRoutes: RouteConfig[] = [
         path: 'colors',
         name: 'Colors',
         meta: {
-          title: 'Colors',
-          icon: 'invert_colors',
+          title: 'colors',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "notice" */ 'pages/components/color.vue'),
       },
@@ -312,7 +312,7 @@ export const constantRoutes: RouteConfig[] = [
         name: 'Table',
         meta: {
           title: 'table',
-          icon: 'table_chart',
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "tableA" */ 'pages/table/index.vue'),
       },
@@ -372,10 +372,10 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'a',
-        name: 'AuthA',
+        name: 'label',
         meta: {
           title: 'authA',
-          icon: 'block',
+          icon: 'label',
           pagePermissionId: ['-1', '1'],
         },
         component: () => import(/* webpackChunkName: "authA" */ 'pages/auth/a.vue'),
@@ -385,7 +385,7 @@ export const asyncRoutes: RouteConfig[] = [
         name: 'AuthB',
         meta: {
           title: 'authB',
-          icon: 'assignment',
+          icon: 'label',
           pagePermissionId: ['-1', '2'],
         },
         component: () => import(/* webpackChunkName: "authB" */ 'pages/auth/b.vue'),

@@ -2,7 +2,7 @@
 
 #### :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
-  <img src="https://z3.ax1x.com/2021/05/14/grMoSU.png" >
+  <img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
 
 ## Install the dependencies
 

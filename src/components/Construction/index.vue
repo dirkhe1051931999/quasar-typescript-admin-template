@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <p class="text-center">Under construction...🚧</p>
+    <p class="text-left">Under construction...</p>
   </div>
 </template>
 

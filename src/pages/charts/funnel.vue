@@ -14,11 +14,11 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class extends Vue {
   async mounted() {
     const data = [
-      { action: '浏览网站', pv: 50000 },
-      { action: '放入购物车', pv: 35000 },
-      { action: '生成订单', pv: 25000 },
-      { action: '支付', pv: 15000 },
-      { action: '成交', pv: 8500 },
+      { action: 'browse the website', pv: 50000 },
+      { action: 'put it in the cart', pv: 35000 },
+      { action: 'generate orders', pv: 25000 },
+      { action: 'pay money', pv: 15000 },
+      { action: 'conclude a transaction', pv: 8500 },
     ];
     await this.$nextTick();
     const funnelPlot = new Funnel(document.getElementById('container3'), {

@@ -28,11 +28,11 @@ export default class extends Vue {
     const linePlot = new Line(document.getElementById('container-2'), {
       title: {
         visible: true,
-        text: '带数据点的折线图',
+        text: 'Line chart with data points',
       },
       description: {
         visible: true,
-        text: '将折线图上的每一个数据点显示出来，作为辅助阅读。',
+        text: 'Display each data point on the line chart as an aid to reading.',
       },
       forceFit: true,
       padding: 'auto',

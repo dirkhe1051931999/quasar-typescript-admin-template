@@ -10,7 +10,7 @@
               <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route, index) in breadcrumbs" :key="index" />
             </q-breadcrumbs>
           </q-toolbar-title>
-          <q-btn-dropdown stretch flat align="center" label="v0.0.0.1"></q-btn-dropdown>
+          <q-btn-dropdown stretch flat align="center" label="v0.0.1.1"></q-btn-dropdown>
           <q-separator dark vertical />
           <q-btn stretch flat icon="refresh" @click="refreshCurPage">
             <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
@@ -75,7 +75,7 @@
               v-for="(tag, index) in visitedViews"
               :key="index"
               ref="tag"
-              :class="['bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20', isActive(tag) ? 'text-light-blue  p-r-10' : '']"
+              :class="['bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20 cursor-pointer', isActive(tag) ? 'text-light-blue  p-r-10' : '']"
               :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
               tag="div"
               v-ripple
@@ -274,7 +274,6 @@ export default class extends Vue {
 </script>
 <style lang="scss">
 .layout-header-label {
-  cursor: pointer;
   padding-right: 30px;
   position: relative;
   .scroll {

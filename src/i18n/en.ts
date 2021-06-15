@@ -33,9 +33,10 @@ export default {
     transfer: 'Transfer',
     convert: 'Convert',
     dialog: 'Dialog',
+    colors: 'Colors',
     profile: 'Profile',
     parallax: 'Parallax',
-    relationship: "Relationship"
+    relationship: 'Relationship',
   },
   layouts: {
     profile: 'Profile',

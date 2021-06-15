@@ -1,202 +1,256 @@
 <template>
   <div class="q-pa-md">
+    <q-form class="flex flex-wrap query-list m-b-30" ref="queryFrom">
+      <div v-for="(item, index) in queryInput" :key="index">
+        <q-input
+          v-model.trim="queryParams[item.id]"
+          :type="item.inputType"
+          :class="['', item.class]"
+          :label="item.placeholder"
+          v-if="item.type === 'text'"
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          clearable
+          dense
+          outlined
+          :spellcheck="false"
+        />
+        <q-select
+          v-if="item.type === 'select'"
+          :class="['', item.class]"
+          v-model="queryParams[item.id]"
+          :options="item.selectArr"
+          :label="item.placeholder"
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          clearable
+          dense
+          outlined
+          :spellcheck="false"
+        />
+      </div>
+      <q-btn color="primary" icon="search" label="Query" no-caps class="m-r-15 h-40" :loading="queryLoading" />
+      <q-btn icon="youtube_searched_for" label="Reset" outline color="primary" no-caps class="h-40" :loading="resetLoading" />
+    </q-form>
     <q-table
-      :fullscreen="$q.fullscreen.isActive"
-      :grid="grid"
-      :data="data"
-      color="primary"
-      square
-      row-key="name"
-      selection="multiple"
-      :selected.sync="selected"
-      no-data-label="No data"
-      :columns="columns"
-      :pagination.sync="paginationParams"
+      :columns="tableParams.column"
+      :data="tableParams.data"
+      :loading="tableParams.loading"
+      :pagination="tableParams.pagination"
       hide-pagination
-      :loading="tableLoading"
+      no-data-label="No data"
     >
+      <!--      loading-->
       <template v-slot:loading>
-        <q-inner-loading showing color="primary" />
+        <q-inner-loading color="primary" showing />
       </template>
-      <template v-slot:top>
-        Table
-        <q-space />
-        <q-btn
-          flat
-          stretch
-          @click="$q.fullscreen.toggle()"
-          :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-          :label="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-        ></q-btn>
-        <q-btn flat stretch @click="grid = !grid" :icon="grid ? 'grid_off' : 'grid_on'" label="grid"></q-btn>
-      </template>
-      <template v-slot:no-data="{ icon, message, filter }">
-        <div class="full-width row flex-center text-primary q-gutter-sm">
-          <q-icon size="2em" name="sentiment_dissatisfied" />
-          <span>Well this is sad... {{ message }}</span>
-          <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
-        </div>
-      </template>
-      <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition" :style="props.selected ? 'transform: scale(0.95);' : ''">
-          <q-card :class="props.selected ? 'bg-grey-2' : ''">
-            <q-card-section>
-              <q-checkbox dense v-model="props.selected" :label="props.row.name" />
-            </q-card-section>
-            <q-separator />
-            <q-list dense>
-              <q-item v-for="col in props.cols.filter((col) => col.name !== 'desc')" :key="col.name">
-                <q-item-section>
-                  <q-item-label>{{ col.label }}</q-item-label>
-                </q-item-section>
-                <q-item-section side>
-                  <q-item-label caption>{{ col.value }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-card>
-        </div>
-      </template>
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td class="text-center">
-            <q-checkbox dense v-model="props.selected" />
-          </q-td>
-          <q-td key="name" :props="props">{{ props.row.name }}</q-td>
-          <q-td key="calories" :props="props">{{ props.row.calories }}</q-td>
-          <q-td key="fat" :props="props">{{ props.row.fat }}</q-td>
-          <q-td key="carbs" :props="props">{{ props.row.carbs }}</q-td>
-          <q-td key="protein" :props="props">{{ props.row.protein }}</q-td>
-          <q-td key="sodium" :props="props">{{ props.row.sodium }}</q-td>
-          <q-td key="calcium" :props="props">{{ props.row.calcium }}</q-td>
-          <q-td key="iron" :props="props">{{ props.row.iron }}</q-td>
-          <q-td key="option" class="text-right row a-center j-end">
-            <span class="link-type">details</span>
-            <span class="m-l-5 delete-type vertical-middle relative">
-              <q-icon name="delete_forever" />delete
-              <q-popup-edit v-model="props.row.name" buttons title="Confirm?" label-set="ok" square></q-popup-edit>
-            </span>
-          </q-td>
-        </q-tr>
+      <!--      actions-->
+      <template v-slot:body-cell-action="props">
+        <q-td class="text-left">
+          <span class="in-table-link-button" v-if="props">Active</span>
+          <span class="in-table-delete-button m-l-5">Suspend</span>
+        </q-td>
       </template>
     </q-table>
-    <div class="row justify-end q-mt-md">
-      <q-pagination v-model="paginationParams.page" :max="pagesNumber" :input="true"></q-pagination>
+    <div class="flex a-center j-end q-mt-md" v-if="tableParams.pagination.rowsNumber">
+      <p class="m-r-10">Total {{ tableParams.pagination.rowsNumber }}</p>
+      <q-pagination
+        v-model="tableParams.pagination.page"
+        :input="false"
+        :max-pages="6"
+        :max="
+          tableParams.pagination.rowsNumber / tableParams.pagination.rowsPerPage < 1
+            ? 1
+            : Math.ceil(tableParams.pagination.rowsNumber / tableParams.pagination.rowsPerPage)
+        "
+        @input="paginationInput"
+        ellipses
+        outline
+        boundary-numbers
+      ></q-pagination>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { cloneDeep } from 'lodash';
 import { Component, Vue, Watch } from 'vue-property-decorator';
-
+import { defaultFill } from '@/utils';
+const QUERY_PARAMS = {
+  imsi: '',
+  iccid: '',
+  package: '',
+  operator: '',
+  area: '',
+  state: '',
+  allocated: '',
+  statusType: '',
+  ascription: '',
+};
 @Component({
   name: 'Index',
 })
 export default class extends Vue {
-  get pagesNumber() {
-    return Math.ceil(this.paginationParams.rowsNumber / this.paginationParams.rowsPerPage);
-  }
-  private tableLoading = false;
-  private grid = false;
-  private selected = [];
-
-  private columns = [
+  private queryParams = cloneDeep(QUERY_PARAMS);
+  private queryLoading = false;
+  private resetLoading = false;
+  private queryInput: any = [
     {
-      name: 'name',
-      label: 'Dessert (100g serving)',
-      align: 'left',
-      field: (row: any) => row.name,
-      format: (val: string) => `${val}`,
+      placeholder: 'IMSI',
+      type: 'text',
+      class: 'w-250 m-r-15 m-b-15',
+      inputType: 'number',
+      id: 'imsi',
     },
-    { name: 'calories', align: 'center', label: 'Calories', field: 'calories' },
-    { name: 'fat', label: 'Fat (g)', field: 'fat' },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium' },
-    { name: 'iron', label: 'Iron (%)', field: 'iron' },
-    { name: 'option', label: 'option' },
+    {
+      placeholder: 'ICCID',
+      type: 'text',
+      class: 'w-250 m-r-15 m-b-15',
+      inputType: 'number',
+      id: 'iccid',
+    },
+    {
+      placeholder: 'Plan',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      id: 'package',
+      selectArr: ['Plan1', 'Plan2'],
+      selectArrObject: [],
+    },
+    {
+      placeholder: 'Operator',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      id: 'operator',
+      selectArr: ['Operator1', 'Operator2'],
+      selectArrObject: [],
+    },
+    {
+      placeholder: 'Area',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      id: 'area',
+      selectArr: ['Province1', 'Province2'],
+      selectArrObject: [],
+    },
+    {
+      placeholder: 'Profile status',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      id: 'state',
+      selectArr: ['Activated', 'Deactivate'],
+      selectArrObject: [],
+    },
+    {
+      placeholder: 'Occupation status',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      id: 'allocated',
+      selectArr: ['Occupied', 'Unoccupied'],
+      selectArrObject: [],
+    },
+    {
+      placeholder: 'Plan type',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      selectArr: ['Type1', 'Type2'],
+      selectArrObject: [],
+      id: 'statusType',
+    },
+    {
+      placeholder: 'Affiliation',
+      type: 'select',
+      class: 'w-250 m-r-15 m-b-15',
+      selectArr: ['Org1', 'Org2'],
+      selectArrObject: [],
+      id: 'ascription',
+    },
   ];
-  private data: any[] = [];
-  private paginationParams = {
-    descending: false,
-    page: 1,
-    rowsPerPage: 10,
-    rowsNumber: 0,
+  private tableParams = {
+    loading: false,
+    data: [
+      {
+        imsi: '1',
+        iccid: '1',
+        carrierName: '1',
+        area: '1',
+        bundleName: '1',
+        bundleTypeId: '1',
+        state: '1',
+        allocated: '1',
+      },
+    ],
+    pagination: {
+      page: 1,
+      rowsPerPage: 10,
+      rowsNumber: 1,
+    },
+    column: [
+      {
+        name: 'imsi',
+        label: 'IMSI',
+        align: 'left',
+        field: (row: any) => row.imsi,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'iccid',
+        label: 'ICCID',
+        field: (row: any) => row.iccid,
+        format: (val: any) => `${defaultFill(val)}`,
+        align: 'left',
+      },
+      {
+        name: 'operator',
+        label: 'Operator',
+        align: 'left',
+        field: (row: any) => row.carrierName,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'area',
+        label: 'Area',
+        align: 'left',
+        field: (row: any) => row.area,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'bundleName',
+        label: 'Plan',
+        align: 'left',
+        field: (row: any) => row.bundleName,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'statusType',
+        label: 'Plan type',
+        align: 'left',
+        field: (row: any) => row.bundleTypeId,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'bootUpSatus',
+        label: 'Profile type',
+        align: 'left',
+        field: (row: any) => row.state,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'occupancyStatus',
+        label: 'Affiliation',
+        align: 'left',
+        field: (row: any) => row.allocated,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      { name: 'action', label: 'Actions', field: 'action', align: 'left' },
+    ],
   };
-  created() {
-    this.tableLoading = true;
-    setTimeout(() => {
-      this.tableLoading = false;
-      this.data = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%',
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          sodium: 129,
-          calcium: '8%',
-          iron: '1%',
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%',
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          sodium: 413,
-          calcium: '3%',
-          iron: '8%',
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          sodium: 327,
-          calcium: '7%',
-          iron: '16%',
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          sodium: 50,
-          calcium: '0%',
-          iron: '0%',
-        },
-      ];
-    }, 1000);
+  private paginationInput() {
+    if (this.tableParams.pagination.rowsNumber / this.tableParams.pagination.rowsPerPage < 1) return;
+    this.getData();
   }
+  private getData() {}
 }
 </script>
-
-<style scoped lang='scss'>
-.grid-style-transition {
-  transition: transform 0.28s, background-color 0.28s;
-}
-</style>

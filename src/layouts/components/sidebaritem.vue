@@ -8,7 +8,7 @@
         :label="label(route)"
         class="theOnlyOneChild"
         :caption="resolvePath(route)"
-        :active-class="$route.path === resolvePath(route) ? 'bg-small-blue text-light-blue active-tab' : 'text-black2'"
+        :active-class="$route.path === resolvePath(route) ? 'bg-small-blue text-primary active-tab' : 'text-black2'"
       ></q-expansion-item>
     </q-list>
     <q-list class="q-list" v-else>
@@ -80,7 +80,7 @@ export default class extends Vue {
       position: absolute;
       width: 3px;
       height: 100%;
-      background: $light-blue;
+      background: $blue;
       top: 0;
       right: 0;
     }
