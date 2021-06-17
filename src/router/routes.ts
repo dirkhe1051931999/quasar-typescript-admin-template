@@ -110,6 +110,15 @@ export const constantRoutes: RouteConfig[] = [
         },
         component: () => import(/* webpackChunkName: "line" */ 'pages/charts/relationship.vue'),
       },
+      {
+        path: 'map',
+        name: 'Map',
+        meta: {
+          title: 'map',
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "map" */ 'pages/charts/map.vue'),
+      },
     ],
   },
   {
