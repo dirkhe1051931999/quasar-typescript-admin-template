@@ -75,7 +75,8 @@ class User extends VuexModule implements IUserState {
   @Action({ rawError: true })
   public async Login(data: any) {
     const { username, password } = data;
-    await login({ username, password });
+    // await login({ username, password });
+    await setTimeout(() => 0, 1000);
     setToken(uid());
     setUsername(username);
     this.SET_TOKEN(uid());
@@ -85,12 +86,13 @@ class User extends VuexModule implements IUserState {
   // 获取用户信息
   @Action({ rawError: true })
   public async getUserInfo() {
-    const result = await getUserInfo({ username: this.username });
-    let { avatar, email, introduction, username } = result.data;
-    this.SET_AVATAR(avatar);
-    this.SET_EMAIL(email);
-    this.SET_INTRODUCTION(introduction);
-    if (username === 'admin') {
+    // const result = await getUserInfo({ username: this.username });
+    // let { avatar, email, introduction, username } = result.data;
+    await setTimeout(() => 0, 1000);
+    this.SET_AVATAR('avatar');
+    this.SET_EMAIL('email');
+    this.SET_INTRODUCTION('introduction');
+    if (this.username === 'admin') {
       this.SET_PAGE_PERMISION_ID(['1']);
       this.SET_PAGE_EDIT_PERMISSION([{ modify: true, permissionId: '1' }]);
     } else {
@@ -107,10 +109,11 @@ class User extends VuexModule implements IUserState {
     if (this.token === '') {
       throw Error('LogOut: token is undefined!');
     }
-    await await axios.request({
-      url: '/api/mock-api/v1/user/logout',
-      method: 'post',
-    });
+    // await await axios.request({
+    //   url: '/api/mock-api/v1/user/logout',
+    //   method: 'post',
+    // });
+    await setTimeout(() => 0, 1000);
     this.ResetToken();
   }
   // 重置cookie

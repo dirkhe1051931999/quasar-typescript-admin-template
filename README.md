@@ -2,7 +2,9 @@
 
 #### :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
-  <img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
+#### online preview https://dirkhe1051931999.github.io/
+
+<img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
 
 ## Install the dependencies
 
@@ -13,8 +15,8 @@ npm install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-# server
-npm run server
+# login by local not by server
+# npm run server
 # spa
 npm run dev
 # electron
