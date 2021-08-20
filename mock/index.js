@@ -7,8 +7,6 @@ const bodyParser = require('koa-bodyparser');
 const parameter = require('koa-parameter');
 const logger = require('./middlewares/logger.js');
 const routeMapping = require('./app/router/index');
-
-
 app.use(bodyParser());
 app.use(logger);
 app.use(error);

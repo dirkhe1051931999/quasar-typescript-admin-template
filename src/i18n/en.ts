@@ -37,7 +37,9 @@ export default {
     profile: 'Profile',
     parallax: 'Parallax',
     relationship: 'Relationship',
-    map: 'Map',
+    map: 'China map',
+    province: 'Province map',
+    city: 'City map',
   },
   layouts: {
     profile: 'Profile',

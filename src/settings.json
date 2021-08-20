@@ -5,6 +5,7 @@
   "logUrl": "/",
   "pro": "",
   "devServerPort": 9002,
+  "ip": "10.18.2.207",
   "mockServerPort": 9004,
   "showSideBarLogo": true,
   "showFooter": true,
