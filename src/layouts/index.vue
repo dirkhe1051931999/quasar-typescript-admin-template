@@ -71,17 +71,20 @@
       <q-page-container>
         <div class="h-48 layout-header-label bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom" :style="drawerLeft ? 'left:250px' : ''">
           <div class="q-gutter-sm row no-wrap scroll">
-            <router-link
+            <div
               v-for="(tag, index) in visitedViews"
               :key="index"
               ref="tag"
-              :class="['bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20 cursor-pointer', isActive(tag) ? 'text-light-blue  p-r-10' : '']"
+              :class="[
+                'bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20 cursor-pointer',
+                isActive(tag) ? 'text-light-blue  p-r-10' : '',
+              ]"
               :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
               tag="div"
               v-ripple
             >
-              <span>{{ $t(`routes.${tag.meta.title}`) }}</span>
-              <q-icon name="close" right @click.native.prevent="closeTag(tag)"></q-icon>
+              <span @click="handlerClickVisitedItem(tag)">{{ $t(`routes.${tag.meta.title}`) }}</span>
+              <q-icon name="close" right @click.native.prevent.stop="closeTag(tag)"></q-icon>
               <q-menu touch-position context-menu>
                 <q-list dense>
                   <q-item clickable v-close-popup>
@@ -89,7 +92,7 @@
                   </q-item>
                 </q-list>
               </q-menu>
-            </router-link>
+            </div>
           </div>
         </div>
         <!-- content -->
@@ -226,14 +229,16 @@ export default class extends Vue {
     TagsViewModule.delAllViews();
     this.$router.push('/').catch((err) => 0);
   }
+  private handlerClickVisitedItem(tag: any) {
+    this.$router.push(tag.fullPath);
+  }
   private moveToCurrentTag() {
     this.$nextTick(() => {
-      const tags = this.$refs.tag as any[];
-      if (tags) {
-        for (const tag of tags) {
-          if ((tag.to as ITagView).path === this.$route.path) {
+      if (this.visitedViews.length) {
+        for (const tag of this.visitedViews) {
+          if ((tag as ITagView).path === this.$route.path) {
             // When query is different then update
-            if ((tag.to as ITagView).fullPath !== this.$route.fullPath) {
+            if ((tag as ITagView).fullPath !== this.$route.fullPath) {
               TagsViewModule.updateVisitedView(this.$route);
             }
             break;

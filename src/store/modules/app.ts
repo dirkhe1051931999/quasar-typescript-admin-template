@@ -1,9 +1,9 @@
 import { i18n } from './../../boot/i18n';
-import { getLanguage } from './../../utils/cookies';
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
-import { getSidebarStatus, getSize, setSidebarStatus, setLanguage, setSize } from '@/utils/cookies';
+import { getSidebarStatus, getSize, setSidebarStatus, setLanguage, setSize, getLanguage } from '@/utils/cookies';
 import store from '@/store/index';
 import Vue from 'vue';
+import { loadCityJson, loadProvinceJson } from 'src/api/map';
 export enum DeviceType {
   Mobile,
   Desktop,
@@ -18,7 +18,7 @@ export interface IAppState {
 class App extends VuexModule implements IAppState {
   public device = DeviceType.Desktop;
   public refreshPage = true;
-  public language = getLanguage() || "en";
+  public language = getLanguage() || 'en';
   @Mutation
   public SET_LANGUAGE(status: any) {
     i18n.locale = status;
@@ -35,6 +35,16 @@ class App extends VuexModule implements IAppState {
     Vue.nextTick(() => {
       this.SET_REFRESH_PAGE(true);
     });
+  }
+  @Action({ rawError: true })
+  public async loadProvinceJson(data: any) {
+    const result = await loadProvinceJson(data);
+    return Promise.resolve(result);
+  }
+  @Action({ rawError: true })
+  public async loadCityJson(data: any) {
+    const result = await loadCityJson(data);
+    return Promise.resolve(result);
   }
 }
 

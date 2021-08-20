@@ -5,7 +5,7 @@ import Layout from '@/layouts/index.vue';
                                  detail see : https://vuejs.org/v2/guide/components-dynamic-async.html#keep-alive-with-Dynamic-Components
   redirect:
   meta: {
-    pagePermissionId              页面权限的id, -1就是管理员才有的权限
+    pagePermissionId              页面权限的id, -1就是管理员才有的权限 ,父包含子的所有权限，父子路由都要有
     modify                        是否可编辑
     title: 'title'               子菜单和面包屑中显示的名称（推荐设置）
     icon: 'svg-name'             侧栏中显示的图标
@@ -35,7 +35,9 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/dashboard',
     component: Layout,
-    meta: {},
+    meta: {
+      pagePermissionId: ['-1', '1'],
+    },
     redirect: '/dashboard/index',
     children: [
       {
@@ -54,6 +56,9 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/account',
     component: Layout,
+    meta: {
+      pagePermissionId: ['-1', '1'],
+    },
     children: [
       {
         path: 'index',
@@ -72,6 +77,7 @@ export const constantRoutes: RouteConfig[] = [
     meta: {
       title: 'charts',
       icon: 'bar_chart',
+      pagePermissionId: ['-1', '1'],
     },
     children: [
       {
@@ -119,12 +125,30 @@ export const constantRoutes: RouteConfig[] = [
         },
         component: () => import(/* webpackChunkName: "map" */ 'pages/charts/map.vue'),
       },
+      {
+        path: 'province',
+        name: 'Province',
+        meta: {
+          title: 'province',
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "province" */ 'pages/charts/province.vue'),
+      },
+      {
+        path: 'city',
+        name: 'City',
+        meta: {
+          title: 'city',
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "city" */ 'pages/charts/city.vue'),
+      },
     ],
   },
   {
     path: '/components',
     component: Layout,
-    meta: { title: 'components', icon: 'extension' },
+    meta: { title: 'components', icon: 'extension', pagePermissionId: ['-1', '1'] },
     children: [
       {
         path: 'editer',
@@ -266,6 +290,7 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/copy',
     component: Layout,
+    meta: { pagePermissionId: ['-1', '1'] },
     children: [
       {
         path: 'index',
@@ -281,6 +306,7 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/i18n',
     component: Layout,
+    meta: { pagePermissionId: ['-1', '1'] },
     children: [
       {
         path: 'index',
@@ -296,6 +322,7 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/icon',
     component: Layout,
+    meta: { pagePermissionId: ['-1', '1'] },
     children: [
       {
         path: 'index',
@@ -314,6 +341,7 @@ export const constantRoutes: RouteConfig[] = [
     meta: {
       title: 'table',
       icon: 'table_chart',
+      pagePermissionId: ['-1', '1'],
     },
     children: [
       {
@@ -332,6 +360,7 @@ export const constantRoutes: RouteConfig[] = [
     component: Layout,
     meta: {
       title: 'convert',
+      pagePermissionId: ['-1', '1'],
     },
     children: [
       {
@@ -350,6 +379,7 @@ export const constantRoutes: RouteConfig[] = [
     component: Layout,
     meta: {
       hidden: true,
+      pagePermissionId: ['-1', '1'],
     },
     children: [
       {
