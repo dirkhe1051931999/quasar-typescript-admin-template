@@ -1,7 +1,7 @@
 <template>
   <div class="fs-32 row j-start a-center wrap">
     <p v-for="item in icons" :key="item" class="m-r-30 m-t-10 border p-10 row a-center">
-      <span class="fs-14 m-r-5">{{item}}</span>
+      <span class="fs-14 m-r-5">{{ item }}</span>
       <q-icon :name="item" />
     </p>
   </div>

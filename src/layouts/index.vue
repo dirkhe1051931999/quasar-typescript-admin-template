@@ -10,7 +10,7 @@
               <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route, index) in breadcrumbs" :key="index" />
             </q-breadcrumbs>
           </q-toolbar-title>
-          <q-btn-dropdown stretch flat align="center" label="v0.0.1.1"></q-btn-dropdown>
+          <q-btn-dropdown stretch flat align="center" label="v0.0.1.2"></q-btn-dropdown>
           <q-separator dark vertical />
           <q-btn stretch flat icon="refresh" @click="refreshCurPage">
             <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>

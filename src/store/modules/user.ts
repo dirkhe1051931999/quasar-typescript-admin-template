@@ -5,6 +5,7 @@ import { resetRouter } from '@/router';
 import store from '@/store';
 import { getUserInfo, login } from '@/api/user';
 import { uid } from 'quasar';
+import { TagsViewModule } from './tags';
 
 export interface IUserState {
   token: string;
@@ -129,6 +130,7 @@ class User extends VuexModule implements IUserState {
     this.SET_EMAIL('');
     this.SET_USERNAME('');
     resetRouter();
+    TagsViewModule.delAllViews();
   }
 }
 

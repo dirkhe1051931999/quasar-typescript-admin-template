@@ -41,7 +41,37 @@
       :pagination="tableParams.pagination"
       hide-pagination
       no-data-label="No data"
+      class="my-table"
     >
+      <!-- top -->
+      <template v-slot:top>
+        <div class="flex j-between w-full a-center">
+          <span class="fs-20">Table</span>
+          <q-btn color="primary" label="New" class="w-100" icon="add" dense @click="handlerClickTableAdd" />
+        </div>
+      </template>
+      <!-- detail -->
+      <template v-slot:body-cell-iccid="props">
+        <q-td class="text-left">
+          <span class="link-type" @click="handlerClickDetail">{{ props.row.iccid }}</span>
+        </q-td>
+      </template>
+      <!-- image -->
+      <template v-slot:body-cell-img="props">
+        <q-td class="text-left relative">
+          <q-img
+            :src="props.row.img"
+            spinner-color="white"
+            style="height: 170px; width: 300px"
+            img-class="my-custom-image"
+            class="rounded-borders"
+            @click="handlerPreviewImage(props.row.img)"
+          >
+            <div class="absolute-bottom text-subtitle4 text-center">Preview image</div>
+          </q-img>
+          <img :src="props.row.img" alt="" class="rounded-borders preview-img" preview="0" preview-text="It is a preview image action" />
+        </q-td>
+      </template>
       <!--      loading-->
       <template v-slot:loading>
         <q-inner-loading color="primary" showing />
@@ -71,6 +101,41 @@
         boundary-numbers
       ></q-pagination>
     </div>
+    <q-dialog v-model="addVisiable" persistent>
+      <q-card style="max-width: 1000px">
+        <q-card-section class="row items-center">
+          <div class="text-h6">Add Form</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section class="q-pt-none" style="width: 1000px; max-width: 1000px">
+          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+            <q-input
+              filled
+              v-model="name"
+              label="Your name *"
+              hint="Name and surname"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+            />
+            <q-input
+              filled
+              type="number"
+              v-model="age"
+              label="Your age *"
+              lazy-rules
+              :rules="[(val) => (val !== null && val !== '') || 'Please type your age', (val) => (val > 0 && val < 100) || 'Please type a real age']"
+            />
+            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <div class="text-right">
+              <q-btn label="Submit" type="submit" color="primary" />
+              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -172,14 +237,15 @@ export default class extends Vue {
     loading: false,
     data: [
       {
-        imsi: '1',
-        iccid: '1',
-        carrierName: '1',
-        area: '1',
-        bundleName: '1',
+        imsi: 'fixed this column',
+        iccid: 'iccid+iccid+iccid+iccid+iccid',
+        carrierName: 'carrierName+carrierName+carrierName+carrierName+carrierName',
+        area: 'area+area+area+area+area',
+        bundleName: 'bundleName+bundleName+bundleName+bundleName',
         bundleTypeId: '1',
         state: '1',
         allocated: '1',
+        img: 'https://z3.ax1x.com/2021/06/15/2HILHU.png',
       },
     ],
     pagination: {
@@ -207,6 +273,13 @@ export default class extends Vue {
         label: 'Operator',
         align: 'left',
         field: (row: any) => row.carrierName,
+        format: (val: any) => `${defaultFill(val)}`,
+      },
+      {
+        name: 'img',
+        label: 'Image',
+        align: 'left',
+        field: (row: any) => row.img,
         format: (val: any) => `${defaultFill(val)}`,
       },
       {
@@ -247,10 +320,78 @@ export default class extends Vue {
       { name: 'action', label: 'Actions', field: 'action', align: 'left' },
     ],
   };
+  private addVisiable = false;
+  private name = null;
+  private age = null;
+  private previewImgUrl = '';
+  private accept = false;
   private paginationInput() {
     if (this.tableParams.pagination.rowsNumber / this.tableParams.pagination.rowsPerPage < 1) return;
     this.getData();
   }
+  private handlerClickTableAdd() {
+    this.addVisiable = true;
+  }
+  private onSubmit() {
+    if (this.accept !== true) {
+      this.$q.notify({
+        color: 'red-5',
+        textColor: 'white',
+        icon: 'warning',
+        message: 'You need to accept the license and terms first',
+      });
+    } else {
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: 'Submitted',
+      });
+    }
+  }
+  private onReset() {
+    this.name = null;
+    this.age = null;
+    this.accept = false;
+  }
+  private handlerClickDetail() {
+    this.$q.notify({
+      message: 'uhhh... no details',
+      icon: 'announcement',
+      position: 'bottom',
+    });
+  }
   private getData() {}
 }
 </script>
+<style lang="scss">
+.my-table {
+  /* specifying max-width so the example can
+    highlight the sticky column on any browser window */
+  max-width: 100%;
+}
+.my-table thead tr:first-child th:first-child {
+  /* bg color is important for th; just specify one */
+  background-color: #fff;
+}
+.my-table td:first-child {
+  background-color: #f3f3f3;
+}
+.my-table th:first-child,
+.my-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+</style>
+<style lang="scss" scoped>
+.preview-img {
+  height: 170px;
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+</style>
