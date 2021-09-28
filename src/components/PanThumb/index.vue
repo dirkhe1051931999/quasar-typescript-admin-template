@@ -17,7 +17,6 @@ import { UserModule } from '../../store/modules/user';
   name: 'PanThumb',
 })
 export default class extends Vue {
-  @Prop({ required: true }) private image!: string;
   @Prop({ default: '150px' }) private width!: string;
   @Prop({ default: '150px' }) private height!: string;
   @Prop({ default: 1 }) private zIndex!: number;

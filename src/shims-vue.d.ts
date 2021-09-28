@@ -11,3 +11,4 @@ declare module '@antv/g2plot';
 declare module 'marked';
 declare module 'vue-json-editor';
 declare module 'sass.js';
+declare module 'vue-photo-preview';
