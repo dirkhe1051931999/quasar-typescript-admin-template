@@ -1,28 +1,25 @@
 <template>
   <div v-if="!route.meta || !route.meta.hidden" class="sidebar-item">
-    <q-list class="q-list text-black2" v-if="!route.children || route.children.length === 1">
+    <q-list class="q-list" v-if="!route.children || (route.children && route.children.length === 1)">
       <q-expansion-item
         :to="resolvePath(route)"
         :icon="iconName(route)"
-        :content-inset-level="1"
         :label="label(route)"
         class="theOnlyOneChild"
-        :caption="resolvePath(route)"
+        :header-inset-level="route.children && route.children.length === 1 && !route.meta.nested ? 0 : route.meta.fatherPath ? 1 : 0.5"
         :active-class="$route.path === resolvePath(route) ? 'bg-small-blue text-primary active-tab' : 'text-black2'"
       ></q-expansion-item>
     </q-list>
     <q-list class="q-list" v-else>
-      <template>
-        <q-expansion-item
-          :icon="route.meta.icon"
-          :content-inset-level="1"
-          :label="$t(`routes.${route.meta.title}`)"
-          v-model="opened"
-          :ref="route.meta.title"
-        >
-          <Sidebaritem v-for="(item, index) in route.children" :route="item" :key="index" :basePath="route.path" />
-        </q-expansion-item>
-      </template>
+      <q-expansion-item
+        :icon="route.meta.icon"
+        :label="$t(`routes.${route.meta.title}`)"
+        v-model="opened"
+        :ref="route.meta.title"
+        :header-inset-level="route.meta.nested ? 0.5 : 0"
+      >
+        <Sidebaritem v-for="(item, index) in route.children" :route="item" :key="index" :basePath="route.path" />
+      </q-expansion-item>
     </q-list>
   </div>
 </template>
@@ -55,6 +52,11 @@ export default class extends Vue {
   private opened = false;
   private visible = false;
   private resolvePath(route: any) {
+    if (route.meta.fatherPath && !route.children) {
+      return path.resolve(this.basePath, route.meta.fatherPath, route.path);
+    } else if (route.meta.nested && !route.meta.fatherPath) {
+      return path.resolve(this.basePath, route.path);
+    }
     if (route.children && route.children.length) {
       return path.resolve(route.path, route.children[0].path);
     } else {
@@ -89,12 +91,6 @@ export default class extends Vue {
     }
     .q-item__section {
       min-width: 40px;
-    }
-    .q-expansion-item__content {
-      padding-left: 0 !important;
-      .q-expansion-item__container a {
-        padding-left: 50px;
-      }
     }
     .theOnlyOneChild {
       .q-item {

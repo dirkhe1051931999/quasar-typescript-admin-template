@@ -40,6 +40,12 @@ export default {
     province: '省份地图',
     colors: '颜色',
     city: '城市地图',
+    nested: '嵌套目录',
+    nested1: '嵌套1',
+    nested2: '嵌套2',
+    nested1_1: '嵌套1-1',
+    nested1_2: '嵌套1-2',
+    nested2_1: '嵌套2-1',
   },
   layouts: {
     profile: '个人中心',
