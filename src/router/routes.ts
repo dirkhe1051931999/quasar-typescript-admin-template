@@ -13,6 +13,8 @@ import Layout from '@/layouts/index.vue';
                                  if false, 当子路径少于或等于一个时，隐藏根菜单
     breadcrumb: false            if false, 该项目将隐藏在面包屑中（默认为true）
     root: true                  if true,是否是根节点，默认固定根节点
+    nested:false                if true 是嵌套目录
+    fatherPath:'nested/1'      配合nested去跳转页面，参考nested目录，最多支持3级嵌套
   }
 */
 
@@ -339,8 +341,6 @@ export const constantRoutes: RouteConfig[] = [
     path: '/table',
     component: Layout,
     meta: {
-      title: 'table',
-      icon: 'table_chart',
       pagePermissionId: ['-1', '1'],
     },
     children: [
@@ -359,7 +359,6 @@ export const constantRoutes: RouteConfig[] = [
     path: '/convert',
     component: Layout,
     meta: {
-      title: 'convert',
       pagePermissionId: ['-1', '1'],
     },
     children: [
@@ -371,6 +370,96 @@ export const constantRoutes: RouteConfig[] = [
           icon: 'code',
         },
         component: () => import(/* webpackChunkName: "convert" */ 'pages/convert/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/nested',
+    component: Layout,
+    meta: {
+      title: 'nested',
+      pagePermissionId: ['-1', '1'],
+      icon: 'format_align_center',
+    },
+    children: [
+      {
+        path: '1',
+        name: 'nested1',
+        meta: {
+          title: 'nested1',
+          pagePermissionId: ['-1', '1'],
+          nested: true,
+        },
+        component: () => import(/* webpackChunkName: "nested1" */ 'pages/nested/nested1/index.vue'),
+        children: [
+          {
+            path: '1',
+            name: 'nested1_1',
+            meta: {
+              title: 'nested1_1',
+              icon: 'label',
+              fatherPath: '/nested/1',
+              pagePermissionId: ['-1', '1'],
+            },
+            component: () => import(/* webpackChunkName: "nested1_1" */ 'pages/nested/nested1/1.vue'),
+          },
+          {
+            path: '2',
+            name: 'nested1_2',
+            meta: {
+              title: 'nested1_2',
+              icon: 'label',
+              fatherPath: '/nested/1',
+              pagePermissionId: ['-1', '1'],
+            },
+            component: () => import(/* webpackChunkName: "nested1_2" */ 'pages/nested/nested1/2.vue'),
+          },
+        ],
+      },
+      {
+        path: '2',
+        name: 'nested2',
+        meta: {
+          pagePermissionId: ['-1', '1'],
+          title: 'nested2_1',
+          nested: true,
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "nested2" */ 'pages/nested/nested2/index.vue'),
+      },
+      {
+        path: '3',
+        name: 'nested3',
+        meta: {
+          title: 'nested3',
+          pagePermissionId: ['-1', '1'],
+          nested: true,
+        },
+        component: () => import(/* webpackChunkName: "nested3" */ 'pages/nested/nested3/index.vue'),
+        children: [
+          {
+            path: '1',
+            name: 'nested3_1',
+            meta: {
+              title: 'nested3_1',
+              icon: 'label',
+              fatherPath: '/nested/3',
+              pagePermissionId: ['-1', '1'],
+            },
+            component: () => import(/* webpackChunkName: "nested3_1" */ 'pages/nested/nested3/1.vue'),
+          },
+          {
+            path: '2',
+            name: 'nested3_2',
+            meta: {
+              title: 'nested3_2',
+              icon: 'label',
+              fatherPath: '/nested/3',
+              pagePermissionId: ['-1', '1'],
+            },
+            component: () => import(/* webpackChunkName: "nested3_2" */ 'pages/nested/nested3/2.vue'),
+          },
+        ],
       },
     ],
   },
