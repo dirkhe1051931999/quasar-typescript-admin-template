@@ -1,5 +1,11 @@
 <template>
   <div>
+    <q-banner inline-actions rounded class="bg-blue text-white m-b-20" v-show="banner">
+      这是一个横幅，可以手动关闭
+      <template v-slot:action>
+        <q-btn flat label="close" @click="banner = false" />
+      </template>
+    </q-banner>
     <Construction />
   </div>
 </template>
@@ -20,6 +26,7 @@ export default class extends Vue {
     return UserModule.username;
   }
   private adminName = settings.adminName;
+  private banner = true;
   get avatar() {
     return UserModule.avatar;
   }
