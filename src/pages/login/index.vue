@@ -6,11 +6,30 @@
         <h3 class="text-center fs-20">{{ PrdTitle }}</h3>
       </q-card-section>
       <q-card-section class="col justify-center">
-        <q-input v-model="username" type="text" label="Username" :rules="[(val) => !!val || 'required']" />
-        <q-input v-model="password" type="password" label="Password" :rules="[(val) => !!val || 'required']" />
+        <q-input
+          v-model="username"
+          type="text"
+          label="Username"
+          :rules="[(val) => !!val || 'required']"
+          autocapitalize="off"
+          autocomplete="new-password"
+        />
+        <q-input
+          v-model="password"
+          type="password"
+          label="Password"
+          :rules="[(val) => !!val || 'required']"
+          autocapitalize="off"
+          autocomplete="off"
+        />
       </q-card-section>
-      <q-card-section class="text-primary text-right">
-        <span class="cursor-pointer">Change your Password?</span>
+      <q-card-section class="row j-between a-center p-t-0">
+        <q-input v-model="verifyCode" type="text" label="Verify code" style="width: 50%" autocapitalize="off" autocomplete="current-password" />
+        <div id="verify-code-login" style="width: 40%; height: 50px"></div>
+      </q-card-section>
+      <q-card-section class="text-right" :class="useVerifyCode ? 'text-primary' : 'text-grey'">
+        <span>Use verification code to verify?</span>
+        <q-toggle v-model="useVerifyCode" />
       </q-card-section>
       <q-card-actions>
         <q-btn
@@ -33,6 +52,7 @@ import { UserModule } from '../../store/modules/user';
 import { Dictionary } from 'vue-router/types/router';
 import { Route } from 'vue-router';
 import settings from '@/settings.json';
+import { GVerify } from '@/utils/canvas_verify_code';
 @Component({
   name: 'Index',
 })
@@ -50,12 +70,22 @@ export default class extends Vue {
       this.otherQuery = this.getOtherQuery(query);
     }
   }
+  created() {}
+  mounted() {
+    try {
+      this.verifyCodeInstance = new GVerify('verify-code-login');
+    } catch (error) {
+      console.log(error)
+    }
+  }
   private username = 'admin';
   private password = '123456';
+  private verifyCode = '';
   private redirect?: string;
   private PrdTitle = settings.title;
   private otherQuery: Dictionary<string> = {};
-
+  private useVerifyCode = false;
+  private verifyCodeInstance: any;
   private getOtherQuery(query: Dictionary<string>) {
     return Object.keys(query).reduce((acc, cur) => {
       if (cur !== 'redirect') {
@@ -65,6 +95,25 @@ export default class extends Vue {
     }, {} as Dictionary<string>);
   }
   private async handLogin() {
+    let verifyCodeResult = true;
+    if (this.useVerifyCode) {
+      verifyCodeResult = this.verifyCodeInstance.validate(this.verifyCode);
+    }
+    if (!verifyCodeResult) {
+      this.$q.notify({
+        message: `Wrong verification code`,
+        color: 'negative',
+        multiLine: true,
+        icon: 'mood_bad',
+        actions: [
+          {
+            label: 'Close',
+            color: 'white',
+          },
+        ],
+      });
+      return;
+    }
     UserModule.SET_LOGIN_LOADING(true);
     setTimeout(async () => {
       await UserModule.Login({ username: this.username, password: this.password });
@@ -94,13 +143,12 @@ export default class extends Vue {
       }, 1000);
     }, 1000);
   }
-  created() {}
 }
 </script>
 <style lang="scss" scoped>
 .login-card {
   width: 500px;
-  height: 400px;
+  height: 480px;
   position: absolute;
   left: 50%;
   top: 50%;
