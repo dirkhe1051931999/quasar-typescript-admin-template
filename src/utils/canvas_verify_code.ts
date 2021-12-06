@@ -46,7 +46,6 @@ export class GVerify {
     canvas.height = this.options.height;
     canvas.style.cursor = 'pointer';
     canvas.innerHTML = '您的浏览器版本不支持canvas';
-    // console.log(123)
     con.appendChild(canvas);
     canvas.onclick = () => {
       this.refresh();
