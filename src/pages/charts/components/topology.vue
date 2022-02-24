@@ -102,7 +102,7 @@ export default class extends Vue {
           },
           status: server[i].status,
           animationDuration: 1000,
-          animationEasing: 'elasticOut',
+          animationEasing: 'cubicOut',
         });
       }
       linksData.push(obj);
@@ -123,9 +123,12 @@ export default class extends Vue {
       },
     });
 
-    const option = {
+    const option: any = {
+      textStyle: {
+        fontFamily: 'NotoSansSC',
+      },
       animationDurationUpdate: 1500,
-      animationEasingUpdate: 'quinticInOut',
+      animationEasingUpdate: 'elasticOut',
       grid: {
         top: '0%',
         bottom: '0%',
@@ -227,7 +230,7 @@ export default class extends Vue {
   }
   private initChart() {
     this.chart && this.chart.dispose();
-    this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons');
+    this.chart = echarts.init(this.$el as any, 'macarons');
     this.chart.setOption(this.option);
   }
 }

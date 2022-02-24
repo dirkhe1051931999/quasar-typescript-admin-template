@@ -20,7 +20,7 @@ export default class extends Vue {
     let i;
     let mapName: any;
     const map: any = document.getElementById('map');
-    const myChart = echarts.init(map);
+    const myChart = window['echarts'].init(map);
     const oBack: any = document.getElementById('back');
     const provinces_pinyin = [
       'shanghai',
@@ -585,7 +585,7 @@ export default class extends Vue {
       /*获取地图数据*/
       const geoCoordMap = {};
       myChart.showLoading(); // loading start
-      const mapFeatures: any = echarts.getMap(name).geoJson['features'];
+      const mapFeatures: any = window['echarts'].getMap(name).geoJson['features'];
       myChart.hideLoading(); // loading end
       mapFeatures.forEach(function (v: { properties: { name: any; cp: any } }) {
         const name = v.properties.name; // 地区名称
@@ -618,6 +618,9 @@ export default class extends Vue {
       const tmpSeriesData = pName === 'china' ? seriesData : seriesDataPro;
       const tmp = pName === 'china' ? toolTipData : provinceData;
       const option: any = {
+        textStyle: {
+          fontFamily: 'NotoSansSC',
+        },
         layoutCenter: ['50%', '50%'], //位置
         layoutSize: pName === 'china' ? '130%' : '100%', //大小
         // tooltip 提示

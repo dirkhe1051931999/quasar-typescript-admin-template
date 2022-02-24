@@ -389,6 +389,7 @@ export const constantRoutes: RouteConfig[] = [
           title: 'nested1',
           pagePermissionId: ['-1', '1'],
           nested: true,
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "nested1" */ 'pages/nested/nested1/index.vue'),
         children: [
@@ -397,7 +398,7 @@ export const constantRoutes: RouteConfig[] = [
             name: 'nested1_1',
             meta: {
               title: 'nested1_1',
-              icon: 'label',
+              icon: 'bookmark',
               fatherPath: '/nested/1',
               pagePermissionId: ['-1', '1'],
             },
@@ -408,7 +409,7 @@ export const constantRoutes: RouteConfig[] = [
             name: 'nested1_2',
             meta: {
               title: 'nested1_2',
-              icon: 'label',
+              icon: 'bookmark',
               fatherPath: '/nested/1',
               pagePermissionId: ['-1', '1'],
             },
@@ -434,6 +435,7 @@ export const constantRoutes: RouteConfig[] = [
           title: 'nested3',
           pagePermissionId: ['-1', '1'],
           nested: true,
+          icon: 'label',
         },
         component: () => import(/* webpackChunkName: "nested3" */ 'pages/nested/nested3/index.vue'),
         children: [
@@ -442,7 +444,7 @@ export const constantRoutes: RouteConfig[] = [
             name: 'nested3_1',
             meta: {
               title: 'nested3_1',
-              icon: 'label',
+              icon: 'bookmark',
               fatherPath: '/nested/3',
               pagePermissionId: ['-1', '1'],
             },
@@ -453,7 +455,7 @@ export const constantRoutes: RouteConfig[] = [
             name: 'nested3_2',
             meta: {
               title: 'nested3_2',
-              icon: 'label',
+              icon: 'bookmark',
               fatherPath: '/nested/3',
               pagePermissionId: ['-1', '1'],
             },

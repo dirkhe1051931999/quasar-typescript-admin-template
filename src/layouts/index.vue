@@ -10,7 +10,7 @@
               <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route, index) in breadcrumbs" :key="index" />
             </q-breadcrumbs>
           </q-toolbar-title>
-          <q-btn-dropdown stretch flat align="center" label="v0.0.1.3"></q-btn-dropdown>
+          <q-btn-dropdown stretch flat align="center" :label="version"></q-btn-dropdown>
           <q-separator dark vertical />
           <q-btn stretch flat icon="refresh" @click="refreshCurPage">
             <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
@@ -163,6 +163,7 @@ export default class extends Vue {
   private drawerLeft = true;
   private fixedRoute: any;
   private visible = false;
+  private version = settings.version;
   private policy = settings.policy;
   private slogoTitle = settings.title;
   private adminName = settings.adminName;

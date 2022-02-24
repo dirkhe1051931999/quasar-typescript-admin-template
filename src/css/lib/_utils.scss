@@ -80,6 +80,7 @@
   transform: translateY(-50%);
   right: 2px;
 }
+// table里的点击按钮 link
 .in-table-link-button {
   display: inline-block;
   text-align: center;
@@ -96,6 +97,7 @@
   background: $blue;
   color: $white;
 }
+// table里的删除按钮 delete/negative
 .in-table-delete-button {
   display: inline-block;
   text-align: center;
@@ -111,4 +113,10 @@
 .in-table-delete-button:hover {
   background: $red;
   color: $white;
+}
+.input-password {
+  font-family: password !important;
+  input {
+    -webkit-text-security: square;
+  }
 }

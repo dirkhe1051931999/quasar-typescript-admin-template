@@ -16,7 +16,8 @@
         />
         <q-input
           v-model="password"
-          type="password"
+          type="text"
+          class="input-password"
           label="Password"
           :rules="[(val) => !!val || 'required']"
           autocapitalize="off"
