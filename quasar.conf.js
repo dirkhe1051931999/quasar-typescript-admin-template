@@ -69,7 +69,9 @@ module.exports = configure(function(ctx) {
                 fileName: 'list.json',
               }),
               new webpack.BannerPlugin({
-                banner: 'design: redteamobile.com\nhash: [hash]\nchunkhash: [chunkhash]\nname: [name]\n_: ' + new Date().toLocaleString(),
+                banner:
+                  'design: https://github.com/dirkhe1051931999 \n hash: [hash]\nchunkhash: [chunkhash]\nname: [name]\n_: ' +
+                  new Date().toLocaleString(),
                 raw: false,
               }),
               new MiniCssExtractPlugin({

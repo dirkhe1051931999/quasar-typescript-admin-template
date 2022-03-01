@@ -12,6 +12,7 @@ import Layout from '@/layouts/index.vue';
     hidden: true                 if true, 此路由不会显示在侧边栏中（默认为false）
                                  if false, 当子路径少于或等于一个时，隐藏根菜单
     breadcrumb: false            if false, 该项目将隐藏在面包屑中（默认为true）
+    tag: false                   if false, 该项目将隐藏在tag中（默认为true）
     root: true                  if true,是否是根节点，默认固定根节点
     nested:false                if true 是嵌套目录
     fatherPath:'nested/1'      配合nested去跳转页面，参考nested目录，最多支持3级嵌套
@@ -21,13 +22,23 @@ import Layout from '@/layouts/index.vue';
 export const constantRoutes: RouteConfig[] = [
   {
     path: '*',
-    redirect: '/404',
+    redirect: '/middleware',
     meta: { hidden: true },
   },
   {
-    path: '/404',
-    component: () => import(/* webpackChunkName: "404" */ 'pages/404/index.vue'),
+    path: '/middleware',
+    component: Layout,
     meta: { hidden: true },
+    children: [
+      {
+        path: '',
+        name: 'middleware',
+        meta: {
+          breadcrumb: false,
+        },
+        component: () => import(/* webpackChunkName: "middleware" */ 'pages/middleware/index.vue'),
+      },
+    ],
   },
   {
     path: '/login',

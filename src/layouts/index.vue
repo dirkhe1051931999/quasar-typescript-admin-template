@@ -144,9 +144,12 @@ export default class extends Vue {
   get key() {
     return this.$route.path;
   }
-
   get visitedViews() {
-    return TagsViewModule.visitedViews;
+    let arr = [];
+    arr = TagsViewModule.visitedViews.filter((item) => {
+      return item.meta && item.meta.title && item.meta.tag !== false;
+    });
+    return arr;
   }
   get curRouteFather() {
     return this.$route.matched[0];
@@ -228,7 +231,7 @@ export default class extends Vue {
   }
   private closeAll() {
     TagsViewModule.delAllViews();
-    this.$router.push('/').catch((err) => 0);
+    this.$router.push('/dashboard').catch((err) => 0);
   }
   private handlerClickVisitedItem(tag: any) {
     this.$router.push(tag.fullPath);
@@ -270,7 +273,7 @@ export default class extends Vue {
     if (this.$route.name === 'Dashboard') {
       return;
     }
-    this.$router.push({ path: '/' });
+    this.$router.push({ path: '/dashboard' });
   }
   private toProfile() {
     this.$router.push({ path: '/profile/index' });
