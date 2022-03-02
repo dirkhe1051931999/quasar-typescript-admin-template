@@ -69,30 +69,32 @@
       </q-drawer>
       <!-- 顶部导航 -->
       <q-page-container>
-        <div class="h-48 layout-header-label bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom" :style="drawerLeft ? 'left:250px' : ''">
-          <div class="q-gutter-sm row no-wrap scroll">
-            <div
-              v-for="(tag, index) in visitedViews"
-              :key="index"
-              ref="tag"
-              :class="[
-                'bg-white p-l-10  b-radius-4 flex row relative border h-30 lh-30 p-r-20 cursor-pointer',
-                isActive(tag) ? 'text-light-blue  p-r-10' : '',
-              ]"
-              :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-              tag="div"
-              v-ripple
-            >
-              <span @click="handlerClickVisitedItem(tag)">{{ $t(`routes.${tag.meta.title}`) }}</span>
-              <q-icon name="close" right @click.native.prevent.stop="closeTag(tag)"></q-icon>
-              <q-menu touch-position context-menu>
-                <q-list dense>
-                  <q-item clickable v-close-popup>
-                    <q-item-section @click="closeAll"> 关闭所有 </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </div>
+        <div
+          class="h-48 bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom"
+          :style="drawerLeft ? 'left:250px' : ''"
+          :class="drawerLeft ? 'w-calc' : 'w-full'"
+        >
+          <div
+            v-for="(tag, index) in visitedViews"
+            :key="index"
+            ref="tag"
+            :class="[
+              'bg-white p-l-10  b-radius-4 d-inline-block relative border h-30 lh-30 p-r-10 cursor-pointer m-r-10',
+              isActive(tag) ? 'text-light-blue  p-r-10' : '',
+            ]"
+            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+            tag="div"
+            v-ripple
+          >
+            <span @click="handlerClickVisitedItem(tag)">{{ $t(`routes.${tag.meta.title}`) }}</span>
+            <q-icon name="close" right @click.native.prevent.stop="closeTag(tag)"></q-icon>
+            <q-menu touch-position context-menu>
+              <q-list dense>
+                <q-item clickable v-close-popup>
+                  <q-item-section @click="closeAll"> 关闭所有 </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
           </div>
         </div>
         <!-- content -->
@@ -309,11 +311,30 @@ export default class extends Vue {
 }
 </style>
 <style scoped lang="scss">
+$body_padding: 250px;
 .visited {
   position: fixed;
-  width: 100%;
   z-index: 10000;
   left: 0;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  user-select: none;
+  scrollbar-width: 30px;
+  &.w-calc {
+    width: calc(100% - #{$body_padding});
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
   .close-all {
     position: fixed;
     right: 0;
