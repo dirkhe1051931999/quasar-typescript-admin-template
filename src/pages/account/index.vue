@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-banner inline-actions rounded class="bg-blue text-white m-b-20" v-show="banner">
-      这是一个横幅，可以手动关闭
+      This is a banner that can be closed manually
       <template v-slot:action>
         <q-btn flat label="close" @click="banner = false" />
       </template>

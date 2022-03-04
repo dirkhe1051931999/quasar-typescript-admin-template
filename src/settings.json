@@ -4,7 +4,7 @@
   "errorLog": ["production"],
   "logUrl": "/",
   "pro": "",
-  "version": "V0.0.1.5",
+  "version": "V0.0.1.6",
   "devServerPort": 9002,
   "ip": "10.18.2.207",
   "mockServerPort": 9004,

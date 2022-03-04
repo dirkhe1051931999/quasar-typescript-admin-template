@@ -353,16 +353,27 @@ export const constantRoutes: RouteConfig[] = [
     component: Layout,
     meta: {
       pagePermissionId: ['-1', '1'],
+      title: 'table',
+      icon: 'table_chart',
     },
     children: [
       {
         path: 'index',
-        name: 'Table',
+        name: 'table-index',
         meta: {
-          title: 'table',
+          title: 'table-index',
           icon: 'label',
         },
-        component: () => import(/* webpackChunkName: "tableA" */ 'pages/table/index.vue'),
+        component: () => import(/* webpackChunkName: "table-index" */ 'pages/table/index.vue'),
+      },
+      {
+        path: 'standard',
+        name: 'table-standard',
+        meta: {
+          title: 'table-standard',
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "table-standard" */ 'pages/table/standard.vue'),
       },
     ],
   },
