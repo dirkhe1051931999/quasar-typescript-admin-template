@@ -44,6 +44,9 @@ export default class extends Vue {
     this.$nextTick(() => {
       const father = newVal.matched[0];
       const title = father.meta.title;
+      if (newVal.meta.fatherPath && newVal.matched[1].name && this.$refs[newVal.matched[1].name]) {
+        (this.$refs[newVal.matched[1].name] as any).show();
+      }
       if (father.meta && title && this.$refs[title]) {
         this.opened = true;
       }

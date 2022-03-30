@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-banner inline-actions rounded class="bg-blue text-white m-b-20" v-show="banner">
+    <q-banner inline-actions rounded class="bg-primary text-white m-b-20" v-show="banner">
       Encapsulate q-table, traverse the array to render q-table, without writing a bunch of html
       <template v-slot:action>
         <q-btn flat label="close" @click="banner = false" />
@@ -8,8 +8,8 @@
     </q-banner>
     <div class="query-form-and-action">
       <div class="action">
-        <q-btn color="primary" icon="add" label="Add" no-caps class="m-r-15 h-40" @click="handleClickAddSite" />
-        <q-btn icon="file_upload" label="Upload" outline color="primary" no-caps class="h-40" @click="handleClickUploadSite" />
+        <q-btn color="primary" icon="add" label="Add" no-caps class="m-r-15 h-40" @click="handleClickAdd" />
+        <q-btn icon="file_upload" label="Upload" outline color="primary" no-caps class="h-40" @click="handleClickUpload" />
       </div>
       <q-form class="query" ref="queryFrom">
         <div v-for="(item, index) in queryParams.input" :key="index">
@@ -45,54 +45,69 @@
             map-options
           />
         </div>
-        <q-btn color="primary" icon="search" :label="$t('action.search')" no-caps class="m-r-15 h-40" :loading="queryParams.queryLoading" />
-        <q-btn icon="restart_alt" :label="$t('action.reset')" outline color="primary" no-caps class="h-40" :loading="queryParams.resetLoading" />
+        <q-btn
+          color="primary"
+          icon="search"
+          :label="$t('action.search')"
+          no-caps
+          class="m-r-15 h-40"
+          :loading="queryParams.queryLoading"
+          @click="handleQuery"
+        />
+        <q-btn
+          icon="restart_alt"
+          :label="$t('action.reset')"
+          outline
+          color="primary"
+          no-caps
+          class="h-40"
+          :loading="queryParams.resetLoading"
+          @click="handleResetQuery"
+        />
       </q-form>
     </div>
-    <div class="q-table-container">
-      <q-table
-        :columns="tableParams.column"
-        :data="tableParams.data"
-        :loading="tableParams.loading"
-        :pagination="tableParams.pagination"
-        hide-pagination
-        :no-data-label="$t(`tip.noData`)"
-        class="my-table"
-        :selected-rows-label="(numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`"
-        selection="multiple"
-        :selected.sync="tableParams.selected"
-        row-key="a"
-      >
-        <template v-slot:header-selection="props">
-          <q-checkbox color="primary" v-model="props.selected" />
-        </template>
-        <template v-slot:body-selection="props">
-          <q-checkbox color="primary" v-model="props.selected" />
-        </template>
-        <template v-slot:body-cell-id="props">
-          <q-td class="text-left">
-            <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
-          </q-td>
-        </template>
-        <!-- detail -->
-        <template v-slot:body-cell-a="props">
-          <q-td class="text-left">
-            <span class="link-type" @click="handlerClickDetail">{{ props.row.a }}</span>
-          </q-td>
-        </template>
-        <!--      loading-->
-        <template v-slot:loading>
-          <q-inner-loading color="primary" showing />
-        </template>
-        <!--      actions-->
-        <template v-slot:body-cell-action="props">
-          <q-td class="text-left">
-            <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }}</span>
-            <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }}</span>
-          </q-td>
-        </template>
-      </q-table>
-    </div>
+    <q-table
+      :columns="tableParams.column"
+      :data="tableParams.data"
+      :loading="tableParams.loading"
+      :pagination="tableParams.pagination"
+      hide-pagination
+      :no-data-label="$t(`tip.noData`)"
+      class="my-table"
+      :selected-rows-label="(numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`"
+      selection="multiple"
+      :selected.sync="tableParams.selected"
+      row-key="name"
+    >
+      <template v-slot:header-selection="props">
+        <q-checkbox color="primary" v-model="props.selected" />
+      </template>
+      <template v-slot:body-selection="props">
+        <q-checkbox color="primary" v-model="props.selected" />
+      </template>
+      <template v-slot:body-cell-id="props">
+        <q-td class="text-left">
+          <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
+        </q-td>
+      </template>
+      <!-- detail -->
+      <template v-slot:body-cell-name="props">
+        <q-td class="text-left">
+          <span class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
+        </q-td>
+      </template>
+      <!--      loading-->
+      <template v-slot:loading>
+        <q-inner-loading color="primary" showing />
+      </template>
+      <!--      actions-->
+      <template v-slot:body-cell-action="props">
+        <q-td class="text-left">
+          <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }}</span>
+          <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }}</span>
+        </q-td>
+      </template>
+    </q-table>
     <div class="flex a-center j-end q-mt-md" v-if="tableParams.pagination.rowsNumber">
       <p class="m-r-10">Total {{ tableParams.pagination.rowsNumber }}</p>
       <q-pagination
@@ -110,22 +125,23 @@
         boundary-numbers
       ></q-pagination>
     </div>
-    <q-dialog v-model="dialogAddUpdateDetailParams.visiable" persistent @before-hide="monitorDialogAddUpdateDetailHide">
+    <q-dialog v-model="dialogAddUpdateParams.visiable" persistent @before-hide="monitorDialogAddUpdateDetailHide">
       <q-card class="dialog-input-form">
-        <q-card-section class="flex a-center j-between q-pb-none">
-          <div class="text-h6 bold">{{ dialogAddUpdateDetailParams.title }}</div>
+        <q-card-section class="flex a-center j-between p-b-20">
+          <div class="text-h6 bold">{{ dialogAddUpdateParams.title }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-        <q-card-section :class="dialogAddUpdateDetailParams.dialogType !== 'detail' ? 'q-pb-none' : 'p-b-30'">
-          <q-form :ref="dialogAddUpdateDetailParams.id">
-            <div v-for="(fahter, i) in dialogAddUpdateDetailParams.input" :key="i">
+        <q-separator />
+        <q-card-section class="p-b-30 scroll" style="max-height: 50vh">
+          <q-form :ref="dialogAddUpdateParams.id">
+            <div v-for="(fahter, i) in dialogAddUpdateParams.input" :key="i">
               <div class="block-title">{{ fahter[0] }}</div>
               <div class="input">
                 <div v-for="(item, index) in fahter[1]" :key="index" class="input-item">
                   <q-input
                     v-if="item.type === 'text'"
-                    v-model.trim="dialogAddUpdateDetailParams.params[item.id]"
+                    v-model.trim="dialogAddUpdateParams.params[item.id]"
                     :class="[
                       {
                         'm-b-30': !item.rules || (item.rules && !item.rules.length),
@@ -133,28 +149,26 @@
                       },
                       item.class,
                     ]"
-                    :label="
-                      dialogAddUpdateDetailParams.dialogType !== 'detail' && item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder
-                    "
+                    :label="item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder"
                     :rules="item.rules || []"
-                    :outlined="dialogAddUpdateDetailParams.dialogType !== 'detail'"
+                    :spellcheck="false"
                     :type="item.inputType || 'text'"
                     :rows="item.rows || 1"
                     :disable="item.disable"
-                    :readonly="dialogAddUpdateDetailParams.dialogType === 'detail' || item.readonly"
-                    :ref="dialogAddUpdateDetailParams.id + '_' + item.id"
-                    @input="monitorDialogInputChange(item.id, dialogAddUpdateDetailParams.id)"
+                    :readonly="item.readonly"
+                    :ref="dialogAddUpdateParams.id + '_' + item.id"
+                    @input="monitorDialogInputChange(item.id, dialogAddUpdateParams.id)"
                     autocapitalize="off"
                     autocomplete="new-password"
                     autocorrect="off"
                     clearable
+                    outlined
                     dense
-                    :spellcheck="false"
                   >
                   </q-input>
                   <q-select
                     v-if="item.type === 'select'"
-                    v-model="dialogAddUpdateDetailParams.params[item.id]"
+                    v-model="dialogAddUpdateParams.params[item.id]"
                     :class="[
                       {
                         'm-b-30': !item.rules || (item.rules && !item.rules.length),
@@ -163,57 +177,46 @@
                       item.class,
                     ]"
                     :options="item.selectOption"
-                    :label="
-                      dialogAddUpdateDetailParams.dialogType !== 'detail' && item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder
-                    "
+                    :label="item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder"
                     :rules="item.rules || []"
-                    :outlined="dialogAddUpdateDetailParams.dialogType !== 'detail'"
                     :disable="item.disable"
-                    :readonly="dialogAddUpdateDetailParams.dialogType === 'detail' || item.readonly"
-                    :ref="dialogAddUpdateDetailParams.id + '_' + item.id"
-                    @input="monitorDialogInputChange(item.id, dialogAddUpdateDetailParams.id)"
+                    :readonly="dialogAddUpdateParams.dialogType === 'detail' || item.readonly"
+                    :ref="dialogAddUpdateParams.id + '_' + item.id"
+                    @input="monitorDialogInputChange(item.id, dialogAddUpdateParams.id)"
+                    :spellcheck="false"
                     autocapitalize="off"
                     autocomplete="new-password"
                     autocorrect="off"
-                    :spellcheck="false"
                     clearable
                     dense
                     options-dense
                     emit-value
                     map-options
+                    outlined
                   />
                   <q-input
                     v-if="item.type === 'date'"
-                    v-model="dialogAddUpdateDetailParams.params[item.id]"
-                    :label="
-                      dialogAddUpdateDetailParams.dialogType !== 'detail' && item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder
-                    "
+                    v-model="dialogAddUpdateParams.params[item.id]"
+                    :label="item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder"
                     :rules="item.rules || []"
-                    :outlined="dialogAddUpdateDetailParams.dialogType !== 'detail'"
                     :disable="item.disable"
-                    :readonly="dialogAddUpdateDetailParams.dialogType === 'detail' || item.readonly"
-                    :ref="dialogAddUpdateDetailParams.id + '_' + item.id"
+                    :readonly="dialogAddUpdateParams.dialogType === 'detail' || item.readonly"
+                    :ref="dialogAddUpdateParams.id + '_' + item.id"
+                    :spellcheck="false"
                     autocapitalize="off"
                     autocomplete="new-password"
                     autocorrect="off"
-                    :spellcheck="false"
                     clearable
+                    outlined
                     dense
                   >
                     <template v-slot:prepend>
-                      <q-icon
-                        name="event"
-                        :class="{ 'cursor-pointer': !item.disableSelectDate && dialogAddUpdateDetailParams.dialogType !== 'detail' }"
-                      >
-                        <q-popup-proxy
-                          transition-show="scale"
-                          transition-hide="scale"
-                          v-if="!item.disableSelectDate && dialogAddUpdateDetailParams.dialogType !== 'detail'"
-                        >
+                      <q-icon name="event" :class="{ 'cursor-pointer': !item.disableSelectDate }">
+                        <q-popup-proxy transition-show="scale" transition-hide="scale" v-if="!item.disableSelectDate">
                           <q-date
-                            v-model="dialogAddUpdateDetailParams.params[item.id]"
+                            v-model="dialogAddUpdateParams.params[item.id]"
                             mask="YYYY-MM-DD HH:mm:ss"
-                            @input="monitorDialogInputChange(item.id, dialogAddUpdateDetailParams.id)"
+                            @input="monitorDialogInputChange(item.id, dialogAddUpdateParams.id)"
                           >
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup :label="$t(`action.confirm`)" color="primary" flat />
@@ -226,23 +229,19 @@
                       <q-icon
                         style="color: rgba(0, 0, 0, 0.32)"
                         name="cancel"
-                        v-show="dialogAddUpdateDetailParams.params[item.id]"
+                        v-show="dialogAddUpdateParams.params[item.id]"
                         class="cursor-pointer"
-                        @click.prevent.stop="dialogAddUpdateDetailParams.params[item.id] = ''"
-                        v-if="!item.disableSelectDate && item.readonly && dialogAddUpdateDetailParams.dialogType !== 'detail'"
+                        @click.prevent.stop="dialogAddUpdateParams.params[item.id] = ''"
+                        v-if="!item.disableSelectDate && item.readonly"
                       ></q-icon>
-                      <q-icon
-                        name="access_time"
-                        class="cursor-pointer"
-                        v-if="!item.disableSelectDate && dialogAddUpdateDetailParams.dialogType !== 'detail'"
-                      >
+                      <q-icon name="access_time" class="cursor-pointer" v-if="!item.disableSelectDate">
                         <q-popup-proxy transition-show="scale" transition-hide="scale">
                           <q-time
-                            v-model="dialogAddUpdateDetailParams.params[item.id]"
+                            v-model="dialogAddUpdateParams.params[item.id]"
                             mask="YYYY-MM-DD HH:mm:ss"
                             format24h
                             with-seconds
-                            @input="monitorDialogInputChange(item.id, dialogAddUpdateDetailParams.id)"
+                            @input="monitorDialogInputChange(item.id, dialogAddUpdateParams.id)"
                           >
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup :label="$t(`action.confirm`)" color="primary" flat />
@@ -257,22 +256,73 @@
             </div>
           </q-form>
         </q-card-section>
-        <q-card-section align="right" v-if="dialogAddUpdateDetailParams.dialogType === 'add' || dialogAddUpdateDetailParams.dialogType === 'update'">
-          <q-btn
-            :label="$t(`action.cancel`)"
-            v-close-popup
-            :disable="dialogAddUpdateDetailParams.clickLoading"
-            outline
-            color="primary"
-            class="w-80"
-          />
+        <q-separator />
+        <q-card-section align="right" v-if="dialogAddUpdateParams.dialogType === 'add' || dialogAddUpdateParams.dialogType === 'update'">
+          <q-btn :label="$t(`action.cancel`)" v-close-popup :disable="dialogAddUpdateParams.clickLoading" outline color="primary" class="w-80" />
           <q-btn
             :label="$t(`action.confirm`)"
             color="primary"
-            @click="dialogAddUpdateDetailParams.dialogType === 'add' ? handlerClickDialogConfirmAddButton() : handlerClickDialogConfirmUpdateButton()"
+            @click="dialogAddUpdateParams.dialogType === 'add' ? handlerClickDialogConfirmAddButton() : handlerClickDialogConfirmUpdateButton()"
             class="w-80 m-l-20"
-            :loading="dialogAddUpdateDetailParams.clickLoading"
+            :loading="dialogAddUpdateParams.clickLoading"
           />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="dialogUpload.visiable" persistent @before-hide="monitorDialogUploadHide">
+      <q-card class="dialog-upload-form">
+        <q-card-section class="flex a-center j-between p-b-20">
+          <div class="text-h6 bold">{{ dialogUpload.title }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-separator />
+        <q-card-section q-card-section class="p-b-30 scroll container-wrap" style="max-height: 50vh">
+          <input type="file" class="hide" :ref="dialogUpload.id" accept=".xls" :draggable="false" @change="uploadFileSuccess" />
+          <div class="title">Click to upload</div>
+          <div class="container">
+            <div class="center" @click="handleClickUploadFile">
+              <img src="~assets/inbox.png" alt />
+              <p class="click">Click to upload</p>
+              <p class="format">File type is: xlsx</p>
+              <p class="fileName" v-if="dialogUpload.params.fileName">{{ dialogUpload.params.fileName }}</p>
+            </div>
+          </div>
+          <div class="upload-limit">
+            <span class="link-type">{{ $t('action.download_template') }}</span>
+            Here's some text
+          </div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section align="right">
+          <q-btn :label="$t(`action.cancel`)" v-close-popup :disable="dialogUpload.clickLoading" outline color="primary" class="w-80" />
+          <q-btn
+            :label="$t(`action.confirm`)"
+            color="primary"
+            @click="hanleCLickUploadConfirm()"
+            class="w-80 m-l-20"
+            :loading="dialogUpload.clickLoading"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="dialogDetailParams.visiable" persistent>
+      <q-card class="dialog-input-form">
+        <q-card-section class="flex a-center j-between p-b-20">
+          <div class="text-h6 bold">{{ dialogDetailParams.title }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="p-t-10 p-l-0 p-r-0 scroll" style="max-height: 50vh">
+          <q-list class="input">
+            <q-item v-for="(item, index) in dialogDetailParams.data" :key="index" class="input-item" v-ripple clickable>
+              <q-item-section>
+                <q-item-label caption>{{ item.label }}：</q-item-label>
+                <q-item-label :class="item.class">{{ item.value }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -288,7 +338,7 @@ const CONST_PARAMS = {
   dialog_add_update_detail: { a: '', b: '', c: '', d: '', e: '' },
 };
 @Component({
-  name: 'siteManagement-index',
+  name: 'table-standard',
 })
 export default class extends Vue {
   /**instance */
@@ -310,15 +360,15 @@ export default class extends Vue {
       },
       {
         placeholder: 'Input2',
-        type: 'text',
+        type: 'select',
         class: 'w-250 m-r-15 m-b-15',
         selectOption: [
           {
-            label: '选项1',
+            label: 'option 1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: 'option 2',
             value: '2',
           },
         ],
@@ -337,26 +387,26 @@ export default class extends Vue {
     loading: false,
     data: [
       {
-        a: 'just',
-        b: 'do',
-        c: 'something',
-        d: 'what',
-        e: 'you',
-        f: 'like',
-        g: 'that',
-        h: 'is',
-        i: 'right',
+        name: 'jen.he.female',
+        sex: 'female',
+        c: 'ccccccccccccccccc1',
+        d: 'ddddddddddddddddd1',
+        e: 'eeeeeeeeeeeeeeeee1',
+        f: 'fffffffffffffffff1',
+        g: 'ggggggggggggggggg1',
+        h: 'hhhhhhhhhhhhhhhhh1',
+        i: 'iiiiiiiiiiiiiiiii1',
       },
       {
-        a: 'just2',
-        b: 'do2',
-        c: 'something2',
-        d: 'what2',
-        e: 'you2',
-        f: 'like2',
-        g: 'that2',
-        h: 'is2',
-        i: 'right2',
+        name: 'jen.he.male',
+        sex: 'male',
+        c: 'ccccccccccccccccc2',
+        d: 'ddddddddddddddddd2',
+        e: 'eeeeeeeeeeeeeeeee2',
+        f: 'fffffffffffffffff2',
+        g: 'ggggggggggggggggg2',
+        h: 'hhhhhhhhhhhhhhhhh2',
+        i: 'iiiiiiiiiiiiiiiii2',
       },
     ],
     pagination: {
@@ -371,17 +421,17 @@ export default class extends Vue {
         align: 'left',
       },
       {
-        name: 'a',
-        label: 'Table2',
+        name: 'name',
+        label: 'Name',
         align: 'left',
         required: true,
-        field: (row: any) => row.a,
+        field: (row: any) => row.name,
         format: (val: any) => `${defaultFill(val)}`,
       },
       {
-        name: 'b',
-        label: 'Table3',
-        field: (row: any) => row.b,
+        name: 'sex',
+        label: 'Sex',
+        field: (row: any) => row.sex,
         format: (val: any) => `${defaultFill(val)}`,
         align: 'left',
       },
@@ -437,7 +487,7 @@ export default class extends Vue {
       { name: 'action', label: this.$t(`table.action`), field: 'action', align: 'left' },
     ],
   };
-  private dialogAddUpdateDetailParams = {
+  private dialogAddUpdateParams = {
     id: 'dialog_add_update_detail',
     dialogType: 'add',
     clickLoading: false,
@@ -509,7 +559,7 @@ export default class extends Vue {
             disableSelectDate: false,
             rules: [
               (val: string): any => {
-                return +new Date(val) < +new Date(this.dialogAddUpdateDetailParams.params.e) || 'start time < end time';
+                return +new Date(val) < +new Date(this.dialogAddUpdateParams.params.e) || 'start time < end time';
               },
             ],
           },
@@ -524,7 +574,7 @@ export default class extends Vue {
             disableSelectDate: false,
             rules: [
               (val: string): any => {
-                return +new Date(val) > +new Date(this.dialogAddUpdateDetailParams.params.d) || 'start time < end time';
+                return +new Date(val) > +new Date(this.dialogAddUpdateParams.params.d) || 'start time < end time';
               },
             ],
           },
@@ -532,30 +582,112 @@ export default class extends Vue {
       ],
     ],
   };
+  private dialogUpload = {
+    id: 'dialog_upload_file',
+    clickLoading: false,
+    visiable: false,
+    title: '',
+    params: { file: '', fileName: '' },
+  };
+  private dialogDetailParams = {
+    title: 'Detail',
+    visiable: false,
+    data: [
+      { label: 'Name', value: '', id: 'name', class: '' },
+      { label: 'Sex', value: '', id: 'sex', class: '' },
+      { label: 'C', value: '', id: 'c', class: '' },
+      { label: 'D', value: '', id: 'd', class: '' },
+      { label: 'E', value: '', id: 'e', class: '' },
+      { label: 'F', value: '', id: 'f', class: '' },
+      { label: 'g', value: '', id: 'g', class: '' },
+      { label: 'h', value: '', id: 'h', class: '' },
+      { label: 'I', value: '', id: 'i', class: '' },
+    ],
+  };
   /**event */
   private paginationInput() {
     if (this.tableParams.pagination.rowsNumber / this.tableParams.pagination.rowsPerPage < 1) return;
     this.getData();
   }
-  private handleClickAddSite() {
-    this.dialogAddUpdateDetailParams.visiable = true;
-    this.dialogAddUpdateDetailParams.dialogType = 'add';
-    this.dialogAddUpdateDetailParams.title = 'add';
+  private async handleQuery() {
+    this.queryParams.queryLoading = true;
+    this.tableParams.pagination.page = 1;
+    await this.getData();
+    this.queryParams.queryLoading = false;
   }
-  private handlerClickDetail() {
-    this.dialogAddUpdateDetailParams.visiable = true;
-    this.dialogAddUpdateDetailParams.dialogType = 'detail';
-    this.dialogAddUpdateDetailParams.title = 'detail';
+  private async handleResetQuery() {
+    this.queryParams.resetLoading = true;
+    this.queryParams.params = cloneDeep(CONST_PARAMS.query);
+    this.tableParams.pagination.page = 1;
+    await this.getData();
+    this.queryParams.resetLoading = false;
+  }
+  private handleClickAdd() {
+    this.dialogAddUpdateParams.visiable = true;
+    this.dialogAddUpdateParams.dialogType = 'add';
+    this.dialogAddUpdateParams.title = 'add';
+  }
+  private handlerClickDetail(row: any) {
+    const getValue = (row: any, key: string): string => {
+      switch (key) {
+        case 'name':
+          return row[key] + '-description';
+        default:
+          return row[key] || '--';
+      }
+    };
+    const getClass = (row: any, key: string): string => {
+      switch (key) {
+        case 'sex':
+          return 'text-red';
+        default:
+          return '';
+      }
+    };
+    const arr = cloneDeep(this.dialogDetailParams.data);
+    for (let item of arr) {
+      for (let key in row) {
+        if (item.id === key) {
+          item.value = getValue(row, key);
+          item.class = getClass(row, key);
+        }
+      }
+    }
+    this.dialogDetailParams.data = arr;
+    this.dialogDetailParams.visiable = true;
   }
   private handlerClickUpdate(row: any) {
-    this.dialogAddUpdateDetailParams.visiable = true;
-    this.dialogAddUpdateDetailParams.dialogType = 'update';
-    this.dialogAddUpdateDetailParams.title = 'update';
+    this.dialogAddUpdateParams.visiable = true;
+    this.dialogAddUpdateParams.dialogType = 'update';
+    this.dialogAddUpdateParams.title = 'update';
   }
-  private handleClickUploadSite() {}
-  // 移除汉字
+  private handleClickUpload() {
+    this.dialogUpload.visiable = true;
+    this.dialogUpload.title = 'Upload';
+    this.$nextTick(() => {
+      this.$refs[this.dialogUpload.id].type = 'text';
+      this.dialogUpload.params.fileName = '';
+      this.dialogUpload.params.file = '';
+      setTimeout(() => {
+        this.$refs[this.dialogUpload.id].type = 'file';
+        this.$refs[this.dialogUpload.id].value = '';
+      }, 100);
+    });
+  }
+  private handleClickUploadFile() {
+    this.$refs[this.dialogUpload.id].click();
+  }
+  private uploadFileSuccess() {
+    const files = this.$refs[this.dialogUpload.id].files;
+    let postFiles = Array.prototype.slice.call(files);
+    postFiles = postFiles.slice(0, 1);
+    postFiles.forEach((rawFile: any) => {
+      this.dialogUpload.params.fileName = rawFile.name;
+      this.dialogUpload.params.file = rawFile;
+    });
+  }
   private _findDialogInputIndex(id: string) {
-    const input = this.dialogAddUpdateDetailParams.input;
+    const input = this.dialogAddUpdateParams.input;
     const index = input.findIndex((item: any) => {
       return item.id === id;
     });
@@ -565,40 +697,55 @@ export default class extends Vue {
   private monitorDialogInputChange(input_id: any, formId: any) {
     if (input_id === 'd' || input_id === 'e') {
       if (
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_d'] &&
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_d'][0] &&
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_e'] &&
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_e'][0]
+        this.$refs[this.dialogAddUpdateParams.id + '_d'] &&
+        this.$refs[this.dialogAddUpdateParams.id + '_d'][0] &&
+        this.$refs[this.dialogAddUpdateParams.id + '_e'] &&
+        this.$refs[this.dialogAddUpdateParams.id + '_e'][0]
       ) {
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_d'][0].validate();
-        this.$refs[this.dialogAddUpdateDetailParams.id + '_e'][0].validate();
+        this.$refs[this.dialogAddUpdateParams.id + '_d'][0].validate();
+        this.$refs[this.dialogAddUpdateParams.id + '_e'][0].validate();
       }
     }
 
     if (input_id === 'password') {
-      // this.dialogAddUpdateDetailParams.input.password = this.dialogAddUpdateDetailParams.params.password.replace(/[\u4e00-\u9fa5]/gi, '');
+      // this.dialogAddUpdateParams.input.password = this.dialogAddUpdateParams.params.password.replace(/[\u4e00-\u9fa5]/gi, '');
       // this.$refs.dialogRePassword[0].validate();
     }
     if (input_id === 'rePassword') {
-      // this.dialogAddUpdateDetailParams.params.rePassword = this.dialogAddUpdateDetailParams.params.rePassword.replace(/[\u4e00-\u9fa5]/gi, '');
+      // this.dialogAddUpdateParams.params.rePassword = this.dialogAddUpdateParams.params.rePassword.replace(/[\u4e00-\u9fa5]/gi, '');
       // this.$refs.dialogPassword[0].validate();
     }
   }
   // 监听dialog隐藏
   private monitorDialogAddUpdateDetailHide() {
-    this.dialogAddUpdateDetailParams.params = cloneDeep(CONST_PARAMS[this.dialogAddUpdateDetailParams.id]);
-    this.$refs[this.dialogAddUpdateDetailParams.id].resetValidation();
+    this.dialogAddUpdateParams.params = cloneDeep(CONST_PARAMS[this.dialogAddUpdateParams.id]);
+    this.$refs[this.dialogAddUpdateParams.id].resetValidation();
+  }
+  private monitorDialogUploadHide() {
+    this.dialogUpload.params.fileName = '';
+    this.dialogUpload.params.file = '';
   }
   /**http */
-  private getData() {}
+  private getData() {
+    try {
+      this.tableParams.loading = true;
+      this.tableParams.loading = false;
+    } catch (error) {
+      this.tableParams.loading = false;
+    } finally {
+      return Promise.resolve();
+    }
+  }
   // 确定新增
   private handlerClickDialogConfirmAddButton() {
-    this.$refs[this.dialogAddUpdateDetailParams.id].validate().then(async (valid: boolean) => {
+    this.$refs[this.dialogAddUpdateParams.id].validate().then(async (valid: boolean) => {
       if (valid) {
         this.$q
           .dialog({
             title: this.$t('messages.tishi') as string,
             message: this.$t('messages.addConfirm') as string,
+            cancel: true,
+            persistent: true,
           })
           .onOk(() => {
             console.log('OK');
@@ -608,12 +755,14 @@ export default class extends Vue {
   }
   // 确定更新
   private handlerClickDialogConfirmUpdateButton() {
-    this.$refs[this.dialogAddUpdateDetailParams.id].validate().then(async (valid: boolean) => {
+    this.$refs[this.dialogAddUpdateParams.id].validate().then(async (valid: boolean) => {
       if (valid) {
         this.$q
           .dialog({
             title: this.$t('messages.tishi') as string,
             message: this.$t('messages.updateConfirm') as string,
+            cancel: true,
+            persistent: true,
           })
           .onOk(() => {
             // console.log('OK')
@@ -626,10 +775,40 @@ export default class extends Vue {
       .dialog({
         title: this.$t('messages.tishi') as string,
         message: this.$t('messages.deleteConfirm') as string,
+        cancel: true,
+        persistent: true,
       })
       .onOk(() => {
+        if (this.tableParams.data.length === 1 && this.tableParams.pagination.page > 1) {
+          this.tableParams.pagination.page--;
+        }
         // console.log('OK')
       });
+  }
+  private hanleCLickUploadConfirm() {
+    try {
+      const form = new FormData();
+      form.append('file', this.dialogUpload.params.file);
+      this.dialogUpload.clickLoading = true;
+      // await HTTP_REQUEST()
+      this.$q.notify({
+        message: 'Upload success',
+        color: 'primary',
+        multiLine: true,
+        icon: 'mood',
+        actions: [
+          {
+            label: 'Close',
+            color: 'white',
+          },
+        ],
+      });
+      this.dialogUpload.clickLoading = false;
+      this.dialogUpload.visiable = false;
+      this.getData();
+    } catch (error) {
+      this.dialogUpload.clickLoading = false;
+    }
   }
 }
 </script>
@@ -668,29 +847,9 @@ export default class extends Vue {
     align-items: flex-start;
   }
 }
-.q-table-container {
-  background: $white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.02);
-}
 .dialog-input-form {
-  padding: 10px;
   width: 50vw;
   max-width: 80vw;
-  max-height: 40vw;
-  &::-webkit-scrollbar {
-    width: 12px;
-    height: 10px;
-    max-height: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #cccccc;
-    border-radius: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
   .block-title {
     font-size: 14px;
     color: #8c8c8c;
@@ -703,7 +862,7 @@ export default class extends Vue {
       content: '';
       width: 4px;
       height: 15px;
-      background: $blue;
+      background: var(--q-color-primary);
       margin-right: 10px;
       border-radius: 2px;
     }
@@ -715,6 +874,57 @@ export default class extends Vue {
     width: 100%;
     .input-item {
       width: 49%;
+    }
+  }
+}
+.dialog-upload-form {
+  width: 25vw;
+  max-width: 40vw;
+  .container-wrap {
+    .title {
+      font-size: 14px;
+      color: #8c8c8c;
+      padding-bottom: 10px;
+    }
+    .container {
+      height: 195px;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 4px;
+      border: 1px dashed rgba(0, 0, 0, 0.15);
+      position: relative;
+      .center {
+        width: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        cursor: pointer;
+        img {
+          width: 48px;
+          height: 48px;
+        }
+        .click {
+          color: #262626;
+          font-size: 16px;
+          padding-top: 20px;
+        }
+        .format {
+          color: #8c8c8c;
+          font-size: 12px;
+          padding-top: 5px;
+        }
+        .fileName {
+          color: #8c8c8c;
+          font-size: 12px;
+          padding-top: 10px;
+        }
+      }
+    }
+    .upload-limit {
+      padding-top: 10px;
+      font-size: 14px;
+      color: #595959;
     }
   }
 }
