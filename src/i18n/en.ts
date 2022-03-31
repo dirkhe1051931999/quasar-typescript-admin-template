@@ -13,6 +13,7 @@ export default {
     table: 'Table',
     'table-index': 'Normal table',
     'table-standard': 'Standard table',
+    'table-beta': 'Beta table',
     tableA: 'TableA',
     tableB: 'TableB',
     auth: 'Auth',

@@ -375,6 +375,15 @@ export const constantRoutes: RouteConfig[] = [
         },
         component: () => import(/* webpackChunkName: "table-standard" */ 'pages/table/standard.vue'),
       },
+      {
+        path: 'beta',
+        name: 'table-beta',
+        meta: {
+          title: 'table-beta',
+          icon: 'label',
+        },
+        component: () => import(/* webpackChunkName: "table-beta" */ 'pages/table/beta.vue'),
+      },
     ],
   },
   {

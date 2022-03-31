@@ -1,11 +1,5 @@
 <template>
   <div>
-    <q-banner inline-actions rounded class="bg-primary text-white m-b-20" v-show="banner">
-      Encapsulate q-form, without writing a bunch of q-input, traverse the array to render q-form
-      <template v-slot:action>
-        <q-btn flat label="close" @click="banner = false" />
-      </template>
-    </q-banner>
     <div class="query-form-and-action">
       <div class="action">
         <q-btn color="primary" icon="add" label="Add" no-caps class="m-r-15 h-40" @click="handleClickAdd" />
@@ -79,33 +73,65 @@
       :selected.sync="tableParams.selected"
       row-key="name"
     >
-      <template v-slot:header-selection="props">
-        <q-checkbox color="primary" v-model="props.selected" />
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <!-- selected -->
+          <q-th style="text-align: left">
+            <q-checkbox color="primary" v-model="props.selected" />
+          </q-th>
+          <!-- expand -->
+          <q-th auto-width>Expand</q-th>
+          <!-- other -->
+          <q-th v-for="col in props.cols" :key="col.name" :props="props" style="text-align: left">
+            {{ col.label }}
+          </q-th>
+        </q-tr>
       </template>
-      <template v-slot:body-selection="props">
-        <q-checkbox color="primary" v-model="props.selected" />
-      </template>
-      <template v-slot:body-cell-id="props">
-        <q-td class="text-left">
-          <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
-        </q-td>
-      </template>
-      <!-- detail -->
-      <template v-slot:body-cell-name="props">
-        <q-td class="text-left">
-          <span class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
-        </q-td>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <!-- selected -->
+          <q-td class="text-left">
+            <q-checkbox color="primary" v-model="props.selected" />
+          </q-td>
+          <!-- expand -->
+          <q-td auto-width>
+            <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove" />
+          </q-td>
+          <!-- ID -->
+          <q-td class="text-left">
+            <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
+          </q-td>
+          <!-- name -->
+          <q-td class="text-left">
+            <span class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
+          </q-td>
+          <!-- other -->
+          <q-td
+            v-for="col in props.cols.filter((item) => {
+              return !item.inSlot;
+            })"
+            :key="col.name"
+            :props="props"
+          >
+            {{ col.value }}
+          </q-td>
+          <!-- action -->
+          <q-td class="text-left">
+            <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }}</span>
+            <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }}</span>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <!-- expand detail -->
+          <q-td colspan="100%">
+            <div class="text-left">Name:{{ props.row.name }}</div>
+            <div>this is expand detail , it maybe json string or other special text</div>
+          </q-td>
+        </q-tr>
       </template>
       <!--      loading-->
       <template v-slot:loading>
         <q-inner-loading color="primary" showing />
-      </template>
-      <!--      actions-->
-      <template v-slot:body-cell-action="props">
-        <q-td class="text-left">
-          <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }}</span>
-          <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }}</span>
-        </q-td>
       </template>
     </q-table>
     <div class="flex a-center j-end q-mt-md" v-if="tableParams.pagination.rowsNumber">
@@ -345,7 +371,6 @@ export default class extends Vue {
   $refs: any;
   mounted() {}
   /**params */
-  private banner = true;
   private queryParams: any = {
     id: 'query',
     queryLoading: false,
@@ -418,20 +443,18 @@ export default class extends Vue {
       {
         name: 'id',
         label: 'ID',
-        align: 'left',
+        inSlot: true,
       },
       {
         name: 'name',
         label: 'Name',
-        align: 'left',
-        field: (row: any) => row.name,
-        format: (val: any) => `${defaultFill(val)}`,
+        inSlot: true,
       },
       {
         name: 'sex',
         label: 'Sex',
-        field: (row: any) => row.sex,
         align: 'left',
+        field: (row: any) => row.sex,
         format: (val: any) => `${defaultFill(val)}`,
       },
       {
@@ -483,7 +506,7 @@ export default class extends Vue {
         field: (row: any) => row.i,
         format: (val: any) => `${defaultFill(val)}`,
       },
-      { name: 'action', label: this.$t(`table.action`), field: 'action', align: 'left' },
+      { name: 'action', label: this.$t(`table.action`), field: 'action', align: 'left', inSlot: true },
     ],
   };
   private dialogAddUpdateParams = {

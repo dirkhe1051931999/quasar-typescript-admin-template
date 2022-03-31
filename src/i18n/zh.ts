@@ -13,6 +13,7 @@ export default {
     table: '表格',
     'table-index': '普通的表格',
     'table-standard': '标准的表格',
+    'table-beta': '新增功能的表格',
     tableA: '表格A',
     tableB: '表格B',
     auth: '权限',
