@@ -2,7 +2,7 @@
 
 #### :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
-#### online preview https://dirkhe1051931999.github.io/qusar
+#### online preview https://dirkhe1051931999.github.io/quasar
 
 <img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
 
