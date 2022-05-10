@@ -151,7 +151,7 @@
         boundary-numbers
       ></q-pagination>
     </div>
-    <q-dialog v-model="dialogAddUpdateParams.visiable" persistent @before-hide="monitorDialogAddUpdateDetailHide">
+    <q-dialog v-model="dialogAddUpdateParams.visiable" persistent @before-hide="monitorDialogAddUpdateHide">
       <q-card class="dialog-input-form">
         <q-card-section class="flex a-center j-between p-b-20">
           <div class="text-h6 bold">{{ dialogAddUpdateParams.title }}</div>
@@ -206,7 +206,7 @@
                     :label="item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder"
                     :rules="item.rules || []"
                     :disable="item.disable"
-                    :readonly="dialogAddUpdateParams.dialogType === 'detail' || item.readonly"
+                    :readonly="item.readonly"
                     :ref="dialogAddUpdateParams.id + '_' + item.id"
                     @input="monitorDialogInputChange(item.id, dialogAddUpdateParams.id)"
                     :spellcheck="false"
@@ -226,7 +226,7 @@
                     :label="item.requiredPlaceholder ? item.requiredPlaceholder : item.placeholder"
                     :rules="item.rules || []"
                     :disable="item.disable"
-                    :readonly="dialogAddUpdateParams.dialogType === 'detail' || item.readonly"
+                    :readonly="item.readonly"
                     :ref="dialogAddUpdateParams.id + '_' + item.id"
                     :spellcheck="false"
                     autocapitalize="off"
@@ -360,8 +360,8 @@ import { cloneDeep } from 'lodash';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { defaultFill } from '@/utils';
 const CONST_PARAMS = {
-  query: { siteNumber: '', gatewayNumber: '', constructionWorker: '' },
-  dialog_add_update_detail: { a: '', b: '', c: '', d: '', e: '' },
+  query: { a: '', b: '', c: '' },
+  dialog_add_update: { a: '', b: '', c: '', d: '', e: '' },
 };
 @Component({
   name: 'table-standard',
@@ -381,7 +381,7 @@ export default class extends Vue {
         placeholder: 'Input1',
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
-        id: 'siteNumber',
+        id: 'a',
       },
       {
         placeholder: 'Input2',
@@ -397,13 +397,13 @@ export default class extends Vue {
             value: '2',
           },
         ],
-        id: 'gatewayNumber',
+        id: 'b',
       },
       {
         placeholder: 'Input3',
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
-        id: 'constructionWorker',
+        id: 'c',
       },
     ],
   };
@@ -510,13 +510,13 @@ export default class extends Vue {
     ],
   };
   private dialogAddUpdateParams = {
-    id: 'dialog_add_update_detail',
+    id: 'dialog_add_update',
     dialogType: 'add',
     clickLoading: false,
     getDataLoading: false,
     visiable: false,
     title: '',
-    params: cloneDeep(CONST_PARAMS.dialog_add_update_detail),
+    params: cloneDeep(CONST_PARAMS.dialog_add_update),
     input: [
       [
         'text 1',
@@ -739,7 +739,7 @@ export default class extends Vue {
     }
   }
   // 监听dialog隐藏
-  private monitorDialogAddUpdateDetailHide() {
+  private monitorDialogAddUpdateHide() {
     this.dialogAddUpdateParams.params = cloneDeep(CONST_PARAMS[this.dialogAddUpdateParams.id]);
     this.$refs[this.dialogAddUpdateParams.id].resetValidation();
   }
@@ -928,6 +928,9 @@ export default class extends Vue {
 .dialog-input-form {
   width: 50vw;
   max-width: 80vw;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .block-title {
     font-size: 14px;
     color: #8c8c8c;
@@ -958,6 +961,9 @@ export default class extends Vue {
 .dialog-upload-form {
   width: 25vw;
   max-width: 40vw;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .container-wrap {
     .title {
       font-size: 14px;
