@@ -171,9 +171,9 @@ async-each@^1.0.0:
   integrity sha1-tyfb+H12UWAvBvTUrDh/R9kbDL8=
 
 async@^3.1.0:
-  version "3.2.1"
-  resolved "https://registry.nlark.com/async/download/async-3.2.1.tgz?cache=0&sync_timestamp=1628205815983&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fasync%2Fdownload%2Fasync-3.2.1.tgz#d3274ec66d107a47476a4c49136aacdb00665fc8"
-  integrity sha1-0ydOxm0QekdHakxJE2qs2wBmX8g=
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
+  integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
 
 atob@^2.1.2:
   version "2.1.2"
