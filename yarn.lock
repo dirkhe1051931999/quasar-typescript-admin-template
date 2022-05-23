@@ -14163,7 +14163,7 @@ vue-loader@^13.0.5:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-loader@^15.9.2:
+vue-loader@^15.9.2, vue-loader@^15.9.8:
   version "15.9.8"
   resolved "https://registry.nlark.com/vue-loader/download/vue-loader-15.9.8.tgz?cache=0&sync_timestamp=1628666788607&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-loader%2Fdownload%2Fvue-loader-15.9.8.tgz#4b0f602afaf66a996be1e534fb9609dc4ab10e61"
   integrity sha1-Sw9gKvr2aplr4eU0+5YJ3EqxDmE=
