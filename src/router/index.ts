@@ -17,7 +17,7 @@ const createRouter = () =>
   });
 
 const router = createRouter();
-router.beforeEach((to, from, next) => {
+router.beforeEach((to: any, from, next) => {
   next(to.meta.default);
 });
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465

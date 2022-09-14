@@ -1,42 +1,52 @@
+/* eslint-env node */
+
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
  * the ES6 features that are supported by your Node version. https://node.green/
  */
+
 // Configuration for your app
-// https://quasar.dev/quasar-cli/quasar-conf-js
-/* eslint-env node */
+// https://v1.quasar.dev/quasar-cli/quasar-conf-js
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { configure } = require('quasar/wrappers');
 const path = require('path');
-// extract css
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 // clean dist
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 // build list
 var ManifestPlugin = require('webpack-manifest-plugin');
-const webpack = require('webpack');
-// const settings = require('./src/settings.json');
-module.exports = configure(function(ctx) {
+module.exports = configure(function (ctx) {
   return {
-    // https://quasar.dev/quasar-cli/supporting-ts
+    // https://v1.quasar.dev/quasar-cli/supporting-ts
     supportTS: {
       tsCheckerConfig: {
-        eslint: true,
+        eslint: {
+          enabled: true,
+          files: './src/**/*.{ts,tsx,js,jsx,vue}',
+        },
       },
     },
-    // https://quasar.dev/quasar-cli/prefetch-feature
+
+    // https://v1.quasar.dev/quasar-cli/prefetch-feature
     // preFetch: true,
+
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
-    // https://quasar.dev/quasar-cli/boot-files
-    boot: ['main', 'i18n'],
-    // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
+    // https://v1.quasar.dev/quasar-cli/boot-files
+    boot: ['i18n', 'main'],
+
+    // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['index.scss'],
+
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       'material-icons', // optional, you are not bound to it
     ],
-    // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
+
+    // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       transpile: false,
@@ -46,13 +56,16 @@ module.exports = configure(function(ctx) {
       transpileDependencies: [],
       rtl: false, // https://quasar.dev/options/rtl-support
       preloadChunks: true,
-      showProgress: false,
+      showProgress: true,
       gzip: true,
       analyze: false,
+
       // Options below are automatically set depending on the env, set them if you want to override
       extractCSS: false,
       distDir: ctx.modeName === 'spa' ? 'dist' : `dist/${ctx.modeName}`,
-      // https://quasar.dev/quasar-cli/handling-webpack
+      // https://v1.quasar.dev/quasar-cli/handling-webpack
+      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      chainWebpack(/* chain */) {},
       extendWebpack(cfg) {
         // linting is slow in TS projects, we execute it only for production builds
         if (ctx.prod) {
@@ -65,6 +78,24 @@ module.exports = configure(function(ctx) {
           cfg.plugins.push(
             ...[
               new CleanWebpackPlugin(),
+              new UglifyJsPlugin({
+                uglifyOptions: {
+                  // 删除注释
+                  output: {
+                    comments: false,
+                  },
+                  compress: {
+                    drop_console: true, // 删除所有调式带有console的
+                    drop_debugger: true,
+                    pure_funcs: [
+                      'console.log',
+                      'console.info',
+                      'console.warn',
+                      'console.table',
+                    ], // 删除console.log
+                  },
+                },
+              }),
               new ManifestPlugin({
                 fileName: 'list.json',
               }),
@@ -74,22 +105,7 @@ module.exports = configure(function(ctx) {
                   new Date().toLocaleString(),
                 raw: false,
               }),
-              new MiniCssExtractPlugin({
-                // Options similar to the same options in webpackOptions.output
-                // all options are optional
-                filename: '[name].[hash:6].css',
-                chunkFilename: '[id].[hash:6].css',
-                ignoreOrder: false, // Enable to remove warnings about conflicting order
-                options: {
-                  rules: [
-                    {
-                      test: /\.(sa|sc|c)ss$/,
-                      use: ['css-loader', 'postcss-loader', 'sass-loader'],
-                    },
-                  ],
-                },
-              }),
-            ],
+            ]
           );
         }
         cfg.resolve.alias = {
@@ -99,6 +115,7 @@ module.exports = configure(function(ctx) {
         };
       },
     },
+
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,
@@ -115,6 +132,7 @@ module.exports = configure(function(ctx) {
         },
       },
     },
+
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set
@@ -139,29 +157,38 @@ module.exports = configure(function(ctx) {
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
       // * 'all'  - Manually specify what to import
       importStrategy: 'auto',
-      plugins: ['Notify', 'AppFullscreen', 'LoadingBar', 'Loading', 'Dialog', 'BottomSheet'],
+      plugins: [
+        'Notify',
+        'AppFullscreen',
+        'LoadingBar',
+        'Loading',
+        'Dialog',
+        'BottomSheet',
+      ],
       components: ['QHeader', 'QFooter', 'QTooltip'],
       directives: ['Ripple', 'Mutation', 'Scroll'],
     },
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
     animations: ['fadeIn', 'fadeOut', 'fadeInRight'],
-    // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
+
+    // https://v1.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
       pwa: false,
     },
-    // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
+
+    // https://v1.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'quasar admin with typescript ',
-        short_name: 'quasar admin with typescript ',
-        description: 'quasar admin',
+        name: 'Quasar App',
+        short_name: 'Quasar App',
+        description: 'A Quasar Project',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#0080ff',
+        theme_color: '#027be3',
         icons: [
           {
             src: 'icons/icon-128x128.png',
@@ -192,17 +219,20 @@ module.exports = configure(function(ctx) {
       },
     },
 
-    // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
+    // Full list of options: https://v1.quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
     },
-    // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
+
+    // Full list of options: https://v1.quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {
       hideSplashscreen: true,
     },
-    // Full list of options: https://quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
+
+    // Full list of options: https://v1.quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
     electron: {
       bundler: 'packager', // 'packager' or 'builder'
+
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
         // OS X / Mac App Store
@@ -213,12 +243,16 @@ module.exports = configure(function(ctx) {
         // Windows only
         // win32metadata: { ... }
       },
+
       builder: {
         // https://www.electron.build/configuration/configuration
-        appId: 'quasar.typescript.admin.template',
+
+        appId: 'quasar-template',
       },
-      // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
+
+      // More info: https://v1.quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: true,
+
       extendWebpack(/* cfg */) {
         // do something with Electron main process Webpack cfg
         // chainWebpack also available besides this extendWebpack

@@ -1,7 +1,0 @@
-{
-  "appId": "org.capacitor.quasar.app",
-  "appName": " ",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}

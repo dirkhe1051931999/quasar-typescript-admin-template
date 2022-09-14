@@ -15,11 +15,11 @@ const config = {
   expires: in30Minutes,
 };
 // App
-const sidebarStatusKey = settings.title + '-' + 'sidebar-status';
+const sidebarStatusKey = `${settings.title  }-` + 'sidebar-status';
 export const getSidebarStatus = () => Cookies.get(sidebarStatusKey);
 export const setSidebarStatus = (sidebarStatus: string) => Cookies.set(sidebarStatusKey, sidebarStatus, config);
 
-const languageKey = settings.title + '-' + 'quasar-language';
+const languageKey = `${settings.title  }-` + 'quasar-language';
 export const getLanguage = () => Cookies.get(languageKey);
 export const setLanguage = (language: string) => Cookies.set(languageKey, language, config);
 
@@ -28,12 +28,12 @@ export const getSize = () => Cookies.get(sizeKey);
 export const setSize = (size: string) => Cookies.set(sizeKey, size, config);
 
 // User
-const tokenKey = settings.title + '-' + 'token';
+const tokenKey = `${settings.title  }-` + 'token';
 export const getToken = () => Cookies.get(tokenKey);
 export const setToken = (token: string) => Cookies.set(tokenKey, token, config);
 export const removeToken = () => Cookies.remove(tokenKey);
 
-const usernameKey = settings.title + '-' + 'username';
+const usernameKey = `${settings.title  }-` + 'username';
 export const getUsername = (): any => Cookies.get(usernameKey);
 export const setUsername = (username: string) => Cookies.set(usernameKey, username, config);
 export const removeUsername = () => Cookies.remove(usernameKey);

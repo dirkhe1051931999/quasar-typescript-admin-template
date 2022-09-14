@@ -1,4 +1,10 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  getModule,
+} from 'vuex-module-decorators';
 import { Route } from 'vue-router';
 import store from '@/store';
 
@@ -17,7 +23,7 @@ class TagsView extends VuexModule implements ITagsViewState {
   public cachedViews: (string | undefined)[] = [];
 
   @Mutation
-  private ADD_VISITED_VIEW(view: ITagView) {
+  private ADD_VISITED_VIEW(view: any) {
     if (
       this.visitedViews.some((v) => {
         return v.path === view.path;
@@ -27,14 +33,14 @@ class TagsView extends VuexModule implements ITagsViewState {
     this.visitedViews.push(
       Object.assign({}, view, {
         title: view.meta.title || 'no-name',
-      }),
+      })
     );
   }
 
   @Mutation
   private DEL_ALL_VISITED_VIEWS() {
     // keep affix tags
-    const affixTags = this.visitedViews.filter((tag) => tag.meta.affix);
+    const affixTags = this.visitedViews.filter((tag: any) => tag.meta.affix);
     this.visitedViews = affixTags;
   }
 

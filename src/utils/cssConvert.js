@@ -1,31 +1,36 @@
 import CodeMirror from 'codeMirror';
+/*eslint eqeqeq: "off"*/
+/*eslint no-prototype-builtins: "off"*/
+/*eslint no-use-before-define: "off"*/
 CodeMirror.defineMode('css', (config, parserConfig) => {
-  var inline = parserConfig.inline;
-  if (!parserConfig.propertyKeywords) parserConfig = CodeMirror.resolveMode('text/css');
-  var indentUnit = config.indentUnit,
+  let inline = parserConfig.inline;
+  if (!parserConfig.propertyKeywords)
+    parserConfig = CodeMirror.resolveMode('text/css');
+  let indentUnit = config.indentUnit,
     tokenHooks = parserConfig.tokenHooks,
     documentTypes = parserConfig.documentTypes || {},
     mediaTypes = parserConfig.mediaTypes || {},
     mediaFeatures = parserConfig.mediaFeatures || {},
     mediaValueKeywords = parserConfig.mediaValueKeywords || {},
     propertyKeywords = parserConfig.propertyKeywords || {},
-    nonStandardPropertyKeywords = parserConfig.nonStandardPropertyKeywords || {},
+    nonStandardPropertyKeywords =
+      parserConfig.nonStandardPropertyKeywords || {},
     fontProperties = parserConfig.fontProperties || {},
     counterDescriptors = parserConfig.counterDescriptors || {},
     colorKeywords = parserConfig.colorKeywords || {},
     valueKeywords = parserConfig.valueKeywords || {},
     allowNested = parserConfig.allowNested,
     supportsAtComponent = parserConfig.supportsAtComponent === true;
-  var type, override;
+  let type, override;
 
   function ret(style, tp) {
     type = tp;
     return style;
   }
   function tokenBase(stream, state) {
-    var ch = stream.next();
+    let ch = stream.next();
     if (tokenHooks[ch]) {
-      var result = tokenHooks[ch](stream, state);
+      let result = tokenHooks[ch](stream, state);
       if (result !== false) return result;
     }
     if (ch == '@') {
@@ -51,7 +56,8 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
         return ret('number', 'unit');
       } else if (stream.match(/^-[\w\\\-]+/)) {
         stream.eatWhile(/[\w\\\-]/);
-        if (stream.match(/^\s*:/, false)) return ret('variable-2', 'variable-definition');
+        if (stream.match(/^\s*:/, false))
+          return ret('variable-2', 'variable-definition');
         return ret('variable-2', 'variable');
       } else if (stream.match(/^\w+-/)) {
         return ret('meta', 'meta');
@@ -62,7 +68,11 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
       return ret('qualifier', 'qualifier');
     } else if (/[:;{}\[\]\(\)]/.test(ch)) {
       return ret(null, ch);
-    } else if ((ch == 'u' && stream.match(/rl(-prefix)?\(/)) || (ch == 'd' && stream.match('omain(')) || (ch == 'r' && stream.match('egexp('))) {
+    } else if (
+      (ch == 'u' && stream.match(/rl(-prefix)?\(/)) ||
+      (ch == 'd' && stream.match('omain(')) ||
+      (ch == 'r' && stream.match('egexp('))
+    ) {
       stream.backUp(1);
       state.tokenize = tokenParenthesized;
       return ret('property', 'word');
@@ -75,8 +85,8 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
   }
 
   function tokenString(quote) {
-    return function(stream, state) {
-      var escaped = false,
+    return function (stream, state) {
+      let escaped = false,
         ch;
       while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped) {
@@ -104,7 +114,11 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
   }
 
   function pushContext(state, stream, type, indent) {
-    state.context = new Context(type, stream.indentation() + (indent === false ? 0 : indentUnit), state.context);
+    state.context = new Context(
+      type,
+      stream.indentation() + (indent === false ? 0 : indentUnit),
+      state.context
+    );
     return type;
   }
 
@@ -118,18 +132,18 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
   }
 
   function popAndPass(type, stream, state, n) {
-    for (var i = n || 1; i > 0; i--) state.context = state.context.prev;
+    for (let i = n || 1; i > 0; i--) state.context = state.context.prev;
     return pass(type, stream, state);
   }
 
   function wordAsValue(stream) {
-    var word = stream.current().toLowerCase();
+    let word = stream.current().toLowerCase();
     if (valueKeywords.hasOwnProperty(word)) override = 'atom';
     else if (colorKeywords.hasOwnProperty(word)) override = 'keyword';
     else override = 'variable';
   }
   var states = {};
-  states.top = function(type, stream, state) {
+  states.top = function (type, stream, state) {
     if (type == '{') {
       return pushContext(state, stream, 'block');
     } else if (type == '}' && state.context.prev) {
@@ -162,9 +176,9 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     }
     return state.context.type;
   };
-  states.block = function(type, stream, state) {
+  states.block = function (type, stream, state) {
     if (type == 'word') {
-      var word = stream.current().toLowerCase();
+      let word = stream.current().toLowerCase();
       if (propertyKeywords.hasOwnProperty(word)) {
         override = 'property';
         return 'maybeprop';
@@ -187,16 +201,22 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
       return states.top(type, stream, state);
     }
   };
-  states.maybeprop = function(type, stream, state) {
+  states.maybeprop = function (type, stream, state) {
     if (type == ':') return pushContext(state, stream, 'prop');
     return pass(type, stream, state);
   };
-  states.prop = function(type, stream, state) {
+  states.prop = function (type, stream, state) {
     if (type == ';') return popContext(state);
-    if (type == '{' && allowNested) return pushContext(state, stream, 'propBlock');
+    if (type == '{' && allowNested)
+      return pushContext(state, stream, 'propBlock');
     if (type == '}' || type == '{') return popAndPass(type, stream, state);
     if (type == '(') return pushContext(state, stream, 'parens');
-    if (type == 'hash' && !/^#([0-9a-fA-f]{3,4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/.test(stream.current())) {
+    if (
+      type == 'hash' &&
+      !/^#([0-9a-fA-f]{3,4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/.test(
+        stream.current()
+      )
+    ) {
       override += ' error';
     } else if (type == 'word') {
       wordAsValue(stream);
@@ -205,7 +225,7 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     }
     return 'prop';
   };
-  states.propBlock = function(type, _stream, state) {
+  states.propBlock = function (type, _stream, state) {
     if (type == '}') return popContext(state);
     if (type == 'word') {
       override = 'property';
@@ -213,22 +233,23 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     }
     return state.context.type;
   };
-  states.parens = function(type, stream, state) {
+  states.parens = function (type, stream, state) {
     if (type == '{' || type == '}') return popAndPass(type, stream, state);
     if (type == ')') return popContext(state);
     if (type == '(') return pushContext(state, stream, 'parens');
-    if (type == 'interpolation') return pushContext(state, stream, 'interpolation');
+    if (type == 'interpolation')
+      return pushContext(state, stream, 'interpolation');
     if (type == 'word') wordAsValue(stream);
     return 'parens';
   };
-  states.pseudo = function(type, stream, state) {
+  states.pseudo = function (type, stream, state) {
     if (type == 'word') {
       override = 'variable-3';
       return state.context.type;
     }
     return pass(type, stream, state);
   };
-  states.documentTypes = function(type, stream, state) {
+  states.documentTypes = function (type, stream, state) {
     if (type == 'word' && documentTypes.hasOwnProperty(stream.current())) {
       override = 'tag';
       return state.context.type;
@@ -236,37 +257,48 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
       return states.atBlock(type, stream, state);
     }
   };
-  states.atBlock = function(type, stream, state) {
+  states.atBlock = function (type, stream, state) {
     if (type == '(') return pushContext(state, stream, 'atBlock_parens');
     if (type == '}' || type == ';') return popAndPass(type, stream, state);
-    if (type == '{') return popContext(state) && pushContext(state, stream, allowNested ? 'block' : 'top');
-    if (type == 'interpolation') return pushContext(state, stream, 'interpolation');
+    if (type == '{')
+      return (
+        popContext(state) &&
+        pushContext(state, stream, allowNested ? 'block' : 'top')
+      );
+    if (type == 'interpolation')
+      return pushContext(state, stream, 'interpolation');
     if (type == 'word') {
-      var word = stream.current().toLowerCase();
-      if (word == 'only' || word == 'not' || word == 'and' || word == 'or') override = 'keyword';
+      let word = stream.current().toLowerCase();
+      if (word == 'only' || word == 'not' || word == 'and' || word == 'or')
+        override = 'keyword';
       else if (mediaTypes.hasOwnProperty(word)) override = 'attribute';
       else if (mediaFeatures.hasOwnProperty(word)) override = 'property';
       else if (mediaValueKeywords.hasOwnProperty(word)) override = 'keyword';
       else if (propertyKeywords.hasOwnProperty(word)) override = 'property';
-      else if (nonStandardPropertyKeywords.hasOwnProperty(word)) override = 'string-2';
+      else if (nonStandardPropertyKeywords.hasOwnProperty(word))
+        override = 'string-2';
       else if (valueKeywords.hasOwnProperty(word)) override = 'atom';
       else if (colorKeywords.hasOwnProperty(word)) override = 'keyword';
       else override = 'error';
     }
     return state.context.type;
   };
-  states.atComponentBlock = function(type, stream, state) {
+  states.atComponentBlock = function (type, stream, state) {
     if (type == '}') return popAndPass(type, stream, state);
-    if (type == '{') return popContext(state) && pushContext(state, stream, allowNested ? 'block' : 'top', false);
+    if (type == '{')
+      return (
+        popContext(state) &&
+        pushContext(state, stream, allowNested ? 'block' : 'top', false)
+      );
     if (type == 'word') override = 'error';
     return state.context.type;
   };
-  states.atBlock_parens = function(type, stream, state) {
+  states.atBlock_parens = function (type, stream, state) {
     if (type == ')') return popContext(state);
     if (type == '{' || type == '}') return popAndPass(type, stream, state, 2);
     return states.atBlock(type, stream, state);
   };
-  states.restricted_atBlock_before = function(type, stream, state) {
+  states.restricted_atBlock_before = function (type, stream, state) {
     if (type == '{') return pushContext(state, stream, 'restricted_atBlock');
     if (type == 'word' && state.stateArg == '@counter-style') {
       override = 'variable';
@@ -274,15 +306,17 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     }
     return pass(type, stream, state);
   };
-  states.restricted_atBlock = function(type, stream, state) {
+  states.restricted_atBlock = function (type, stream, state) {
     if (type == '}') {
       state.stateArg = null;
       return popContext(state);
     }
     if (type == 'word') {
       if (
-        (state.stateArg == '@font-face' && !fontProperties.hasOwnProperty(stream.current().toLowerCase())) ||
-        (state.stateArg == '@counter-style' && !counterDescriptors.hasOwnProperty(stream.current().toLowerCase()))
+        (state.stateArg == '@font-face' &&
+          !fontProperties.hasOwnProperty(stream.current().toLowerCase())) ||
+        (state.stateArg == '@counter-style' &&
+          !counterDescriptors.hasOwnProperty(stream.current().toLowerCase()))
       )
         override = 'error';
       else override = 'property';
@@ -290,7 +324,7 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     }
     return 'restricted_atBlock';
   };
-  states.keyframes = function(type, stream, state) {
+  states.keyframes = function (type, stream, state) {
     if (type == 'word') {
       override = 'variable';
       return 'keyframes';
@@ -298,22 +332,23 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
     if (type == '{') return pushContext(state, stream, 'top');
     return pass(type, stream, state);
   };
-  states.at = function(type, stream, state) {
+  states.at = function (type, stream, state) {
     if (type == ';') return popContext(state);
     if (type == '{' || type == '}') return popAndPass(type, stream, state);
     if (type == 'word') override = 'tag';
     else if (type == 'hash') override = 'builtin';
     return 'at';
   };
-  states.interpolation = function(type, stream, state) {
+  states.interpolation = function (type, stream, state) {
     if (type == '}') return popContext(state);
     if (type == '{' || type == ';') return popAndPass(type, stream, state);
     if (type == 'word') override = 'variable';
-    else if (type != 'variable' && type != '(' && type != ')') override = 'error';
+    else if (type != 'variable' && type != '(' && type != ')')
+      override = 'error';
     return 'interpolation';
   };
   return {
-    startState: function(base) {
+    startState: function (base) {
       return {
         tokenize: null,
         state: inline ? 'block' : 'top',
@@ -321,10 +356,10 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
         context: new Context(inline ? 'block' : 'top', base || 0, null),
       };
     },
-    token: function(stream, state) {
+    token: function (stream, state) {
       if (!state.tokenize && stream.eatSpace()) return null;
-      var style = (state.tokenize || tokenBase)(stream, state);
-      if (style && typeof style == 'object') {
+      let style = (state.tokenize || tokenBase)(stream, state);
+      if (style && typeof style === 'object') {
         type = style[1];
         style = style[0];
       }
@@ -332,16 +367,25 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
       state.state = states[state.state](type, stream, state);
       return override;
     },
-    indent: function(state, textAfter) {
-      var cx = state.context,
+    indent: function (state, textAfter) {
+      let cx = state.context,
         ch = textAfter && textAfter.charAt(0);
-      var indent = cx.indent;
+      let indent = cx.indent;
       if (cx.type == 'prop' && (ch == '}' || ch == ')')) cx = cx.prev;
       if (cx.prev) {
-        if (ch == '}' && (cx.type == 'block' || cx.type == 'top' || cx.type == 'interpolation' || cx.type == 'restricted_atBlock')) {
+        if (
+          ch == '}' &&
+          (cx.type == 'block' ||
+            cx.type == 'top' ||
+            cx.type == 'interpolation' ||
+            cx.type == 'restricted_atBlock')
+        ) {
           cx = cx.prev;
           indent = cx.indent;
-        } else if ((ch == ')' && (cx.type == 'parens' || cx.type == 'atBlock_parens')) || (ch == '{' && (cx.type == 'at' || cx.type == 'atBlock'))) {
+        } else if (
+          (ch == ')' && (cx.type == 'parens' || cx.type == 'atBlock_parens')) ||
+          (ch == '{' && (cx.type == 'at' || cx.type == 'atBlock'))
+        ) {
           indent = Math.max(0, cx.indent - indentUnit);
           cx = cx.prev;
         }
@@ -355,19 +399,29 @@ CodeMirror.defineMode('css', (config, parserConfig) => {
   };
 });
 
-
 function keySet(array) {
-  var keys = {};
-  for (var i = 0; i < array.length; ++i) {
+  let keys = {};
+  for (let i = 0; i < array.length; ++i) {
     keys[array[i]] = true;
   }
   return keys;
 }
-var documentTypes_ = ['domain', 'regexp', 'url', 'url-prefix'],
+let documentTypes_ = ['domain', 'regexp', 'url', 'url-prefix'],
   documentTypes = keySet(documentTypes_);
-var mediaTypes_ = ['all', 'aural', 'braille', 'handheld', 'print', 'projection', 'screen', 'tty', 'tv', 'embossed'],
+let mediaTypes_ = [
+    'all',
+    'aural',
+    'braille',
+    'handheld',
+    'print',
+    'projection',
+    'screen',
+    'tty',
+    'tv',
+    'embossed',
+  ],
   mediaTypes = keySet(mediaTypes_);
-var mediaFeatures_ = [
+let mediaFeatures_ = [
     'width',
     'min-width',
     'max-width',
@@ -410,9 +464,19 @@ var mediaFeatures_ = [
     'any-hover',
   ],
   mediaFeatures = keySet(mediaFeatures_);
-var mediaValueKeywords_ = ['landscape', 'portrait', 'none', 'coarse', 'fine', 'on-demand', 'hover', 'interlace', 'progressive'],
+let mediaValueKeywords_ = [
+    'landscape',
+    'portrait',
+    'none',
+    'coarse',
+    'fine',
+    'on-demand',
+    'hover',
+    'interlace',
+    'progressive',
+  ],
   mediaValueKeywords = keySet(mediaValueKeywords_);
-var propertyKeywords_ = [
+let propertyKeywords_ = [
     'align-content',
     'align-items',
     'align-self',
@@ -777,7 +841,7 @@ var propertyKeywords_ = [
     'writing-mode',
   ],
   propertyKeywords = keySet(propertyKeywords_);
-var nonStandardPropertyKeywords_ = [
+let nonStandardPropertyKeywords_ = [
     'scrollbar-arrow-color',
     'scrollbar-base-color',
     'scrollbar-dark-shadow-color',
@@ -794,11 +858,31 @@ var nonStandardPropertyKeywords_ = [
     'zoom',
   ],
   nonStandardPropertyKeywords = keySet(nonStandardPropertyKeywords_);
-var fontProperties_ = ['font-family', 'src', 'unicode-range', 'font-variant', 'font-feature-settings', 'font-stretch', 'font-weight', 'font-style'],
+let fontProperties_ = [
+    'font-family',
+    'src',
+    'unicode-range',
+    'font-variant',
+    'font-feature-settings',
+    'font-stretch',
+    'font-weight',
+    'font-style',
+  ],
   fontProperties = keySet(fontProperties_);
-var counterDescriptors_ = ['additive-symbols', 'fallback', 'negative', 'pad', 'prefix', 'range', 'speak-as', 'suffix', 'symbols', 'system'],
+let counterDescriptors_ = [
+    'additive-symbols',
+    'fallback',
+    'negative',
+    'pad',
+    'prefix',
+    'range',
+    'speak-as',
+    'suffix',
+    'symbols',
+    'system',
+  ],
   counterDescriptors = keySet(counterDescriptors_);
-var colorKeywords_ = [
+let colorKeywords_ = [
     'aliceblue',
     'antiquewhite',
     'aqua',
@@ -943,7 +1027,7 @@ var colorKeywords_ = [
     'yellowgreen',
   ],
   colorKeywords = keySet(colorKeywords_);
-var valueKeywords_ = [
+let valueKeywords_ = [
     'above',
     'absolute',
     'activeborder',
@@ -1448,7 +1532,7 @@ var valueKeywords_ = [
     'xx-small',
   ],
   valueKeywords = keySet(valueKeywords_);
-var allWords = documentTypes_
+let allWords = documentTypes_
   .concat(mediaTypes_)
   .concat(mediaFeatures_)
   .concat(mediaValueKeywords_)
@@ -1459,7 +1543,7 @@ var allWords = documentTypes_
 CodeMirror.registerHelper('hintWords', 'css', allWords);
 
 function tokenCComment(stream, state) {
-  var maybeEnd = false,
+  let maybeEnd = false,
     ch;
   while ((ch = stream.next()) != null) {
     if (maybeEnd && ch == '/') {
@@ -1482,7 +1566,7 @@ CodeMirror.defineMIME('text/css', {
   colorKeywords: colorKeywords,
   valueKeywords: valueKeywords,
   tokenHooks: {
-    '/': function(stream, state) {
+    '/': function (stream, state) {
       if (!stream.eat('*')) return false;
       state.tokenize = tokenCComment;
       return tokenCComment(stream, state);
@@ -1501,7 +1585,7 @@ CodeMirror.defineMIME('text/x-scss', {
   fontProperties: fontProperties,
   allowNested: true,
   tokenHooks: {
-    '/': function(stream, state) {
+    '/': function (stream, state) {
       if (stream.eat('/')) {
         stream.skipToEnd();
         return ['comment', 'comment'];
@@ -1512,16 +1596,17 @@ CodeMirror.defineMIME('text/x-scss', {
         return ['operator', 'operator'];
       }
     },
-    ':': function(stream) {
+    ':': function (stream) {
       if (stream.match(/\s*\{/)) return [null, '{'];
       return false;
     },
-    $: function(stream) {
+    $: function (stream) {
       stream.match(/^[\w-]+/);
-      if (stream.match(/^\s*:/, false)) return ['variable-2', 'variable-definition'];
+      if (stream.match(/^\s*:/, false))
+        return ['variable-2', 'variable-definition'];
       return ['variable-2', 'variable'];
     },
-    '#': function(stream) {
+    '#': function (stream) {
       if (!stream.eat('{')) return false;
       return [null, 'interpolation'];
     },
@@ -1540,7 +1625,7 @@ CodeMirror.defineMIME('text/x-less', {
   fontProperties: fontProperties,
   allowNested: true,
   tokenHooks: {
-    '/': function(stream, state) {
+    '/': function (stream, state) {
       if (stream.eat('/')) {
         stream.skipToEnd();
         return ['comment', 'comment'];
@@ -1551,14 +1636,21 @@ CodeMirror.defineMIME('text/x-less', {
         return ['operator', 'operator'];
       }
     },
-    '@': function(stream) {
+    '@': function (stream) {
       if (stream.eat('{')) return [null, 'interpolation'];
-      if (stream.match(/^(charset|document|font-face|import|(-(moz|ms|o|webkit)-)?keyframes|media|namespace|page|supports)\b/, false)) return false;
+      if (
+        stream.match(
+          /^(charset|document|font-face|import|(-(moz|ms|o|webkit)-)?keyframes|media|namespace|page|supports)\b/,
+          false
+        )
+      )
+        return false;
       stream.eatWhile(/[\w\\\-]/);
-      if (stream.match(/^\s*:/, false)) return ['variable-2', 'variable-definition'];
+      if (stream.match(/^\s*:/, false))
+        return ['variable-2', 'variable-definition'];
       return ['variable-2', 'variable'];
     },
-    '&': function() {
+    '&': function () {
       return ['atom', 'atom'];
     },
   },
@@ -1577,7 +1669,7 @@ CodeMirror.defineMIME('text/x-gss', {
   valueKeywords: valueKeywords,
   supportsAtComponent: true,
   tokenHooks: {
-    '/': function(stream, state) {
+    '/': function (stream, state) {
       if (!stream.eat('*')) return false;
       state.tokenize = tokenCComment;
       return tokenCComment(stream, state);

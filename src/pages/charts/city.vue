@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { AppModule } from 'src/store/modules/app';
-import {chinaCity} from "./data/chinaCity"
+import {chinaCity} from './data/chinaCity'
 @Component({
   name: 'city-map',
 })
@@ -43,7 +43,7 @@ export default class extends Vue {
     //注册可用的地图,必须在包括 geo 组件或者 map 图表类型的时候才能使用。
     window['echarts'].registerMap(this.currentCity, result);
     const dom: any = document.getElementById('city-map');
-    var mapData = [
+    let mapData = [
       { latitude: 34.24, longitude: 108.946994, name: '碑林区', value: 15, color: '#ff6521' }, //碑林区
       { latitude: 34.213389, longitude: 108.88, name: '雁塔区', value: 15, color: '#ff6521' }, //雁塔区
       { latitude: 34.38, longitude: 108.946022, name: '未央区', value: 10, color: '#ECEA1F' }, //未央区
@@ -78,7 +78,7 @@ export default class extends Vue {
           zoom: 1, // 缩放
           showLegendSymbol: false, // 存在legend时显示
           selectedMode: 'single',
-          data: mapData.map(function (itemOpt) {
+          data: mapData.map((itemOpt) => {
             //散点生成
             return {
               name: itemOpt.name,

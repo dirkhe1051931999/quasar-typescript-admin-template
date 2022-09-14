@@ -27,7 +27,7 @@ import 'prismjs/themes/prism.css';
 import 'codemirror/lib/codemirror.css';
 import '@/utils/cssConvert';
 import CodeMirror from 'codeMirror';
-const lessStr = `@width:500px;@height:300px;@font_size:12px;textarea {width:@width;height:@height;font-size:@font_size;}`;
+const lessStr = '@width:500px;@height:300px;@font_size:12px;textarea {width:@width;height:@height;font-size:@font_size;}';
 const scssStr = '';
 const less = window['less'];
 @Component

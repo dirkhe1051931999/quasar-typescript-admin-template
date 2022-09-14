@@ -121,7 +121,7 @@ export default class extends Vue {
     }
     if (!verifyCodeResult) {
       this.$q.notify({
-        message: `Wrong verification code`,
+        message: 'Wrong verification code',
         color: 'negative',
         multiLine: true,
         icon: 'mood_bad',

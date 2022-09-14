@@ -1,7 +1,7 @@
 // 该5省属于南方电网
 export const provinces = ['云南省', '贵州省', '海南省', '广西省', '广东省'];
 export const provinces2 = ['云南', '贵州', '海南', '广西', '广东'];
-export const province: String[] = [
+export const province: string[] = [
   '北京市',
   '天津市',
   '河北省',

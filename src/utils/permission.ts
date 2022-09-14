@@ -38,14 +38,17 @@ router.beforeEach(async (to: any, _, next) => {
           const pagePermissionId = UserModule.pagePermissionId;
           const pageEditPermission = UserModule.pageEditPermission;
           // Generate accessible routes map based on role
-          await PermissionModule.GenerateRoutes({ pagePermissionId, pageEditPermission });
+          await PermissionModule.GenerateRoutes({
+            pagePermissionId,
+            pageEditPermission,
+          });
           // Dynamically add accessible routes
           router.addRoutes(PermissionModule.dynamicRoutes);
           // Hack: ensure addRoutes is complete
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true });
         } catch (err) {
-          console.log(err)
+          console.log(err);
           // Remove token and  to login page
           UserModule.ResetToken();
           next(`/login?redirect=${to.path}`);
@@ -66,7 +69,7 @@ router.beforeEach(async (to: any, _, next) => {
     }
   }
 });
-router.afterEach((to) => {
+router.afterEach((to: any) => {
   // Finish progress bar
   LoadingBar.stop();
   // set page title

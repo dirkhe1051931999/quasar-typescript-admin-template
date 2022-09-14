@@ -506,7 +506,7 @@ export default class extends Vue {
         field: (row: any) => row.i,
         format: (val: any) => `${defaultFill(val)}`,
       },
-      { name: 'action', label: this.$t(`table.action`), field: 'action', align: 'left', inSlot: true },
+      { name: 'action', label: this.$t('table.action'), field: 'action', align: 'left', inSlot: true },
     ],
   };
   private dialogAddUpdateParams = {
@@ -541,8 +541,8 @@ export default class extends Vue {
             readonly: false,
             disable: false,
             rules: [
-              (val: string) => (val && val.length > 0) || `please enter password`,
-              (val: string) => (val && val.length >= 8 && val.length <= 28) || `password length is 8-28`,
+              (val: string) => (val && val.length > 0) || 'please enter password',
+              (val: string) => (val && val.length >= 8 && val.length <= 28) || 'password length is 8-28',
             ],
           },
           {
@@ -563,7 +563,7 @@ export default class extends Vue {
             id: 'c',
             readonly: false,
             disable: false,
-            rules: [(val: string) => (val && val.length > 0) || `please select option`],
+            rules: [(val: string) => (val && val.length > 0) || 'please select option'],
           },
         ],
       ],
@@ -653,7 +653,7 @@ export default class extends Vue {
     const getValue = (row: any, key: string): string => {
       switch (key) {
         case 'name':
-          return row[key] + '-description';
+          return `${row[key]  }-description`;
         default:
           return row[key] || '--';
       }
@@ -719,13 +719,13 @@ export default class extends Vue {
   private monitorDialogInputChange(input_id: any, formId: any) {
     if (input_id === 'd' || input_id === 'e') {
       if (
-        this.$refs[this.dialogAddUpdateParams.id + '_d'] &&
-        this.$refs[this.dialogAddUpdateParams.id + '_d'][0] &&
-        this.$refs[this.dialogAddUpdateParams.id + '_e'] &&
-        this.$refs[this.dialogAddUpdateParams.id + '_e'][0]
+        this.$refs[`${this.dialogAddUpdateParams.id  }_d`] &&
+        this.$refs[`${this.dialogAddUpdateParams.id  }_d`][0] &&
+        this.$refs[`${this.dialogAddUpdateParams.id  }_e`] &&
+        this.$refs[`${this.dialogAddUpdateParams.id  }_e`][0]
       ) {
-        this.$refs[this.dialogAddUpdateParams.id + '_d'][0].validate();
-        this.$refs[this.dialogAddUpdateParams.id + '_e'][0].validate();
+        this.$refs[`${this.dialogAddUpdateParams.id  }_d`][0].validate();
+        this.$refs[`${this.dialogAddUpdateParams.id  }_e`][0].validate();
       }
     }
 

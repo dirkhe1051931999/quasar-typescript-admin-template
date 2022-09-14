@@ -1,4 +1,3 @@
-
 <template>
   <div id="q-app">
     <router-view />
@@ -6,10 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-@Component
-export default class extends Vue {}
-</script>
+import { Vue, Component } from 'vue-property-decorator';
 
-<style scoped lang='scss'>
-</style>
+@Component
+export default class App extends Vue {}
+</script>

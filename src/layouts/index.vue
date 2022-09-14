@@ -207,7 +207,7 @@ export default class extends Vue {
           color: 'white',
         },
       ],
-      message: `Sign out successfully`,
+      message: 'Sign out successfully',
     });
   }
   private addTags() {
@@ -242,9 +242,9 @@ export default class extends Vue {
     this.$nextTick(() => {
       if (this.visitedViews.length) {
         for (const tag of this.visitedViews) {
-          if ((tag as ITagView).path === this.$route.path) {
+          if ((tag ).path === this.$route.path) {
             // When query is different then update
-            if ((tag as ITagView).fullPath !== this.$route.fullPath) {
+            if ((tag ).fullPath !== this.$route.fullPath) {
               TagsViewModule.updateVisitedView(this.$route);
             }
             break;

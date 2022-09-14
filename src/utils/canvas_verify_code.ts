@@ -1,7 +1,8 @@
 // export class GVerify {}
+/*eslint eqeqeq: "off"*/
 /**生成字母数组**/
 function getAllLetter() {
-  let letterStr = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
+  const letterStr = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
   return letterStr.split(',');
 }
 /**生成一个随机数**/
@@ -10,10 +11,10 @@ function randomNum(min: number, max: number) {
 }
 /**生成一个随机色**/
 function randomColor(min: number, max: number) {
-  let r = randomNum(min, max);
-  let g = randomNum(min, max);
-  let b = randomNum(min, max);
-  return 'rgb(' + r + ',' + g + ',' + b + ')';
+  const r = randomNum(min, max);
+  const g = randomNum(min, max);
+  const b = randomNum(min, max);
+  return `rgb(${  r  },${  g  },${  b  })`;
 }
 export class GVerify {
   constructor(domId: any) {
@@ -36,9 +37,9 @@ export class GVerify {
   private init() {
     this.options.numArr = '0,1,2,3,4,5,6,7,8,9'.split(',');
     this.options.letterArr = getAllLetter();
-    let con: any = document.getElementById(this.options.domId);
+    const con: any = document.getElementById(this.options.domId);
     if (!con) throw new Error('invalid dom');
-    let canvas: any = document.createElement('canvas');
+    const canvas: any = document.createElement('canvas');
     this.options.width = con.offsetWidth > 0 ? con.offsetWidth : '100';
     this.options.height = con.offsetHeight > 0 ? con.offsetHeight : '30';
     canvas.id = this.options.canvasId;
@@ -53,7 +54,7 @@ export class GVerify {
   }
   /**生成验证码**/
   private refresh() {
-    let canvas: any = document.getElementById(this.options.canvasId);
+    const canvas: any = document.getElementById(this.options.canvasId);
     let ctx: any;
     let txtArr: any;
     this.options.code = '';
@@ -72,17 +73,17 @@ export class GVerify {
     }
 
     for (let i = 1; i <= 4; i++) {
-      let txt = txtArr[randomNum(0, txtArr.length)];
+      const txt = txtArr[randomNum(0, txtArr.length)];
       this.options.code += txt;
-      ctx.font = randomNum(this.options.height / 2, this.options.height) + 'px SimHei'; //随机生成字体大小
+      ctx.font = `${randomNum(this.options.height / 2, this.options.height)  }px SimHei`; //随机生成字体大小
       ctx.fillStyle = randomColor(50, 160); //随机生成字体颜色
       ctx.shadowOffsetX = randomNum(-3, 3);
       ctx.shadowOffsetY = randomNum(-3, 3);
       ctx.shadowBlur = randomNum(-3, 3);
       ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-      let x = (this.options.width / 5) * i;
-      let y = this.options.height / 2;
-      let deg = randomNum(-30, 30);
+      const x = (this.options.width / 5) * i;
+      const y = this.options.height / 2;
+      const deg = randomNum(-30, 30);
       /**设置旋转角度和坐标原点**/
       ctx.translate(x, y);
       ctx.rotate((deg * Math.PI) / 180);
@@ -110,7 +111,7 @@ export class GVerify {
   /**验证验证码**/
   validate(code: any) {
     code = code.toLowerCase();
-    let v_code = this.options.code.toLowerCase();
+    const v_code = this.options.code.toLowerCase();
     if (code == v_code) {
       return true;
     } else {

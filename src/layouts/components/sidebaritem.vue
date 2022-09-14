@@ -5,9 +5,9 @@
         :to="resolvePath(route)"
         :icon="iconName(route)"
         :label="label(route)"
-        class="theOnlyOneChild"
+        class="theOnlyOneChild relative"
         :header-inset-level="route.children && route.children.length === 1 && !route.meta.nested ? 0 : route.meta.fatherPath ? 1 : 0.5"
-        :active-class="$route.path === resolvePath(route) ? 'bg-small-blue text-primary active-tab' : 'text-black2'"
+        :class="$route.path === resolvePath(route) ? 'bg-small-blue text-primary active-tab' : 'text-black2'"
       ></q-expansion-item>
     </q-list>
     <q-list class="q-list" v-else>

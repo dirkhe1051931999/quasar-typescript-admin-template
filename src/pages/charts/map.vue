@@ -565,7 +565,7 @@ export default class extends Vue {
     }
     const max = Math.max.apply(
         Math,
-        seriesData.map(function (o) {
+        seriesData.map((o) => {
           return o.value;
         }),
       ),
@@ -587,7 +587,7 @@ export default class extends Vue {
       myChart.showLoading(); // loading start
       const mapFeatures: any = window['echarts'].getMap(name).geoJson['features'];
       myChart.hideLoading(); // loading end
-      mapFeatures.forEach(function (v: { properties: { name: any; cp: any } }) {
+      mapFeatures.forEach((v: { properties: { name: any; cp: any } }) => {
         const name = v.properties.name; // 地区名称
         geoCoordMap[name] = v.properties.cp; // 地区经纬度
       });
@@ -633,7 +633,7 @@ export default class extends Vue {
             if (pName === 'china') {
               toolTiphtml = '';
               for (i = 0; i < tmp.length; i++) {
-                if (params.name == tmp[i].provinceName) {
+                if (params.name === tmp[i].provinceName) {
                   toolTiphtml += tmp[i].totalPrice;
                 }
               }
@@ -645,7 +645,7 @@ export default class extends Vue {
             } else {
               toolTiphtml = '';
               for (i = 0; i < tmp.length; i++) {
-                if (params.name == tmp[i].cityName) {
+                if (params.name === tmp[i].cityName) {
                   toolTiphtml += tmp[i].totalPrice;
                 }
               }
@@ -780,7 +780,7 @@ export default class extends Vue {
         ],
       };
       // 针对海南放大
-      if (pName == '海南') {
+      if (pName === '海南') {
         option.series[1].center = [109.844902, 19.0392];
         option.series[1].layoutCenter = ['75%', '25%'];
         option.series[1].layoutSize = '200%';
@@ -794,7 +794,7 @@ export default class extends Vue {
       myChart.off('click');
       if (pName === 'china') {
         // 全国时，添加click 进入省级
-        myChart.on('click', function (param: any) {
+        myChart.on('click', (param: any) => {
           if (param.data && param.data.provinceKey) {
             if (provinceData.length) {
               // 遍历取到provincesText 中的下标  去拿到对应的省js
@@ -816,7 +816,7 @@ export default class extends Vue {
         });
       } else {
         // 省份，添加双击 回退到全国
-        myChart.on('dblclick', function () {
+        myChart.on('dblclick', () => {
           mapName = '';
           initEcharts('china');
           oBack.classList.add('hidden');
@@ -827,7 +827,7 @@ export default class extends Vue {
     // 展示对应的省
     function showProvince(pName: any, Chinese_: any) {
       //这写省份的js都是通过在线构建工具生成的，保存在本地，需要时加载使用即可，最好不要一开始全部直接引入。
-      loadBdScript(pName + 'js', '/map/' + pName + '.js', function () {
+      loadBdScript(`${pName  }js`, `/map/${  pName  }.js`, () => {
         initEcharts(Chinese_);
       });
     }
