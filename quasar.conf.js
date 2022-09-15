@@ -140,7 +140,7 @@ module.exports = configure(function (ctx) {
       config: {
         brand: {
           negative: '#e93030',
-          // primary: '#009D8D',
+          primary: '#5469d4',
           black: '#252631',
         },
         loadingBar: {

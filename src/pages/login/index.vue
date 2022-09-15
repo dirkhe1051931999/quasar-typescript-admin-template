@@ -1,55 +1,262 @@
 <template>
-  <div class="login-container relative window-height w-full">
-    <img src="~@/assets/login-bg.jpg" alt class="absolute left-0 top-0 window-height w-full" />
-    <q-card class="login-card" :class="useVerifyCode ? 'h-540' : 'h-470'">
-      <q-card-section>
-        <h3 class="text-center fs-20">{{ PrdTitle }}</h3>
-      </q-card-section>
-      <q-card-section class="col justify-center">
-        <q-input
-          v-model="username"
-          type="text"
-          label="Username"
-          :rules="[(val) => !!val || 'required']"
-          autocapitalize="off"
-          autocomplete="new-password"
-        />
-        <q-input
-          v-model="password"
-          type="text"
-          class="input-password"
-          label="Password"
-          :rules="[(val) => !!val || 'required']"
-          autocapitalize="off"
-          autocomplete="off"
-        />
-      </q-card-section>
-      <q-card-section class="row j-between a-center p-t-0" v-show="useVerifyCode">
-        <q-input v-model="verifyCode" type="text" label="Verify code" style="width: 50%" autocapitalize="off" autocomplete="current-password" />
-        <div id="verify-code-login" style="width: 40%; height: 100%"></div>
-      </q-card-section>
-      <q-card-section class="row j-between a-center p-t-0"> </q-card-section>
-      <q-card-section class="text-right">
-        <div :class="useSwipeVerifyCode ? 'text-primary' : 'text-grey'">
-          <span>Use swipe verification code to verify?</span> <q-toggle v-model="useSwipeVerifyCode" />
+  <div>
+    <div class="login-root">
+      <div
+        class="box-root flex-flex flex-direction--column"
+        style="min-height: 100vh; flex-grow: 1"
+      >
+        <div class="loginbackground padding-top--64">
+          <div class="loginbackground-gridContainer">
+            <div
+              class="box-root flex-flex"
+              style="grid-area: top / start / 8 / end"
+            >
+              <div
+                class="box-root"
+                style="
+                  background-image: linear-gradient(
+                    white 0%,
+                    rgb(247, 250, 252) 33%
+                  );
+                  flex-grow: 1;
+                "
+              ></div>
+            </div>
+            <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5">
+              <div
+                class="
+                  box-root
+                  box-divider--light-all-2
+                  animationLeftRight
+                  tans3s
+                "
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 6 / start / auto / 2"
+            >
+              <div
+                class="box-root box-background--blue800"
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 7 / start / auto / 4"
+            >
+              <div
+                class="box-root box-background--blue animationLeftRight"
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6">
+              <div
+                class="
+                  box-root
+                  box-background--gray100
+                  animationLeftRight
+                  tans3s
+                "
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 2 / 15 / auto / end"
+            >
+              <div
+                class="
+                  box-root
+                  box-background--cyan200
+                  animationRightLeft
+                  tans4s
+                "
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 3 / 14 / auto / end"
+            >
+              <div
+                class="box-root box-background--blue animationRightLeft"
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 4 / 17 / auto / 20"
+            >
+              <div
+                class="
+                  box-root
+                  box-background--gray100
+                  animationRightLeft
+                  tans4s
+                "
+                style="flex-grow: 1"
+              ></div>
+            </div>
+            <div
+              class="box-root flex-flex"
+              style="grid-area: 5 / 14 / auto / 17"
+            >
+              <div
+                class="
+                  box-root
+                  box-divider--light-all-2
+                  animationRightLeft
+                  tans3s
+                "
+                style="flex-grow: 1"
+              ></div>
+            </div>
+          </div>
         </div>
-        <div :class="useVerifyCode ? 'text-primary' : 'text-grey'">
-          <span>Use verification code to verify?</span>
-          <q-toggle v-model="useVerifyCode" />
+        <div
+          class="box-root padding-top--24 flex-flex flex-direction--column"
+          style="flex-grow: 1; z-index: 9"
+        >
+          <div
+            class="
+              box-root
+              padding-top--48
+              padding-bottom--24
+              flex-flex
+              flex-justifyContent--center
+            "
+          >
+            <h3 class="text-primary">
+              {{ PrdTitle }}
+            </h3>
+          </div>
+          <div class="formbg-outer">
+            <div class="formbg">
+              <div class="formbg-inner padding-horizontal--48">
+                <span class="padding-bottom--15">Sign in to your account</span>
+                <form id="stripe-login">
+                  <div class="field padding-bottom--24">
+                    <label for="email">Username</label>
+                    <input
+                      type="text"
+                      name="email"
+                      autocapitalize="off"
+                      v-model="username"
+                      autocomplete="new-password"
+                    />
+                  </div>
+                  <div class="field padding-bottom--24">
+                    <div class="grid--50-50">
+                      <label for="password">Password</label>
+                      <div class="reset-pass">
+                        <a href="#">Forgot your password?</a>
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      name="password"
+                      class="input-password"
+                      v-model="password"
+                      autocapitalize="off"
+                      autocomplete="new-password"
+                    />
+                  </div>
+                  <div class="field padding-bottom--24" v-show="useVerifyCode">
+                    <label for="verifyCode">Code</label>
+                    <div class="flex j-between">
+                      <input
+                        type="text"
+                        name="verifyCode"
+                        v-model="verifyCode"
+                        autocapitalize="off"
+                        style="width: 55%; height: 100%"
+                        autocomplete="new-password"
+                      />
+                      <div
+                        id="verify-code-login"
+                        style="width: 40%; height: 44px"
+                      ></div>
+                    </div>
+                  </div>
+                  <div
+                    class="
+                      field field-checkbox
+                      padding-bottom--24
+                      flex-flex
+                      align-center
+                    "
+                  >
+                    <label
+                      for="checkbox"
+                      @click="useSwipeVerifyCode = !useSwipeVerifyCode"
+                    >
+                      <input
+                        type="checkbox"
+                        name="checkbox"
+                        v-model="useSwipeVerifyCode"
+                      />
+                      Use swipe verification code to verify?
+                    </label>
+                  </div>
+                  <div
+                    class="
+                      field field-checkbox
+                      padding-bottom--24
+                      flex-flex
+                      align-center
+                    "
+                  >
+                    <label
+                      for="checkbox"
+                      @click="useVerifyCode = !useVerifyCode"
+                    >
+                      <input
+                        type="checkbox"
+                        name="checkbox"
+                        v-model="useVerifyCode"
+                      />
+                      Use verification code to verify?
+                    </label>
+                  </div>
+                  <div class="field padding-bottom--24">
+                    <div
+                      class="login-submit-button"
+                      @click.prevent="handLogin"
+                      v-ripple
+                    >
+                      Login
+                    </div>
+                  </div>
+                  <div class="field">
+                    <a class="ssolink" href="#">
+                      Use single sign-on (Google) instead
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="footer-link padding-top--24">
+              <span>Don't have an account? <a href="#">Sign up</a></span>
+              <div
+                class="
+                  listing
+                  padding-top--24
+                  padding-bottom--24
+                  flex-flex
+                  center-center
+                "
+              >
+                <span><a href="#">© Term1 something left</a></span>
+                <span><a href="#">Term2</a></span>
+                <span><a href="#">Term3</a></span>
+              </div>
+            </div>
+          </div>
         </div>
-      </q-card-section>
-      <q-card-actions>
-        <q-btn
-          color="primary"
-          icon="login"
-          label="Login"
-          @click.prevent="handLogin"
-          class="w-full h-50"
-          :loading="loginLoading"
-          :disable="loginLoading"
-        />
-      </q-card-actions>
-    </q-card>
+      </div>
+    </div>
     <div v-show="showUseSwipeVerifyCode" class="useSwipeVerifyCode">
       <q-card>
         <q-card-section>
@@ -64,20 +271,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
-import { UserModule } from '../../store/modules/user';
-import { Dictionary } from 'vue-router/types/router';
-import { Route } from 'vue-router';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import settings from '@/settings.json';
+import { UserModule } from '@/store/modules/user';
+import { Route } from 'vue-router';
+import { Dictionary } from 'lodash';
 import { GVerify } from '@/utils/canvas_verify_code';
 import { sliderCaptcha } from '@/utils/slidercaptcha';
-@Component({
-  name: 'Index',
-})
+@Component({ name: 'signIn' })
 export default class extends Vue {
-  get loginLoading() {
-    return UserModule.loginLoading;
-  }
   @Watch('$route', { immediate: true })
   private onRouteChange(route: Route) {
     // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
@@ -96,16 +298,6 @@ export default class extends Vue {
       console.log(error);
     }
   }
-  private username = 'admin';
-  private password = '123456';
-  private verifyCode = '';
-  private redirect?: string;
-  private PrdTitle = settings.title;
-  private otherQuery: Dictionary<string> = {};
-  private useVerifyCode = false;
-  private useSwipeVerifyCode = false;
-  private showUseSwipeVerifyCode = false;
-  private verifyCodeInstance: any;
   private getOtherQuery(query: Dictionary<string>) {
     return Object.keys(query).reduce((acc, cur) => {
       if (cur !== 'redirect') {
@@ -114,6 +306,17 @@ export default class extends Vue {
       return acc;
     }, {} as Dictionary<string>);
   }
+  private verifyCodeInstance: any;
+  private otherQuery: Dictionary<string> = {};
+  private username = 'admin';
+  private password = '123456';
+  private verifyCode = '';
+  private redirect?: string;
+  private PrdTitle = settings.title;
+  private useVerifyCode = false;
+  private useSwipeVerifyCode = false;
+  private showUseSwipeVerifyCode = false;
+  private lockShowUseSwipeVerifyCode = false;
   private async handLogin() {
     let verifyCodeResult = true;
     if (this.useVerifyCode) {
@@ -135,20 +338,25 @@ export default class extends Vue {
       return;
     }
     const loginSuccess = () => {
-      UserModule.SET_LOGIN_LOADING(true);
+      this.$q.loading.show({
+        delay: 400, // ms
+      });
       setTimeout(async () => {
-        await UserModule.Login({ username: this.username, password: this.password });
+        await UserModule.Login({
+          username: this.username,
+          password: this.password,
+        });
         if (!this.redirect) {
           this.$router.push('/dashboard');
         } else {
           this.$router.push(
             { path: this.redirect || '/dashboard' },
             () => {},
-            () => {},
+            () => {}
           );
         }
         setTimeout(() => {
-          UserModule.SET_LOGIN_LOADING(false);
+          this.$q.loading.hide();
           this.useSwipeVerifyCode = false;
           this.useVerifyCode = false;
           this.$q.notify({
@@ -167,24 +375,29 @@ export default class extends Vue {
       }, 1000);
     };
     if (this.useSwipeVerifyCode) {
-      this.showUseSwipeVerifyCode = true;
-      var captcha = new sliderCaptcha(document.querySelector('#captcha'), {
-        id: 'captcha',
-        onSuccess: () => {
-          var handler = setTimeout(() => {
-            this.showUseSwipeVerifyCode = false;
-            window.clearTimeout(handler);
-            captcha.reset();
-            loginSuccess();
-          }, 500);
-        },
-      });
+      if (!this.lockShowUseSwipeVerifyCode) {
+        this.lockShowUseSwipeVerifyCode = true;
+        this.showUseSwipeVerifyCode = true;
+        var captcha = new sliderCaptcha(document.querySelector('#captcha'), {
+          id: 'captcha',
+          onSuccess: () => {
+            var handler = setTimeout(() => {
+              this.showUseSwipeVerifyCode = false;
+              this.lockShowUseSwipeVerifyCode = false;
+              window.clearTimeout(handler);
+              captcha.reset();
+              loginSuccess();
+            }, 500);
+          },
+        });
+      }
     } else {
       loginSuccess();
     }
   }
 }
 </script>
+
 <style lang="scss">
 .slidercaptcha-block {
   position: absolute;
@@ -272,19 +485,7 @@ export default class extends Vue {
 }
 </style>
 <style lang="scss" scoped>
-.login-card {
-  width: 500px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  &.h-540 {
-    height: 540px;
-  }
-  &.h-470 {
-    height: 470px;
-  }
-}
+@import './index.scss';
 .useSwipeVerifyCode {
   position: absolute;
   width: 320px;
@@ -293,5 +494,6 @@ export default class extends Vue {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000;
 }
 </style>
