@@ -43,7 +43,9 @@ router.beforeEach(async (to: any, _, next) => {
             pageEditPermission,
           });
           // Dynamically add accessible routes
-          router.addRoutes(PermissionModule.dynamicRoutes);
+          for (let item of PermissionModule.dynamicRoutes) {
+            router.addRoute(item);
+          }
           // Hack: ensure addRoutes is complete
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true });
