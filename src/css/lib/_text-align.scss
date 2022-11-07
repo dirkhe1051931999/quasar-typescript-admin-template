@@ -1,9 +1,0 @@
-  /**
- *  position-text
- *  use: text-center
- */
-@each $type in left, right, center, justify, inherit {
-  .text-#{$type} {
-    text-align: #{$type};
-  }
-}

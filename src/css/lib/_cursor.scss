@@ -1,9 +1,0 @@
-/**
- *  margin padding
- *  use: cursor-pointer
- */
-@each $type in default, auto, crosshair, pointer, move, text, wait, help {
-  .cursor-#{$type} {
-    cursor: $type;
-  }
-}
