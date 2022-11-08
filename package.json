@@ -6,9 +6,9 @@
   "author": "dirk.he <hejiandirk@163.com>",
   "private": true,
   "scripts": {
-    "dev": "quasar dev",
-    "build": "quasar build",
-    "build:pwa": "quasar build -m pwa",
+    "dev": "npx quasar dev",
+    "build": "npx quasar build",
+    "build:pwa": "npx quasar build -m pwa",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
