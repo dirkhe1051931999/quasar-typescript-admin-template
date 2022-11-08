@@ -1,38 +1,32 @@
-import { route } from 'quasar/wrappers';
 import {
-  createMemoryHistory,
+  type RouteRecordRaw,
   createRouter,
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
-
-import routes from './routes';
-
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Router instance.
- */
-
-export default route((/* { store, ssrContext } */) => {
-  const createHistory = process.env.SERVER
-    ? createMemoryHistory
-    : process.env.VUE_ROUTER_MODE === 'history'
-    ? createWebHistory
-    : createWebHashHistory;
-
-  const Router = createRouter({
-    scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
-
-    // Leave this as is and make changes in quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
-    history: createHistory(process.env.VUE_ROUTER_BASE),
-  });
-
-  return Router;
+import { constantRoutes } from './routes';
+const router = createRouter({
+  history:
+    import.meta.env.VITE_ROUTER_HISTORY === 'hash'
+      ? createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH)
+      : createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
+  routes: constantRoutes,
 });
+
+/** 重置路由 */
+export function resetRouter() {
+  // 注意：所有动态路由路由必须带有 Name 属性，否则可能会不能完全重置干净
+  try {
+    router.getRoutes().forEach((route) => {
+      const { name, meta } = route;
+      if (name && meta.roles) {
+        router.hasRoute(name) && router.removeRoute(name);
+      }
+    });
+  } catch (error) {
+    // 强制刷新浏览器也行，只是交互体验不是很好
+    window.location.reload();
+  }
+}
+
+export default router;

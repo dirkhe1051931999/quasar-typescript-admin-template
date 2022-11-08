@@ -1,11 +1,21 @@
 import { RouteRecordRaw } from 'vue-router';
-
-const routes: RouteRecordRaw[] = [
+import Layout from 'src/layouts/index.vue';
+export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: Layout,
+    name: 'MainLayout1',
+    meta: {
+      title: '权限管理',
+      roles: ['admin', 'editor'],
+    },
     children: [
-      { path: '', component: () => import('src/pages/indexPage.vue') },
+      {
+        path: '',
+        component: () => import('src/pages/indexPage.vue'),
+        name: 'indexPage',
+        meta: { title: '权限管理', roles: ['admin', 'editor'] },
+      },
     ],
   },
 
@@ -19,5 +29,9 @@ const routes: RouteRecordRaw[] = [
       ),
   },
 ];
-
-export default routes;
+/**
+ * 动态路由
+ * 用来放置有权限 (Roles 属性) 的路由
+ * 必须带有 Name 属性
+ */
+export const asyncRoutes: RouteRecordRaw[] = [];

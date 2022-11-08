@@ -19,6 +19,7 @@
         w-100
         bg-grey-5
       "
+      v-permission="['admin']"
     >
       {{ count }}
     </p>
