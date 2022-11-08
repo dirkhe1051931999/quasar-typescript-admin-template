@@ -1,0 +1,27 @@
+@import '../quasar.variables.scss';
+/**
+ *  line-height
+ *  use:  l-h-1
+ */
+@for $size from 0 through $line-height-through {
+  .l-h-#{$size} {
+    line-height: #{$size}em;
+  }
+  @if $size <= $line-height-decimal-through {
+    @for $i from 0 to 10 {
+      .l-h-#{$size}_#{$i} {
+        line-height: #{$size}#{'.'}#{$i}em;
+      }
+    }
+  } @else {
+    .l-h-#{$size}_5 {
+      line-height: #{$size}#{'.5'}em;
+    }
+  }
+}
+
+@for $size from 0 through $line-height-px-through {
+  .lh-#{$size} {
+    line-height: #{$size}px;
+  }
+}

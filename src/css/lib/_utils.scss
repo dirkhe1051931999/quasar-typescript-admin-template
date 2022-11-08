@@ -1,0 +1,14 @@
+// 可点击的link
+// explanation
+.eg {
+  font-size: 12px;
+  line-height: 1;
+  display: inline-block;
+  font-weight: normal;
+}
+// 点点点
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
