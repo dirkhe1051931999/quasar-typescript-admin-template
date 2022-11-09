@@ -11,20 +11,12 @@
         @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ tag.meta?.title }}
-        <el-icon
-          v-if="!isAffix(tag)"
-          :size="12"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        >
+        <el-icon v-if="!isAffix(tag)" :size="12" @click.prevent.stop="closeSelectedTag(tag)">
           <Close />
         </el-icon>
       </router-link>
     </ScrollPane>
-    <ul
-      v-show="visible"
-      :style="{ left: left + 'px', top: top + 'px' }"
-      class="contextmenu"
-    >
+    <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="refreshSelectedTag()">刷新</li>
       <li v-if="!isAffix()" @click="closeSelectedTag()">关闭</li>
       <li @click="closeOthersTags">关闭其它</li>

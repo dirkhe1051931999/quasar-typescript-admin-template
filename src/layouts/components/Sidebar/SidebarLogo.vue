@@ -3,13 +3,13 @@
   <div class="sidebar-logo-container" :class="{ collapse: collapse }">
     <transition name="sidebar-logo-fade">
       <router-link v-if="collapse" key="collapse" to="/">
-        <img src="~src/assets/layout/logo.png" class="sidebar-logo" />
+        <img src="~src/assets/slogo.png" class="sidebar-logo" />
       </router-link>
       <router-link v-else key="expand" to="/">
-        <img
-          src="~src/assets/layout/logo-text-1.png"
-          class="sidebar-logo-text"
-        />
+        <div class="row items-center p-l-10 p-r-10">
+          <img src="~src/assets/slogo.png" class="sidebar-logo" />
+          <div class="text-black fs-14 bold">{{PrdTitle}}</div>
+        </div>
       </router-link>
     </transition>
   </div>
@@ -17,11 +17,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
+import setting from 'src/setting.json';
 @Component({
   name: 'SidebarLogoComponent',
 })
 export default class SidebarLogoComponent extends Vue {
   @Prop({ default: true }) collapse!: boolean;
+  public PrdTitle = setting.title;
 }
 </script>
 
@@ -35,22 +37,19 @@ export default class SidebarLogoComponent extends Vue {
   text-align: center;
   overflow: hidden;
   .sidebar-logo {
-    display: none;
-  }
-  .sidebar-logo-text {
-    height: 100%;
+    height: 42px;
+    width: 42px;
     vertical-align: middle;
+    margin-right: 10px;
   }
 }
 .collapse {
   .sidebar-logo {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     vertical-align: middle;
     display: inline-block;
-  }
-  .sidebar-logo-text {
-    display: none;
+    margin-right: 0;
   }
 }
 </style>

@@ -1,29 +1,21 @@
 <template>
   <div class="scroll-container">
-    <el-icon class="arrow left" @click="scrollTo('left')">
-      <ArrowLeft />
-    </el-icon>
+    <q-icon class="arrow left fs-26" name="arrow_left" @click="scrollTo('left')"></q-icon>
     <el-scrollbar ref="scrollbarRef" @scroll="scroll">
       <div ref="scrollbarContentRef" class="scrollbar-content">
         <slot />
       </div>
     </el-scrollbar>
-    <el-icon class="arrow right" @click="scrollTo('right')">
-      <ArrowRight />
-    </el-icon>
+    <q-icon class="arrow right fs-26" name="arrow_right" @click="scrollTo('right')"></q-icon>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Emit, Prop, Ref, Vue } from 'vue-facing-decorator';
 import { ElScrollbar } from 'element-plus';
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
 @Component({
   name: 'ScrollPaneComponent',
-  components: {
-    ArrowLeft,
-    ArrowRight,
-  },
+  components: {},
 })
 export default class ScrollPaneComponent extends Vue {
   @Ref

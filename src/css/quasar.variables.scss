@@ -13,10 +13,11 @@
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
 $dark: #1d1d1d;
+$black: #252631;
 $dark-page: #121212;
-
+$primary: #5469d4;
 $positive: #21ba45;
-$negative: #c10015;
+$negative: #e93030;
 $info: #31ccec;
 $warning: #f2c037;
 
@@ -31,8 +32,9 @@ $line-height-decimal-through: 5 !default;
 $line-height-px-through: 100 !default;
 
 :root {
+  --el-color-primary: var(--q-primary);
   /** 全局背景色 */
-  --v3-body-bg-color: #f2f3f5;
+  --v3-body-bg-color: #f5f5f5;
   /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
   --v3-header-height: calc(
     var(--v3-navigationbar-height) + var(--v3-tagsview-height)
@@ -42,26 +44,26 @@ $line-height-px-through: 100 !default;
   /** Sidebar 组件 */
   --v3-sidebar-width: 220px;
   --v3-sidebar-hide-width: 58px;
-  --v3-sidebar-menu-item-height: 60px;
-  --v3-sidebar-menu-tip-line-bg-color: var(--el-color-primary);
-  --v3-sidebar-menu-bg-color: #001428;
-  --v3-sidebar-menu-hover-bg-color: #ffffff10;
-  --v3-sidebar-menu-text-color: #c0c4cc;
-  --v3-sidebar-menu-active-text-color: #ffffff;
+  --v3-sidebar-menu-item-height: 48px;
+  --v3-sidebar-menu-tip-line-bg-color: var(--q-primary);
+  --v3-sidebar-menu-bg-color: #ffffff;
+  --v3-sidebar-menu-hover-bg-color: #5469d420;
+  --v3-sidebar-menu-text-color: $black;
+  --v3-sidebar-menu-active-text-color: var(--q-primary);
   /** SidebarLogo 组件 */
-  --v3-sidebarlogo-bg-color: #001428;
+  --v3-sidebarlogo-bg-color: #ffffff;
   /** TagsView 组件 */
   --v3-tagsview-height: 34px;
   --v3-tagsview-tag-text-color: #495060;
   --v3-tagsview-tag-active-text-color: #ffffff;
   --v3-tagsview-tag-bg-color: #ffffff;
-  --v3-tagsview-tag-active-bg-color: var(--el-color-primary);
+  --v3-tagsview-tag-active-bg-color: var(--q-primary);
   --v3-tagsview-tag-border-radius: 2px;
   --v3-tagsview-tag-border-color: #d8dce5;
-  --v3-tagsview-tag-active-border-color: var(--el-color-primary);
+  --v3-tagsview-tag-active-border-color: var(--q-primary);
   --v3-tagsview-tag-active-before-color: #ffffff;
   --v3-tagsview-tag-icon-hover-bg-color: #00000030;
   --v3-tagsview-tag-icon-hover-color: #ffffff;
   /** RightPanel 组件  */
-  --v3-rightpanel-button-bg-color: #001428;
+  --v3-rightpanel-button-bg-color: var(--q-primary);
 }

@@ -13,13 +13,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <SidebarItem
-          v-for="route in routes"
-          :key="route.path"
-          :item="route"
-          :basePath="route.path"
-          :isCollapse="isCollapse"
-        />
+        <SidebarItem v-for="route in routes" :key="route.path" :item="route" :basePath="route.path" :isCollapse="isCollapse" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -79,8 +73,8 @@ export default class SidebarLogoComponent extends Vue {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    width: 2px;
+    right: 0;
+    width: 3px;
     height: 100%;
     background-color: var(--v3-sidebar-menu-tip-line-bg-color);
   }
@@ -130,13 +124,16 @@ export default class SidebarLogoComponent extends Vue {
     vertical-align: middle;
   }
 }
-
 :deep(.el-menu-item) {
+  color: (--v3-sidebar-menu-text-color) !important;
+  font-size: 14px !important;
   &.is-active {
     @include tip-line;
+    .q-icon {
+      color: var(--v3-tagsview-tag-active-bg-color);
+    }
   }
 }
-
 .el-menu--collapse {
   :deep(.el-sub-menu) {
     &.is-active {

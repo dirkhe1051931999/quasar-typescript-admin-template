@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-env node */
 
 /*
@@ -14,7 +15,7 @@ const pkg = require('./package.json');
 const banner = require('vite-plugin-banner');
 const { manualChunksPlugin } = require('vite-plugin-webpackchunkname');
 const setting = require('./src/setting.json');
-module.exports = configure(function (ctx) {
+module.exports = configure((ctx) => {
   return {
     eslint: {
       // fix: true,
@@ -123,7 +124,7 @@ module.exports = configure(function (ctx) {
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
         '/api': {
-          target: 'http://127.0.0.1:' + 9004,
+          target: `http://127.0.0.1:${  9004}`,
           changeOrigin: true,
           pathRewrite: {
             '^/api': '',

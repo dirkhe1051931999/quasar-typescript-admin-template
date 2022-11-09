@@ -1,10 +1,6 @@
 <template>
   <div class="navigation-bar">
-    <Hamburger
-      :is-active="sidebar.opened"
-      class="hamburger"
-      @toggleClick="toggleSidebar"
-    />
+    <Hamburger :is-active="sidebar.opened" class="hamburger" @toggleClick="toggleSidebar" />
     <Breadcrumb class="breadcrumb" />
     <div class="right-menu">
       <!-- <Screenfull v-if="showScreenfull" class="right-menu-item" /> -->
@@ -17,10 +13,7 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <a
-              target="_blank"
-              href="https://juejin.cn/post/7089377403717287972"
-            >
+            <a target="_blank" href="https://juejin.cn/post/7089377403717287972">
               <el-dropdown-item>中文文档</el-dropdown-item>
             </a>
             <a target="_blank" href="https://github.com/un-pany/v3-admin-vite">
@@ -87,6 +80,7 @@ export default class NavigationBarComponent extends Vue {
 
 <style lang="scss" scoped>
 .navigation-bar {
+  border-bottom: 1px solid #eee;
   height: var(--v3-navigationbar-height);
   overflow: hidden;
   background: #fff;

@@ -28,8 +28,8 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'indexPage',
         meta: {
           permissionId: ['-1', '1'],
-          title: 'unocss',
-          icon: 'app:unocss',
+          title: 'Unocss',
+          icon: 'home',
         },
       },
     ],
@@ -40,9 +40,9 @@ export const asyncRoutes: RouteRecordRaw[] = [
     redirect: '/table/index1',
     name: 'Table',
     meta: {
-      title: 'table',
+      title: 'Table',
       permissionId: ['-1', '1'],
-      icon: 'app:unocss',
+      icon: 'home',
     },
     children: [
       {
@@ -53,6 +53,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'Table1',
           permissionId: ['-1'],
+          icon: 'label',
         },
       },
       {
@@ -63,6 +64,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           permissionId: ['-1', '1'],
           title: 'Table2',
+          icon: 'label',
         },
       },
     ],
