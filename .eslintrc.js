@@ -126,5 +126,7 @@ module.exports = {
     // allow async-await 强制 generator 函数中 * 号周围使用一致的空格
     'generator-star-spacing': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/no-non-null-assert': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 };

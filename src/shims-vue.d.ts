@@ -9,3 +9,4 @@ declare module '*.vue' {
   export default component;
 }
 declare module 'js-cookie';
+declare module 'path-to-regexp';

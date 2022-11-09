@@ -14,5 +14,14 @@
   "adminName": ["admin"],
   "errorCode": [],
   "succCode": [],
-  "defaultErrorMsg": "Network Error, please contact engineer"
+  "defaultErrorMsg": "Network Error, please contact engineer",
+  "layoutSetting": {
+    "showSettings": true,
+    "showTagsView": true,
+    "fixedHeader": true,
+    "showSidebarLogo": true,
+    "showNotify": true,
+    "showThemeSwitch": true,
+    "showScreenfull": true
+  }
 }

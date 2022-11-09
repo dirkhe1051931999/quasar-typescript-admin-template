@@ -12,3 +12,9 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.input-password {
+  font-family: password !important;
+  input {
+    -webkit-text-security: square;
+  }
+}

@@ -1,6 +1,10 @@
 import * as directives from 'src/directives/index';
 import { boot } from 'quasar/wrappers';
 import { type Directive } from 'vue';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
+import 'src/router/permission';
 export default boot(({ app }) => {
   // We globally register our directive with Vue;
   // Rememeber that all directives in Vue will start with 'v-'
@@ -10,4 +14,5 @@ export default boot(({ app }) => {
   Object.keys(directives).forEach((key) => {
     app.directive(key, (directives as { [key: string]: Directive })[key]);
   });
+  app.use(ElementPlus);
 });
