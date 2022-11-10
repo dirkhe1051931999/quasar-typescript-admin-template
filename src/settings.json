@@ -3,6 +3,7 @@
   "title": "Quasar admin",
   "errorLog": ["production"],
   "logUrl": "/",
+  "publicPath": "/quasar/",
   "pro": "",
   "version": "V0.0.2.7",
   "devServerPort": 9002,

@@ -18,6 +18,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 // build list
 var ManifestPlugin = require('webpack-manifest-plugin');
+const setting = require('./src/settings.json');
 module.exports = configure(function (ctx) {
   return {
     // https://v1.quasar.dev/quasar-cli/supporting-ts
@@ -50,6 +51,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       transpile: false,
+      publicPath: ctx.dev === 'prod' ? setting.publicPath : '/',
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -69,12 +71,12 @@ module.exports = configure(function (ctx) {
       extendWebpack(cfg) {
         // linting is slow in TS projects, we execute it only for production builds
         if (ctx.prod) {
-          cfg.module.rules.push({
-            enforce: 'pre',
-            test: /\.(js|vue)$/,
-            loader: 'eslint-loader',
-            exclude: /node_modules/,
-          });
+          // cfg.module.rules.push({
+          //   enforce: 'pre',
+          //   test: /\.(js|vue)$/,
+          //   loader: 'eslint-loader',
+          //   exclude: /node_modules/,
+          // });
           cfg.plugins.push(
             ...[
               new CleanWebpackPlugin(),

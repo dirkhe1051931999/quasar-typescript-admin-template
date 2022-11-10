@@ -4,70 +4,43 @@
       <!-- header -->
       <q-header>
         <q-toolbar>
-          <q-btn
-            dense
-            flat
-            round
-            :icon="drawerLeft ? 'menu_open' : 'menu'"
-            @click="set_left_darwer_open"
-          />
+          <q-btn dense flat round :icon="drawerLeft ? 'menu_open' : 'menu'" @click="set_left_darwer_open" />
           <q-toolbar-title class="row a-center">
-            <q-breadcrumbs
-              active-color="white"
-              separator-color="white"
-              class="fs-14 h-16"
-              :key="+new Date()"
-            >
-              <q-breadcrumbs-el
-                :label="$t(`routes.${route.meta.title}`)"
-                :name="curRouteFather"
-                v-for="(route, index) in breadcrumbs"
-                :key="index"
-              />
+            <q-breadcrumbs active-color="white" separator-color="white" class="fs-14 h-16" :key="+new Date()">
+              <q-breadcrumbs-el :label="$t(`routes.${route.meta.title}`)" :name="curRouteFather" v-for="(route, index) in breadcrumbs" :key="index" />
             </q-breadcrumbs>
           </q-toolbar-title>
-          <q-btn-dropdown
-            stretch
-            flat
-            align="center"
-            :label="version"
-          ></q-btn-dropdown>
+          <a
+            class="right-menu-item"
+            href="https://dirkhe1051931999.github.io/v3-admin/"
+            target="__blank"
+          >vue3 with quasar and use vue-facing-decorator</a>
+          <q-icon name="arrow_forward_ios" class="fs-18 text-white m-r-12"></q-icon>
+          <q-separator dark vertical />
+          <q-btn-dropdown stretch flat align="center" :label="version"></q-btn-dropdown>
           <q-separator dark vertical />
           <q-btn stretch flat icon="refresh" @click="refreshCurPage">
             <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
           </q-btn>
           <q-separator dark vertical />
-          <q-btn
-            stretch
-            flat
-            @click="$q.fullscreen.toggle()"
-            :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-          >
-            <q-tooltip>{{
+          <q-btn stretch flat @click="$q.fullscreen.toggle()" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'">
+            <q-tooltip>
+              {{
               !$q.fullscreen.isActive
-                ? `${$t('tip.fullscreen')}`
-                : `${$t('tip.cancelFullscreen')}`
-            }}</q-tooltip>
+              ? `${$t('tip.fullscreen')}`
+              : `${$t('tip.cancelFullscreen')}`
+              }}
+            </q-tooltip>
           </q-btn>
           <q-separator dark vertical />
           <q-btn-dropdown stretch flat align="center" icon="font_download">
             <q-list>
-              <q-item
-                :clickable="lang === 'zh'"
-                v-close-popup="lang === 'zh'"
-                :disable="lang === 'en'"
-                @click="checkLang('en')"
-              >
+              <q-item :clickable="lang === 'zh'" v-close-popup="lang === 'zh'" :disable="lang === 'en'" @click="checkLang('en')">
                 <q-item-section>
                   <q-item-label>English</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item
-                v-close-popup="lang === 'en'"
-                :disable="lang === 'zh'"
-                :clickable="lang === 'en'"
-                @click="checkLang('zh')"
-              >
+              <q-item v-close-popup="lang === 'en'" :disable="lang === 'zh'" :clickable="lang === 'en'" @click="checkLang('zh')">
                 <q-item-section>
                   <q-item-label>中文</q-item-label>
                 </q-item-section>
@@ -98,45 +71,19 @@
         </q-toolbar>
       </q-header>
       <!-- left -->
-      <q-drawer
-        v-model="drawerLeft"
-        show-if-above
-        side="left"
-        :width="250"
-        :breakpoint="700"
-        bordered
-        content-class="text-black2"
-        class="h-full"
-      >
+      <q-drawer v-model="drawerLeft" show-if-above side="left" :width="250" :breakpoint="700" bordered content-class="text-black2" class="h-full">
         <q-scroll-area class="fit">
-          <div
-            class="row p-16 a-center fs-20 text-bold cursor-pointer"
-            @click="toHome"
-            v-if="showSideBarLogo"
-          >
+          <div class="row p-16 a-center fs-20 text-bold cursor-pointer" @click="toHome" v-if="showSideBarLogo">
             <img src="~assets/slogo.png" class="sidebar-slogo" />
             <span class="m-l-5 ellipsis w-170">{{ slogoTitle }}</span>
           </div>
-          <Sidebaritem
-            v-for="(item, index) in routes"
-            :route="item"
-            :key="index"
-            :base-path="item.path"
-            ref="sidebaritem"
-          />
+          <Sidebaritem v-for="(item, index) in routes" :route="item" :key="index" :base-path="item.path" ref="sidebaritem" />
         </q-scroll-area>
       </q-drawer>
       <!-- 顶部导航 -->
       <q-page-container>
         <div
-          class="
-            h-48
-            bg-white
-            text-black2
-            p-t-10 p-l-15 p-r-15
-            visited
-            b-bottom
-          "
+          class="h-48 bg-white text-black2 p-t-10 p-l-15 p-r-15 visited b-bottom"
           :style="drawerLeft ? 'left:250px' : ''"
           :class="drawerLeft ? 'w-calc' : 'w-full'"
         >
@@ -152,18 +99,16 @@
             tag="div"
             v-ripple
           >
-            <span @click="handlerClickVisitedItem(tag)">{{
+            <span @click="handlerClickVisitedItem(tag)">
+              {{
               $t(`routes.${tag.meta.title}`)
-            }}</span>
-            <q-icon
-              name="close"
-              right
-              @click.native.prevent.stop="closeTag(tag)"
-            ></q-icon>
+              }}
+            </span>
+            <q-icon name="close" right @click.prevent.stop="closeTag(tag)"></q-icon>
             <q-menu touch-position context-menu>
               <q-list dense>
                 <q-item clickable v-close-popup>
-                  <q-item-section @click="closeAll"> 关闭所有 </q-item-section>
+                  <q-item-section @click="closeAll">关闭所有</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -171,29 +116,17 @@
         </div>
         <!-- content -->
         <div class="m-t-70 p-l-20 p-r-20 p-b-20" :key="key">
-          <transition
-            enter-active-class="animated  fadeInUp"
-            leave-active-class="animated  fadeOutDown"
-            appear
-            :duration="5000"
-          >
+          <transition enter-active-class="animated  fadeInUp" leave-active-class="animated  fadeOutDown" appear :duration="5000">
             <router-view v-if="refreshPage" />
           </transition>
           <!-- 回到顶部 -->
-          <q-page-scroller
-            position="bottom-right"
-            :scroll-offset="150"
-            :offset="[18, 18]"
-          >
+          <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
             <q-btn fab icon="keyboard_arrow_up" color="blue-8" />
           </q-page-scroller>
         </div>
       </q-page-container>
       <!-- footer -->
-      <q-footer
-        class="bg-white text-center fs-12 text-gray row a-center j-center p-b-5"
-        v-if="showFooter"
-      >
+      <q-footer class="bg-white text-center fs-12 text-gray row a-center j-center p-b-5" v-if="showFooter">
         <a :href="policy" target="_blank">{{ policy }}</a>
       </q-footer>
     </q-layout>
