@@ -31,8 +31,8 @@ export interface IUserState {
 
 @Module({ dynamic: true, store, name: 'User', namespaced: true })
 class User extends VuexModule implements IUserState {
-  public token = getToken() ?? '';
-  public username = getUsername() ?? '';
+  public token = getToken() || '';
+  public username = getUsername() || '';
   public introduction = '';
   public pagePermissionId: string[] = [];
   public userInfo = {};

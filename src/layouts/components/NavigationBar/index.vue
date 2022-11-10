@@ -25,13 +25,14 @@
             : `${$t('tip.cancelFullscreen')}`
         }}</q-tooltip>
       </q-btn>
+      <q-separator dark vertical />
       <q-btn-dropdown stretch flat align="center" icon="font_download">
         <q-list>
           <q-item
-            :clickable="lang === 'zh'"
-            v-close-popup="lang === 'zh'"
-            :disable="lang === 'en'"
-            @click="checkLang('en')"
+            :clickable="lang === 'zh-CN'"
+            v-close-popup="lang === 'zh-CN'"
+            :disable="lang === 'en-US'"
+            @click="checkLang('en-US')"
           >
             <q-item-section>
               <q-item-label>English</q-item-label>
@@ -39,9 +40,9 @@
           </q-item>
           <q-item
             v-close-popup="lang === 'en'"
-            :disable="lang === 'zh'"
-            :clickable="lang === 'en'"
-            @click="checkLang('zh')"
+            :disable="lang === 'zh-CN'"
+            :clickable="lang === 'en-US'"
+            @click="checkLang('zh-CN')"
           >
             <q-item-section>
               <q-item-label>中文</q-item-label>
@@ -95,7 +96,6 @@ export default class NavigationBarComponent extends Vue {
     return UserModule.username;
   }
   get lang() {
-    console.log(AppModule.language);
     return AppModule.language;
   }
   get sidebar() {
@@ -111,8 +111,20 @@ export default class NavigationBarComponent extends Vue {
     return SettingModule.showScreenfull;
   }
   public version = setting.version;
-  public checkLang(lang: string) {}
-  public refreshCurPage() {}
+  public checkLang(language: string) {
+    if (language === 'en-US') {
+      AppModule.SET_LANGUAGE(language);
+      this.$i18n.locale = language;
+      setting.language = language;
+    } else {
+      AppModule.SET_LANGUAGE(language);
+      this.$i18n.locale = language;
+      setting.language = language;
+    }
+  }
+  public refreshCurPage() {
+    AppModule.refreshCurPage();
+  }
   public toggleSidebar() {
     AppModule.TOGGLE_SIDEBAR(false);
   }

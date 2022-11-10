@@ -1,15 +1,17 @@
 <template>
   <section class="app-main">
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }" v-if="refreshPage">
       <transition name="fade-transform" mode="out-in">
-        <!-- <keep-alive> -->
-        <component :is="Component" :key="key" />
-        <!-- </keep-alive> -->
+        <keep-alive>
+          <component :is="Component" :key="key" />
+        </keep-alive>
       </transition>
     </router-view>
   </section>
 </template>
 <script lang="ts">
+import { AppModule } from 'src/store/modules/app';
+
 import { Component, Vue } from 'vue-facing-decorator';
 
 @Component({
@@ -19,6 +21,9 @@ import { Component, Vue } from 'vue-facing-decorator';
 export default class AppMainComponent extends Vue {
   get key() {
     return this.$route.path;
+  }
+  get refreshPage() {
+    return AppModule.refreshPage;
   }
 }
 </script>

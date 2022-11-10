@@ -57,7 +57,6 @@ export default class SidebarLogoComponent extends Vue {
     return SettingModule.showSidebarLogo;
   }
   get routes() {
-    console.log(PermissionModule.routes);
     return PermissionModule.routes;
   }
   public v3SidebarMenuBgColor = getCssVariableValue(

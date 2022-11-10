@@ -19,7 +19,7 @@ router.beforeEach(async (to, _from, next) => {
   if (getToken()) {
     if (to.path === '/login') {
       // 如果已经登录，并准备进入 Login 页面，则重定向到主页
-      next({ path: '/' });
+      next({ path: '/dashboard' });
       LoadingBar.stop();
     } else {
       // 检查用户是否已获得其权限角色
@@ -30,9 +30,9 @@ router.beforeEach(async (to, _from, next) => {
           // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
           PermissionModule.GenerateRoutes();
           // 将'有访问权限的动态路由' 添加到 Router 中
-          PermissionModule.dynamicRoutes.forEach((route) => {
+          for (let route of PermissionModule.dynamicRoutes) {
             router.addRoute(route);
-          });
+          }
           // 确保添加路由已完成
           // 设置 replace: true, 因此导航将不会留下历史记录
           next({ ...to, replace: true });

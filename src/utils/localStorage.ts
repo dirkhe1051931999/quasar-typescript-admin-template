@@ -1,10 +1,9 @@
 /** 统一处理 localStorage */
-
-import CacheKey from './cacheKey';
+import setting from 'src/setting.json';
 
 export const getSidebarStatus = () => {
-  return localStorage.getItem(CacheKey.SIDEBAR_STATUS);
+  return localStorage.getItem(`${setting.title}-sidebar-status-key`);
 };
 export const setSidebarStatus = (sidebarStatus: 'opened' | 'closed') => {
-  localStorage.setItem(CacheKey.SIDEBAR_STATUS, sidebarStatus);
+  localStorage.setItem(`${setting.title}-sidebar-status-key`, sidebarStatus);
 };

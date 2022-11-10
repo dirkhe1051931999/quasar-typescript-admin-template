@@ -7,8 +7,10 @@
 import { Component, Vue } from 'vue-facing-decorator';
 import { myIcons } from './assets/icons';
 
-@Component
-export default class myComponent extends Vue {
+@Component({
+  name: 'myComponentApp',
+})
+export default class myComponentApp extends Vue {
   mounted() {
     const iconPath = 'img:src/assets/icons/svg/';
     this.$q.iconMapFn = (iconName) => {

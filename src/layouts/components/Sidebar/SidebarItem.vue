@@ -20,7 +20,7 @@
             v-if="theOnlyOneChild.meta.icon"
           ></q-icon>
           <template v-if="theOnlyOneChild.meta.title" #title>{{
-            theOnlyOneChild.meta.title
+            $t(`routes.${theOnlyOneChild.meta.title}`)
           }}</template>
         </el-menu-item>
       </SidebarItemLink>
@@ -31,7 +31,9 @@
           :name="item.meta.icon"
           v-if="item.meta && item.meta.icon"
         ></q-icon>
-        <span v-if="item.meta && item.meta.title">{{ item.meta.title }}</span>
+        <span v-if="item.meta && item.meta.title">{{
+          $t(`routes.${item.meta.title}`)
+        }}</span>
       </template>
       <template v-if="item.children">
         <sidebar-item

@@ -6,9 +6,11 @@
           item.redirect === 'noRedirect' || index === breadcrumbs.length - 1
         "
         class="no-redirect"
-        >{{ item.meta.title }}</span
+        >{{ $t(`routes.${item.meta.title}`) }}</span
       >
-      <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+      <a v-else @click.prevent="handleLink(item)">{{
+        $t(`routes.${item.meta.title}`)
+      }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>

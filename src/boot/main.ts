@@ -4,7 +4,9 @@ import { type Directive } from 'vue';
 import ElementPlus from 'element-plus';
 import 'src/router/permission';
 import 'element-plus/dist/index.css';
-// import 'src/css/element-variables.scss';
+import vue3PhotoPreview from 'vue3-photo-preview';
+import 'vue3-photo-preview/dist/index.css';
+
 export default boot(({ app }) => {
   // We globally register our directive with Vue;
   // Rememeber that all directives in Vue will start with 'v-'
@@ -14,5 +16,6 @@ export default boot(({ app }) => {
   Object.keys(directives).forEach((key) => {
     app.directive(key, (directives as { [key: string]: Directive })[key]);
   });
+  app.use(vue3PhotoPreview);
   app.use(ElementPlus);
 });

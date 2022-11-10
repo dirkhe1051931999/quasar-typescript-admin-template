@@ -10,7 +10,7 @@
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
-        {{ tag.meta?.title }}
+        {{ $t(`routes.${tag.meta?.title}`) }}
         <q-icon
           name="close"
           class="fs-12"
@@ -24,10 +24,12 @@
       :style="{ left: left + 'px', top: top + 'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag()">刷新</li>
-      <li v-if="!isAffix()" @click="closeSelectedTag()">关闭</li>
-      <li @click="closeOthersTags">关闭其它</li>
-      <li @click="closeAllTags()">关闭所有</li>
+      <li @click="refreshSelectedTag()">{{ $t('action.refresh') }}</li>
+      <li v-if="!isAffix()" @click="closeSelectedTag()">
+        {{ $t('action.close') }}
+      </li>
+      <li @click="closeOthersTags">{{ $t('action.closeOther') }}</li>
+      <li @click="closeAllTags()">{{ $t('action.closeAll') }}</li>
     </ul>
   </div>
 </template>
@@ -40,6 +42,8 @@ import ScrollPane from './ScrollPane.vue';
 import path from 'path-browserify';
 import { ITagsView, TagsViewModule } from 'src/store/modules/tags';
 import { PermissionModule } from 'src/store/modules/permission';
+import { getCssVariableValue } from 'src/utils/tools';
+import { AppModule } from 'src/store/modules/app';
 @Component({
   name: 'TagsViewComponent',
   components: {
@@ -66,7 +70,6 @@ export default class TagsViewComponent extends Vue {
     this.initTags();
     this.addTags();
   }
-  readonly instance = getCurrentInstance();
   public selectedTag: ITagsView = {};
   public visible = false;
   public top = 0;
@@ -118,10 +121,7 @@ export default class TagsViewComponent extends Vue {
     }
   }
   public refreshSelectedTag() {
-    this.$router.replace({
-      path: `/redirect${this.selectedTag.path}`,
-      query: this.selectedTag.query,
-    });
+    AppModule.refreshCurPage();
   }
   public closeSelectedTag(view: ITagsView) {
     if (!view) {
@@ -170,20 +170,26 @@ export default class TagsViewComponent extends Vue {
         // 重新加载主页
         this.$router.push({ path: `/redirect${view.path}`, query: view.query });
       } else {
-        this.$router.push('/');
+        this.$router.push('/dashboard');
       }
     }
   }
   public openMenu(tag: ITagsView, e: MouseEvent) {
     const menuMinWidth = 105;
+    const sidebarWidth = getCssVariableValue('--v3-sidebar-width');
+    console.log();
     // container margin left
-    const offsetLeft = this.instance!.proxy!.$el.getBoundingClientRect().left;
+    const offsetLeft = this.$el.getBoundingClientRect().left;
     // container width
-    const offsetWidth = this.instance!.proxy!.$el.offsetWidth;
+    const offsetWidth = this.$el.offsetWidth;
     // left boundary
     const maxLeft = offsetWidth - menuMinWidth;
     // 15: margin right
-    const left15 = e.clientX - offsetLeft + 15;
+    const left15 =
+      e.clientX -
+      offsetLeft +
+      15 +
+      Number(sidebarWidth.replace('px', '').replace('', ''));
     if (left15 > maxLeft) {
       this.left = maxLeft;
     } else {
@@ -260,7 +266,7 @@ export default class TagsViewComponent extends Vue {
     margin: 0;
     background-color: #fff;
     z-index: 3000;
-    position: absolute;
+    position: fixed;
     list-style-type: none;
     padding: 5px 0;
     border-radius: 4px;
@@ -270,8 +276,11 @@ export default class TagsViewComponent extends Vue {
     box-shadow: 2px 2px 3px 0 #00000030;
     li {
       margin: 0;
-      padding: 7px 16px;
+      padding: 0 12px;
       cursor: pointer;
+      width: 100%;
+      height: 24px;
+      line-height: 24px;
       &:hover {
         background-color: #eee;
       }

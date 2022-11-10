@@ -12,6 +12,60 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.link-type,
+.link-type:focus {
+  color: var(--q-primary);
+  cursor: pointer;
+}
+.link-type:hover {
+  color: var(--el-color-primary-dark-2);
+  text-decoration: underline;
+}
+.delete-type,
+.delete-type:focus {
+  color: var(--q-negative);
+  cursor: pointer;
+}
+.delete-type:hover {
+  color: var(--el-color-error-dark-2);
+  text-decoration: underline;
+}
+// table里的点击按钮 link
+.in-table-link-button {
+  display: inline-block;
+  text-align: center;
+  width: 68px;
+  line-height: 26px;
+  color: var(--q-primary);
+  cursor: pointer;
+  height: 26px;
+  // background: var(--el-color-primary-light-7);
+  background: #ffffff;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  border: solid 1px var(--q-primary);
+}
+.in-table-link-button:hover {
+  background: var(--q-primary);
+  color: #ffffff;
+}
+// table里的删除按钮 delete/negative
+.in-table-delete-button {
+  display: inline-block;
+  text-align: center;
+  width: 68px;
+  line-height: 26px;
+  color: var(--q-negative);
+  cursor: pointer;
+  height: 27px;
+  border: solid 1px var(--el-color-danger);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+.in-table-delete-button:hover {
+  background: var(--q-negative);
+  color: #ffffff;
+}
 .input-password {
   font-family: password !important;
   input {

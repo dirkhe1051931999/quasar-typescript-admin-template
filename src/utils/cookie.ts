@@ -7,7 +7,7 @@ const config = {
 };
 // lang
 const languageKey = `${setting.title}-Jalen_Brunson`;
-export const getLanguage = () => Cookies.get(languageKey) ?? '';
+export const getLanguage = () => Cookies.get(languageKey) || '';
 export const setLanguage = (language: string) =>
   Cookies.set(languageKey, String(language), config);
 const sizeKey = 'size';
