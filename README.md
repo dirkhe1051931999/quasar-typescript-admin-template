@@ -2,9 +2,9 @@
 
 #### :dizzy: :dizzy: template for quasar admin with typescript :full_moon_with_face: :full_moon_with_face: support pwa,electron,spa,Ionic
 
-#### Vue2 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
+#### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
 
-#### Vue3 Class syntax preview https://dirkhe1051931999.github.io/quasar
+#### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
 <img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
 
