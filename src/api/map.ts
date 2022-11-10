@@ -3,7 +3,7 @@ export const loadProvinceJson = (data: any): any => {
     const xhr = new XMLHttpRequest();
     xhr.open(
       'GET',
-      `https://dirkhe1051931999.github.io/quasar/map/province/${data.prov}.json`,
+      `https://dirkhe1051931999.github.io/v3-admin/map/province/${data.prov}.json`,
       true
     );
     xhr.send();
@@ -19,7 +19,7 @@ export const loadCityJson = (data: any): any => {
     const xhr = new XMLHttpRequest();
     xhr.open(
       'GET',
-      `https://dirkhe1051931999.github.io/quasar/map/city/${data.city}.json`,
+      `https://dirkhe1051931999.github.io/v3-admin/map/city/${data.city}.json`,
       true
     );
     xhr.send();
