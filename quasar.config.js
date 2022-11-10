@@ -82,7 +82,7 @@ module.exports = configure((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: setting.publicPath,
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -91,7 +91,9 @@ module.exports = configure((ctx) => {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf(viteConf) {
+        viteConf.build.chunkSizeWarningLimit = 50000;
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [

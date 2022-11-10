@@ -1,46 +1,32 @@
 <template>
   <div class="dashboard-container">
     <div class="row justify-between align-center">
-      <q-card
-        flat
-        class="w-100 text-center"
-        v-for="(item, index) in count"
-        :key="index"
-      >
+      <q-card flat class="w-100 text-center" v-for="(item, index) in count" :key="index">
         <q-card-section>
-          <q-icon
-            :name="item.icon"
-            class="fs-45"
-            :class="`text-${item.color}`"
-          />
+          <q-icon :name="item.icon" class="fs-45" :class="`text-${item.color}`" />
         </q-card-section>
         <q-card-section class="column items-center justify-center">
           <p class="fs-16 text-grey p-b-10">{{ item.name }}</p>
-          <CountTo
-            :startVal="0"
-            :endVal="item.num"
-            :duration="4000"
-            class="fs-20 bold"
-          ></CountTo>
+          <CountTo :startVal="0" :endVal="item.num" :duration="4000" class="fs-20 bold"></CountTo>
         </q-card-section>
       </q-card>
     </div>
     <q-card class="m-t-20" flat>
-      <div id="chart1"></div>
+      <div id="chart1" style="width:100%;height:500px"></div>
     </q-card>
     <q-separator spaced inset vertical dark />
-    <div class="row items-center m-t-20">
-      <q-card class="p-l-10 p-r-10 m-r-20 w-400" flat>
-        <div id="chart2"></div>
+    <div class="row items-center justify-between m-t-20 full-width">
+      <q-card class="p-r-10 w-p-24" flat>
+        <div id="chart2" style="width:100%;height:400px"></div>
       </q-card>
-      <q-card class="m-r-20 w-500" flat>
-        <div id="chart3"></div>
+      <q-card class="w-p-24" flat>
+        <div id="chart3" style="width:100%;height:400px"></div>
       </q-card>
-      <q-card class="m-r-20" flat>
-        <div id="chart4"></div>
+      <q-card class="w-p-24" flat>
+        <div id="chart4" style="width:100%;height:400px"></div>
       </q-card>
-      <q-card flat>
-        <div id="chart5"></div>
+      <q-card flat class="w-p-24">
+        <div id="chart5" style="width:100%;height:400px"></div>
       </q-card>
     </div>
     <div class="row m-t-20">
@@ -67,12 +53,7 @@
           <q-item clickable v-ripple>
             <q-item-section>Rounded avatar-type icon</q-item-section>
             <q-item-section avatar>
-              <q-avatar
-                rounded
-                color="purple"
-                text-color="white"
-                icon="bluetooth"
-              />
+              <q-avatar rounded color="purple" text-color="white" icon="bluetooth" />
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
@@ -124,10 +105,7 @@
         </q-list>
       </q-card>
       <q-card class="w-p-50" flat>
-        <q-video
-          src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0"
-          class="h-300"
-        />
+        <q-video src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0" class="h-300" />
         <q-card-section>
           <div class="text-h6">What Is A Quasar?</div>
           <div class="text-subtitle2">by Fraser Cain</div>
@@ -192,7 +170,8 @@
 import { Vue, Component } from 'vue-facing-decorator';
 import _ from 'lodash';
 import { CountTo } from 'vue3-count-to';
-import { Column, Radar, StackedRose, MeterGauge } from '@antv/g2plot';
+import * as echarts from 'echarts';
+
 interface count {
   name: string;
   num: number;
@@ -228,125 +207,281 @@ export default class DashboardComponent extends Vue {
     }
   }
   mounted() {
-    const linePlot = new Column(
-      document.getElementById('chart1') as HTMLDivElement,
-      {
-        title: {
-          visible: true,
-          text: 'Data',
+    this.initBar();
+    this.initTang();
+    this.initRose();
+    this.initGauge();
+    this.initRadar();
+  }
+  public initBar() {
+    const xAxisData = [];
+    const seriesData = [];
+    for (let item of this.count) {
+      xAxisData.push(item.name);
+      seriesData.push(item.num);
+    }
+    var chartDom: any = document.getElementById('chart1');
+    var myChart = echarts.init(chartDom);
+    var option;
+    option = {
+      xAxis: {
+        type: 'category',
+        data: xAxisData,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
         },
-        forceFit: true,
-        padding: 'auto',
-        data: this.count,
-        xField: 'name',
-        yField: 'num',
-        label: {
-          visible: true,
-          style: {
-            fill: '#1976d2',
-            fontSize: 12,
-            fontWeight: 600,
-            opacity: 0.6,
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: seriesData,
+          type: 'bar',
+          showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)',
           },
         },
-      } as any
-    );
-    const radarPlot = new Radar(
-      document.getElementById('chart2') as any,
-      {
-        title: {
-          visible: true,
+      ],
+    };
+    option && myChart.setOption(option);
+  }
+  public initTang() {
+    var chartDom: any = document.getElementById('chart2');
+    var myChart = echarts.init(chartDom);
+    var option;
+    option = {
+      polar: {
+        radius: [30, '80%'],
+      },
+      angleAxis: {
+        max: 4,
+        startAngle: 75,
+      },
+      radiusAxis: {
+        type: 'category',
+        data: ['a', 'b', 'c', 'd'],
+      },
+      tooltip: {},
+      series: {
+        type: 'bar',
+        data: [2, 1.2, 2.4, 3.6],
+        coordinateSystem: 'polar',
+        label: {
+          show: true,
+          position: 'middle',
+          formatter: '{b}: {c}',
         },
-        data: this.count,
-        angleField: 'icon',
-        radiusField: 'name',
-        seriesField: 'num',
-        radiusAxis: {
-          grid: {
-            line: {
-              type: 'line',
+      },
+    };
+
+    option && myChart.setOption(option);
+  }
+  public initRose() {
+    var chartDom: any = document.getElementById('chart3');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var data = [
+      {
+        name: 'Grandpa',
+        children: [
+          {
+            name: 'Uncle Leo',
+            value: 15,
+            children: [
+              {
+                name: 'Cousin Jack',
+                value: 2,
+              },
+              {
+                name: 'Cousin Mary',
+                value: 5,
+                children: [
+                  {
+                    name: 'Jackson',
+                    value: 2,
+                  },
+                ],
+              },
+              {
+                name: 'Cousin Ben',
+                value: 4,
+              },
+            ],
+          },
+          {
+            name: 'Father',
+            value: 10,
+            children: [
+              {
+                name: 'Me',
+                value: 5,
+              },
+              {
+                name: 'Brother Peter',
+                value: 1,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Nancy',
+        children: [
+          {
+            name: 'Uncle Nike',
+            children: [
+              {
+                name: 'Cousin Betty',
+                value: 1,
+              },
+              {
+                name: 'Cousin Jenny',
+                value: 2,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    option = {
+      series: {
+        type: 'sunburst',
+        // emphasis: {
+        //     focus: 'ancestor'
+        // },
+        data: data,
+        radius: [0, '90%'],
+        label: {
+          rotate: 'radial',
+        },
+      },
+    };
+    option && myChart.setOption(option);
+  }
+  public initGauge() {
+    var chartDom: any = document.getElementById('chart4');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      series: [
+        {
+          type: 'gauge',
+          axisLine: {
+            lineStyle: {
+              width: 30,
+              color: [
+                [0.3, '#67e0e3'],
+                [0.7, '#37a2da'],
+                [1, '#fd666d'],
+              ],
             },
           },
+          pointer: {
+            itemStyle: {
+              color: 'auto',
+            },
+          },
+          axisTick: {
+            distance: -30,
+            length: 8,
+            lineStyle: {
+              color: '#fff',
+              width: 2,
+            },
+          },
+          splitLine: {
+            distance: -30,
+            length: 30,
+            lineStyle: {
+              color: '#fff',
+              width: 4,
+            },
+          },
+          axisLabel: {
+            color: 'auto',
+            distance: 40,
+            fontSize: 20,
+          },
+          detail: {
+            valueAnimation: true,
+            formatter: '{value} km/h',
+            color: 'auto',
+          },
+          data: [
+            {
+              value: 70,
+            },
+          ],
         },
-        line: {
-          visible: true,
+      ],
+    };
+    setInterval(() => {
+      myChart.setOption({
+        series: [
+          {
+            data: [
+              {
+                value: +(Math.random() * 100).toFixed(2),
+              },
+            ],
+          },
+        ],
+      });
+    }, 2000);
+    option && myChart.setOption(option);
+  }
+  public initRadar() {
+    var chartDom: any = document.getElementById('chart5');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      legend: {
+        data: ['Allocated Budget', 'Actual Spending'],
+      },
+      radar: {
+        // shape: 'circle',
+        indicator: [
+          { name: 'Sales', max: 6500 },
+          { name: 'Administration', max: 16000 },
+          { name: 'Information Technology', max: 30000 },
+          { name: 'Customer Support', max: 38000 },
+          { name: 'Development', max: 52000 },
+          { name: 'Marketing', max: 25000 },
+        ],
+      },
+      series: [
+        {
+          name: 'Budget vs spending',
+          type: 'radar',
+          data: [
+            {
+              value: [4200, 3000, 20000, 35000, 50000, 18000],
+              name: 'Allocated Budget',
+            },
+            {
+              value: [5000, 14000, 28000, 26000, 42000, 21000],
+              name: 'Actual Spending',
+            },
+          ],
         },
-        point: {
-          visible: true,
-          shape: 'circle',
-        },
-        legend: {
-          visible: true,
-          position: 'bottom-center',
-        },
-      } as any
-    );
-    const rosePlot = new StackedRose(
-      document.getElementById('chart3') as any,
-      {
-        forceFit: true,
-        title: {
-          visible: true,
-        },
-        description: {
-          visible: true,
-        },
-        radius: 0.8,
-        data: this.count,
-        radiusField: 'icon',
-        categoryField: 'name',
-        stackField: 'num',
-        label: {
-          visible: true,
-          type: 'inner',
-        },
-      } as any
-    );
-    const gaugePlot = new MeterGauge(
-      document.getElementById('chart4') as HTMLDivElement,
-      {
-        title: {
-          visible: true,
-        },
-        width: 300,
-        height: 400,
-        value: 60,
-        min: 0,
-        max: 100,
-        range: [0, 25, 50, 75, 100],
-        statistic: {
-          visible: true,
-          text: 'Nice',
-          color: '#30b08f',
-        },
-        color: ['#1976d2', '#c03639', '#30b08f', '#fec171'],
-      } as any
-    );
-    const gaugePlot2 = new MeterGauge(
-      document.getElementById('chart5') as HTMLDivElement,
-      {
-        title: {
-          visible: true,
-        },
-        width: 300,
-        height: 400,
-        value: 60,
-        min: 0,
-        max: 100,
-        range: [0, 25, 50, 75, 100],
-        statistic: {
-          visible: true,
-          text: 'Fail',
-          color: '#c03639',
-        },
-        color: ['#1976d2', '#c03639', '#30b08f', '#fec171'],
-      } as any
-    );
-    gaugePlot.render();
-    gaugePlot2.render();
-    rosePlot.render();
-    linePlot.render();
-    radarPlot.render();
+      ],
+    };
+
+    option && myChart.setOption(option);
   }
 }
 </script>

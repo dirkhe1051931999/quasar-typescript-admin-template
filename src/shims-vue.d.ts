@@ -11,8 +11,6 @@ declare module '*.vue' {
 declare module 'js-cookie';
 declare module 'path-to-regexp';
 declare module 'vue3-count-to';
-declare module 'vue3-json-editor';
-declare module '@antv/g2plot';
 declare module 'marked';
 declare module 'sass.js';
 declare module 'vue3-photo-preview';

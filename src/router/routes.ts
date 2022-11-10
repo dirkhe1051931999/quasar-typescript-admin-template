@@ -78,47 +78,13 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/charts',
     component: shallowRef(Layout),
     name: 'Charts',
-    redirect: '/charts/columnLine',
+    redirect: '/charts/relationship',
     meta: {
       title: 'charts',
       icon: 'bar_chart',
       pagePermissionId: ['-1', '1'],
     },
     children: [
-      {
-        path: 'columnLine',
-        name: 'ColumnLine',
-        meta: {
-          title: 'columnLine',
-          icon: 'label',
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "columnLine" */ 'src/pages/charts/columnLine.vue'
-          ),
-      },
-      {
-        path: 'funnel',
-        name: 'Funnel',
-        meta: {
-          title: 'funnel',
-          icon: 'label',
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "funnel" */ 'src/pages/charts/funnel.vue'
-          ),
-      },
-      {
-        path: 'line',
-        name: 'Line',
-        meta: {
-          title: 'line',
-          icon: 'label',
-        },
-        component: () =>
-          import(/* webpackChunkName: "line" */ 'src/pages/charts/line.vue'),
-      },
       {
         path: 'relationship',
         name: 'Relationship',
