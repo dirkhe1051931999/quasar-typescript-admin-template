@@ -1,9 +1,7 @@
 
 <template>
   <div class="handle-button" @click="show = true">
-    <el-icon :size="24">
-      <Setting />
-    </el-icon>
+    <q-icon name="settings" class="fs-24"></q-icon>
   </div>
   <el-drawer v-model="show" size="300px" :with-header="false">
     <slot />
@@ -11,12 +9,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Setting } from '@element-plus/icons-vue';
 @Component({
   name: 'RightPanelComponent',
-  components: {
-    Setting,
-  },
+  components: {},
 })
 export default class RightPanelComponent extends Vue {
   get key() {

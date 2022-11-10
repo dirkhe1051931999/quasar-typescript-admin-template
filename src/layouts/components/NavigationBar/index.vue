@@ -1,33 +1,76 @@
 <template>
   <div class="navigation-bar">
-    <Hamburger :is-active="sidebar.opened" class="hamburger" @toggleClick="toggleSidebar" />
+    <Hamburger
+      :is-active="sidebar.opened"
+      class="hamburger"
+      @toggleClick="toggleSidebar"
+    />
     <Breadcrumb class="breadcrumb" />
     <div class="right-menu">
-      <!-- <Screenfull v-if="showScreenfull" class="right-menu-item" /> -->
-      <!-- <ThemeSwitch v-if="showThemeSwitch" class="right-menu-item" /> -->
-      <!-- <Notify v-if="showNotify" class="right-menu-item" /> -->
-      <el-dropdown class="right-menu-item">
-        <div class="right-menu-avatar">
-          <el-avatar :icon="UserFilled" :size="30" />
+      <div class="right-menu-item">{{ version }}</div>
+      <q-separator dark vertical />
+      <q-btn stretch flat icon="refresh" @click="refreshCurPage">
+        <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
+      </q-btn>
+      <q-separator dark vertical />
+      <q-btn
+        stretch
+        flat
+        @click="$q.fullscreen.toggle()"
+        :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+      >
+        <q-tooltip>{{
+          !$q.fullscreen.isActive
+            ? `${$t('tip.fullscreen')}`
+            : `${$t('tip.cancelFullscreen')}`
+        }}</q-tooltip>
+      </q-btn>
+      <q-btn-dropdown stretch flat align="center" icon="font_download">
+        <q-list>
+          <q-item
+            :clickable="lang === 'zh'"
+            v-close-popup="lang === 'zh'"
+            :disable="lang === 'en'"
+            @click="checkLang('en')"
+          >
+            <q-item-section>
+              <q-item-label>English</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item
+            v-close-popup="lang === 'en'"
+            :disable="lang === 'zh'"
+            :clickable="lang === 'en'"
+            @click="checkLang('zh')"
+          >
+            <q-item-section>
+              <q-item-label>中文</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
+      <q-separator dark vertical />
+      <q-btn-dropdown stretch flat align="center">
+        <template v-slot:label>
+          <q-avatar class="m-r-10 fs-38">
+            <img src="~assets/avatar2.jpg" />
+          </q-avatar>
           <span>{{ username }}</span>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <a target="_blank" href="https://juejin.cn/post/7089377403717287972">
-              <el-dropdown-item>中文文档</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://github.com/un-pany/v3-admin-vite">
-              <el-dropdown-item>GitHub</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://gitee.com/un-pany/v3-admin-vite">
-              <el-dropdown-item>Gitee</el-dropdown-item>
-            </a>
-            <el-dropdown-item divided @click="logout">
-              <span style="display: block">退出登录</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
         </template>
-      </el-dropdown>
+        <q-list>
+          <q-item clickable v-close-popup>
+            <q-item-section>
+              <q-item-label>{{ $t('layouts.profile') }}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-separator inset spaced />
+          <q-item clickable v-close-popup @click="logout">
+            <q-item-section>
+              <q-item-label>{{ $t('layouts.logout') }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
     </div>
   </div>
 </template>
@@ -36,10 +79,10 @@
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { AppModule } from 'src/store/modules/app';
 import { SettingModule } from 'src/store/modules/setting';
-import { UserFilled } from '@element-plus/icons-vue';
 import Breadcrumb from '../Breadcrumb/index.vue';
 import Hamburger from '../Hamburger/index.vue';
 import { UserModule } from 'src/store/modules/user';
+import setting from 'src/setting.json';
 @Component({
   name: 'NavigationBarComponent',
   components: {
@@ -49,7 +92,11 @@ import { UserModule } from 'src/store/modules/user';
 })
 export default class NavigationBarComponent extends Vue {
   get username() {
-    return 'UserModule.username';
+    return UserModule.username;
+  }
+  get lang() {
+    console.log(AppModule.language);
+    return AppModule.language;
   }
   get sidebar() {
     return AppModule.sidebar;
@@ -63,9 +110,9 @@ export default class NavigationBarComponent extends Vue {
   get showScreenfull() {
     return SettingModule.showScreenfull;
   }
-  get UserFilled() {
-    return UserFilled;
-  }
+  public version = setting.version;
+  public checkLang(lang: string) {}
+  public refreshCurPage() {}
   public toggleSidebar() {
     AppModule.TOGGLE_SIDEBAR(false);
   }
@@ -83,14 +130,15 @@ export default class NavigationBarComponent extends Vue {
   border-bottom: 1px solid #eee;
   height: var(--v3-navigationbar-height);
   overflow: hidden;
-  background: #fff;
+  background: var(--v3-navigationbar-background);
   .hamburger {
     display: flex;
     align-items: center;
     height: 100%;
     float: left;
-    padding: 0 15px;
+    padding: 0 12px;
     cursor: pointer;
+    color: #ffffff;
   }
   .breadcrumb {
     float: left;
@@ -101,24 +149,13 @@ export default class NavigationBarComponent extends Vue {
   }
   .right-menu {
     float: right;
-    margin-right: 10px;
+    margin-right: 12px;
     height: 100%;
     display: flex;
     align-items: center;
-    color: #606266;
+    color: #ffffff;
     .right-menu-item {
-      padding: 0 10px;
-      cursor: pointer;
-      .right-menu-avatar {
-        display: flex;
-        align-items: center;
-        .el-avatar {
-          margin-right: 10px;
-        }
-        span {
-          font-size: 16px;
-        }
-      }
+      padding: 0 12px;
     }
   }
 }

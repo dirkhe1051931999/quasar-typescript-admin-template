@@ -2,9 +2,9 @@ import * as directives from 'src/directives/index';
 import { boot } from 'quasar/wrappers';
 import { type Directive } from 'vue';
 import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
-import 'element-plus/theme-chalk/dark/css-vars.css';
 import 'src/router/permission';
+import 'element-plus/dist/index.css';
+// import 'src/css/element-variables.scss';
 export default boot(({ app }) => {
   // We globally register our directive with Vue;
   // Rememeber that all directives in Vue will start with 'v-'

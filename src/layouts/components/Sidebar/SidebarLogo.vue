@@ -8,7 +8,7 @@
       <router-link v-else key="expand" to="/">
         <div class="row items-center p-l-10 p-r-10">
           <img src="~src/assets/slogo.png" class="sidebar-logo" />
-          <div class="text-black fs-14 bold">{{PrdTitle}}</div>
+          <div class="text-black fs-14 bold">{{ PrdTitle }}</div>
         </div>
       </router-link>
     </transition>
@@ -31,22 +31,23 @@ export default class SidebarLogoComponent extends Vue {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
+  zoom: 1;
   height: var(--v3-header-height);
   line-height: var(--v3-header-height);
   background-color: var(--v3-sidebarlogo-bg-color);
   text-align: center;
   overflow: hidden;
   .sidebar-logo {
-    height: 42px;
-    width: 42px;
+    height: 32px;
+    width: 32px;
     vertical-align: middle;
     margin-right: 10px;
   }
 }
 .collapse {
   .sidebar-logo {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     vertical-align: middle;
     display: inline-block;
     margin-right: 0;

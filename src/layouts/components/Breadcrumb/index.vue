@@ -1,9 +1,13 @@
 <template>
   <el-breadcrumb class="app-breadcrumb">
     <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
-      <span v-if="
+      <span
+        v-if="
           item.redirect === 'noRedirect' || index === breadcrumbs.length - 1
-        " class="no-redirect">{{ item.meta.title }}</span>
+        "
+        class="no-redirect"
+        >{{ item.meta.title }}</span
+      >
       <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -52,16 +56,22 @@ export default class BreadcrumbComponent extends Vue {
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
+  color: #ffffff;
+  &:hover {
+    color: #ffffff;
+  }
 }
 
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
   font-size: 14px;
   line-height: var(--v3-navigationbar-height);
-  margin-left: 8px;
   .no-redirect {
-    color: #97a8be;
+    color: #eeeeee;
     cursor: text;
   }
+}
+:deep(.el-breadcrumb__separator) {
+  color: #ffffff;
 }
 </style>

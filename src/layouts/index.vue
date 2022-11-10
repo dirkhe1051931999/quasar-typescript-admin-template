@@ -1,7 +1,11 @@
 
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="classObj.mobile && classObj.openSidebar" class="drawer-bg" @click="handleClickOutside" />
+    <div
+      v-if="classObj.mobile && classObj.openSidebar"
+      class="drawer-bg"
+      @click="handleClickOutside"
+    />
     <Sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
@@ -79,7 +83,7 @@ export default class LayoutIndexComponents extends Vue {
 
 .drawer-bg {
   background-color: #000;
-  opacity: 0.3;
+  opacity: 0.2;
   width: 100%;
   top: 0;
   height: 100%;
@@ -92,16 +96,17 @@ export default class LayoutIndexComponents extends Vue {
   transition: margin-left 0.28s;
   margin-left: var(--v3-sidebar-width);
   position: relative;
+  background: var(--v3-main-container-background);
 }
 
 .sidebar-container {
-  transition: width 0.28s;
+  // transition: width 0.28s;
   width: var(--v3-sidebar-width) !important;
   border-right: 1px solid #d8dce5;
   height: 100%;
   position: fixed;
   font-size: 0px;
-  top: 0;
+  top: var(--v3-navigationbar-height);
   bottom: 0;
   left: 0;
   z-index: 1001;
@@ -111,9 +116,10 @@ export default class LayoutIndexComponents extends Vue {
 .fixed-header {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   z-index: 9;
-  width: calc(100% - var(--v3-sidebar-width));
+  width: 100%;
+  z-index: 999;
   transition: width 0.28s;
 }
 
@@ -124,8 +130,15 @@ export default class LayoutIndexComponents extends Vue {
   .sidebar-container {
     width: var(--v3-sidebar-hide-width) !important;
   }
-  .fixed-header {
+  .tags-view-container {
     width: calc(100% - var(--v3-sidebar-hide-width));
+    left: var(--v3-sidebar-hide-width);
+  }
+}
+.hideSidebar.mobile {
+  .tags-view-container {
+    width: 100%;
+    left: 0;
   }
 }
 

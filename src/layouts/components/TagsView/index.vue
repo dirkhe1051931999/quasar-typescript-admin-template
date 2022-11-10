@@ -11,12 +11,19 @@
         @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ tag.meta?.title }}
-        <el-icon v-if="!isAffix(tag)" :size="12" @click.prevent.stop="closeSelectedTag(tag)">
-          <Close />
-        </el-icon>
+        <q-icon
+          name="close"
+          class="fs-12"
+          v-if="!isAffix(tag)"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        ></q-icon>
       </router-link>
     </ScrollPane>
-    <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
+    <ul
+      v-show="visible"
+      :style="{ left: left + 'px', top: top + 'px' }"
+      class="contextmenu"
+    >
       <li @click="refreshSelectedTag()">刷新</li>
       <li v-if="!isAffix()" @click="closeSelectedTag()">关闭</li>
       <li @click="closeOthersTags">关闭其它</li>
@@ -31,14 +38,12 @@ import { getCurrentInstance } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import ScrollPane from './ScrollPane.vue';
 import path from 'path-browserify';
-import { Close } from '@element-plus/icons-vue';
 import { ITagsView, TagsViewModule } from 'src/store/modules/tags';
 import { PermissionModule } from 'src/store/modules/permission';
 @Component({
   name: 'TagsViewComponent',
   components: {
     ScrollPane,
-    Close,
   },
 })
 export default class TagsViewComponent extends Vue {
@@ -196,18 +201,21 @@ export default class TagsViewComponent extends Vue {
 
 <style lang="scss" scoped>
 .tags-view-container {
+  width: calc(100% - var(--v3-sidebar-width));
   height: var(--v3-tagsview-height);
-  width: 100%;
+  line-height: var(--v3-tagsview-height);
   background-color: #fff;
+  position: fixed;
+  overflow: hidden;
+  left: var(--v3-sidebar-width);
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 #00000010, 0 0 3px 0 #00000010;
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 26px;
-      line-height: 26px;
+      height: 30px;
+      line-height: 30px;
       border: 1px solid var(--v3-tagsview-tag-border-color);
       border-radius: var(--v3-tagsview-tag-border-radius);
       color: var(--v3-tagsview-tag-text-color);
@@ -237,9 +245,9 @@ export default class TagsViewComponent extends Vue {
           margin-right: 2px;
         }
       }
-      .el-icon {
+      :deep(.q-icon) {
         margin: 0 2px;
-        vertical-align: middle;
+        vertical-align: -2px;
         border-radius: 50%;
         &:hover {
           background-color: var(--v3-tagsview-tag-icon-hover-bg-color);

@@ -1,0 +1,85 @@
+:root {
+  /** 全局背景色 */
+  --v3-main-container-background: #f5f5f5;
+  /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
+  --v3-tagsview-height: 48px;
+  --v3-header-height: var(--v3-tagsview-height);
+  /** NavigationBar 组件 */
+  --v3-navigationbar-height: 50px;
+  --v3-navigationbar-background: var(--q-primary);
+  /** Sidebar 组件 */
+  --v3-sidebar-width: 220px;
+  --v3-sidebar-hide-width: 58px;
+  --v3-sidebar-menu-item-height: 48px;
+  --v3-sidebar-menu-tip-line-bg-color: var(--q-primary);
+  --v3-sidebar-menu-bg-color: #ffffff;
+  --v3-sidebar-menu-hover-bg-color: #5469d420;
+  --v3-sidebar-menu-text-color: var(--q-black);
+  --v3-sidebar-menu-active-text-color: var(--q-primary);
+  /** SidebarLogo 组件 */
+  --v3-sidebarlogo-bg-color: #ffffff;
+  /** TagsView 组件 */
+  --v3-tagsview-tag-text-color: var(--q-black);
+  --v3-tagsview-tag-active-text-color: #ffffff;
+  --v3-tagsview-tag-bg-color: #ffffff;
+  --v3-tagsview-tag-active-bg-color: var(--q-primary);
+  --v3-tagsview-tag-border-radius: 2px;
+  --v3-tagsview-tag-border-color: #d8dce5;
+  --v3-tagsview-tag-active-border-color: var(--q-primary);
+  --v3-tagsview-tag-active-before-color: #ffffff;
+  --v3-tagsview-tag-icon-hover-bg-color: #00000030;
+  --v3-tagsview-tag-icon-hover-color: #ffffff;
+  /** RightPanel 组件  */
+  --v3-rightpanel-button-bg-color: var(--q-primary);
+
+  --el-color-white: #ffffff !important;
+  --el-color-black: var(--q-black) !important;
+  --el-color-primary: var(--q-primary) !important;
+  --el-menu-item-height: ;
+  // --el-color-primary-light-3: #79bbff;
+  // --el-color-primary-light-5: #a0cfff;
+  // --el-color-primary-light-7: #c6e2ff;
+  // --el-color-primary-light-8: #d9ecff;
+  // --el-color-primary-light-9: #ecf5ff;
+  // --el-color-primary-dark-2: #337ecc;
+  // --el-color-success: #67c23a;
+  // --el-color-success-light-3: #95d475;
+  // --el-color-success-light-5: #b3e19d;
+  // --el-color-success-light-7: #d1edc4;
+  // --el-color-success-light-8: #e1f3d8;
+  // --el-color-success-light-9: #f0f9eb;
+  // --el-color-success-dark-2: #529b2e;
+  // --el-color-warning: #e6a23c;
+  // --el-color-warning-light-3: #eebe77;
+  // --el-color-warning-light-5: #f3d19e;
+  // --el-color-warning-light-7: #f8e3c5;
+  // --el-color-warning-light-8: #faecd8;
+  // --el-color-warning-light-9: #fdf6ec;
+  // --el-color-warning-dark-2: #b88230;
+  // --el-color-danger: #f56c6c;
+  // --el-color-danger-light-3: #f89898;
+  // --el-color-danger-light-5: #fab6b6;
+  // --el-color-danger-light-7: #fcd3d3;
+  // --el-color-danger-light-8: #fde2e2;
+  // --el-color-danger-light-9: #fef0f0;
+  // --el-color-danger-dark-2: #c45656;
+  // --el-color-error: #f56c6c;
+  // --el-color-error-light-3: #f89898;
+  // --el-color-error-light-5: #fab6b6;
+  // --el-color-error-light-7: #fcd3d3;
+  // --el-color-error-light-8: #fde2e2;
+  // --el-color-error-light-9: #fef0f0;
+  // --el-color-error-dark-2: #c45656;
+  // --el-color-info: #909399;
+  // --el-color-info-light-3: #b1b3b8;
+  // --el-color-info-light-5: #c8c9cc;
+  // --el-color-info-light-7: #dedfe0;
+  // --el-color-info-light-8: #e9e9eb;
+  // --el-color-info-light-9: #f4f4f5;
+  // --el-color-info-dark-2: #73767a;
+  // --el-bg-color: #ffffff;
+  // --el-bg-color-page: #f2f3f5;
+  // --el-bg-color-overlay: #ffffff;
+  // --el-text-color-primary: #323232 !important;
+  // --el-text-color-regular: #606266;
+}

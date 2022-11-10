@@ -29,6 +29,7 @@ export default class AppMainComponent extends Vue {
 .app-main {
   min-height: calc(100vh - var(--v3-navigationbar-height));
   width: 100%;
+  padding: 16px;
   position: relative;
   overflow: hidden;
 }
@@ -39,10 +40,15 @@ export default class AppMainComponent extends Vue {
 }
 .hasTagsView {
   .app-main {
-    min-height: calc(100vh - var(--v3-header-height));
+    min-height: calc(
+      100vh - var(--v3-header-height)-var(--v3-navigationbar-height)
+    );
   }
   .fixed-header + .app-main {
-    padding-top: var(--v3-header-height);
+    padding-top: calc(
+      var(--v3-navigationbar-height) + var(--v3-header-height) + 16px
+    );
+    padding-bottom: 16px;
   }
 }
 </style>

@@ -1,20 +1,36 @@
 
 <template>
-  <div v-if="!item.meta?.hidden" :class="{
+  <div
+    v-if="!item.meta?.hidden"
+    :class="{
       'simple-mode': isCollapse,
       'first-level': isFirstLevel,
-    }">
-    <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
-      <SidebarItemLink v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)">
+    }"
+  >
+    <template
+      v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
+    >
+      <SidebarItemLink
+        v-if="theOnlyOneChild.meta"
+        :to="resolvePath(theOnlyOneChild.path)"
+      >
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
-          <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon"></q-icon>
-          <template v-if="theOnlyOneChild.meta.title" #title>{{ theOnlyOneChild.meta.title }}</template>
+          <q-icon
+            :name="theOnlyOneChild.meta.icon"
+            v-if="theOnlyOneChild.meta.icon"
+          ></q-icon>
+          <template v-if="theOnlyOneChild.meta.title" #title>{{
+            theOnlyOneChild.meta.title
+          }}</template>
         </el-menu-item>
       </SidebarItemLink>
     </template>
     <el-sub-menu v-else :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <q-icon :name="item.meta.icon" v-if="item.meta && item.meta.icon"></q-icon>
+        <q-icon
+          :name="item.meta.icon"
+          v-if="item.meta && item.meta.icon"
+        ></q-icon>
         <span v-if="item.meta && item.meta.title">{{ item.meta.title }}</span>
       </template>
       <template v-if="item.children">
@@ -102,6 +118,9 @@ export default class SidebarItemLinkComponent extends Vue {
 :deep(.el-sub-menu .el-sub-menu__icon-arrow) {
   font-size: 16px;
   font-weight: bold;
+}
+:deep(.el-menu-item) {
+  height: var(--v3-sidebar-menu-item-height);
 }
 
 .simple-mode {
