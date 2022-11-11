@@ -1,7 +1,7 @@
 {
   "language": "en-US",
   "title": "Quasar admin Vue3",
-  "policy": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/tree/v3-admin",
+  "policy": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/",
   "publicPath": "/v3-admin/",
   "pro": "",
   "version": "V1.0.1",
