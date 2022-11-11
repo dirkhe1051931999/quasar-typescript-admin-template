@@ -6,7 +6,7 @@ const config = {
   expires: infiniteTime,
 };
 // lang
-const languageKey = `${setting.title}-Jalen_Brunson`;
+const languageKey = `${setting.title.replaceAll(' ', '_')}_lang`;
 export const getLanguage = () => Cookies.get(languageKey) || '';
 export const setLanguage = (language: string) =>
   Cookies.set(languageKey, String(language), config);
@@ -14,13 +14,14 @@ const sizeKey = 'size';
 export const getSize = () => Cookies.get(sizeKey);
 export const setSize = (size: string) => Cookies.set(sizeKey, size, config);
 
-// User
-const tokenKey = `${setting.title}-token`;
+// Token
+const tokenKey = `${setting.title.replaceAll(' ', '_')}_token`;
 export const getToken = () => Cookies.get(tokenKey);
 export const setToken = (token: string) => Cookies.set(tokenKey, token, config);
 export const removeToken = () => Cookies.remove(tokenKey);
 
-const usernameKey = `${setting.title}-username`;
+// Username
+const usernameKey = `${setting.title.replaceAll(' ', '_')}_username`;
 export const getUsername = (): any => Cookies.get(usernameKey);
 export const setUsername = (username: string) =>
   Cookies.set(usernameKey, username, config);

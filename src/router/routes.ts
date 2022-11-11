@@ -539,9 +539,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     name: 'catchAll',
-    component: () =>
-      import(
-        /* webpackChunkName: "errorNotFound" */ 'src/pages/notFound/index.vue'
-      ),
+    redirect: '/dashboard',
   },
 ];

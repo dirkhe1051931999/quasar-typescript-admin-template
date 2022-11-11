@@ -22,9 +22,13 @@
 import { Component, Vue } from 'vue-facing-decorator';
 
 @Component({
-  name: '404',
+  name: 'myComponents404',
 })
-export default class myComponents extends Vue {}
+export default class myComponents404 extends Vue {
+  mounted() {
+    this.$router.push('/dashboard');
+  }
+}
 </script>
 
 

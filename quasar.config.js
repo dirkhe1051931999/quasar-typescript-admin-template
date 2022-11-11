@@ -15,6 +15,8 @@ const pkg = require('./package.json');
 const banner = require('vite-plugin-banner');
 const { manualChunksPlugin } = require('vite-plugin-webpackchunkname');
 const setting = require('./src/setting.json');
+const vue = require('@vitejs/plugin-vue');
+
 module.exports = configure((ctx) => {
   return {
     eslint: {
@@ -57,7 +59,10 @@ module.exports = configure((ctx) => {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16',
       },
-      distDir: ctx.modeName === 'spa' ? 'dist' : `dist/${ctx.modeName}`,
+      distDir:
+        ctx.modeName === 'spa'
+          ? `dist${setting.publicPath}`
+          : `dist/${ctx.modeName}`,
       analyze: false,
       useFilenameHashes: true,
       transpileDependencies: ['vuex-module-decorators'],
@@ -74,15 +79,11 @@ module.exports = configure((ctx) => {
        * @default false
        */
       devQuasarTreeshaking: true,
-      // alias: [{ '@': path.join(__dirname, 'src') }],
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
-
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
-
-      publicPath: ctx.dev === 'prod' ? setting.publicPath : '/',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -93,6 +94,7 @@ module.exports = configure((ctx) => {
 
       extendViteConf(viteConf) {
         viteConf.build.chunkSizeWarningLimit = 50000;
+        viteConf.base = ctx.dev ? '/' : '/v3-admin/';
       },
       // viteVuePluginOptions: {},
 
@@ -121,7 +123,7 @@ module.exports = configure((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       https: false,
-      port: setting.devServerPort,
+      port: ctx.mode.ssr ? 9100 : setting.devServerPort,
       open: true, // opens browser window automatically
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder

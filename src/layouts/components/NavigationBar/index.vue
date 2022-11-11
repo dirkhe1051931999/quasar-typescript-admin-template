@@ -1,9 +1,18 @@
 <template>
   <div class="navigation-bar">
-    <Hamburger :is-active="sidebar.opened" class="hamburger" @toggleClick="toggleSidebar" />
+    <Hamburger
+      :is-active="sidebar.opened"
+      class="hamburger"
+      @toggleClick="toggleSidebar"
+    />
     <Breadcrumb class="breadcrumb" />
     <div class="right-menu">
-      <a class="right-menu-item" href="https://dirkhe1051931999.github.io/quasar/" target="__blank">vue2 with quasar and use vue-class-decorator</a>
+      <a
+        class="right-menu-item"
+        href="https://dirkhe1051931999.github.io/quasar/"
+        target="__blank"
+        >vue2 with quasar and use vue-class-decorator</a
+      >
       <q-icon name="arrow_forward_ios" class="fs-18 text-white m-r-12"></q-icon>
       <q-separator dark vertical />
       <div class="right-menu-item">{{ version }}</div>
@@ -12,24 +21,39 @@
         <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
       </q-btn>
       <q-separator dark vertical />
-      <q-btn stretch flat @click="$q.fullscreen.toggle()" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'">
+      <q-btn
+        stretch
+        flat
+        @click="$q.fullscreen.toggle()"
+        :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+      >
         <q-tooltip>
           {{
-          !$q.fullscreen.isActive
-          ? `${$t('tip.fullscreen')}`
-          : `${$t('tip.cancelFullscreen')}`
+            !$q.fullscreen.isActive
+              ? `${$t('tip.fullscreen')}`
+              : `${$t('tip.cancelFullscreen')}`
           }}
         </q-tooltip>
       </q-btn>
       <q-separator dark vertical />
       <q-btn-dropdown stretch flat align="center" icon="font_download">
         <q-list>
-          <q-item :clickable="lang === 'zh-CN'" v-close-popup="lang === 'zh-CN'" :disable="lang === 'en-US'" @click="checkLang('en-US')">
+          <q-item
+            :clickable="lang === 'zh-CN'"
+            v-close-popup="lang === 'zh-CN'"
+            :disable="lang === 'en-US'"
+            @click="checkLang('en-US')"
+          >
             <q-item-section>
               <q-item-label>English</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-close-popup="lang === 'en'" :disable="lang === 'zh-CN'" :clickable="lang === 'en-US'" @click="checkLang('zh-CN')">
+          <q-item
+            v-close-popup="lang === 'en'"
+            :disable="lang === 'zh-CN'"
+            :clickable="lang === 'en-US'"
+            @click="checkLang('zh-CN')"
+          >
             <q-item-section>
               <q-item-label>中文</q-item-label>
             </q-item-section>
@@ -44,12 +68,7 @@
           </q-avatar>
           <span>{{ username }}</span>
         </template>
-        <q-list>
-          <q-item clickable v-close-popup>
-            <q-item-section>
-              <q-item-label>{{ $t('layouts.profile') }}</q-item-label>
-            </q-item-section>
-          </q-item>
+        <q-list dense>
           <q-separator inset spaced />
           <q-item clickable v-close-popup @click="logout">
             <q-item-section>
