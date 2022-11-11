@@ -6,7 +6,7 @@
 
 #### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
-<img src="https://z3.ax1x.com/2021/06/15/2HILHU.png" >
+<img src="https://s1.ax1x.com/2022/11/11/zCCtbt.png" >
 
 ## Install the dependencies
 
