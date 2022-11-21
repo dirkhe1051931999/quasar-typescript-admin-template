@@ -23,7 +23,7 @@
   }
 }
 
-@for $size from 1 through 1000 {
+@for $size from 0 through 1000 {
   .m-h-#{$size} {
     margin-left: #{$size}px;
     margin-right: #{$size}px;
@@ -43,8 +43,32 @@
     }
   }
 }
+@for $size from 0 through 1000 {
+  .left-#{$size} {
+    left: #{$size}px;
+  }
+  .right-#{$size} {
+    right: #{$size}px;
+  }
+  .top-#{$size} {
+    top: #{$size}px;
+  }
+  .bottom-#{$size} {
+    bottom: #{$size}px;
+  }
+}
+@for $size from 0 through 1000 {
+  .b-r-#{$size} {
+    border-radius: #{$size}px;
+  }
+}
+@each $position in bottom, top, left, right {
+  .b-#{$position} {
+    border-#{$position}: solid 1px #e9ecef;
+  }
+}
 
-@for $size from 1 through 1000 {
+@for $size from 0 through 1000 {
   @each $side in top right bottom left {
     .m-#{str-slice($side, 0, 1)}-#{$size} {
       margin-#{$side}: #{$size}px;

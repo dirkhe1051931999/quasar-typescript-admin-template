@@ -17,11 +17,12 @@
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
           <q-icon
             :name="theOnlyOneChild.meta.icon"
-            v-if="theOnlyOneChild.meta.icon"
+            v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"
           ></q-icon>
-          <template v-if="theOnlyOneChild.meta.title" #title>{{
-            $t(`routes.${theOnlyOneChild.meta.title}`)
-          }}</template>
+          <q-icon name="fiber_manual_record" v-else class="record"> </q-icon>
+          <template v-if="theOnlyOneChild.meta.title" #title>
+            {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}</template
+          >
         </el-menu-item>
       </SidebarItemLink>
     </template>
@@ -55,6 +56,7 @@ import { isExternal } from 'src/utils/validate';
 import path from 'path-browserify';
 import SidebarItemLink from './SidebarItemLink.vue';
 import { RouteRecordRaw } from 'vue-router';
+import { PermissionModule } from 'src/store/modules/permission';
 @Component({
   name: 'SidebarItemLinkComponent',
   components: {
@@ -98,6 +100,21 @@ export default class SidebarItemLinkComponent extends Vue {
     // If there is no children, return itself with path removed,
     // because this.basePath already contains item's path information
     return { ...this.item, path: '' };
+  }
+  get isRootMemu() {
+    return (data: any) => {
+      let isRoot = false;
+      for (let item of PermissionModule.dynamicRoutes) {
+        if (
+          item.children?.length === 1 &&
+          item.children[0].name === data.name
+        ) {
+          isRoot = true;
+          break;
+        }
+      }
+      return isRoot;
+    };
   }
   public isExternal = isExternal;
   public resolvePath(routePath: string) {

@@ -102,7 +102,7 @@ export default class LayoutIndexComponents extends Vue {
 .sidebar-container {
   // transition: width 0.28s;
   width: var(--v3-sidebar-width) !important;
-  border-right: 1px solid #d8dce5;
+  // border-right: 1px solid #d8dce5;
   height: 100%;
   position: fixed;
   font-size: 0px;

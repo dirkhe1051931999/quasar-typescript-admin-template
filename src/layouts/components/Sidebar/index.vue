@@ -132,10 +132,20 @@ export default class SidebarLogoComponent extends Vue {
 :deep(.el-menu-item) {
   color: (--v3-sidebar-menu-text-color) !important;
   font-size: 14px !important;
+  .record {
+    color: rgba(58, 65, 111, 0.5);
+    font-size: 3px;
+    width: 3px;
+    height: 3px;
+  }
   &.is-active {
     @include tip-line;
     .q-icon {
-      color: var(--v3-tagsview-tag-active-bg-color);
+      color: var(--v3-sidebar-menu-active-text-color);
+      &.record {
+        color: var(--v3-sidebar-menu-active-text-color);
+        font-size: 18px;
+      }
     }
   }
 }

@@ -210,11 +210,10 @@ export default class TagsViewComponent extends Vue {
   width: calc(100% - var(--v3-sidebar-width));
   height: var(--v3-tagsview-height);
   line-height: var(--v3-tagsview-height);
-  background-color: #fff;
+  background-color: var(--v3-main-container-background);
   position: fixed;
   overflow: hidden;
   left: var(--v3-sidebar-width);
-  border-bottom: 1px solid #d8dce5;
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
