@@ -85,7 +85,7 @@
       flat
       bordered
       :columns="tableParams.column"
-      :rows="[]"
+      :rows="tableParams.data"
       :loading="tableParams.loading"
       :pagination="tableParams.pagination"
       hide-pagination

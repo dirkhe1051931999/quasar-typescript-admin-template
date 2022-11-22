@@ -6,8 +6,17 @@ Use **vue-facing-decorator(Class syntax)** to Write Vue3 , discard setup syntax 
 
 ### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
-<img src="https://s1.ax1x.com/2022/11/11/zCCCNT.png" >
+#### Login
 
+<img src="https://s1.ax1x.com/2022/11/22/z1OeIO.png" >
+
+#### Dashboard
+
+<img src="https://s1.ax1x.com/2022/11/22/z1OuJe.png" >
+
+#### Table
+
+<img src="https://s1.ax1x.com/2022/11/22/z1OniD.png" >
 ## Install the dependencies
 
 ```bash
