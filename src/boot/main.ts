@@ -6,6 +6,7 @@ import 'src/router/permission';
 import 'element-plus/dist/index.css';
 import vue3PhotoPreview from 'vue3-photo-preview';
 import 'vue3-photo-preview/dist/index.css';
+// import { Loading } from 'quasar';
 
 export default boot(({ app }) => {
   // We globally register our directive with Vue;
@@ -18,4 +19,7 @@ export default boot(({ app }) => {
   });
   app.use(vue3PhotoPreview);
   app.use(ElementPlus);
+  // Loading.setDefaults({
+  //   customClass: '15px',
+  // });
 });

@@ -21,8 +21,8 @@
           ></q-icon>
           <q-icon name="fiber_manual_record" v-else class="record"> </q-icon>
           <template v-if="theOnlyOneChild.meta.title" #title>
-            {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}</template
-          >
+            {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
+          </template>
         </el-menu-item>
       </SidebarItemLink>
     </template>

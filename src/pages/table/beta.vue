@@ -20,66 +20,72 @@
           @click="handleClickUpload"
         />
       </div>
-      <q-form class="query" ref="queryFrom">
-        <div v-for="(item, index) in queryParams.input" :key="index">
-          <q-input
-            v-model.trim="queryParams.params[item.id]"
-            :type="item.inputType"
-            :class="['', item.class]"
-            :label="item.placeholder"
-            v-if="item.type === 'text'"
-            autocapitalize="off"
-            autocomplete="new-password"
-            autocorrect="off"
-            clearable
-            dense
-            outlined
-            :spellcheck="false"
-          />
-          <q-select
-            v-if="item.type === 'select'"
-            :class="['', item.class]"
-            v-model="queryParams.params[item.id]"
-            :options="item.selectOption"
-            :label="item.placeholder"
-            :spellcheck="false"
-            autocapitalize="off"
-            autocomplete="new-password"
-            autocorrect="off"
-            clearable
-            dense
-            options-dense
-            outlined
-            emit-value
-            map-options
-          />
+      <q-form ref="queryFrom">
+        <div class="row">
+          <div class="row items-start col-10">
+            <div v-for="(item, index) in queryParams.input" :key="index">
+              <q-input
+                v-model.trim="queryParams.params[item.id]"
+                :type="item.inputType"
+                :class="['', item.class]"
+                :label="item.placeholder"
+                v-if="item.type === 'text'"
+                autocapitalize="off"
+                autocomplete="new-password"
+                autocorrect="off"
+                clearable
+                dense
+                outlined
+                :spellcheck="false"
+              />
+              <q-select
+                v-if="item.type === 'select'"
+                :class="['', item.class]"
+                v-model="queryParams.params[item.id]"
+                :options="item.selectOption"
+                :label="item.placeholder"
+                :spellcheck="false"
+                autocapitalize="off"
+                autocomplete="new-password"
+                autocorrect="off"
+                clearable
+                dense
+                options-dense
+                outlined
+                emit-value
+                map-options
+              />
+            </div>
+          </div>
+          <div class="col-2">
+            <q-btn
+              color="primary"
+              icon="search"
+              :label="$t('action.search')"
+              no-caps
+              class="m-r-15 h-40"
+              :loading="queryParams.queryLoading"
+              @click="handleQuery"
+            />
+            <q-btn
+              icon="restart_alt"
+              :label="$t('action.reset')"
+              outline
+              color="primary"
+              no-caps
+              class="h-40"
+              :loading="queryParams.resetLoading"
+              @click="handleResetQuery"
+            />
+          </div>
         </div>
-        <q-btn
-          color="primary"
-          icon="search"
-          :label="$t('action.search')"
-          no-caps
-          class="m-r-15 h-40"
-          :loading="queryParams.queryLoading"
-          @click="handleQuery"
-        />
-        <q-btn
-          icon="restart_alt"
-          :label="$t('action.reset')"
-          outline
-          color="primary"
-          no-caps
-          class="h-40"
-          :loading="queryParams.resetLoading"
-          @click="handleResetQuery"
-        />
       </q-form>
     </div>
     <q-table
       flat
       bordered
       :columns="tableParams.column"
-      :rows="tableParams.data"
+      :rows="[]"
       :loading="tableParams.loading"
       :pagination="tableParams.pagination"
       hide-pagination
@@ -552,6 +558,24 @@ export default class myComponentTableBeta extends Vue {
     resetLoading: false,
     params: cloneDeep(CONST_PARAMS.query),
     input: [
+      {
+        placeholder: 'Input1',
+        type: 'text',
+        class: 'w-250 m-r-15 m-b-15',
+        id: 'a',
+      },
+      {
+        placeholder: 'Input1',
+        type: 'text',
+        class: 'w-250 m-r-15 m-b-15',
+        id: 'a',
+      },
+      {
+        placeholder: 'Input1',
+        type: 'text',
+        class: 'w-250 m-r-15 m-b-15',
+        id: 'a',
+      },
       {
         placeholder: 'Input1',
         type: 'text',
@@ -1120,20 +1144,6 @@ export default class myComponentTableBeta extends Vue {
 // }
 </style>
 <style lang="scss" scoped>
-.query-form-and-action {
-  background: #ffffff;
-  border-radius: 5px;
-  border: solid 1px rgba(0, 0, 0, 0.12);
-  padding: 25px 20px 20px;
-  margin-bottom: 30px;
-  .action {
-    margin-bottom: 18px;
-  }
-  .query {
-    display: flex;
-    align-items: flex-start;
-  }
-}
 .dialog-input-form {
   width: 50vw;
   max-width: 80vw;

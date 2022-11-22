@@ -154,6 +154,9 @@ module.exports = configure((ctx) => {
           position: 'bottom-right',
           timeout: 2500,
         },
+        loading: {
+          message: 'Loading...',
+        },
       },
 
       iconSet: 'material-icons', // Quasar icon set

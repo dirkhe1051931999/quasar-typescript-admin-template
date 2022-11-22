@@ -6,6 +6,9 @@
   display: inline-block;
   font-weight: normal;
 }
+.hide {
+  display: none !important;
+}
 // 点点点
 .ellipsis {
   overflow: hidden;
@@ -77,4 +80,18 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.split-line {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.4),
+    transparent
+  );
+  background-color: transparent;
+  opacity: 0.2;
+}
+.text-gradient {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

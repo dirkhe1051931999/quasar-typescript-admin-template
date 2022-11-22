@@ -26,11 +26,5 @@ export default class myComponentApp extends Vue {
 
 
 <style lang="scss">
-.q-card {
-  border-radius: 16px;
-  vertical-align: top;
-  background: #fff;
-  position: relative;
-  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
-}
+@import 'src/css/reset-quasar.scss';
 </style>

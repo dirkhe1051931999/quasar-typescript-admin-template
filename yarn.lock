@@ -49,6 +49,46 @@
   dependencies:
     "@floating-ui/core" "^1.0.1"
 
+"@fullcalendar/common@~5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.11.3.tgz#6d555a06925b8a6d1556570c9f039960539908d5"
+  integrity sha512-welVwyfQOXQQGfDwBMSfYEPbiO1cPfUD+C7jd3ZoweJR+dSO11ddFugxIQ7dGfABAGZ63oq/+LW9FsmAJezVNg==
+  dependencies:
+    tslib "^2.1.0"
+
+"@fullcalendar/core@^5.11.3", "@fullcalendar/core@~5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-5.11.3.tgz#26f276347eb83185e03e4086772910c85406b88e"
+  integrity sha512-YUFxCvVJytUwFeXCx4J17kFMM7Ixwn9zBjVRw5NM2bMwgR6VAhSnlZc6yNQSOIy7Hj2TF0vDkO/4JNlTvxyAXw==
+  dependencies:
+    "@fullcalendar/common" "~5.11.3"
+    preact "^10.0.5"
+    tslib "^2.1.0"
+
+"@fullcalendar/daygrid@^5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-5.11.3.tgz#6bc1f956c95f84438428aa6e7a106c863a791a70"
+  integrity sha512-PCK0y80DRNCzWuC5lGpIWqCgKDvql1ah7rXql5lu+Gn2EeFj15ZQ8diMFjtNIQucEmFaNOXnR05Pgcry1n6Shg==
+  dependencies:
+    "@fullcalendar/common" "~5.11.3"
+    tslib "^2.1.0"
+
+"@fullcalendar/interaction@^5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-5.11.3.tgz#c6712c1305ecb8e975953c7ff462222b49204187"
+  integrity sha512-L955wkDjza62K96ndstvYs2Fd4V0kayTDpqW8W7huFG3Ox8MutpLqKAa2SCaTvcNIlWS4oexGQRiQAaJG7u47A==
+  dependencies:
+    "@fullcalendar/common" "~5.11.3"
+    tslib "^2.1.0"
+
+"@fullcalendar/vue3@^5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/vue3/-/vue3-5.11.3.tgz#3b7ee1971313dc2ed15f8fd8dc00974fb7ed6ba4"
+  integrity sha512-/IjyTKXkdc3V5j1X9tajlMnGbWEbyruiQh9hU9EdKQfAcPze+aXpstdigoi4vYiTUvVsjvLGnaCgMgE+OZsyYw==
+  dependencies:
+    "@fullcalendar/core" "~5.11.3"
+    tslib "^2.1.0"
+
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.7.tgz#38aec044c6c828f6ed51d5d7ae3d9b9faf6dbb0f"
@@ -2816,6 +2856,11 @@ postcss@^8.1.10, postcss@^8.4.13:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+preact@^10.0.5:
+  version "10.11.3"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.11.3.tgz#8a7e4ba19d3992c488b0785afcc0f8aa13c78d19"
+  integrity sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"

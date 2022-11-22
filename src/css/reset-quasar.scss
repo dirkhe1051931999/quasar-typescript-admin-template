@@ -1,0 +1,81 @@
+// 卡片
+.q-card {
+  border-radius: 16px !important;
+  vertical-align: top;
+  position: relative;
+  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px !important;
+  border: none !important;
+}
+// 搜索栏
+.query-form-and-action {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 25px 20px 20px;
+  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+  margin-bottom: 30px;
+  .action {
+    margin-bottom: 16px;
+  }
+}
+
+// 按钮
+.q-btn--rectangle {
+  border-radius: 8px;
+}
+.q-field--outlined .q-field__control {
+  border-radius: 8px;
+}
+// 输入框
+.q-field {
+  .q-field__label {
+    color: #99979c;
+  }
+}
+// 表格
+.q-table__container {
+  border: none !important;
+  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+  border-radius: 8px;
+}
+.q-table {
+  th {
+    color: #8392ab;
+  }
+  tbody {
+    tr {
+      td {
+        &::before {
+          background: rgba(0, 0, 0, 0) !important;
+        }
+      }
+    }
+  }
+}
+/* 滚动条 */
+.scroll::-webkit-scrollbar {
+  background: transparent;
+}
+.scroll::-webkit-scrollbar:vertical {
+  width: 1em;
+}
+.scroll::-webkit-scrollbar:horizontal {
+  height: 1em;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 99999px;
+  border: 0.3125em solid transparent;
+  background-clip: content-box;
+}
+/* table no data */
+.q-table__bottom--nodata {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100px;
+  text-align: center;
+  i {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+}
