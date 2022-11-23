@@ -186,7 +186,7 @@
     >
       <q-card class="dialog-input-form">
         <q-card-section class="row items-center justify-between">
-          <div class="text-h6 bold">{{ dialogAddUpdateParams.title }}</div>
+          <div class="text-h6 f-bold">{{ dialogAddUpdateParams.title }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -415,7 +415,7 @@
     >
       <q-card class="dialog-upload-form">
         <q-card-section class="row items-center justify-between">
-          <div class="text-h6 bold">{{ dialogUpload.title }}</div>
+          <div class="text-h6 f-bold">{{ dialogUpload.title }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -471,8 +471,8 @@
     </q-dialog>
     <q-dialog v-model="dialogDetailParams.visiable" persistent>
       <q-card class="dialog-input-form">
-        <q-card-section class="row items-center justify-between p-b-20">
-          <div class="text-h6 bold">{{ dialogDetailParams.title }}</div>
+        <q-card-section class="row items-center justify-between">
+          <div class="text-h6 f-bold">{{ dialogDetailParams.title }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -1095,91 +1095,4 @@ export default class myComponentStandard extends Vue {
 // }
 </style>
 <style lang="scss" scoped>
-.dialog-input-form {
-  width: 50vw;
-  max-width: 80vw;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  .block-title {
-    font-size: 14px;
-    color: #8c8c8c;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    &::before {
-      content: '';
-      width: 4px;
-      height: 15px;
-      background: var(--q-color-primary);
-      margin-right: 10px;
-      border-radius: 2px;
-    }
-  }
-  .input {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-    .input-item {
-      width: 49%;
-    }
-  }
-}
-.dialog-upload-form {
-  width: 25vw;
-  max-width: 40vw;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  .container-wrap {
-    .title {
-      font-size: 14px;
-      color: #8c8c8c;
-      padding-bottom: 10px;
-    }
-    .container {
-      height: 195px;
-      background: rgba(0, 0, 0, 0.02);
-      border-radius: 4px;
-      border: 1px dashed rgba(0, 0, 0, 0.15);
-      position: relative;
-      .center {
-        width: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        cursor: pointer;
-        img {
-          width: 48px;
-          height: 48px;
-        }
-        .click {
-          color: #262626;
-          font-size: 16px;
-          padding-top: 20px;
-        }
-        .format {
-          color: #8c8c8c;
-          font-size: 12px;
-          padding-top: 5px;
-        }
-        .fileName {
-          color: #8c8c8c;
-          font-size: 12px;
-          padding-top: 10px;
-        }
-      }
-    }
-    .upload-limit {
-      padding-top: 10px;
-      font-size: 14px;
-      color: #595959;
-    }
-  }
-}
 </style>

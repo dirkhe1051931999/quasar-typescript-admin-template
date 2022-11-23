@@ -1,6 +1,6 @@
 # Quasar App (quasar-vue3-admin-template)
 
-Use **vue-facing-decorator(Class syntax)** to Write Vue3 , discard setup syntax , embrace OOP , try your self
+Use **vue-facing-decorator(Class syntax)** to Write Vue3 , discard setup syntax , use vite instead of use webpack , embrace OOP , try my self do it
 
 ### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
 

@@ -95,3 +95,13 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.f-bold {
+  font-family: NotoSans-SemiBold, NotoSansSC-Bold;
+}
+.q-icon.f-bold {
+  font-family: 'Material Icons';
+  font-weight: bold;
+}
+.thin-shadow {
+  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+}

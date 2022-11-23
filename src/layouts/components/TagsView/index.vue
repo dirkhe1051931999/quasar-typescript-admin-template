@@ -1,5 +1,5 @@
 <template>
-  <div class="tags-view-container">
+  <div class="tags-view-container thin-shadow">
     <ScrollPane class="tags-view-wrapper">
       <router-link
         v-for="tag in visitedViews"

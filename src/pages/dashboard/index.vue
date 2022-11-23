@@ -28,7 +28,7 @@
           :key="index"
         >
           <q-card-section
-            class="column items-center justify-center"
+            class="column items-start justify-center"
             style="padding: 0"
           >
             <p class="fs-16 text-grey p-b-10">{{ item.name }}</p>
@@ -36,7 +36,7 @@
               :startVal="0"
               :endVal="item.num"
               :duration="4000"
-              class="fs-20 bold"
+              class="fs-20 f-bold"
             ></CountTo>
           </q-card-section>
           <q-card-section style="padding: 0">
@@ -51,11 +51,11 @@
       <div class="col-6">
         <q-card class="m-l-16 p-16">
           <div>
-            <p class="fs-18 bold p-b-10">Overview</p>
+            <p class="fs-18 f-bold p-b-10">Overview</p>
             <p>
               <q-icon
                 name="arrow_upward"
-                class="text-green fs-18 bold"
+                class="text-green fs-18 f-bold"
               ></q-icon>
               4% more in 2022
             </p>
@@ -67,7 +67,7 @@
         <div class="p-l-16 m-b-16 row m-t-16">
           <div class="col-6">
             <q-card class="text-center p-16">
-              <p class="text-primary fs-48 bold">
+              <p class="text-primary fs-48 f-bold">
                 87 <span class="fs-18">m³</span>
               </p>
               <p class="fs-18 p-t-16 p-b-16">Water</p>
@@ -76,7 +76,7 @@
           </div>
           <div class="col-6 p-l-16">
             <q-card class="text-center p-16">
-              <p class="text-primary fs-48 bold">
+              <p class="text-primary fs-48 f-bold">
                 417 <span class="fs-18">GB</span>
               </p>
               <p class="fs-18 p-t-16 p-b-16">Internet</p>
@@ -89,12 +89,12 @@
     <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
     <div class="row items-startm justify-between">
       <div class="col-6">
-        <q-card class="h-275">
-          <div class="header p-16 p-b-0 bold row items-center justify-between">
-            <div class="title">Consumption by room</div>
+        <q-card class="p-16">
+          <div class="header row items-center justify-between p-b-16">
+            <div class="title fs-18 f-bold">Consumption by room</div>
             <q-icon name="help_outline" class="fs-20"></q-icon>
           </div>
-          <div class="row p-16 items-start">
+          <div class="row items-start">
             <div class="left relative w-300">
               <div class="chart">
                 <canvas
@@ -104,7 +104,7 @@
                 ></canvas>
               </div>
               <div class="w-300 h-200 absolute left-16 top-52">
-                <div class="bold absolute absolute-center">
+                <div class="f-bold absolute absolute-center text-center">
                   <p class="fs-24">471.3</p>
                   <p class="fs-14">WATTS</p>
                 </div>
@@ -207,7 +207,7 @@
       <div class="col-6 row">
         <div class="p-l-16 col-6">
           <q-card class="p-16">
-            <div class="header fs-18 p-b-16">Consumption per day</div>
+            <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
             <div>
               <canvas
                 id="chart-cons-week"
@@ -219,8 +219,8 @@
         </div>
         <div class="p-l-16 col-6">
           <q-card class="p-16">
-            <div class="header fs-18 p-b-16">Consumption per day</div>
-            <div class="text-center">
+            <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
+            <div class="text-center h-200">
               <q-circular-progress
                 show-value
                 font-size="12px"

@@ -8,7 +8,7 @@
       <router-link v-else key="expand" to="/">
         <div class="row items-center p-l-10 p-r-10">
           <img src="~src/assets/slogo.png" class="sidebar-logo" />
-          <div class="text-black fs-14 bold">
+          <div class="text-black fs-14 f-bold">
             {{ PrdTitle }}
           </div>
         </div>
