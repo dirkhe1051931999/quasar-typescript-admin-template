@@ -12,7 +12,6 @@
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 const pkg = require('./package.json');
-const banner = require('vite-plugin-banner');
 const { manualChunksPlugin } = require('vite-plugin-webpackchunkname');
 const setting = require('./src/setting.json');
 const vue = require('@vitejs/plugin-vue');
@@ -34,7 +33,7 @@ module.exports = configure((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'main'],
+    boot: ['i18n', 'axios', 'main', 'register-component'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -51,6 +50,7 @@ module.exports = configure((ctx) => {
 
       'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
+      'material-icons-outlined',
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -101,13 +101,6 @@ module.exports = configure((ctx) => {
       vitePlugins: [
         [
           manualChunksPlugin(),
-          banner(
-            `/**\n * name: ${pkg.name}\n * version: v${
-              pkg.version
-            }\n * description: ${pkg.description}\n * author: ${
-              pkg.author
-            }\n * _: ${new Date().toLocaleString()}\n */`
-          ),
           '@intlify/vite-plugin-vue-i18n',
           {
             // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`

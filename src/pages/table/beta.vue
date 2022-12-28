@@ -1,28 +1,10 @@
 <template>
   <div>
     <div class="query-form-and-action">
-      <div class="action">
-        <q-btn
-          color="primary"
-          icon="add"
-          label="Add"
-          no-caps
-          class="m-r-15 h-40"
-          @click="handleClickAdd"
-        />
-        <q-btn
-          icon="file_upload"
-          label="Upload"
-          outline
-          color="primary"
-          no-caps
-          class="h-40"
-          @click="handleClickUpload"
-        />
-      </div>
+      <div class="action"></div>
       <q-form ref="queryFrom">
         <div class="row">
-          <div class="row items-start col-10">
+          <div class="row items-start">
             <div v-for="(item, index) in queryParams.input" :key="index">
               <q-input
                 v-model.trim="queryParams.params[item.id]"
@@ -36,6 +18,8 @@
                 clearable
                 dense
                 outlined
+                dropdown-icon="app:topbar-arrow-bottom"
+                clear-icon="app:clear"
                 :spellcheck="false"
               />
               <q-select
@@ -53,17 +37,19 @@
                 options-dense
                 outlined
                 emit-value
+                dropdown-icon="app:topbar-arrow-bottom"
+                clear-icon="app:clear"
                 map-options
               />
             </div>
           </div>
-          <div class="col-2">
+          <div>
             <q-btn
               color="primary"
               icon="search"
               :label="$t('action.search')"
               no-caps
-              class="m-r-15 h-40"
+              class="m-r-15"
               :loading="queryParams.queryLoading"
               @click="handleQuery"
             />
@@ -73,7 +59,6 @@
               outline
               color="primary"
               no-caps
-              class="h-40"
               :loading="queryParams.resetLoading"
               @click="handleResetQuery"
             />
@@ -98,6 +83,26 @@
       v-model:selected="tableParams.selected"
       row-key="name"
     >
+      <template #top>
+        <div class="full-width justify-end row">
+          <q-btn
+            color="primary"
+            icon="add"
+            label="Add"
+            no-caps
+            class="m-r-15"
+            @click="handleClickAdd"
+          />
+          <q-btn
+            icon="file_upload"
+            label="Upload"
+            outline
+            color="primary"
+            no-caps
+            @click="handleClickUpload"
+          />
+        </div>
+      </template>
       <template v-slot:header="props">
         <q-tr :props="props">
           <!-- selected -->
@@ -139,38 +144,41 @@
               unchecked-icon="remove"
             />
           </q-td>
-          <!-- ID -->
-          <q-td class="text-left">
-            <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
-          </q-td>
-          <!-- name -->
-          <q-td class="text-left">
-            <span class="link-type" @click="handlerClickDetail(props.row)">{{
-              props.row.name
-            }}</span>
-          </q-td>
           <!-- other -->
           <q-td
-            v-for="col in props.cols.filter((item) => {
-              return !item.inSlot;
-            })"
+            v-for="col in props.cols"
             :key="col.name"
             :props="props"
+            class="text-left"
           >
-            {{ col.value }}
-          </q-td>
-          <!-- action -->
-          <q-td class="text-left">
-            <span
-              class="in-table-link-button"
-              @click="handlerClickUpdate(props.row)"
-              >{{ $t(`action.update`) }}</span
-            >
-            <span
-              class="in-table-delete-button m-l-10"
-              @click="handlerClickDelete(props.row)"
-              >{{ $t(`action.delete`) }}</span
-            >
+            <span v-if="!col.inSlot">{{ col.value }}</span>
+            <div class="text-left" v-else>
+              <!-- id -->
+              <div v-if="col.name === 'id'">
+                <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
+              </div>
+              <!-- name -->
+              <div v-if="col.name === 'name'">
+                <span
+                  class="link-type"
+                  @click="handlerClickDetail(props.row)"
+                  >{{ props.row.name }}</span
+                >
+              </div>
+              <!-- action -->
+              <div v-if="col.name === 'action'">
+                <span
+                  class="in-table-link-button"
+                  @click="handlerClickUpdate(props.row)"
+                  >{{ $t(`action.update`) }}</span
+                >
+                <span
+                  class="in-table-delete-button m-l-10"
+                  @click="handlerClickDelete(props.row)"
+                  >{{ $t(`action.delete`) }}</span
+                >
+              </div>
+            </div>
           </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
@@ -188,352 +196,152 @@
         <q-inner-loading color="primary" showing />
       </template>
     </q-table>
-    <div
-      class="row items-center justify-end q-mt-md"
-      v-if="tableParams.pagination.rowsNumber"
+    <MyPagination
+      :paginationParams="tableParams.pagination"
+      v-if="tableParams.pagination.rowsNumber > 0"
+      @pagination="paginationInput"
+    ></MyPagination>
+    <MyDialog
+      :option="{
+        id: dialogAddUpdateParams.id,
+        dialogType: dialogAddUpdateParams.dialogType,
+        clickLoading: dialogAddUpdateParams.clickLoading,
+        getDataLoading: dialogAddUpdateParams.getDataLoading,
+        visiable: dialogAddUpdateParams.visiable,
+        title: dialogAddUpdateParams.title,
+        params: dialogAddUpdateParams.params,
+      }"
+      @close="dialogAddUpdateCloseEvent"
+      @confirm="dialogAddUpdateConfirmEvent"
+      @before-hide="dialogAddUpdateBeforeHideEvent"
     >
-      <p class="m-r-10">Total {{ tableParams.pagination.rowsNumber }}</p>
-      <q-pagination
-        v-model="tableParams.pagination.page"
-        :input="false"
-        :max-pages="6"
-        :max="
-          tableParams.pagination.rowsNumber /
-            tableParams.pagination.rowsPerPage <
-          1
-            ? 1
-            : Math.ceil(
-                tableParams.pagination.rowsNumber /
-                  tableParams.pagination.rowsPerPage
-              )
-        "
-        @update:model-value="paginationInput"
-        ellipses
-        outline
-        boundary-numbers
-      ></q-pagination>
-    </div>
-    <q-dialog
-      v-model="dialogAddUpdateParams.visiable"
-      persistent
-      @before-hide="monitorDialogAddUpdateHide"
-    >
-      <q-card class="dialog-input-form">
-        <q-card-section class="row items-center justify-between">
-          <div class="text-h6 f-bold">{{ dialogAddUpdateParams.title }}</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-card-section class="p-b-30 scroll" style="max-height: 50vh">
-          <q-form :ref="dialogAddUpdateParams.id">
-            <div v-for="(fahter, i) in dialogAddUpdateParams.input" :key="i">
-              <div class="block-title">{{ fahter[0] }}</div>
-              <div class="input">
-                <div
-                  v-for="(item, index) in fahter[1]"
-                  :key="index"
-                  class="input-item"
-                >
-                  <q-input
-                    v-if="item.type === 'text'"
-                    v-model.trim="dialogAddUpdateParams.params[item.id]"
-                    :class="[
-                      {
-                        'm-b-30':
-                          !item.rules || (item.rules && !item.rules.length),
-                        'm-b-15': item.rules && item.rules.length,
-                      },
-                      item.class,
-                    ]"
-                    :label="
-                      item.requiredPlaceholder
-                        ? item.requiredPlaceholder
-                        : item.placeholder
-                    "
-                    :rules="item.rules || []"
-                    :spellcheck="false"
-                    :type="item.inputType || 'text'"
-                    :rows="item.rows || 1"
-                    :disable="item.disable"
-                    :readonly="item.readonly"
-                    :ref="dialogAddUpdateParams.id + '_' + item.id"
-                    @update:model-value="
-                      monitorDialogInputChange(
-                        item.id,
-                        dialogAddUpdateParams.id
-                      )
-                    "
-                    autocapitalize="off"
-                    autocomplete="new-password"
-                    autocorrect="off"
-                    clearable
-                    outlined
-                    dense
-                  >
-                  </q-input>
-                  <q-select
-                    v-if="item.type === 'select'"
-                    v-model="dialogAddUpdateParams.params[item.id]"
-                    :class="[
-                      {
-                        'm-b-30':
-                          !item.rules || (item.rules && !item.rules.length),
-                        'm-b-15': item.rules && item.rules.length,
-                      },
-                      item.class,
-                    ]"
-                    :options="item.selectOption"
-                    :label="
-                      item.requiredPlaceholder
-                        ? item.requiredPlaceholder
-                        : item.placeholder
-                    "
-                    :rules="item.rules || []"
-                    :disable="item.disable"
-                    :readonly="item.readonly"
-                    :ref="dialogAddUpdateParams.id + '_' + item.id"
-                    @update:model-value="
-                      monitorDialogInputChange(
-                        item.id,
-                        dialogAddUpdateParams.id
-                      )
-                    "
-                    :spellcheck="false"
-                    autocapitalize="off"
-                    autocomplete="new-password"
-                    autocorrect="off"
-                    clearable
-                    dense
-                    options-dense
-                    emit-value
-                    map-options
-                    outlined
-                  />
-                  <q-input
-                    v-if="item.type === 'date'"
-                    v-model="dialogAddUpdateParams.params[item.id]"
-                    :label="
-                      item.requiredPlaceholder
-                        ? item.requiredPlaceholder
-                        : item.placeholder
-                    "
-                    :rules="item.rules || []"
-                    :disable="item.disable"
-                    :readonly="item.readonly"
-                    :ref="dialogAddUpdateParams.id + '_' + item.id"
-                    :spellcheck="false"
-                    autocapitalize="off"
-                    autocomplete="new-password"
-                    autocorrect="off"
-                    clearable
-                    outlined
-                    dense
-                  >
-                    <template v-slot:prepend>
-                      <q-icon
-                        name="event"
-                        :class="{ 'cursor-pointer': !item.disableSelectDate }"
-                      >
-                        <q-popup-proxy
-                          transition-show="scale"
-                          transition-hide="scale"
-                          v-if="!item.disableSelectDate"
-                        >
-                          <q-date
-                            v-model="dialogAddUpdateParams.params[item.id]"
-                            mask="YYYY-MM-DD HH:mm:ss"
-                            @update:model-value="
-                              monitorDialogInputChange(
-                                item.id,
-                                dialogAddUpdateParams.id
-                              )
-                            "
-                          >
-                            <div class="row items-center justify-end">
-                              <q-btn
-                                v-close-popup
-                                :label="$t(`action.confirm`)"
-                                color="primary"
-                                flat
-                              />
-                            </div>
-                          </q-date>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                    <template v-slot:append>
-                      <q-icon
-                        style="color: rgba(0, 0, 0, 0.32)"
-                        name="cancel"
-                        v-show="dialogAddUpdateParams.params[item.id]"
-                        class="cursor-pointer"
-                        @click.prevent.stop="
-                          dialogAddUpdateParams.params[item.id] = ''
-                        "
-                        v-if="!item.disableSelectDate && item.readonly"
-                      ></q-icon>
-                      <q-icon
-                        name="access_time"
-                        class="cursor-pointer"
-                        v-if="!item.disableSelectDate"
-                      >
-                        <q-popup-proxy
-                          transition-show="scale"
-                          transition-hide="scale"
-                        >
-                          <q-time
-                            v-model="dialogAddUpdateParams.params[item.id]"
-                            mask="YYYY-MM-DD HH:mm:ss"
-                            format24h
-                            with-seconds
-                            @update:model-value="
-                              monitorDialogInputChange(
-                                item.id,
-                                dialogAddUpdateParams.id
-                              )
-                            "
-                          >
-                            <div class="row items-center justify-end">
-                              <q-btn
-                                v-close-popup
-                                :label="$t(`action.confirm`)"
-                                color="primary"
-                                flat
-                              />
-                            </div>
-                          </q-time>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
-                </div>
-              </div>
-            </div>
-          </q-form>
-        </q-card-section>
-        <q-separator />
-        <q-card-section
-          align="right"
-          v-if="
-            dialogAddUpdateParams.dialogType === 'add' ||
-            dialogAddUpdateParams.dialogType === 'update'
-          "
+      <div class="row q-col-gutter-x-md">
+        <div
+          v-for="(item, index) in dialogAddUpdateParams.input"
+          :key="index"
+          class="col-6"
         >
-          <q-btn
-            :label="$t(`action.cancel`)"
-            v-close-popup
-            :disable="dialogAddUpdateParams.clickLoading"
-            outline
-            color="primary"
-            class="w-80"
-          />
-          <q-btn
-            :label="$t(`action.confirm`)"
-            color="primary"
-            @click="
-              dialogAddUpdateParams.dialogType === 'add'
-                ? handlerClickDialogConfirmAddButton()
-                : handlerClickDialogConfirmUpdateButton()
+          <MyFormSelect
+            v-if="item.type === 'select'"
+            :option="{
+              inputRules: item.inputRules,
+              inputClass: item.inputClass,
+              inputModel: dialogAddUpdateParams.params[item.inputModel],
+              inputLabel: item.inputLabel,
+              inputSelectOption: item.inputSelectOption,
+            }"
+            @input="
+              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
             "
-            class="w-80 m-l-20"
-            :loading="dialogAddUpdateParams.clickLoading"
           />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-    <q-dialog
-      v-model="dialogUpload.visiable"
-      persistent
-      @before-hide="monitorDialogUploadHide"
+          <MyFormDate
+            v-if="item.type === 'date'"
+            :option="{
+              inputRules: item.inputRules,
+              inputClass: item.inputClass,
+              inputModel: dialogAddUpdateParams.params[item.inputModel],
+              inputLabel: item.inputLabel,
+            }"
+            @input="
+              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
+            "
+          />
+          <MyFormMultipleSelect
+            v-if="item.type === 'multiplSelect'"
+            :option="{
+              inputRules: item.inputRules,
+              inputClass: item.inputClass,
+              inputModel: dialogAddUpdateParams.params[item.inputModel],
+              inputLabel: item.inputLabel,
+              inputSelectOption: item.inputSelectOption,
+              multiple: item.multiple,
+            }"
+            @input="
+              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
+            "
+          />
+          <MyFormInput
+            v-if="item.type === 'text'"
+            :option="{
+              inputModel: dialogAddUpdateParams.params[item.inputModel],
+              inputRules: item.inputRules,
+              inputClass: item.inputClass,
+              inputLabel: item.inputLabel,
+            }"
+            @input="
+              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
+            "
+          ></MyFormInput>
+        </div>
+      </div>
+    </MyDialog>
+    <MyDialog
+      :option="{
+        id: dialogUpload.id,
+        dialogType: 'upload',
+        clickLoading: dialogUpload.clickLoading,
+        getDataLoading: dialogUpload.getDataLoading,
+        visiable: dialogUpload.visiable,
+        title: dialogUpload.title,
+        params: dialogUpload.params,
+      }"
+      @close="dialogUploadCloseEvent"
+      @confirm="hanleCLickUploadConfirm"
+      @before-hide="dialogUploadBeforeHideEvent"
     >
-      <q-card class="dialog-upload-form">
-        <q-card-section class="row items-center justify-between">
-          <div class="text-h6 f-bold">{{ dialogUpload.title }}</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-card-section
-          q-card-section
-          class="p-b-30 scroll container-wrap"
-          style="max-height: 50vh"
-        >
-          <input
-            type="file"
-            class="hide"
-            :ref="dialogUpload.id"
-            accept=".xls"
-            :draggable="false"
-            @change="uploadFileSuccess"
-          />
-          <div class="title">Click to upload</div>
-          <div class="container">
-            <div class="center" @click="handleClickUploadFile">
-              <img src="~assets/inbox.png" alt />
-              <p class="click">Click to upload</p>
-              <p class="format">File type is: xlsx</p>
-              <p class="fileName" v-if="dialogUpload.params.fileName">
-                {{ dialogUpload.params.fileName }}
-              </p>
-            </div>
+      <div class="dialog-upload-form">
+        <input
+          type="file"
+          class="hide"
+          :ref="dialogUpload.fileID"
+          :accept="dialogUpload.accept"
+          :draggable="false"
+          @change="uploadFileSuccess"
+        />
+        <div class="container">
+          <div class="center" @click="handleClickUploadFile">
+            <img src="~assets/inbox.png" alt />
+            <p class="click">Click to upload</p>
+            <p class="format">File type is: xlsx</p>
+            <p class="fileName" v-if="dialogUpload.params.fileName">
+              {{ dialogUpload.params.fileName }}
+            </p>
           </div>
-          <div class="upload-limit">
-            <span class="link-type">{{ $t('action.download_template') }}</span>
-            Here's some text
-          </div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section align="right">
-          <q-btn
-            :label="$t(`action.cancel`)"
-            v-close-popup
-            :disable="dialogUpload.clickLoading"
-            outline
-            color="primary"
-            class="w-80"
-          />
-          <q-btn
-            :label="$t(`action.confirm`)"
-            color="primary"
-            @click="hanleCLickUploadConfirm()"
-            class="w-80 m-l-20"
-            :loading="dialogUpload.clickLoading"
-          />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-    <q-dialog v-model="dialogDetailParams.visiable" persistent>
-      <q-card class="dialog-detail">
-        <q-card-section class="row items-center justify-between">
-          <div class="text-h6 f-bold">{{ dialogDetailParams.title }}</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-card-section
-          class="p-t-10 p-l-0 p-r-0 scroll"
-          style="max-height: 50vh"
+        </div>
+        <div class="upload-limit">
+          <span class="link-type">{{ $t('action.download_template') }}</span>
+          Here's some text
+        </div>
+      </div>
+    </MyDialog>
+    <MyDialog
+      :option="{
+        id: dialogDetailParams.id,
+        dialogType: 'detail',
+        clickLoading: dialogDetailParams.clickLoading,
+        getDataLoading: dialogDetailParams.getDataLoading,
+        visiable: dialogDetailParams.visiable,
+        title: dialogDetailParams.title,
+        params: dialogDetailParams.params,
+        showAction: false,
+      }"
+      @close="dialogDetailCloseEvent"
+      @before-hide="dialogDetailBeforeHideEvent"
+    >
+      <q-list class="row q-col-gutter-x-md">
+        <q-item
+          v-for="(item, index) in dialogDetailParams.params"
+          :key="index"
+          :clickable="false"
+          class="col-6"
         >
-          <q-list class="input">
-            <q-item
-              v-for="(item, index) in dialogDetailParams.data"
-              :key="index"
-              class="input-item"
-              v-ripple
-              clickable
-            >
-              <q-item-section>
-                <q-item-label caption>{{ item.label }}：</q-item-label>
-                <q-item-label :class="item.class">{{
-                  item.value
-                }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+          <q-item-section>
+            <q-item-label caption>{{ item.label }}：</q-item-label>
+            <q-item-label :class="item.class">{{ item.value }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </MyDialog>
   </div>
 </template>
 
@@ -541,9 +349,10 @@
 import { cloneDeep } from 'lodash';
 import { Component, Vue, Watch } from 'vue-facing-decorator';
 import { defaultFill } from 'src/utils/tools';
+import { getCurrentInstance } from 'vue';
 const CONST_PARAMS: any = {
   query: { a: '', b: '', c: '' },
-  dialog_add_update: { a: '', b: '', c: '', d: '', e: '' },
+  dialog_add_update: { a: '', b: '', c: '', d: [], e: '' },
 };
 @Component({
   name: 'myComponentTableBeta',
@@ -552,6 +361,7 @@ export default class myComponentTableBeta extends Vue {
   /**instance */
   declare $refs: any;
   /**params */
+  private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private queryParams: any = {
     id: 'query',
     queryLoading: false,
@@ -723,117 +533,113 @@ export default class myComponentTableBeta extends Vue {
     title: '',
     params: cloneDeep(CONST_PARAMS.dialog_add_update),
     input: [
-      [
-        'text 1',
-        [
-          {
-            placeholder: 'username',
-            type: 'text',
-            class: '',
-            inputType: 'text',
-            id: 'a',
-            readonly: false,
-            disable: false,
-            rules: [],
-          },
-          {
-            placeholder: 'new password',
-            requiredPlaceholder: '* new password',
-            type: 'text',
-            class: 'input-password',
-            inputType: 'text',
-            id: 'b',
-            readonly: false,
-            disable: false,
-            rules: [
-              (val: string) =>
-                (val && val.length > 0) || 'please enter password',
-              (val: string) =>
-                (val && val.length >= 8 && val.length <= 28) ||
-                'password length is 8-28',
-            ],
-          },
-          {
-            placeholder: 'select',
-            requiredPlaceholder: '* select',
-            type: 'select',
-            class: '',
-            selectOption: [
-              {
-                label: 'option1',
-                value: '1',
-              },
-              {
-                label: 'option2',
-                value: '2',
-              },
-            ],
-            id: 'c',
-            readonly: false,
-            disable: false,
-            rules: [
-              (val: string) =>
-                (val && val.length > 0) || 'please select option',
-            ],
+      {
+        inputModel: 'a',
+        type: 'text',
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
           },
         ],
-      ],
-      [
-        'text 2',
-        [
-          {
-            placeholder: 'start time',
-            requiredPlaceholder: '* start time',
-            type: 'date',
-            class: '',
-            id: 'd',
-            readonly: true,
-            disable: false,
-            disableSelectDate: false,
-            rules: [
-              (val: string): any => {
-                return (
-                  +new Date(val) <
-                    +new Date(this.dialogAddUpdateParams.params.e) ||
-                  'start time < end time'
-                );
-              },
-            ],
-          },
-          {
-            placeholder: 'end time',
-            requiredPlaceholder: '* end time',
-            type: 'date',
-            class: '',
-            id: 'e',
-            readonly: true,
-            disable: false,
-            disableSelectDate: false,
-            rules: [
-              (val: string): any => {
-                return (
-                  +new Date(val) >
-                    +new Date(this.dialogAddUpdateParams.params.d) ||
-                  'start time < end time'
-                );
-              },
-            ],
+        inputLabel: 'Username',
+      },
+      {
+        inputModel: 'b',
+        type: 'text',
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
           },
         ],
-      ],
+        inputClass: 'input-password',
+        inputLabel: 'New password',
+      },
+      {
+        inputModel: 'c',
+        type: 'select',
+        inputSelectOption: [
+          {
+            label: 'option1',
+            value: '1',
+          },
+          {
+            label: 'option2',
+            value: '2',
+          },
+        ],
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
+          },
+        ],
+        inputLabel: 'select',
+      },
+      {
+        inputModel: 'd',
+        type: 'multiplSelect',
+        multiple: true,
+        inputSelectOption: [
+          {
+            label: 'option1',
+            value: '1',
+          },
+          {
+            label: 'option2',
+            value: '2',
+          },
+        ],
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
+          },
+        ],
+        inputLabel: 'Multipl Select',
+      },
+      {
+        inputModel: 'e',
+        type: 'date',
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
+          },
+        ],
+        inputClass: '',
+        inputLabel: 'Date',
+      },
     ],
   };
   private dialogUpload = {
-    id: 'dialog_upload_file',
+    id: 'dialog-upload-file',
+    fileID: 'dialog_upload_file',
     clickLoading: false,
+    getDataLoading: false,
     visiable: false,
     title: '',
+    accept: '.xls',
     params: { file: '', fileName: '' },
   };
   private dialogDetailParams = {
-    title: 'Detail',
+    id: 'dialog-upload-file',
+    getDataLoading: false,
+    clickLoading: false,
     visiable: false,
-    data: [
+    title: 'Detail',
+    params: [
       { label: 'Name', value: '', id: 'name', class: '' },
       { label: 'Sex', value: '', id: 'sex', class: '' },
       { label: 'C', value: '', id: 'c', class: '' },
@@ -871,7 +677,37 @@ export default class myComponentTableBeta extends Vue {
   private handleClickAdd() {
     this.dialogAddUpdateParams.visiable = true;
     this.dialogAddUpdateParams.dialogType = 'add';
-    this.dialogAddUpdateParams.title = 'add';
+    this.dialogAddUpdateParams.title = 'Add';
+  }
+  private handlerClickUpdate(row: any) {
+    this.dialogAddUpdateParams.visiable = true;
+    this.dialogAddUpdateParams.dialogType = 'update';
+    this.dialogAddUpdateParams.title = 'Update';
+  }
+  private handleClickUpload() {
+    this.dialogUpload.visiable = true;
+    this.dialogUpload.title = 'Upload';
+    this.$nextTick(() => {
+      this.$refs[this.dialogUpload.fileID].type = 'text';
+      this.dialogUpload.params.fileName = '';
+      this.dialogUpload.params.file = '';
+      setTimeout(() => {
+        this.$refs[this.dialogUpload.fileID].type = 'file';
+        this.$refs[this.dialogUpload.fileID].value = '';
+      }, 100);
+    });
+  }
+  private handleClickUploadFile() {
+    this.$refs[this.dialogUpload.fileID].click();
+  }
+  private uploadFileSuccess() {
+    const files = this.$refs[this.dialogUpload.fileID].files;
+    let postFiles = Array.prototype.slice.call(files);
+    postFiles = postFiles.slice(0, 1);
+    postFiles.forEach((rawFile: any) => {
+      this.dialogUpload.params.fileName = rawFile.name;
+      this.dialogUpload.params.file = rawFile;
+    });
   }
   private handlerClickDetail(row: any) {
     const getValue = (row: any, key: string): string => {
@@ -885,12 +721,12 @@ export default class myComponentTableBeta extends Vue {
     const getClass = (row: any, key: string): string => {
       switch (key) {
         case 'sex':
-          return 'text-red';
+          return 'text-primary';
         default:
           return '';
       }
     };
-    const arr = cloneDeep(this.dialogDetailParams.data);
+    const arr = cloneDeep(this.dialogDetailParams.params);
     for (let item of arr) {
       for (let key in row) {
         if (item.id === key) {
@@ -899,79 +735,36 @@ export default class myComponentTableBeta extends Vue {
         }
       }
     }
-    this.dialogDetailParams.data = arr;
+    this.dialogDetailParams.params = arr;
     this.dialogDetailParams.visiable = true;
-  }
-  private handlerClickUpdate(row: any) {
-    this.dialogAddUpdateParams.visiable = true;
-    this.dialogAddUpdateParams.dialogType = 'update';
-    this.dialogAddUpdateParams.title = 'update';
-  }
-  private handleClickUpload() {
-    this.dialogUpload.visiable = true;
-    this.dialogUpload.title = 'Upload';
-    this.$nextTick(() => {
-      this.$refs[this.dialogUpload.id].type = 'text';
-      this.dialogUpload.params.fileName = '';
-      this.dialogUpload.params.file = '';
-      setTimeout(() => {
-        this.$refs[this.dialogUpload.id].type = 'file';
-        this.$refs[this.dialogUpload.id].value = '';
-      }, 100);
-    });
-  }
-  private handleClickUploadFile() {
-    this.$refs[this.dialogUpload.id].click();
-  }
-  private uploadFileSuccess() {
-    const files = this.$refs[this.dialogUpload.id].files;
-    let postFiles = Array.prototype.slice.call(files);
-    postFiles = postFiles.slice(0, 1);
-    postFiles.forEach((rawFile: any) => {
-      this.dialogUpload.params.fileName = rawFile.name;
-      this.dialogUpload.params.file = rawFile;
-    });
-  }
-  private _findDialogInputIndex(id: string) {
-    const input = this.dialogAddUpdateParams.input;
-    const index = input.findIndex((item: any) => {
-      return item.id === id;
-    });
-    return index;
-  }
-  // 监听dialog input input事件
-  private monitorDialogInputChange(input_id: any, formId: any) {
-    if (input_id === 'd' || input_id === 'e') {
-      if (
-        this.$refs[`${this.dialogAddUpdateParams.id}_d`] &&
-        this.$refs[`${this.dialogAddUpdateParams.id}_d`][0] &&
-        this.$refs[`${this.dialogAddUpdateParams.id}_e`] &&
-        this.$refs[`${this.dialogAddUpdateParams.id}_e`][0]
-      ) {
-        this.$refs[`${this.dialogAddUpdateParams.id}_d`][0].validate();
-        this.$refs[`${this.dialogAddUpdateParams.id}_e`][0].validate();
-      }
-    }
-
-    if (input_id === 'password') {
-      // this.dialogAddUpdateParams.input.password = this.dialogAddUpdateParams.params.password.replace(/[\u4e00-\u9fa5]/gi, '');
-      // this.$refs.dialogRePassword[0].validate();
-    }
-    if (input_id === 'rePassword') {
-      // this.dialogAddUpdateParams.params.rePassword = this.dialogAddUpdateParams.params.rePassword.replace(/[\u4e00-\u9fa5]/gi, '');
-      // this.$refs.dialogPassword[0].validate();
-    }
-  }
-  // 监听dialog隐藏
-  private monitorDialogAddUpdateHide() {
-    this.dialogAddUpdateParams.params = cloneDeep(
-      CONST_PARAMS[this.dialogAddUpdateParams.id]
-    );
-    this.$refs[this.dialogAddUpdateParams.id].resetValidation();
   }
   private monitorDialogUploadHide() {
     this.dialogUpload.params.fileName = '';
     this.dialogUpload.params.file = '';
+  }
+  private dialogAddUpdateCloseEvent(data: { type: string }) {
+    this.dialogAddUpdateParams.visiable = false;
+  }
+  private dialogAddUpdateBeforeHideEvent(data: { type: string; params: any }) {
+    if (data.params) {
+      this.dialogAddUpdateParams.params = data.params;
+    }
+  }
+  private dialogUploadCloseEvent(data: { type: string }) {
+    this.dialogUpload.visiable = false;
+  }
+  private dialogUploadBeforeHideEvent(data: { type: string; params: any }) {
+    if (data.params) {
+      this.dialogUpload.params = data.params;
+    }
+  }
+  private dialogDetailCloseEvent(data: { type: string }) {
+    this.dialogDetailParams.visiable = false;
+  }
+  private dialogDetailBeforeHideEvent(data: { type: string; params: any }) {
+    if (data.params) {
+      this.dialogAddUpdateParams.params = data.params;
+    }
   }
   /**http */
   private getData() {
@@ -984,135 +777,46 @@ export default class myComponentTableBeta extends Vue {
       return Promise.resolve();
     }
   }
-  // 确定新增
-  private handlerClickDialogConfirmAddButton() {
-    this.$refs[this.dialogAddUpdateParams.id]
-      .validate()
-      .then(async (valid: boolean) => {
-        if (valid) {
-          this.$q
-            .dialog({
-              title: this.$t('messages.tishi') as string,
-              message: this.$t('messages.addConfirm') as string,
-              cancel: true,
-              persistent: true,
-            })
-            .onOk(async () => {
-              try {
-                this.dialogAddUpdateParams.clickLoading = true;
-                // await HTTP_REQUEST()
-                this.dialogAddUpdateParams.clickLoading = false;
-                this.dialogAddUpdateParams.visiable = false;
-                this.$q.notify({
-                  message: 'Add success',
-                  color: 'primary',
-                  multiLine: true,
-                  icon: 'mood',
-                  actions: [
-                    {
-                      label: 'Close',
-                      color: 'white',
-                    },
-                  ],
-                });
-                this.getData();
-              } catch (error) {
-                this.dialogAddUpdateParams.clickLoading = false;
-              }
-            });
-        }
+  private async dialogAddUpdateConfirmEvent() {
+    try {
+      this.dialogAddUpdateParams.clickLoading = true;
+      // await HTTP_REQUEST()
+      this.dialogAddUpdateParams.clickLoading = false;
+      this.dialogAddUpdateParams.visiable = false;
+      this.$globalMessage.show({
+        type: 'success',
+        content: this.$t('messages.success'),
       });
+      this.getData();
+    } catch (error) {
+      this.dialogAddUpdateParams.clickLoading = false;
+    }
   }
-  // 确定更新
-  private handlerClickDialogConfirmUpdateButton() {
-    this.$refs[this.dialogAddUpdateParams.id]
-      .validate()
-      .then(async (valid: boolean) => {
-        if (valid) {
-          this.$q
-            .dialog({
-              title: this.$t('messages.tishi') as string,
-              message: this.$t('messages.updateConfirm') as string,
-              cancel: true,
-              persistent: true,
-            })
-            .onOk(() => {
-              try {
-                this.dialogAddUpdateParams.clickLoading = true;
-                // await HTTP_REQUEST()
-                this.dialogAddUpdateParams.clickLoading = false;
-                this.dialogAddUpdateParams.visiable = false;
-                this.$q.notify({
-                  message: 'Update success',
-                  color: 'primary',
-                  multiLine: true,
-                  icon: 'mood',
-                  actions: [
-                    {
-                      label: 'Close',
-                      color: 'white',
-                    },
-                  ],
-                });
-                this.getData();
-              } catch (error) {
-                this.dialogAddUpdateParams.clickLoading = false;
-              }
-            });
-        }
+  private async handlerClickDelete(row: any) {
+    try {
+      await this.$globalConfirm.show({
+        title: this.$t('messages.tishi'),
+        color: 'primary',
+        content: this.$t('messages.areYouSure'),
+        confirmButtonText: this.$t('action.yes'),
       });
-  }
-  private handlerClickDelete(row: any) {
-    this.$q
-      .dialog({
-        title: this.$t('messages.tishi') as string,
-        message: this.$t('messages.deleteConfirm') as string,
-        cancel: true,
-        persistent: true,
-      })
-      .onOk(() => {
-        if (
-          this.tableParams.data.length === 1 &&
-          this.tableParams.pagination.page > 1
-        ) {
-          this.tableParams.pagination.page--;
-        }
-        try {
-          // await HTTP_REQUEST()
-          this.$q.notify({
-            message: 'Delete success',
-            color: 'primary',
-            multiLine: true,
-            icon: 'mood',
-            actions: [
-              {
-                label: 'Close',
-                color: 'white',
-              },
-            ],
-          });
-          this.getData();
-        } catch (error) {}
-        // console.log('OK')
+      // await HTTP_REQUEST()
+      this.$globalMessage.show({
+        type: 'success',
+        content: this.$t('messages.success'),
       });
+      this.getData();
+    } catch (error) {}
   }
-  private hanleCLickUploadConfirm() {
+  private async hanleCLickUploadConfirm() {
     try {
       const form = new FormData();
       form.append('file', this.dialogUpload.params.file);
       this.dialogUpload.clickLoading = true;
       // await HTTP_REQUEST()
-      this.$q.notify({
-        message: 'Upload success',
-        color: 'primary',
-        multiLine: true,
-        icon: 'mood',
-        actions: [
-          {
-            label: 'Close',
-            color: 'white',
-          },
-        ],
+      this.$globalMessage.show({
+        type: 'success',
+        content: this.$t('messages.success'),
       });
       this.dialogUpload.clickLoading = false;
       this.dialogUpload.visiable = false;

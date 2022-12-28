@@ -419,18 +419,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
           import(/* webpackChunkName: "table-index" */ 'pages/table/index.vue'),
       },
       {
-        path: 'standard',
-        name: 'table-standard',
-        meta: {
-          title: 'table-standard',
-          icon: 'label',
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "table-standard" */ 'pages/table/standard.vue'
-          ),
-      },
-      {
         path: 'beta',
         name: 'table-beta',
         meta: {

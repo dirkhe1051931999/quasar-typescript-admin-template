@@ -120,6 +120,8 @@ export default {
     setting: 'settings',
     ip: 'IP',
     per: 'per',
+    total: 'Total',
+    pieces_page: 'Pieces/Page',
   },
   messages: {
     failed: 'Action failed',
@@ -129,6 +131,11 @@ export default {
     deleteConfirm: 'Are you sure you want to delete? ',
     updateConfirm: 'Are you sure you want to update? ',
     bindConfirm: 'Are you sure you want to bind? ',
+    areYouSure: 'Are you sure?',
+    required: 'Required',
+    pleaseEnter: 'Please enter',
+    pleaseSelect: 'Please select',
+    pleaseSelectDate: 'Please click right icon select date or time',
     // success: {
     //   login: '登录成功',
     //   logout: '退出成功',
@@ -151,6 +158,7 @@ export default {
     // },
   },
   action: {
+    yes: 'Yes',
     add: 'Add',
     delete: 'Delete',
     update: 'Edit',

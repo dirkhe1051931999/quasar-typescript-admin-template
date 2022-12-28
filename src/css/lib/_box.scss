@@ -43,6 +43,34 @@
     }
   }
 }
+
+@for $size from 1 through 1000 {
+  .m-x-#{$size},
+  .margin-x-#{$size} {
+    margin-left: #{$size}px;
+    margin-right: #{$size}px;
+  }
+  @if $size >= 0 {
+    .p-x-#{$size},
+    .padding-x-#{$size} {
+      padding-left: #{$size}px;
+      padding-right: #{$size}px;
+    }
+  }
+  .m-y-#{$size},
+  .margin-y-#{$size} {
+    margin-top: #{$size}px;
+    margin-bottom: #{$size}px;
+  }
+  @if $size >= 0 {
+    .p-y-#{$size},
+    .padding-y-#{$size} {
+      padding-top: #{$size}px;
+      padding-bottom: #{$size}px;
+    }
+  }
+}
+
 @for $size from 0 through 1000 {
   .left-#{$size} {
     left: #{$size}px;

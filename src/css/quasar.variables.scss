@@ -14,12 +14,23 @@
 
 $dark: #1d1d1d;
 $black: #252631;
-$dark-page: #121212;
 $primary: #5469d4;
-$positive: #21ba45;
-$negative: #e93030;
-$info: #31ccec;
-$warning: #f2c037;
+$blue: #5469d4;
+$blue-1: rgba(85, 105, 212, 0.5);
+$blue-2: rgba(85, 105, 212, 0.08);
+$negative: rgb(234, 6, 6);
+$negative-1: rgb(253, 226, 226);
+$negative-2: rgb(234, 6, 6, 0.08);
+$yellow: rgb(237, 106, 12);
+$yellow-1: rgb(253, 246, 236);
+$yellow-2: rgb(237, 106, 12, 0.08);
+$green: rgba(45, 166, 65, 1);
+$green-1: rgb(225, 243, 216);
+$green-2: rgb(103, 194, 58, 0.08);
+$grey: #969799;
+$grey-1: #fafafb;
+$grey-2: #f8f9fd;
+$grey-3: #999db4;
 
 // font-size
 $font-size-em-through: 10 !default;

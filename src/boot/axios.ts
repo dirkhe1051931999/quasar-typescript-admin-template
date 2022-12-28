@@ -16,10 +16,10 @@ declare module '@vue/runtime-core' {
 // for each client)
 
 axios.defaults.timeout = 25000;
-axios.defaults.headers = {
-  'Access-Control-Allow-Origin': '*',
-  'X-Requested-With': 'XMLHttpRequest',
-};
+// axios.defaults.headers = {
+//   'Access-Control-Allow-Origin': '*',
+//   'X-Requested-With': 'XMLHttpRequest',
+// };
 axios.defaults.baseURL = '';
 // Request interceptors
 axios.interceptors.request.use(

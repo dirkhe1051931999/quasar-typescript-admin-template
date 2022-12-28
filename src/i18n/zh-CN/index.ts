@@ -120,6 +120,8 @@ export default {
     setting: '设置',
     ip: 'IP',
     per: '个',
+    pieces_page: '每页展示数',
+    total: '共计',
   },
   messages: {
     failed: '操作失败',
@@ -129,6 +131,11 @@ export default {
     deleteConfirm: '确定要删除吗？',
     updateConfirm: '确定要更新吗？',
     bindConfirm: '确定要绑定吗？',
+    areYouSure: '确定吗？',
+    required: '必填',
+    pleaseEnter: '请输入',
+    pleaseSelect: '请选择',
+    pleaseSelectDate: '请点击右侧图标选择日期或时间',
     // success: {
     //   login: '登录成功',
     //   logout: '退出成功',
@@ -151,6 +158,7 @@ export default {
     // },
   },
   action: {
+    yes: '确定',
     add: '新增',
     delete: '删除',
     update: '编辑',

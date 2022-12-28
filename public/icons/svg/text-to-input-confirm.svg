@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>console设计规范</title>
+    <g id="物联网平台11.29" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="console设计规范" transform="translate(-773.000000, -488.000000)">
+            <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="1440" height="1872"></rect>
+            <g id="编组" transform="translate(773.000000, 488.000000)">
+                <rect id="矩形备份" x="0" y="0" width="24" height="24"></rect>
+                <path d="M12,2 C6.477,2 2,6.478 2,12 C2,17.522 6.477,22 12,22 C17.523,22 22,17.522 22,12 C22,6.478 17.523,2 12,2" id="Path" fill="#F5F5F8" fill-rule="nonzero"></path>
+                <path d="M14.7046,8.3945 L10.9206,13.3635 L9.2876,11.2775 C8.9476,10.8415 8.3176,10.7655 7.8836,11.1065 C7.4486,11.4465 7.3716,12.0755 7.7126,12.5095 L10.1436,15.6165 C10.3336,15.8585 10.6236,15.9995 10.9316,15.9995 L10.9386,15.9995 C11.2476,15.9985 11.5396,15.8525 11.7266,15.6055 L16.2956,9.6055 C16.6306,9.1655 16.5456,8.5395 16.1056,8.2045 C15.6646,7.8695 15.0386,7.9555 14.7046,8.3945" id="Fill-1676" fill="#858597" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

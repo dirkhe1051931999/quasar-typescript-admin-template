@@ -334,17 +334,9 @@ export default class LoginPage extends Vue {
       verifyCodeResult = this.verifyCodeInstance.validate(this.verifyCode);
     }
     if (!verifyCodeResult) {
-      this.$q.notify({
-        message: 'Wrong verification code',
-        color: 'negative',
-        multiLine: true,
-        icon: 'mood_bad',
-        actions: [
-          {
-            label: 'Close',
-            color: 'white',
-          },
-        ],
+      this.$globalMessage.show({
+        type: 'error',
+        content: 'Wrong verification code',
       });
       return;
     }
@@ -366,17 +358,9 @@ export default class LoginPage extends Vue {
           this.$q.loading.hide();
           this.useSwipeVerifyCode = false;
           this.useVerifyCode = false;
-          this.$q.notify({
-            message: 'success',
-            color: 'primary',
-            multiLine: true,
-            icon: 'mood',
-            actions: [
-              {
-                label: 'Close',
-                color: 'white',
-              },
-            ],
+          this.$globalMessage.show({
+            type: 'success',
+            content: this.$t('messages.success'),
           });
         }, 1000);
       }, 1000);

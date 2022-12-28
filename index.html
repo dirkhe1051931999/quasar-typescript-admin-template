@@ -4,6 +4,7 @@
     <title><%= productName %></title>
 
     <meta charset="utf-8" />
+    <meta content="<%= new Date() %>" name="time" />
     <meta content="<%= productDescription %>" name="description" />
     <meta content="telephone=no" name="format-detection" />
     <meta content="no" name="msapplication-tap-highlight" />
@@ -11,32 +12,31 @@
       name="viewport"
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
     />
-
-    <link
-      href="icons/favicon-128x128.png"
-      rel="icon"
-      sizes="128x128"
-      type="image/png"
-    />
-    <link
-      href="icons/favicon-96x96.png"
-      rel="icon"
-      sizes="96x96"
-      type="image/png"
-    />
-    <link
-      href="icons/favicon-32x32.png"
-      rel="icon"
-      sizes="32x32"
-      type="image/png"
-    />
-    <link
-      href="icons/favicon-16x16.png"
-      rel="icon"
-      sizes="16x16"
-      type="image/png"
-    />
     <link href="favicon.ico" rel="icon" type="image/ico" />
+    <link
+      rel="preload"
+      href="/font/notosans-regular-webfont.woff"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/font/notosans-semibold-webfont.woff"
+      as="font"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/font/notosanssc-bold-webfont.woff"
+      as="font"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/font/notosanssc-regular-webfont.woff"
+      as="font"
+      crossorigin
+    />
     <script src="https://dirkhe1051931999.github.io/v3-admin/less.min.js"></script>
     <script src="https://dirkhe1051931999.github.io/v3-admin/map/echarts.min.js"></script>
     <script src="https://dirkhe1051931999.github.io/v3-admin/map/china.js"></script>
