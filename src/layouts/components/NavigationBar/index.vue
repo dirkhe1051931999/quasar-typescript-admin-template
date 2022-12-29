@@ -64,18 +64,53 @@
       <q-btn-dropdown stretch flat align="center">
         <template v-slot:label>
           <q-avatar class="m-r-10 fs-38">
-            <img src="~assets/avatar2.jpg" />
+            <img src="~assets/avatar.jpg" />
           </q-avatar>
           <span>{{ username }}</span>
         </template>
-        <q-list dense>
-          <q-separator inset spaced />
-          <q-item clickable v-close-popup @click="logout">
-            <q-item-section>
-              <q-item-label>{{ $t('layouts.logout') }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+        <div class="row no-wrap q-pa-md">
+          <div class="column w-200">
+            <div class="text-h6 q-mb-md">Settings</div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">显示标签栏</span>
+              <el-switch v-model="showTagsView" class="drawer-switch" />
+            </div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">显示侧边栏 Logo</span>
+              <el-switch v-model="showSidebarLogo" class="drawer-switch" />
+            </div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">固定 Header</span>
+              <el-switch v-model="fixedHeader" class="drawer-switch" />
+            </div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">显示消息通知</span>
+              <el-switch v-model="showNotify" class="drawer-switch" />
+            </div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">显示切换主题按钮</span>
+              <el-switch v-model="showThemeSwitch" class="drawer-switch" />
+            </div>
+            <div class="row justify-between items-center">
+              <span class="fs-12">显示全屏按钮</span>
+              <el-switch v-model="showScreenfull" class="drawer-switch" />
+            </div>
+          </div>
+          <q-separator vertical inset class="q-mx-md" />
+          <div class="column items-center">
+            <q-avatar size="72px">
+              <img src="~assets/avatar.jpg" />
+            </q-avatar>
+            <div class="text-subtitle1 q-mt-md q-mb-xs">{{ username }}</div>
+            <q-btn
+              color="primary"
+              :label="$t('layouts.logout')"
+              push
+              @click="logout"
+              v-close-popup
+            />
+          </div>
+        </div>
       </q-btn-dropdown>
     </div>
   </div>
@@ -106,6 +141,7 @@ export default class NavigationBarComponent extends Vue {
   get sidebar() {
     return AppModule.sidebar;
   }
+  /* setting */
   get showNotify() {
     return SettingModule.showNotify;
   }
@@ -114,6 +150,15 @@ export default class NavigationBarComponent extends Vue {
   }
   get showScreenfull() {
     return SettingModule.showScreenfull;
+  }
+  get showTagsView() {
+    return SettingModule.showTagsView;
+  }
+  get showSidebarLogo() {
+    return SettingModule.showSidebarLogo;
+  }
+  get fixedHeader() {
+    return SettingModule.fixedHeader;
   }
   public version = setting.version;
   public checkLang(language: string) {

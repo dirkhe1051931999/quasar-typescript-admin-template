@@ -7,3 +7,6 @@ declare namespace NodeJS {
     VUE_ROUTER_BASE: string | undefined;
   }
 }
+declare interface Window {
+  THREE: any;
+}

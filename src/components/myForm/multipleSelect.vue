@@ -30,11 +30,15 @@
           <q-chip
             removable
             v-for="(item, index) in inputModel"
-            :key="index + Math.random()"
+            :key="item"
             dense
             @remove="inputModel.splice(index, 1)"
-            >{{ item }}</q-chip
-          >
+            >{{
+              inputSelectOption.find(
+                (data) => String(data.value) === String(item)
+              )?.label ?? item
+            }}
+          </q-chip>
         </template>
         <template v-else>
           <span class="text-grey-3 fs-12">{{ inputPlaceholder }}</span>

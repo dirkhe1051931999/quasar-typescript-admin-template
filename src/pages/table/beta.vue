@@ -272,6 +272,21 @@
               (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
             "
           ></MyFormInput>
+          <MyMaskInput
+            v-if="item.type === 'mask-input'"
+            :option="{
+              inputModel: dialogAddUpdateParams.params[item.inputModel],
+              inputRules: item.inputRules,
+              inputClass: item.inputClass,
+              inputLabel: item.inputLabel,
+              mask: '####/####/####/####',
+              hint: '####/####/####/####',
+            }"
+            @input="
+              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
+            "
+          >
+          </MyMaskInput>
         </div>
       </div>
     </MyDialog>
@@ -620,6 +635,20 @@ export default class myComponentTableBeta extends Vue {
         ],
         inputClass: '',
         inputLabel: 'Date',
+      },
+      {
+        inputModel: 'f',
+        type: 'mask-input',
+        inputRules: [
+          (val: string | number | undefined | null) => {
+            return (
+              (val && String(val).length > 0) ||
+              this.globals.$t('messages.required')
+            );
+          },
+        ],
+        inputClass: '',
+        inputLabel: 'Mask Input',
       },
     ],
   };

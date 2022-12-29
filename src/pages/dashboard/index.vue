@@ -87,6 +87,34 @@
       </div>
     </div>
     <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
+    <ThreeEarth></ThreeEarth>
+    <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
+    <div class="row q-col-gutter-md">
+      <div class="col-6">
+        <ChartsLine></ChartsLine>
+      </div>
+      <div class="col-6">
+        <ChartsBar></ChartsBar>
+      </div>
+    </div>
+    <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
+    <div class="row q-col-gutter-md">
+      <div class="col-6">
+        <ChartsBarLine></ChartsBarLine>
+      </div>
+      <div class="col-6">
+        <ChartsBubble></ChartsBubble>
+      </div>
+    </div>
+    <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
+    <div class="row q-col-gutter-md">
+      <div class="col-6">
+        <ChartsPie class="q-mb-md"></ChartsPie>
+        <ChartsDoughnut></ChartsDoughnut>
+      </div>
+      <div class="col-6"><ChartsRadar></ChartsRadar></div>
+    </div>
+    <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
     <div class="row items-startm justify-between">
       <div class="col-6">
         <q-card class="p-16">
@@ -1013,6 +1041,14 @@ import '@fullcalendar/core/vdom'; // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import ChartsLine from './components/chartsLine.vue';
+import ChartsBar from './components/chartsBar.vue';
+import ChartsBarLine from './components/chartsBarLine.vue';
+import ChartsBubble from './components/chartsBubble.vue';
+import ChartsPie from './components/chartsPie.vue';
+import ChartsDoughnut from './components/chartsDoughnut.vue';
+import ChartsRadar from './components/chartsRadar.vue';
+import ThreeEarth from './components/threeEarth.vue';
 interface count {
   name: string;
   num: number;
@@ -1024,6 +1060,14 @@ interface count {
   components: {
     CountTo,
     FullCalendar,
+    ChartsLine,
+    ChartsBar,
+    ChartsBarLine,
+    ChartsBubble,
+    ChartsPie,
+    ChartsDoughnut,
+    ChartsRadar,
+    ThreeEarth,
   },
 })
 export default class DashboardComponent extends Vue {

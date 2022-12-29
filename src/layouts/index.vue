@@ -13,9 +13,9 @@
         <TagsView v-if="showTagsView" />
       </div>
       <AppMain />
-      <RightPanel v-if="true">
+      <!-- <RightPanel v-if="true">
         <Settings />
-      </RightPanel>
+      </RightPanel> -->
     </div>
   </div>
 </template>
