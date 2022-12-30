@@ -6,12 +6,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import { myIcons } from 'src/utils/custom-svg';
+import setting from 'src/setting.json';
+const NODE_ENV = process.env.NODE_ENV;
+const development = NODE_ENV === 'development';
+const path = development ? 'img:/icons/' : `img:${setting.publicPath}icons/`;
 @Component({
   name: 'myComponentApp',
 })
 export default class myComponentApp extends Vue {
   mounted() {
-    const iconPath = 'img:/icons/';
+    const iconPath = path;
     this.$q.iconMapFn = (iconName) => {
       const icon = myIcons[iconName];
       if (icon !== void 0) {
