@@ -13,9 +13,6 @@
         <TagsView v-if="showTagsView" />
       </div>
       <AppMain />
-      <!-- <RightPanel v-if="true">
-        <Settings />
-      </RightPanel> -->
     </div>
   </div>
 </template>
@@ -29,8 +26,6 @@ import Sidebar from './components/Sidebar/index.vue';
 import NavigationBar from './components/NavigationBar/index.vue';
 import TagsView from './components/TagsView/index.vue';
 import AppMain from './components/AppMain.vue';
-import Settings from './components/Settings/index.vue';
-import RightPanel from './components/RightPanel/index.vue';
 @Component({
   name: 'LayoutIndexComponents',
   components: {
@@ -38,8 +33,6 @@ import RightPanel from './components/RightPanel/index.vue';
     NavigationBar,
     TagsView,
     AppMain,
-    Settings,
-    RightPanel,
   },
   mixins: [UseResize],
 })

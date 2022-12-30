@@ -1,3 +1,4 @@
+@import './mixins';
 // 可点击的link
 // explanation
 .eg {
@@ -104,4 +105,126 @@
 }
 .thin-shadow {
   box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+}
+.text-black {
+  color: var(--q-black) !important;
+}
+.q-message-error-style {
+  background-color: rgba(0, 0, 0, 0);
+  @include bg-gradient-faded-danger;
+  box-shadow: none;
+  color: #f56c6c !important;
+}
+.q-message-warn-style {
+  background-color: rgba(0, 0, 0, 0);
+  @include bg-gradient-faded-warning;
+  box-shadow: none;
+  color: #e6a23c !important;
+}
+.q-message-success-style {
+  background-color: rgba(0, 0, 0, 0);
+  @include bg-gradient-faded-success;
+  box-shadow: none;
+  color: #67c23a !important;
+}
+.my-label {
+  padding: 4px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  &.blue {
+    background: $blue-2;
+    color: $blue;
+    border: solid 1px rgba($color: $blue, $alpha: 0.5);
+  }
+  &.green {
+    background: $green-2;
+    color: $green;
+    border: solid 1px rgba($color: $green, $alpha: 0.5);
+  }
+  &.yellow {
+    background: $yellow-2;
+    color: $yellow;
+    border: solid 1px rgba($color: $yellow, $alpha: 0.5);
+  }
+  &.red {
+    background: $negative-2;
+    color: $negative;
+    border: solid 1px rgba($color: $negative, $alpha: 0.5);
+  }
+  &.grey {
+    background: $grey-2;
+    color: $grey;
+    border: solid 1px rgba($color: $grey, $alpha: 0.5);
+  }
+}
+.my-button {
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $primary;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  &.outline {
+    border: solid 1px $primary;
+    color: $primary;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-family: NotoSansSC-SemiBold, NotoSansSC-Bold;
+  }
+  &.disabled {
+    background: #ffffff;
+    border: solid 1px $primary;
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: $primary;
+  }
+}
+.my-status {
+  padding: 0 16px;
+  font-size: 14px;
+  position: relative;
+  color: $black;
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $black;
+  }
+  &.green {
+    color: $green;
+    &::before {
+      background: $green;
+    }
+  }
+  &.red {
+    color: $negative;
+    &::before {
+      background: $negative;
+    }
+  }
+  &.yellow {
+    color: $yellow;
+    &::before {
+      background: $yellow;
+    }
+  }
+  &.blue {
+    color: $blue;
+    &::before {
+      background: $blue;
+    }
+  }
 }

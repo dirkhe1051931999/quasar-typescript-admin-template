@@ -26,6 +26,7 @@ const DEFAULT_PARAMS: QNotifyCreateOptions = {
   html: true,
   progress: true,
   iconSize: '20px',
+  badgeStyle: 'background-color:#f56c6c',
 };
 class GlobalMessage {
   constructor() {}
@@ -34,7 +35,12 @@ class GlobalMessage {
       message: content,
       position: position ?? 'top',
       multiLine: isNotify,
-      icon: type !== 'success' ? 'o_info' : 'o_check_circle',
+      icon:
+        type === 'error'
+          ? 'o_highlight_off'
+          : type === 'warn'
+          ? 'o_error_outline'
+          : 'o_check_circle', // error warn success
       actions: isNotify
         ? [
             {

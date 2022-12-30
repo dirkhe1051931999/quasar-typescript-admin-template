@@ -39,12 +39,11 @@
               class="fs-20 f-bold"
             ></CountTo>
           </q-card-section>
-          <q-card-section style="padding: 0">
-            <q-icon
-              :name="item.icon"
-              class="fs-45"
-              :class="`text-${item.color}`"
-            />
+          <q-card-section
+            style="padding: 10px; border-radius: 6px"
+            class="bg-gradient-primary"
+          >
+            <q-icon :name="item.icon" class="fs-22 text-white" />
           </q-card-section>
         </q-card>
       </div>

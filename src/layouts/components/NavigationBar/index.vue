@@ -72,34 +72,34 @@
           <div class="column w-200">
             <div class="text-h6 q-mb-md">Settings</div>
             <div class="row justify-between items-center">
-              <span class="fs-12">显示标签栏</span>
+              <span class="fs-12"> Tab Bar?</span>
               <el-switch v-model="showTagsView" class="drawer-switch" />
             </div>
             <div class="row justify-between items-center">
-              <span class="fs-12">显示侧边栏 Logo</span>
+              <span class="fs-12">Sidebar Logo?</span>
               <el-switch v-model="showSidebarLogo" class="drawer-switch" />
             </div>
             <div class="row justify-between items-center">
-              <span class="fs-12">固定 Header</span>
+              <span class="fs-12">Fixed Header</span>
               <el-switch v-model="fixedHeader" class="drawer-switch" />
             </div>
             <div class="row justify-between items-center">
-              <span class="fs-12">显示消息通知</span>
+              <span class="fs-12">Notify?</span>
               <el-switch v-model="showNotify" class="drawer-switch" />
             </div>
             <div class="row justify-between items-center">
-              <span class="fs-12">显示切换主题按钮</span>
+              <span class="fs-12">Switch Theme Button?</span>
               <el-switch v-model="showThemeSwitch" class="drawer-switch" />
             </div>
             <div class="row justify-between items-center">
-              <span class="fs-12">显示全屏按钮</span>
+              <span class="fs-12">Full Screen Button?</span>
               <el-switch v-model="showScreenfull" class="drawer-switch" />
             </div>
           </div>
           <q-separator vertical inset class="q-mx-md" />
           <div class="column items-center">
             <q-avatar size="72px">
-              <img src="~assets/avatar.jpg" />
+              <img src="~assets/logo.png" />
             </q-avatar>
             <div class="text-subtitle1 q-mt-md q-mb-xs">{{ username }}</div>
             <q-btn
@@ -181,6 +181,10 @@ export default class NavigationBarComponent extends Vue {
   public logout() {
     UserModule.LogOut();
     this.$router.push('/login');
+    this.$globalMessage.show({
+      type: 'success',
+      content: this.$t('messages.success'),
+    });
   }
 }
 </script>

@@ -354,15 +354,13 @@ export default class LoginPage extends Vue {
         } else {
           this.$router.push({ path: this.redirect || '/dashboard' });
         }
-        setTimeout(() => {
-          this.$q.loading.hide();
-          this.useSwipeVerifyCode = false;
-          this.useVerifyCode = false;
-          this.$globalMessage.show({
-            type: 'success',
-            content: this.$t('messages.success'),
-          });
-        }, 1000);
+        this.$q.loading.hide();
+        this.useSwipeVerifyCode = false;
+        this.useVerifyCode = false;
+        this.$globalMessage.show({
+          type: 'success',
+          content: this.$t('messages.success'),
+        });
       }, 1000);
     };
     if (this.useSwipeVerifyCode) {

@@ -3,11 +3,11 @@
   <div class="sidebar-logo-container" :class="{ collapse: collapse }">
     <transition name="sidebar-logo-fade">
       <router-link v-if="collapse" key="collapse" to="/">
-        <img src="~src/assets/slogo.png" class="sidebar-logo" />
+        <img src="~src/assets/logo.png" class="sidebar-logo" />
       </router-link>
       <router-link v-else key="expand" to="/">
         <div class="row items-center p-l-10 p-r-10">
-          <img src="~src/assets/slogo.png" class="sidebar-logo" />
+          <img src="~src/assets/logo.png" class="sidebar-logo" />
           <div class="text-black fs-14 f-bold">
             {{ PrdTitle }}
           </div>
