@@ -20,6 +20,7 @@ export default {
     md: 'Markdown',
     splitter: '分割条',
     jsonEditor: 'JSON编辑器',
+    jsonView: 'JSON预览',
     tabs: '选项卡',
     sticky: 'Sticky',
     carousel: '跑马灯',

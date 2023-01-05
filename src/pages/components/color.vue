@@ -36,6 +36,3 @@ export default class myComponentColor extends Vue {
   ];
 }
 </script>
-
-<style scoped lang='scss'>
-</style>

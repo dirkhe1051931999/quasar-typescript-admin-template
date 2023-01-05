@@ -1,29 +1,26 @@
 <template>
   <div>
-    <JsonEditorVue
-      v-model="json"
-      v-bind="{
-        mode: 'text',
-        readOnly: false,
-        onChange: onJsonChange,
-        /* local props & attrs */
-      }"
-    />
+    <pre><code class="language-json">{{json}}</code></pre>
   </div>
 </template>
 
-
 <script lang="ts">
+// https://ashcroft.dev/blog/how-use-prism-js-vue/
+import Prism from 'prismjs';
+import 'prismjs/components/prism-json';
+import 'prismjs/themes/prism.css';
 import { Component, Vue } from 'vue-facing-decorator';
-import JsonEditorVue from 'json-editor-vue';
 
 @Component({
-  name: 'myComponentJsonEditor',
+  name: 'myComponentJsonView',
   components: {
-    JsonEditorVue,
+    Prism,
   },
 })
-export default class myComponentJsonEditor extends Vue {
+export default class myComponentJsonView extends Vue {
+  mounted() {
+    Prism.highlightAll();
+  }
   public json = {
     restaurants: [
       {
@@ -468,11 +465,9 @@ export default class myComponentJsonEditor extends Vue {
       },
     ],
   };
-  private onJsonChange() {
-    console.log(123123);
-  }
 }
 </script>
 
-<style scoped lang='scss'>
+
+<style lang="scss" scoped>
 </style>

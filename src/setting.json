@@ -24,6 +24,7 @@
     "components-md",
     "components-splitter",
     "components-jsonEditor",
+    "components-jsonView",
     "components-tabs",
     "components-colors",
     "components-sticky",

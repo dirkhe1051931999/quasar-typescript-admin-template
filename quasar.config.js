@@ -95,6 +95,20 @@ module.exports = configure((ctx) => {
       extendViteConf(viteConf) {
         viteConf.build.chunkSizeWarningLimit = 50000;
         viteConf.base = ctx.dev ? '/' : '/v3-admin/';
+        viteConf.css = {
+          preprocessorOptions: {
+            scss: {
+              sourceMap: false,
+              additionalData(source, fp) {
+                // All scss files ending with imports.scss
+                // will not re-import additionalData
+                if (fp.endsWith('variables.scss')) return source;
+                // Use additionalData from legacy nuxt scss options
+                return `@import "src/css/quasar.variables.scss"; ${source}`;
+              },
+            },
+          },
+        };
       },
       // viteVuePluginOptions: {},
 

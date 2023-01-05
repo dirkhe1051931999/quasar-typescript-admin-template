@@ -20,6 +20,7 @@ export default {
     md: 'Markdown',
     splitter: 'Splitter',
     jsonEditor: 'Json Editor',
+    jsonView: 'Json View',
     tabs: 'Tabs',
     sticky: 'Sticky',
     carousel: 'Carousel',

@@ -156,6 +156,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         'components-md',
         'components-splitter',
         'components-jsonEditor',
+        'components-jsonView',
         'components-tabs',
         'components-colors',
         'components-sticky',
@@ -219,6 +220,19 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () =>
           import(
             /* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonEditor.vue'
+          ),
+      },
+      {
+        path: 'jsonView',
+        name: 'jsonView',
+        meta: {
+          title: 'jsonView',
+          icon: 'label',
+          pagePermissionId: ['components-jsonView'],
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'
           ),
       },
       {

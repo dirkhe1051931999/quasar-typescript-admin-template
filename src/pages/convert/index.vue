@@ -27,7 +27,6 @@
       <template v-slot:after>
         <div class="q-pa-md">
           <div class="text-h4 q-mb-md">css</div>
-
           <pre class="language-js"><code v-text="convertCss"></code></pre>
         </div>
       </template>
