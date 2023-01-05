@@ -4,7 +4,7 @@
       <div v-for="(item, index) in queryInput" :key="index">
         <q-input
           v-model.trim="queryParams[item.id]"
-          :type="item.inputType"
+          :type="item.type"
           :class="['', item.class]"
           :label="item.placeholder"
           v-if="item.type === 'text'"
@@ -227,14 +227,14 @@ export default class myComponentMenu2TableIndex extends Vue {
       placeholder: 'IMSI',
       type: 'text',
       class: 'w-250 m-r-15 m-b-15',
-      inputType: 'number',
+      type: 'number',
       id: 'imsi',
     },
     {
       placeholder: 'ICCID',
       type: 'text',
       class: 'w-250 m-r-15 m-b-15',
-      inputType: 'number',
+      type: 'number',
       id: 'iccid',
     },
     {

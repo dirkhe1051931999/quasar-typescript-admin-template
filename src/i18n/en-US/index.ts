@@ -160,6 +160,7 @@ export default {
   action: {
     yes: 'Yes',
     add: 'Add',
+    more: 'More',
     delete: 'Delete',
     update: 'Edit',
     search: 'Search',

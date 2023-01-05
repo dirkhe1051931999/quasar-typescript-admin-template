@@ -8,7 +8,7 @@
             <div v-for="(item, index) in queryParams.input" :key="index">
               <q-input
                 v-model.trim="queryParams.params[item.id]"
-                :type="item.inputType"
+                :type="item.type"
                 :class="['', item.class]"
                 :label="item.placeholder"
                 v-if="item.type === 'text'"
@@ -66,141 +66,194 @@
         </div>
       </q-form>
     </div>
-    <q-table
-      flat
-      bordered
-      :columns="tableParams.column"
-      :rows="tableParams.data"
-      :loading="tableParams.loading"
-      :pagination="tableParams.pagination"
-      hide-pagination
-      :no-data-label="$t(`tip.noData`)"
-      class="my-table"
-      :selected-rows-label="
-        (numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`
-      "
-      selection="multiple"
-      v-model:selected="tableParams.selected"
-      row-key="name"
-    >
-      <template #top>
-        <div class="full-width justify-end row">
-          <q-btn
-            color="primary"
-            icon="add"
-            label="Add"
-            no-caps
-            class="m-r-15"
-            @click="handleClickAdd"
-          />
-          <q-btn
-            icon="file_upload"
-            label="Upload"
-            outline
-            color="primary"
-            no-caps
-            @click="handleClickUpload"
-          />
-        </div>
-      </template>
-      <template v-slot:header="props">
-        <q-tr :props="props">
-          <!-- selected -->
-          <q-th style="text-align: left">
-            <q-checkbox color="primary" v-model="props.selected" />
-          </q-th>
-          <!-- expand -->
-          <q-th auto-width>Expand</q-th>
-          <!-- other -->
-          <q-th
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-            style="text-align: left"
-          >
-            <!-- {{ col.label+'123' }} -->
-            {{
-              col.label.indexOf('$') !== -1
-                ? $t(`table.${col.label.replace('$', '')}`)
-                : col.label
-            }}
-          </q-th>
-        </q-tr>
-      </template>
-      <template v-slot:header-cell-action="props">
-        <q-th :props="props"> </q-th>
-      </template>
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <!-- selected -->
-          <q-td class="text-left">
-            <q-checkbox color="primary" v-model="props.selected" />
-          </q-td>
-          <!-- expand -->
-          <q-td auto-width>
-            <q-toggle
-              v-model="props.expand"
-              checked-icon="add"
-              unchecked-icon="remove"
+    <div class="p-12 bg-white b-r-8">
+      <q-table
+        flat
+        bordered
+        :columns="tableParams.column"
+        :rows="tableParams.data"
+        :loading="tableParams.loading"
+        :pagination="tableParams.pagination"
+        hide-pagination
+        :no-data-label="$t(`tip.noData`)"
+        class="my-table"
+        :selected-rows-label="
+          (numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`
+        "
+        selection="multiple"
+        v-model:selected="tableParams.selected"
+        row-key="name"
+      >
+        <template #top>
+          <div class="full-width justify-end row">
+            <q-btn
+              color="primary"
+              icon="o_add"
+              label="Add"
+              no-caps
+              class="m-r-15"
+              @click="handleClickAdd"
             />
-          </q-td>
-          <!-- other -->
-          <q-td
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-            class="text-left"
-          >
-            <span v-if="!col.inSlot">{{ col.value }}</span>
-            <div class="text-left" v-else>
-              <!-- id -->
-              <div v-if="col.name === 'id'">
-                <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
+            <q-btn
+              icon="o_upload"
+              label="Upload"
+              outline
+              color="primary"
+              no-caps
+              @click="handleClickUpload"
+            />
+          </div>
+        </template>
+        <template v-slot:header="props">
+          <q-tr :props="props">
+            <!-- selected -->
+            <q-th style="text-align: left">
+              <q-checkbox color="primary" v-model="props.selected" />
+            </q-th>
+            <!-- expand -->
+            <q-th auto-width>Expand</q-th>
+            <!-- other -->
+            <q-th
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+              style="text-align: left"
+            >
+              <!-- {{ col.label+'123' }} -->
+              {{
+                col.label.indexOf('$') !== -1
+                  ? $t(`table.${col.label.replace('$', '')}`)
+                  : col.label
+              }}
+            </q-th>
+          </q-tr>
+        </template>
+        <template v-slot:header-cell-action="props">
+          <q-th :props="props"> </q-th>
+        </template>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <!-- selected -->
+            <q-td class="text-left">
+              <q-checkbox color="primary" v-model="props.selected" />
+            </q-td>
+            <!-- expand -->
+            <q-td auto-width>
+              <q-toggle
+                v-model="props.expand"
+                checked-icon="add"
+                unchecked-icon="remove"
+              />
+            </q-td>
+            <!-- other -->
+            <q-td
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+              class="text-left"
+            >
+              <span v-if="!col.inSlot">{{ col.value }}</span>
+              <div class="text-left" v-else>
+                <!-- id -->
+                <div v-if="col.name === 'id'">
+                  <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
+                </div>
+                <!-- name -->
+                <div v-if="col.name === 'name'">
+                  <span
+                    class="link-type"
+                    @click="handlerClickDetail(props.row)"
+                    >{{ props.row.name }}</span
+                  >
+                </div>
+                <!-- action -->
+                <div v-if="col.name === 'action'">
+                  <span
+                    class="in-table-link-button"
+                    @click="handlerClickUpdate(props.row)"
+                    >{{ $t(`action.update`) }}
+                  </span>
+                  <span
+                    class="in-table-delete-button m-l-10"
+                    @click="handlerClickDelete(props.row)"
+                    >{{ $t(`action.delete`) }}
+                  </span>
+                  <span class="in-table-link-button m-l-10">
+                    {{ $t(`action.more`) }}
+                    <q-icon name="o_expand_more"></q-icon>
+                    <q-popup-proxy>
+                      <q-list class="p-t-5">
+                        <q-item
+                          clickable
+                          dense
+                          v-close-popup
+                          style="padding: 0 0 5px"
+                        >
+                          <q-item-section class="text-center">
+                            <span
+                              class="in-table-delete-button"
+                              @click="handlerClickDelete(props.row)"
+                              >{{ $t(`action.delete`) }}
+                            </span>
+                          </q-item-section>
+                        </q-item>
+                        <q-item
+                          clickable
+                          dense
+                          v-close-popup
+                          style="padding: 0 0 5px"
+                        >
+                          <q-item-section class="text-center">
+                            <span
+                              class="in-table-delete-button"
+                              @click="handlerClickDelete(props.row)"
+                              >{{ $t(`action.delete`) }}
+                            </span>
+                          </q-item-section>
+                        </q-item>
+                        <q-item
+                          clickable
+                          dense
+                          v-close-popup
+                          style="padding: 0 0 0"
+                        >
+                          <q-item-section class="text-center">
+                            <span
+                              class="in-table-delete-button"
+                              @click="handlerClickDelete(props.row)"
+                              >{{ $t(`action.delete`) }}
+                            </span>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-popup-proxy>
+                  </span>
+                </div>
               </div>
-              <!-- name -->
-              <div v-if="col.name === 'name'">
-                <span
-                  class="link-type"
-                  @click="handlerClickDetail(props.row)"
-                  >{{ props.row.name }}</span
-                >
+            </q-td>
+          </q-tr>
+          <q-tr v-show="props.expand" :props="props">
+            <!-- expand detail -->
+            <q-td colspan="100%">
+              <div class="text-left">Name:{{ props.row.name }}</div>
+              <div>
+                this is expand detail , it maybe json string or other special
+                text
               </div>
-              <!-- action -->
-              <div v-if="col.name === 'action'">
-                <span
-                  class="in-table-link-button"
-                  @click="handlerClickUpdate(props.row)"
-                  >{{ $t(`action.update`) }}</span
-                >
-                <span
-                  class="in-table-delete-button m-l-10"
-                  @click="handlerClickDelete(props.row)"
-                  >{{ $t(`action.delete`) }}</span
-                >
-              </div>
-            </div>
-          </q-td>
-        </q-tr>
-        <q-tr v-show="props.expand" :props="props">
-          <!-- expand detail -->
-          <q-td colspan="100%">
-            <div class="text-left">Name:{{ props.row.name }}</div>
-            <div>
-              this is expand detail , it maybe json string or other special text
-            </div>
-          </q-td>
-        </q-tr>
-      </template>
-      <!--      loading-->
-      <template v-slot:loading>
-        <q-inner-loading color="primary" showing />
-      </template>
-    </q-table>
-    <MyPagination
-      :paginationParams="tableParams.pagination"
-      v-if="tableParams.pagination.rowsNumber > 0"
-      @pagination="paginationInput"
-    ></MyPagination>
+            </q-td>
+          </q-tr>
+        </template>
+        <!--      loading-->
+        <template v-slot:loading>
+          <q-inner-loading color="primary" showing />
+        </template>
+      </q-table>
+      <MyPagination
+        :paginationParams="tableParams.pagination"
+        v-if="tableParams.pagination.rowsNumber > 0"
+        @pagination="paginationInput"
+      ></MyPagination>
+    </div>
     <MyDialog
       :option="{
         id: dialogAddUpdateParams.id,
@@ -224,67 +277,57 @@
           <MyFormSelect
             v-if="item.type === 'select'"
             :option="{
-              inputRules: item.inputRules,
-              inputClass: item.inputClass,
-              inputModel: dialogAddUpdateParams.params[item.inputModel],
-              inputLabel: item.inputLabel,
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
               inputSelectOption: item.inputSelectOption,
             }"
-            @input="
-              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
-            "
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormDate
             v-if="item.type === 'date'"
             :option="{
-              inputRules: item.inputRules,
-              inputClass: item.inputClass,
-              inputModel: dialogAddUpdateParams.params[item.inputModel],
-              inputLabel: item.inputLabel,
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
             }"
-            @input="
-              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
-            "
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormMultipleSelect
             v-if="item.type === 'multiplSelect'"
             :option="{
-              inputRules: item.inputRules,
-              inputClass: item.inputClass,
-              inputModel: dialogAddUpdateParams.params[item.inputModel],
-              inputLabel: item.inputLabel,
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
               inputSelectOption: item.inputSelectOption,
               multiple: item.multiple,
             }"
-            @input="
-              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
-            "
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormInput
             v-if="item.type === 'text'"
             :option="{
-              inputModel: dialogAddUpdateParams.params[item.inputModel],
-              inputRules: item.inputRules,
-              inputClass: item.inputClass,
-              inputLabel: item.inputLabel,
+              model: dialogAddUpdateParams.params[item.model],
+              rules: item.rules,
+              classes: item.classes,
+              label: item.label,
             }"
-            @input="
-              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
-            "
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           ></MyFormInput>
           <MyMaskInput
             v-if="item.type === 'mask-input'"
             :option="{
-              inputModel: dialogAddUpdateParams.params[item.inputModel],
-              inputRules: item.inputRules,
-              inputClass: item.inputClass,
-              inputLabel: item.inputLabel,
+              model: dialogAddUpdateParams.params[item.model],
+              rules: item.rules,
+              classes: item.classes,
+              label: item.label,
               mask: '####/####/####/####',
               hint: '####/####/####/####',
             }"
-            @input="
-              (data) => (dialogAddUpdateParams.params[item.inputModel] = data)
-            "
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           >
           </MyMaskInput>
         </div>
@@ -549,9 +592,9 @@ export default class myComponentTableBeta extends Vue {
     params: cloneDeep(CONST_PARAMS.dialog_add_update),
     input: [
       {
-        inputModel: 'a',
+        model: 'a',
         type: 'text',
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -559,12 +602,12 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputLabel: 'Username',
+        label: 'Username',
       },
       {
-        inputModel: 'b',
+        model: 'b',
         type: 'text',
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -572,11 +615,11 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputClass: 'input-password',
-        inputLabel: 'New password',
+        classes: 'input-password',
+        label: 'New password',
       },
       {
-        inputModel: 'c',
+        model: 'c',
         type: 'select',
         inputSelectOption: [
           {
@@ -588,7 +631,7 @@ export default class myComponentTableBeta extends Vue {
             value: '2',
           },
         ],
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -596,10 +639,10 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputLabel: 'select',
+        label: 'select',
       },
       {
-        inputModel: 'd',
+        model: 'd',
         type: 'multiplSelect',
         multiple: true,
         inputSelectOption: [
@@ -612,7 +655,7 @@ export default class myComponentTableBeta extends Vue {
             value: '2',
           },
         ],
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -620,12 +663,12 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputLabel: 'Multipl Select',
+        label: 'Multipl Select',
       },
       {
-        inputModel: 'e',
+        model: 'e',
         type: 'date',
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -633,13 +676,12 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputClass: '',
-        inputLabel: 'Date',
+        label: 'Date',
       },
       {
-        inputModel: 'f',
+        model: 'f',
         type: 'mask-input',
-        inputRules: [
+        rules: [
           (val: string | number | undefined | null) => {
             return (
               (val && String(val).length > 0) ||
@@ -647,8 +689,7 @@ export default class myComponentTableBeta extends Vue {
             );
           },
         ],
-        inputClass: '',
-        inputLabel: 'Mask Input',
+        label: 'Mask Input',
       },
     ],
   };
@@ -682,12 +723,6 @@ export default class myComponentTableBeta extends Vue {
   };
   /**event */
   private paginationInput() {
-    if (
-      this.tableParams.pagination.rowsNumber /
-        this.tableParams.pagination.rowsPerPage <
-      1
-    )
-      return;
     this.getData();
   }
   private async handleQuery() {
@@ -857,24 +892,25 @@ export default class myComponentTableBeta extends Vue {
 }
 </script>
 <style lang="scss">
-// .my-table {
-//   /* specifying max-width so the example can
-//     highlight the sticky column on any browser window */
-//   max-width: 100%;
-// }
-// .my-table thead tr:first-child th:first-child {
-//   /* bg color is important for th; just specify one */
-//   background-color: #fff;
-// }
-// .my-table td:first-child {
-//   background-color: #f3f3f3;
-// }
-// .my-table th:first-child,
-// .my-table td:first-child {
-//   position: sticky;
-//   left: 0;
-//   z-index: 1;
-// }
+.my-table {
+  /* specifying max-width so the example can
+    highlight the sticky column on any browser window */
+  max-width: 100%;
+}
+.my-table thead tr:last-child th:last-child {
+  /* bg color is important for th; just specify one */
+  background-color: #fff;
+}
+.my-table td:last-child {
+  background-color: #fff;
+}
+.my-table th:last-child,
+.my-table td:last-child {
+  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+  position: sticky;
+  right: 0;
+  z-index: 1;
+}
 </style>
 <style lang="scss" scoped>
 </style>

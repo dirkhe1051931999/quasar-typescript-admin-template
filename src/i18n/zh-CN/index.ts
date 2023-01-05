@@ -160,6 +160,7 @@ export default {
   action: {
     yes: '确定',
     add: '新增',
+    more: '更多',
     delete: '删除',
     update: '编辑',
     search: '搜索',

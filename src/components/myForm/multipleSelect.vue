@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8" :class="[inputClass]">
-      {{ inputRules.length ? '*' : '' }} {{ inputLabel }}
+    <p class="f-bold fs-12 p-b-8" :class="[classes]">
+      {{ rules.length ? '*' : '' }} {{ label }}
     </p>
     <q-select
       v-model="inputModel"
       :options="inputSelectOption"
-      :class="['m-b-5', inputClass]"
+      :class="['m-b-5', classes]"
       :placeholder="inputPlaceholder"
-      :rules="inputRules"
+      :rules="rules"
       :clearable="showClose"
       :multiple="true"
       :readonly="readonly"
@@ -55,35 +55,35 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 @Component({ name: 'FormMultipleSelectComponent', emits: ['input'] })
 export default class FormMultipleSelectComponent extends Vue {
   @Prop({ default: {} }) option!: {
-    inputModel: string | any[];
+    model: string[] | any[];
     inputPlaceholder?: string;
-    inputClass?: string;
-    inputRules: any[];
-    inputLabel: string;
+    classes?: string;
+    rules: any[];
+    label: string;
     inputSelectOption: any[];
     showClose?: boolean;
     readonly?: boolean;
   };
-  @Watch('inputModel', { deep: true })
+  @Watch('model', { deep: true })
   onchange() {
     this.$emit('input', this.inputModel);
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private inputModel: string | any[] = [];
   private inputPlaceholder = '';
-  private inputClass = '';
-  private inputRules: any[] = [];
-  private inputLabel = '';
+  private classes = '';
+  private rules: any[] = [];
+  private label = '';
   private inputSelectOption: any[] = [];
   private showClose?: boolean;
   private readonly?: boolean;
   mounted() {
-    this.inputModel = this.option.inputModel;
+    this.inputModel = this.option.model;
     this.inputPlaceholder =
       this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseSelect');
-    this.inputClass = this.option?.inputClass ?? '';
-    this.inputRules = this.option?.inputRules;
-    this.inputLabel = this.option?.inputLabel;
+    this.classes = this.option?.classes ?? '';
+    this.rules = this.option?.rules;
+    this.label = this.option?.label;
     this.inputSelectOption = this.option?.inputSelectOption;
     this.showClose = this.option?.showClose ?? true;
     this.readonly = this.option?.readonly ?? false;

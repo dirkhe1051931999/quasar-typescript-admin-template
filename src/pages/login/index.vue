@@ -289,6 +289,7 @@ import { UserModule } from 'src/store/modules/user';
 import { Dictionary } from 'lodash';
 import { GVerify } from 'src/utils/canvas_verify_code';
 import { sliderCaptcha } from 'src/utils/slidercaptcha';
+import { sleep } from 'src/utils/tools';
 @Component({ name: 'LoginPage' })
 export default class LoginPage extends Vue {
   @Watch('$route', { immediate: true })
@@ -340,28 +341,21 @@ export default class LoginPage extends Vue {
       });
       return;
     }
-    const loginSuccess = () => {
-      this.$q.loading.show({
-        delay: 400, // ms
+    const loginSuccess = async () => {
+      this.$q.loading.show();
+      await UserModule.Login({
+        username: this.username,
+        password: this.password,
       });
-      setTimeout(async () => {
-        await UserModule.Login({
-          username: this.username,
-          password: this.password,
-        });
-        if (!this.redirect) {
-          this.$router.push('/dashboard');
-        } else {
-          this.$router.push({ path: this.redirect || '/dashboard' });
-        }
-        this.$q.loading.hide();
-        this.useSwipeVerifyCode = false;
-        this.useVerifyCode = false;
-        this.$globalMessage.show({
-          type: 'success',
-          content: this.$t('messages.success'),
-        });
-      }, 1000);
+      this.$q.loading.hide();
+      this.useSwipeVerifyCode = false;
+      this.useVerifyCode = false;
+      this.$globalMessage.show({
+        type: 'success',
+        content: this.$t('messages.success'),
+      });
+      await sleep(500);
+      location.reload();
     };
     if (this.useSwipeVerifyCode) {
       if (!this.lockShowUseSwipeVerifyCode) {

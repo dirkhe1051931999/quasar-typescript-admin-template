@@ -11,11 +11,11 @@ import {
 } from 'vuex-module-decorators';
 import { UserModule } from './user';
 
-const hasPermission = (permissionId: string[], route: RouteRecordRaw) => {
-  if (route.meta && route.meta.permissionId) {
-    return permissionId.some((id) => {
-      if (route.meta?.permissionId !== undefined) {
-        return (route.meta.permissionId as string[]).includes(id);
+const hasPermission = (pagePermissionId: string[], route: RouteRecordRaw) => {
+  if (route.meta && route.meta.pagePermissionId) {
+    return pagePermissionId.some((id) => {
+      if (route.meta?.pagePermissionId !== undefined) {
+        return (route.meta.pagePermissionId as string[]).includes(id);
       } else {
         return false;
       }
@@ -27,14 +27,14 @@ const hasPermission = (permissionId: string[], route: RouteRecordRaw) => {
 
 const filterAsyncRoutes = (
   routes: RouteRecordRaw[],
-  permissionId: string[]
+  pagePermissionId: string[]
 ) => {
   const res: RouteRecordRaw[] = [];
   routes.forEach((route) => {
     const r = { ...route };
-    if (hasPermission(permissionId, r)) {
+    if (hasPermission(pagePermissionId, r)) {
       if (r.children) {
-        r.children = filterAsyncRoutes(r.children, permissionId);
+        r.children = filterAsyncRoutes(r.children, pagePermissionId);
       }
       res.push(r);
     }
@@ -59,11 +59,6 @@ class Permission extends VuexModule implements IPermissionState {
   public GenerateRoutes() {
     let accessedRoutes = [];
     let pagePermissionId = UserModule.pagePermissionId;
-    if (UserModule.roles.includes('admin')) {
-      pagePermissionId.push('-1');
-    } else {
-      pagePermissionId.push('1');
-    }
     accessedRoutes = filterAsyncRoutes(asyncRoutes, pagePermissionId);
     this.SET_ROUTES(accessedRoutes);
     return Promise.resolve();

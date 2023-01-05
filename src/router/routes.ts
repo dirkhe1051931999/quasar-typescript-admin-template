@@ -2,13 +2,14 @@ import { RouteRecordRaw } from 'vue-router';
 import Layout from 'src/layouts/index.vue';
 import { markRaw, shallowRef } from 'vue';
 import setting from 'src/setting.json';
+import { PermissionModule } from 'src/store/modules/permission';
 
 /*
   name:'router-name'             the name field is required when using <keep-alive>, it should also match its component's name property
                                  detail see : https://vuejs.org/v2/guide/components-dynamic-async.html#keep-alive-with-Dynamic-Components
   redirect:                      如果设置为“ noredirect”，则在单击面包屑时将不会触发任何重定向操作
   meta: {
-    pagePermissionId              页面权限的id, -1就是管理员才有的权限
+    pagePermissionId              页面权限的id, -1就是管理员才有的权限  只有一级的写父级，有多级都要写，不填的就是不限制权限
     title: 'title'               子菜单和面包屑中显示的名称（推荐设置）
     icon: 'icon-name'             侧栏中显示的图标
     hidden: true                 if true, 此路由不会显示在侧边栏中（默认为false）
@@ -36,7 +37,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     component: shallowRef(Layout),
     name: 'Dashboard0',
     meta: {
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: ['dashboard'],
     },
     children: [
       {
@@ -59,7 +60,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     component: shallowRef(Layout),
     name: 'Account0',
     meta: {
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: ['account'],
     },
     children: [
       {
@@ -82,7 +83,13 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       title: 'charts',
       icon: 'bar_chart',
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: [
+        'charts',
+        'charts-relationship',
+        'charts-map',
+        'charts-province',
+        'charts-city',
+      ],
     },
     children: [
       {
@@ -91,6 +98,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'relationship',
           icon: 'label',
+          pagePermissionId: ['charts-relationship'],
         },
         component: () =>
           import(
@@ -103,6 +111,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'map',
           icon: 'label',
+          pagePermissionId: ['charts-map'],
         },
         component: () =>
           import(/* webpackChunkName: "map" */ 'src/pages/charts/map.vue'),
@@ -113,6 +122,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'province',
           icon: 'label',
+          pagePermissionId: ['charts-province'],
         },
         component: () =>
           import(
@@ -125,6 +135,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'city',
           icon: 'label',
+          pagePermissionId: ['charts-city'],
         },
         component: () =>
           import(/* webpackChunkName: "city" */ 'src/pages/charts/city.vue'),
@@ -139,7 +150,25 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       title: 'components',
       icon: 'extension',
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: [
+        'components',
+        'components-editer',
+        'components-md',
+        'components-splitter',
+        'components-jsonEditor',
+        'components-tabs',
+        'components-colors',
+        'components-sticky',
+        'components-dialog',
+        'components-carousel',
+        'components-skeleton',
+        'components-spinners',
+        'components-colorPicker',
+        'components-notice',
+        'components-transfer',
+        'components-parallax',
+        'components-colors',
+      ],
     },
     children: [
       {
@@ -148,6 +177,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'editer',
           icon: 'label',
+          pagePermissionId: ['components-editer'],
         },
         component: () =>
           import(
@@ -160,6 +190,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'md',
           icon: 'label',
+          pagePermissionId: ['components-md'],
         },
         component: () =>
           import(/* webpackChunkName: "md" */ 'src/pages/components/md.vue'),
@@ -170,6 +201,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'splitter',
           icon: 'label',
+          pagePermissionId: ['components-splitter'],
         },
         component: () =>
           import(
@@ -182,6 +214,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'jsonEditor',
           icon: 'label',
+          pagePermissionId: ['components-jsonEditor'],
         },
         component: () =>
           import(
@@ -194,6 +227,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'tabs',
           icon: 'label',
+          pagePermissionId: ['components-tabs'],
         },
         component: () =>
           import(
@@ -206,6 +240,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'sticky',
           icon: 'label',
+          pagePermissionId: ['components-sticky'],
         },
         component: () =>
           import(
@@ -218,6 +253,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'dialog',
           icon: 'label',
+          pagePermissionId: ['components-dialog'],
         },
         component: () =>
           import(
@@ -230,6 +266,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'carousel',
           icon: 'label',
+          pagePermissionId: ['components-carousel'],
         },
         component: () =>
           import(
@@ -242,6 +279,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'colorPicker',
           icon: 'label',
+          pagePermissionId: ['components-colorPicker'],
         },
         component: () =>
           import(
@@ -254,6 +292,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'skeleton',
           icon: 'label',
+          pagePermissionId: ['components-skeleton'],
         },
         component: () =>
           import(
@@ -266,6 +305,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'spinners',
           icon: 'label',
+          pagePermissionId: ['components-spinners'],
         },
         component: () =>
           import(
@@ -278,6 +318,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'notice',
           icon: 'label',
+          pagePermissionId: ['components-notice'],
         },
         component: () =>
           import(
@@ -290,6 +331,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'transfer',
           icon: 'label',
+          pagePermissionId: ['components-transfer'],
         },
         component: () =>
           import(
@@ -302,6 +344,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'parallax',
           icon: 'label',
+          pagePermissionId: ['components-parallax'],
         },
         component: () =>
           import(
@@ -314,6 +357,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'colors',
           icon: 'label',
+          pagePermissionId: ['components-colors'],
         },
         component: () =>
           import(
@@ -326,7 +370,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/copy',
     component: shallowRef(Layout),
     name: 'Copy0',
-    meta: { pagePermissionId: ['-1', '1'] },
+    meta: { pagePermissionId: ['copy'] },
     redirect: '/copy',
     children: [
       {
@@ -345,7 +389,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/i18n',
     component: shallowRef(Layout),
     name: 'I18n0',
-    meta: { pagePermissionId: ['-1', '1'] },
+    meta: { pagePermissionId: ['i18n'] },
     children: [
       {
         path: '',
@@ -363,7 +407,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/icon',
     component: shallowRef(Layout),
     name: 'Icon0',
-    meta: { pagePermissionId: ['-1', '1'] },
+    meta: { pagePermissionId: ['icon'] },
     children: [
       {
         path: '',
@@ -382,7 +426,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     component: shallowRef(Layout),
     name: 'Convert0',
     meta: {
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: ['convert'],
     },
     children: [
       {
@@ -403,7 +447,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     name: 'Table',
     redirect: '/table/index',
     meta: {
-      pagePermissionId: ['-1', '1'],
+      pagePermissionId: ['table', 'table-index', 'table-beta'],
       title: 'table',
       icon: 'table_chart',
     },
@@ -414,6 +458,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'table-index',
           icon: 'label',
+          pagePermissionId: ['table-index'],
         },
         component: () =>
           import(/* webpackChunkName: "table-index" */ 'pages/table/index.vue'),
@@ -424,6 +469,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'table-beta',
           icon: 'label',
+          pagePermissionId: ['table-beta'],
         },
         component: () =>
           import(/* webpackChunkName: "table-beta" */ 'pages/table/beta.vue'),
@@ -438,6 +484,16 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       title: 'nested',
       icon: 'menu',
+      pagePermissionId: [
+        'menu',
+        'menu-menu1',
+        'menu-menu1-1',
+        'menu-menu1-2',
+        'menu-menu1-2-1',
+        'menu-menu1-2-2',
+        'menu-menu1-3',
+        'menu-menu2',
+      ],
     },
     children: [
       {
@@ -447,6 +503,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'Menu1',
         meta: {
           title: 'nested1',
+          pagePermissionId: ['menu-menu1'],
         },
         children: [
           {
@@ -455,6 +512,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
             name: 'Menu1-1',
             meta: {
               title: 'nested1_1',
+              pagePermissionId: ['menu-menu1-1'],
             },
           },
           {
@@ -464,6 +522,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
             name: 'Menu1-2',
             meta: {
               title: 'nested1_2',
+              pagePermissionId: ['menu-menu1-2'],
             },
             children: [
               {
@@ -473,6 +532,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
                 name: 'Menu1-2-1',
                 meta: {
                   title: 'nested1_2_1',
+                  pagePermissionId: ['menu-menu1-2-1'],
                 },
               },
               {
@@ -482,6 +542,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
                 name: 'Menu1-2-2',
                 meta: {
                   title: 'nested1_2_2',
+                  pagePermissionId: ['menu-menu1-2-2'],
                 },
               },
             ],
@@ -492,6 +553,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
             name: 'Menu1-3',
             meta: {
               title: 'nested1_3',
+              pagePermissionId: ['menu-menu1-3'],
             },
           },
         ],
@@ -502,6 +564,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'Menu2',
         meta: {
           title: 'nested2',
+          pagePermissionId: ['menu-menu2'],
         },
       },
     ],
@@ -526,7 +589,9 @@ export const asyncRoutes: RouteRecordRaw[] = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    name: 'catchAll',
-    redirect: '/dashboard',
+    redirect: (to) => {
+      const routes = PermissionModule.routes;
+      return routes[1].path;
+    },
   },
 ];

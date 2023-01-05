@@ -30,6 +30,11 @@ class App extends VuexModule {
   };
   public device: DeviceType = DeviceType.Desktop;
   public refreshPage = true;
+  public toolTipClass = '';
+  @Mutation
+  public SET_TOOL_TIP_CLASS(className: string) {
+    this.toolTipClass = className;
+  }
   @Mutation
   public SET_REFRESH_PAGE(status: any) {
     this.refreshPage = status;

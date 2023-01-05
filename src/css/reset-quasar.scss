@@ -19,6 +19,62 @@
 .q-btn--rectangle {
   border-radius: 8px;
 }
+.q-field__control,
+.q-btn {
+  padding: 0 24px;
+  &.q-btn--outline {
+    font-family: NotoSans-SemiBold, NotoSansSC-Bold;
+  }
+}
+.q-date__content {
+  .q-btn {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    padding: 0;
+    &.q-btn--rectangle {
+      border-radius: 3 !important;
+    }
+  }
+}
+.q-pagination {
+  margin-top: 3px;
+  .q-btn {
+    min-height: 32px;
+    height: 32px;
+    width: 32px !important;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    &:has(img) {
+      min-width: 32px !important;
+      min-height: 32px;
+      height: 32px;
+      margin-right: 8px !important;
+      margin-left: 8px !important;
+      &::before {
+        border-radius: 8px;
+        border: 1px solid #e0e1e8;
+      }
+    }
+    span {
+      height: 32px !important;
+      line-height: 32px !important;
+    }
+    &::before {
+      box-shadow: none;
+      height: 32px !important;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0);
+      box-sizing: border-box;
+    }
+    &.text-primary {
+      font-family: NotoSans-SemiBold, NotoSansSC-Bold;
+    }
+  }
+}
 .q-field--outlined .q-field__control {
   border-radius: 8px;
 }
@@ -31,8 +87,6 @@
 // 表格
 .q-table__container {
   border: none !important;
-  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
-  border-radius: 8px;
 }
 .q-table {
   th {
@@ -119,4 +173,8 @@
     font-size: 14px;
     color: #595959;
   }
+}
+/* tooltip */
+.hide-tooltip {
+  z-index: -1 !important;
 }

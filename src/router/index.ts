@@ -19,7 +19,7 @@ export function resetRouter() {
   try {
     router.getRoutes().forEach((route) => {
       const { name, meta } = route;
-      if (name && meta.roles) {
+      if (name && meta.pagePermissionId) {
         router.hasRoute(name) && router.removeRoute(name);
       }
     });

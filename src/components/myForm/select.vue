@@ -1,14 +1,12 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8">
-      {{ inputRules.length ? '*' : '' }} {{ inputLabel }}
-    </p>
+    <p class="f-bold fs-12 p-b-8">{{ rules.length ? '*' : '' }} {{ label }}</p>
     <q-select
-      v-model="inputModel"
+      v-model="model"
       :options="inputSelectOption"
-      :class="['m-b-5', inputClass]"
+      :class="['m-b-5', classes]"
       :placeholder="inputPlaceholder"
-      :rules="inputRules"
+      :rules="rules"
       :clearable="showClose"
       :readonly="readonly"
       :hint="hint"
@@ -26,11 +24,11 @@
       clear-icon="app:clear"
     >
       <template #selected>
-        <template v-if="inputModel">
+        <template v-if="model">
           {{
             inputSelectOption.find(
-              (data) => String(data.value) === String(inputModel)
-            )?.label ?? inputModel
+              (data) => String(data.value) === String(model)
+            )?.label ?? model
           }}
         </template>
         <template v-else>
@@ -50,37 +48,37 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 @Component({ name: 'FormSelectComponent', emits: ['input'] })
 export default class FormSelectComponent extends Vue {
   @Prop({ default: {} }) option!: {
-    inputModel: string | any[];
+    model: string | any[];
     inputPlaceholder?: string;
-    inputClass?: string;
-    inputRules: any[];
-    inputLabel: string;
+    classes?: string;
+    rules: any[];
+    label: string;
     inputSelectOption: any[];
     showClose?: boolean;
     readonly?: boolean;
     hint?: string;
   };
-  @Watch('inputModel')
+  @Watch('model')
   onchange() {
-    this.$emit('input', this.inputModel);
+    this.$emit('input', this.model);
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
-  private inputModel: string | any[] = '';
+  private model: string | any[] = '';
   private inputPlaceholder = '';
-  private inputClass = '';
-  private inputRules: any[] = [];
-  private inputLabel = '';
+  private classes = '';
+  private rules: any[] = [];
+  private label = '';
   private inputSelectOption: any[] = [];
   private showClose?: boolean;
   private readonly?: boolean;
   private hint?: string;
   mounted() {
-    this.inputModel = this.option?.inputModel ?? '';
+    this.model = this.option?.model ?? '';
     this.inputPlaceholder =
       this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseSelect');
-    this.inputClass = this.option?.inputClass ?? '';
-    this.inputRules = this.option?.inputRules;
-    this.inputLabel = this.option?.inputLabel;
+    this.classes = this.option?.classes ?? '';
+    this.rules = this.option?.rules;
+    this.label = this.option?.label;
     this.inputSelectOption = this.option?.inputSelectOption;
     this.showClose = this.option?.showClose ?? true;
     this.readonly = this.option?.readonly ?? false;

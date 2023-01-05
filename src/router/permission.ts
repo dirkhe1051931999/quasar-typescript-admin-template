@@ -1,31 +1,43 @@
 import router from 'src/router/index';
 import { UserModule } from 'src/store/modules/user';
 import { PermissionModule } from 'src/store/modules/permission';
-import { getToken } from 'src/utils/cookie';
+import { getToken, getUsername } from 'src/utils/cookie';
 import setting from 'src/setting.json';
 import { LoadingBar } from 'quasar';
+import { AppModule } from 'src/store/modules/app';
+import i18n from 'src/i18n';
+import store from 'src/store';
+import { getUserinfo } from 'src/utils/localStorage';
 const whiteList = ['/login'];
-const getPageTitle = (key: string) => {
-  const hasKey = false;
-  if (hasKey) {
-    const pageName = 'i18n.t(routes.${key})';
-    return '123';
+const getPageTitle = (to: any) => {
+  if (to.path === '/login') {
+    return `${setting.title}`;
   }
-  return `${setting.title}`;
+  if (!to.matched[1]) {
+    return `${setting.title}`;
+  }
+  if (to.matched[0].name === to.matched[1].name) {
+    return `${setting.title} ${
+      (i18n as any)[AppModule.language]['routes'][to.meta.title]
+    }`;
+  } else {
+    return `${setting.title} ${
+      (i18n as any)[AppModule.language]['routes'][to.meta.title]
+    }`;
+  }
 };
 
 router.beforeEach(async (to, _from, next) => {
   // 判断该用户是否登录
-  if (getToken()) {
+  if (getToken() && getUserinfo() && getUsername()) {
     if (to.path === '/login') {
       // 如果已经登录，并准备进入 Login 页面，则重定向到主页
       next({ path: '/dashboard' });
       LoadingBar.stop();
     } else {
       // 检查用户是否已获得其权限角色
-      if (UserModule.roles.length === 0) {
+      if (!UserModule.introduction) {
         try {
-          // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
           await UserModule.getUserInfo();
           // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
           PermissionModule.GenerateRoutes();
@@ -62,5 +74,14 @@ router.beforeEach(async (to, _from, next) => {
 
 router.afterEach((to: any): void => {
   LoadingBar.stop();
-  document.title = getPageTitle(to.meta.title);
+  document.title = getPageTitle(to);
 });
+store.watch(
+  // 第一个参数是箭头函数，用来选择你要监听的数据
+  (state: any, getters) => state.App.language,
+  // 第二参数也是箭头函数，是数据改变后的回调监听
+  (newVal: string, oldVal: string) => {
+    if (router.currentRoute.value)
+      document.title = getPageTitle(router.currentRoute.value);
+  }
+);

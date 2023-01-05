@@ -1,14 +1,12 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8">
-      {{ inputRules.length ? '*' : '' }} {{ inputLabel }}
-    </p>
+    <p class="f-bold fs-12 p-b-8">{{ rules.length ? '*' : '' }} {{ label }}</p>
     <q-input
-      v-model.trim="inputModel"
-      :type="inputType"
-      :class="['m-b-5', inputClass]"
+      v-model.trim="model"
+      :type="type"
+      :class="['m-b-5', classes]"
       :placeholder="inputPlaceholder"
-      :rules="inputRules"
+      :rules="rules"
       :hint="hint"
       :readonly="readonly"
       ref="inputDom"
@@ -34,36 +32,36 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 export default class FormInputComponent extends Vue {
   declare $refs: any;
   @Prop({ default: {} }) option!: {
-    inputModel: string;
-    inputType?: string;
+    model: string;
+    type?: string;
     inputPlaceholder?: string;
-    inputClass?: string;
-    inputRules: any[];
-    inputLabel: string;
+    classes?: string;
+    rules: any[];
+    label: string;
     hint?: string;
     readonly?: boolean;
   };
-  @Watch('inputModel')
+  @Watch('model')
   onchange(newVal: string) {
     this.$emit('input', newVal);
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
-  private inputModel = '';
-  private inputType = '';
+  private model = '';
+  private type = '';
   private inputPlaceholder = '';
-  private inputClass = '';
-  private inputRules: any[] = [];
-  private inputLabel = '';
+  private classes = '';
+  private rules: any[] = [];
+  private label = '';
   private hint?: string;
   private readonly?: boolean;
   mounted() {
-    this.inputModel = this.option.inputModel ?? '';
-    this.inputType = this.option?.inputType ?? 'text';
+    this.model = this.option.model ?? '';
+    this.type = this.option?.type ?? 'text';
     this.inputPlaceholder =
       this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseEnter');
-    this.inputClass = this.option?.inputClass ?? '';
-    this.inputRules = this.option?.inputRules;
-    this.inputLabel = this.option?.inputLabel;
+    this.classes = this.option?.classes ?? '';
+    this.rules = this.option?.rules;
+    this.label = this.option?.label;
     this.hint = this.option.hint ?? '';
     this.readonly = this.option.readonly ?? false;
   }

@@ -178,8 +178,8 @@ export default class NavigationBarComponent extends Vue {
   public toggleSidebar() {
     AppModule.TOGGLE_SIDEBAR(false);
   }
-  public logout() {
-    UserModule.LogOut();
+  public async logout() {
+    await UserModule.LogOut();
     this.$router.push('/login');
     this.$globalMessage.show({
       type: 'success',

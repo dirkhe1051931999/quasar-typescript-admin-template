@@ -1,11 +1,12 @@
 <template>
   <div>
     <p class="f-bold fs-12 p-b-8">
-      {{ myDateData.inputRules.length ? '*' : '' }} {{ myDateData.inputLabel }}
+      {{ myDateData.rules.length ? '*' : '' }} {{ myDateData.label }}
     </p>
     <q-input
-      v-model="myDateData.inputModel"
-      :rules="myDateData.inputRules"
+      v-model="myDateData.model"
+      :rules="myDateData.rules"
+      ref=""
       :placeholder="myDateData.inputPlaceholder"
       :disable="false"
       :readonly="true"
@@ -14,18 +15,14 @@
       autocomplete="new-password"
       autocorrect="off"
       outlined
+      no-error-icon
       dense
     >
       <template v-slot:append>
         <q-icon
           name="app:clear"
-          v-show="myDateData.inputModel"
-          @click.prevent.stop="
-            (myDateData.inputModel = ''),
-              (myDateData.inputModelList = ['', '']),
-              (myDateData.dateModel = ''),
-              (myDateData.timeModel = '')
-          "
+          v-if="myDateData.model"
+          @click.prevent.stop="clickDateClear"
         ></q-icon>
         <q-icon name="o_calendar_month" class="cursor-pointer">
           <q-popup-proxy transition-show="jump-up" transition-hide="jump-down">
@@ -77,32 +74,41 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 export default class FormDateComponent extends Vue {
   @Prop({
     default: {
-      inputModel: '',
-      inputLabel: '',
-      inputRules: [],
+      model: '',
+      label: '',
+      rules: [],
     },
   })
   option!: any;
   @Watch('myDateData.inputModelList', { deep: true })
   onchange() {
-    this.myDateData.inputModel = this.myDateData.inputModelList.join(' ');
-    this.$emit('input', this.myDateData.inputModel);
+    this.myDateData.model =
+      this.myDateData.inputModelList.join(' ') === ' '
+        ? ''
+        : this.myDateData.inputModelList.join(' ');
+    this.$emit('input', this.myDateData.model);
   }
   mounted() {
-    this.myDateData.inputModel = this.option.inputModel;
-    this.myDateData.inputLabel = this.option.inputLabel;
-    this.myDateData.inputRules = this.option.inputRules;
+    this.myDateData.model = this.option.model;
+    this.myDateData.label = this.option.label;
+    this.myDateData.rules = this.option.rules;
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private myDateData = {
-    inputModel: '',
+    model: '',
     inputModelList: ['', ''],
-    inputLabel: '',
+    label: '',
     inputPlaceholder: this.globals.$t('messages.pleaseSelectDate'),
     dateModel: '',
     timeModel: '',
-    inputRules: [],
+    rules: [],
   };
+  private clickDateClear() {
+    this.myDateData.model = '';
+    this.myDateData.inputModelList = ['', ''];
+    this.myDateData.dateModel = '';
+    this.myDateData.timeModel = '';
+  }
   private monitorDateChange() {
     this.myDateData.inputModelList[0] = this.myDateData.dateModel;
   }

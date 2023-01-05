@@ -19,14 +19,20 @@ import store from 'src/store';
 import { getUserInfo, login } from 'src/api/user';
 import { uid } from 'quasar';
 import { TagsViewModule } from './tags';
+import { sleep } from 'src/utils/tools';
+import setting from 'src/setting.json';
+import {
+  getUserinfo,
+  removeUserinfo,
+  setUserinfo,
+} from 'src/utils/localStorage';
 
 export interface IUserState {
   token: string;
-  roles: string[];
   username: string;
   introduction: string;
   pagePermissionId: any[];
-  userInfo: any;
+  userinfo: any;
 }
 
 @Module({ dynamic: true, store, name: 'User', namespaced: true })
@@ -34,9 +40,10 @@ class User extends VuexModule implements IUserState {
   public token = getToken() || '';
   public username = getUsername() || '';
   public introduction = '';
-  public pagePermissionId: string[] = [];
-  public userInfo = {};
-  public roles: string[] = [];
+  public pagePermissionId = getUserinfo()
+    ? JSON.parse(getUserinfo()!).pagePermissionId
+    : {};
+  public userinfo = getUserinfo() ? JSON.parse(getUserinfo()!) : {};
 
   @Mutation
   public SET_PAGE_PERMISION_ID(arr: any) {
@@ -55,39 +62,45 @@ class User extends VuexModule implements IUserState {
     this.introduction = introduction;
   }
   @Mutation
-  private SET_ROLES(value: string[]) {
-    this.roles = value;
+  private SET_USERINFO(userinfo: any) {
+    this.userinfo = userinfo;
   }
   // 登录
   @Action({ rawError: true })
   public async Login(data: any) {
     const { username, password } = data;
     // await login({ username, password });
-    await setTimeout(() => 0, 1000);
-    setToken(uid());
+    await sleep(1000);
+    const token = uid();
+    const pagePermissionId = setting.pagePermissionId;
+    const userinfo = {
+      token,
+      username,
+      pagePermissionId,
+    };
+    setToken(token);
     setUsername(username);
-    this.SET_TOKEN(uid());
+    setUserinfo(JSON.stringify(userinfo));
+    this.SET_TOKEN(token);
     this.SET_USERNAME(username);
+    this.SET_USERINFO(userinfo);
+    this.SET_PAGE_PERMISION_ID(pagePermissionId);
+    return Promise.resolve();
   }
   // 获取用户信息
   @Action({ rawError: true })
   public async getUserInfo() {
     // const result = await getUserInfo({ username: this.username });
-    await setTimeout(() => 0, 1000);
+    await sleep(300);
     this.SET_INTRODUCTION('introduction');
-    if (this.username === 'admin') {
-      this.SET_PAGE_PERMISION_ID(['-11']);
-      this.SET_ROLES(['admin']);
-    } else {
-      this.SET_PAGE_PERMISION_ID(['11']);
-      this.SET_ROLES(['editor']);
-    }
+    return Promise.resolve();
   }
   // 退出
   @Action({ rawError: true })
   public async LogOut() {
-    await setTimeout(() => 0, 1000);
+    await sleep(1000);
     this.ResetToken();
+    return Promise.resolve();
   }
   // 重置cookie
   @Action({ rawError: true })
@@ -95,12 +108,13 @@ class User extends VuexModule implements IUserState {
     removeUsername();
     removeToken();
     resetRouter();
+    removeUserinfo();
     TagsViewModule.delAllViews();
     this.SET_TOKEN('');
     this.SET_PAGE_PERMISION_ID([]);
     this.SET_INTRODUCTION('');
     this.SET_USERNAME('');
-    this.SET_ROLES([]);
+    this.SET_USERINFO({});
   }
 }
 

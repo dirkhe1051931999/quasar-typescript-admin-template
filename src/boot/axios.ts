@@ -1,7 +1,11 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { Notify } from 'quasar';
-
+import globalMessage from 'src/utils/notify';
+import setting from 'src/setting.json';
+import { UserModule } from 'src/store/modules/user';
+import router from 'src/router';
+import { Loading } from 'quasar';
+import { AppModule } from 'src/store/modules/app';
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance;
@@ -24,22 +28,47 @@ axios.defaults.baseURL = '';
 // Request interceptors
 axios.interceptors.request.use(
   (config: any) => {
+    config.data = config.data || {};
+    config.params = config.params || {};
+    // // 获取header头内容
+    if (config.method === 'post' && config.data.getResHeader) {
+      delete config.data.getResHeader;
+      config.getResHeader = true;
+    }
+    if (config.method === 'get' && config.params.getResHeader) {
+      delete config.params.getResHeader;
+      config.getResHeader = true;
+    }
+    let Timestamp = new Date().getTime();
+    //时间戳
+    config.headers['accept-language'] =
+      AppModule.language === 'en-US' ? 'en' : 'zh-cn';
+    config.headers['Timestamp'] = Timestamp;
+    if (UserModule.token) {
+      let requetId = 'uuidv4()'; //uuid
+      let sk = 'UserModule.otherLoginData.sk'; //获取SK
+      let SKEnc = 'CryptoJS.MD5(Timestamp + sk)'; // SKEnc = MD5(Timestamp + SK)
+      let SKEnc1 = 'CryptoJS.enc.Hex.stringify(SKEnc)';
+      let body =
+        config.method === 'get'
+          ? ''
+          : JSON.stringify(config.data) === '{}'
+          ? '{}'
+          : JSON.stringify(config.data);
+      let data = UserModule.token + Timestamp + requetId + body;
+      let sign = 'CryptoJS.HmacSHA256(data, SKEnc1)'; // Signature = HMAC-SHA256(Authorization + Timestamp + Request_Id + Request_Body, SKEnc).toLowerCase()
+      let sign1 = 'CryptoJS.enc.Hex.stringify(sign)';
+      config.headers['Authorization'] = UserModule.token;
+      config.headers.Signature = sign1;
+      config.headers['Request-ID'] = requetId;
+      config.headers.Version = '1.0';
+      config.headers['Sign-Method'] = 'HMAC-SHA256';
+    }
     return config;
   },
   (error) => {
     console.log(error);
-    Notify.create({
-      message: error,
-      color: 'negative',
-      multiLine: true,
-      icon: 'mood_bad',
-      actions: [
-        {
-          label: 'Close',
-          color: 'white',
-        },
-      ],
-    });
+    globalMessage.show({ type: 'error', content: error });
     Promise.reject(error);
   }
 );
@@ -47,40 +76,76 @@ axios.interceptors.request.use(
 // Response interceptors
 axios.interceptors.response.use(
   (response) => {
-    const { data, code } = response.data;
-    if (!data || (data && !data.success)) {
-      Notify.create({
-        message: 'msgText',
-        color: 'negative',
-        multiLine: true,
-        icon: 'mood_bad',
-        actions: [
-          {
-            label: 'Close',
-            color: 'white',
-          },
-        ],
+    const errorFuc = (response: any) => {
+      const { status, success, msg } = response.data;
+      if (['88003', '88016'].includes(String(status))) {
+        /* token无效 */
+        UserModule.ResetToken();
+        router.push(`/login?redirect=${router.currentRoute.value.path}`);
+        globalMessage.show({
+          type: 'error',
+          content: msg ?? setting.defaultErrorMsg,
+        });
+        Loading.hide();
+        return Promise.reject(status);
+      } else {
+        /* 错误提示 */
+        globalMessage.show({
+          type: 'error',
+          content: msg ?? setting.defaultErrorMsg,
+        });
+        Loading.hide();
+        return Promise.reject('error');
+      }
+    };
+    const successFuc = (response: any) => {
+      Loading.hide();
+      if (response.config.getResHeader) {
+        if (response.data instanceof Blob) {
+          // 如果是blob获取header头内容
+          return Promise.resolve(
+            Object.assign({ blob: response.data }, response.headers)
+          );
+        } else {
+          return Promise.resolve(
+            Object.assign(response.data, response.headers)
+          );
+        }
+      } else {
+        return Promise.resolve(response.data);
+      }
+    };
+    if (response.data instanceof Blob) {
+      let responseBak = response;
+      /* 如果是blob */
+      return new Promise((resolve) => {
+        var reader: any = new FileReader();
+        reader.readAsBinaryString(response.data);
+        reader.addEventListener('loadend', () => {
+          if (reader.result.indexOf('status') !== -1) {
+            response.data = JSON.parse(reader.result);
+            resolve(errorFuc(response));
+          } else {
+            resolve(successFuc(responseBak));
+          }
+        });
       });
-      return Promise.reject('error');
+    } else {
+      /* 不是blob */
+      const { status, success } = response.data;
+      if (!status || !success || !setting.succCode.includes(String(status))) {
+        return errorFuc(response);
+      } else {
+        return successFuc(response);
+      }
     }
-    return Promise.resolve(response.data);
   },
   (error: any) => {
-    console.info(error);
-    if (error.config.url.includes('/login')) {
-      Notify.create({
-        message: 'DEFAULT_ERRORMSG',
-        color: 'negative',
-        multiLine: true,
-        icon: 'mood_bad',
-        actions: [
-          {
-            label: 'Close',
-            color: 'white',
-          },
-        ],
-      });
+    if (error.config && error.config.url.includes('/login')) {
+      console.info(error);
+      globalMessage.show({ type: 'error', content: setting.defaultErrorMsg });
     }
+    Loading.hide();
     return Promise.reject('error');
   }
 );
