@@ -178,17 +178,15 @@
                     @click="handlerClickDelete(props.row)"
                     >{{ $t(`action.delete`) }}
                   </span>
-                  <span class="in-table-link-button m-l-10">
+                  <span
+                    class="in-table-link-button m-l-10"
+                    style="width: 100px"
+                  >
                     {{ $t(`action.more`) }}
                     <q-icon name="o_expand_more"></q-icon>
                     <q-popup-proxy>
-                      <q-list class="p-t-5">
-                        <q-item
-                          clickable
-                          dense
-                          v-close-popup
-                          style="padding: 0 0 5px"
-                        >
+                      <q-list>
+                        <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
                             <span
                               class="in-table-delete-button"
@@ -197,12 +195,7 @@
                             </span>
                           </q-item-section>
                         </q-item>
-                        <q-item
-                          clickable
-                          dense
-                          v-close-popup
-                          style="padding: 0 0 5px"
-                        >
+                        <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
                             <span
                               class="in-table-delete-button"
@@ -211,12 +204,7 @@
                             </span>
                           </q-item-section>
                         </q-item>
-                        <q-item
-                          clickable
-                          dense
-                          v-close-popup
-                          style="padding: 0 0 0"
-                        >
+                        <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
                             <span
                               class="in-table-delete-button"
@@ -277,11 +265,13 @@
           <MyFormSelect
             v-if="item.type === 'select'"
             :option="{
+              inputId: `${dialogAddUpdateParams.id}-select-${item.model}`,
               rules: item.rules,
               classes: item.classes,
               model: dialogAddUpdateParams.params[item.model],
               label: item.label,
               inputSelectOption: item.inputSelectOption,
+              userInput: true,
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
@@ -296,17 +286,42 @@
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormMultipleSelect
-            v-if="item.type === 'multiplSelect'"
+            v-if="item.type === 'multiple-select'"
             :option="{
+              inputId: `${dialogAddUpdateParams.id}-multiple-select-${item.model}`,
               rules: item.rules,
               classes: item.classes,
               model: dialogAddUpdateParams.params[item.model],
               label: item.label,
               inputSelectOption: item.inputSelectOption,
               multiple: item.multiple,
+              userInput: true,
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
-          />
+          >
+            <template #subTitle>
+              <el-popover
+                placement="top"
+                title="popover-title"
+                :width="320"
+                popper-style="z-index:9999"
+                trigger="hover"
+              >
+                <p
+                  v-for="(item, index) in ['test1', 'test2', 'test3']"
+                  :key="index"
+                >
+                  {{ index + 1 }}. {{ item }}
+                </p>
+                <template #reference>
+                  <q-icon
+                    name="o_info"
+                    class="text-grey-4 cursor-pointer fs-16"
+                  />
+                </template>
+              </el-popover>
+            </template>
+          </MyFormMultipleSelect>
           <MyFormInput
             v-if="item.type === 'text'"
             :option="{
@@ -316,7 +331,30 @@
               label: item.label,
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
-          ></MyFormInput>
+          >
+            <template #subTitle>
+              <el-popover
+                placement="top"
+                title="popover-title"
+                :width="320"
+                popper-style="z-index:9999"
+                trigger="hover"
+              >
+                <p
+                  v-for="(item, index) in ['test1', 'test2', 'test3']"
+                  :key="index"
+                >
+                  {{ index + 1 }}. {{ item }}
+                </p>
+                <template #reference>
+                  <q-icon
+                    name="o_info"
+                    class="text-grey-4 cursor-pointer fs-16"
+                  />
+                </template>
+              </el-popover>
+            </template>
+          </MyFormInput>
           <MyMaskInput
             v-if="item.type === 'mask-input'"
             :option="{
@@ -343,6 +381,7 @@
         title: dialogUpload.title,
         params: dialogUpload.params,
       }"
+      width="30vw"
       @close="dialogUploadCloseEvent"
       @confirm="hanleCLickUploadConfirm"
       @before-hide="dialogUploadBeforeHideEvent"
@@ -358,7 +397,12 @@
         />
         <div class="container">
           <div class="center" @click="handleClickUploadFile">
-            <img src="~assets/inbox.png" alt />
+            <!-- <img src="~assets/inbox.png" alt /> -->
+            <q-icon
+              name="o_cloud_upload"
+              class="fs-50"
+              color="primary"
+            ></q-icon>
             <p class="click">Click to upload</p>
             <p class="format">File type is: xlsx</p>
             <p class="fileName" v-if="dialogUpload.params.fileName">
@@ -643,7 +687,7 @@ export default class myComponentTableBeta extends Vue {
       },
       {
         model: 'd',
-        type: 'multiplSelect',
+        type: 'multiple-select',
         multiple: true,
         inputSelectOption: [
           {

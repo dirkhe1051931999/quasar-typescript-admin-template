@@ -1,6 +1,9 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8">{{ rules.length ? '*' : '' }} {{ label }}</p>
+    <p class="f-bold fs-12 p-b-8 row items-center">
+      <span class="m-r-6">{{ rules.length ? '*' : '' }} {{ label }}</span>
+      <slot name="subTitle"></slot>
+    </p>
     <q-input
       v-model.trim="model"
       :type="type"

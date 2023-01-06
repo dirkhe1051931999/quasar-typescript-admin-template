@@ -389,13 +389,15 @@ canvas {
 #app {
   height: 100%;
 }
-input {
+input,
+textarea {
   &::placeholder {
     font-family: NotoSans-Regular, NotoSansSC-Regular;
     font-size: 12px;
     color: #97a8be !important;
   }
 }
+
 // q-input的label和messages都不要用password字体
 .q-field__label {
   font-family: NotoSans-Regular, NotoSansSC-Regular;

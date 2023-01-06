@@ -11,13 +11,7 @@
         <div class="title f-bold">
           {{ myDialogParams.title }}
           <div class="close">
-            <q-btn
-              icon="close"
-              flat
-              round
-              dense
-              @click="handlerClickCancel()"
-            />
+            <q-icon name="close" class="icon" @click="handlerClickCancel()" />
           </div>
         </div>
         <q-separator />
@@ -27,10 +21,7 @@
           </q-form>
         </div>
         <q-separator v-show="myDialogParams.showAction" />
-        <div
-          class="text-right p-y-24 p-x-16"
-          v-show="myDialogParams.showAction"
-        >
+        <div class="text-right p-16" v-show="myDialogParams.showAction">
           <q-btn
             :label="$t(`action.cancel`)"
             :disable="myDialogParams.clickLoading"
@@ -183,12 +174,10 @@ export default class MyDialogComponent extends Vue {
     position: relative;
     .close {
       position: absolute;
-      right: 24px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border-radius: 3px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -201,12 +190,8 @@ export default class MyDialogComponent extends Vue {
     }
   }
   .content {
-    padding: 0 20px;
+    padding: 0 16px;
     margin: 10px 0;
-  }
-  .action {
-    padding: 24px;
-    text-align: center;
   }
 }
 </style>
