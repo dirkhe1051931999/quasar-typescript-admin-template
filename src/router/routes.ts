@@ -605,7 +605,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/:catchAll(.*)*',
     redirect: (to) => {
       const routes = PermissionModule.routes;
-      return `${routes[1].path}/${routes[1].children![0].path}`;
+      return `${routes[1].path}${routes[1].children![0].path ? '/' : ''}`;
     },
   },
 ];

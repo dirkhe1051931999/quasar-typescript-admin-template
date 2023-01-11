@@ -6,7 +6,7 @@ const config = {
   expires: infiniteTime,
 };
 // lang
-const languageKey = `${setting.title.replaceAll(' ', '_')}_lang`;
+const languageKey = `${setting.title.replace(/\s/g, '_')}_lang`;
 export const getLanguage = () => Cookies.get(languageKey) || '';
 export const setLanguage = (language: string) =>
   Cookies.set(languageKey, String(language), config);
@@ -15,13 +15,13 @@ export const getSize = () => Cookies.get(sizeKey);
 export const setSize = (size: string) => Cookies.set(sizeKey, size, config);
 
 // Token
-const tokenKey = `${setting.title.replaceAll(' ', '_')}_token`;
+const tokenKey = `${setting.title.replace(/\s/g, '_')}_token`;
 export const getToken = () => Cookies.get(tokenKey);
 export const setToken = (token: string) => Cookies.set(tokenKey, token, config);
 export const removeToken = () => Cookies.remove(tokenKey);
 
 // Username
-const usernameKey = `${setting.title.replaceAll(' ', '_')}_username`;
+const usernameKey = `${setting.title.replace(/\s/g, '_')}_username`;
 export const getUsername = (): any => Cookies.get(usernameKey);
 export const setUsername = (username: string) =>
   Cookies.set(usernameKey, username, config);

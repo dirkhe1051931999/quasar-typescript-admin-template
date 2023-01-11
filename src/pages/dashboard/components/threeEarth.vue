@@ -50,21 +50,24 @@ export default class myThreeEarthComponent extends Vue {
       const { width, height } = container.getBoundingClientRect();
 
       // 1. Setup scene
-      const scene = new THREE.Scene();
+      const scene = new (<any>THREE).Scene();
       // 2. Setup camera
-      const camera: any = new THREE.PerspectiveCamera(45, width / height);
+      const camera: any = new (<any>THREE).PerspectiveCamera(
+        45,
+        width / height
+      );
       // 3. Setup renderer
-      const renderer = new THREE.WebGLRenderer({
+      const renderer = new (<any>THREE).WebGLRenderer({
         canvas,
         antialias: true,
       });
       renderer.setSize(width, height);
       // 4. Add points to canvas
       // - Single geometry to contain all points.
-      const mergedGeometry = new THREE.Geometry();
+      const mergedGeometry = new (<any>THREE).Geometry();
       // - Material that the dots will be made of.
-      const pointGeometry = new THREE.SphereGeometry(0.5, 1, 1);
-      const pointMaterial = new THREE.MeshBasicMaterial({
+      const pointGeometry = new (<any>THREE).SphereGeometry(0.5, 1, 1);
+      const pointMaterial = new (<any>THREE).MeshBasicMaterial({
         color: '#989db5',
       });
 
@@ -83,13 +86,13 @@ export default class myThreeEarthComponent extends Vue {
         }
       }
 
-      const globeShape = new THREE.Mesh(mergedGeometry, pointMaterial);
+      const globeShape = new (<any>THREE).Mesh(mergedGeometry, pointMaterial);
       scene.add(globeShape);
 
       container.classList.add('peekaboo');
 
       // Setup orbital controls
-      camera.orbitControls = new THREE.OrbitControls(camera, canvas);
+      camera.orbitControls = new (<any>THREE).OrbitControls(camera, canvas);
       camera.orbitControls.enableKeys = false;
       camera.orbitControls.enablePan = false;
       camera.orbitControls.enableZoom = false;

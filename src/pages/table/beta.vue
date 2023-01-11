@@ -8,7 +8,7 @@
             <div v-for="(item, index) in queryParams.input" :key="index">
               <q-input
                 v-model.trim="queryParams.params[item.id]"
-                :type="item.type"
+                :type="item.inputType"
                 :class="['', item.class]"
                 :label="item.placeholder"
                 v-if="item.type === 'text'"
@@ -475,24 +475,28 @@ export default class myComponentTableBeta extends Vue {
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
         id: 'a',
+        inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
         id: 'a',
+        inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
         id: 'a',
+        inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
         id: 'a',
+        inputType: 'text',
       },
       {
         placeholder: 'Input2',
@@ -515,6 +519,7 @@ export default class myComponentTableBeta extends Vue {
         type: 'text',
         class: 'w-250 m-r-15 m-b-15',
         id: 'c',
+        inputType: 'text',
       },
     ],
   };

@@ -1,12 +1,20 @@
 <template>
   <div class="scroll-container">
-    <q-icon class="arrow left fs-26" name="arrow_left" @click="scrollTo('left')"></q-icon>
+    <q-icon
+      class="arrow left fs-26"
+      name="arrow_left"
+      @click="scrollTo('left')"
+    ></q-icon>
     <el-scrollbar ref="scrollbarRef" @scroll="scroll">
       <div ref="scrollbarContentRef" class="scrollbar-content">
         <slot />
       </div>
     </el-scrollbar>
-    <q-icon class="arrow right fs-26" name="arrow_right" @click="scrollTo('right')"></q-icon>
+    <q-icon
+      class="arrow right fs-26"
+      name="arrow_right"
+      @click="scrollTo('right')"
+    ></q-icon>
   </div>
 </template>
 
@@ -36,7 +44,7 @@ export default class ScrollPaneComponent extends Vue {
     /** 可滚动内容的长度 */
     const scrollbarContentRefWidth = this.scrollbarContentRef!.clientWidth;
     /** 滚动可视区宽度 */
-    const scrollbarRefWidth = this.scrollbarRef!.wrap$!.clientWidth;
+    const scrollbarRefWidth = this.scrollbarRef.$el.clientWidth;
     /** 最后剩余可滚动的宽度 */
     const lastDistance =
       scrollbarContentRefWidth - scrollbarRefWidth - this.currentScrollLeft;

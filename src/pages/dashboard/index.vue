@@ -1036,7 +1036,7 @@ import { Vue, Component } from 'vue-facing-decorator';
 import _ from 'lodash';
 import { CountTo } from 'vue3-count-to';
 import { Chart } from 'chart.js/auto';
-import '@fullcalendar/core/vdom'; // solves problem with Vite
+import '@fullcalendar/core/vdom';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';

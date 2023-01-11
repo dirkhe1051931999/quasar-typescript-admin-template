@@ -7,7 +7,7 @@
           :type="item.type"
           :class="['', item.class]"
           :label="item.placeholder"
-          v-if="item.type === 'text'"
+          v-if="item.inputType === 'text'"
           autocapitalize="off"
           autocomplete="off"
           autocorrect="off"
@@ -17,7 +17,7 @@
           :spellcheck="false"
         />
         <q-select
-          v-if="item.type === 'select'"
+          v-if="item.inputType === 'select'"
           :class="['', item.class]"
           v-model="queryParams[item.id]"
           :options="item.selectArr"
@@ -227,14 +227,14 @@ export default class myComponentMenu2TableIndex extends Vue {
       placeholder: 'IMSI',
       type: 'text',
       class: 'w-250 m-r-15 m-b-15',
-      type: 'number',
+      inputType: 'number',
       id: 'imsi',
     },
     {
       placeholder: 'ICCID',
       type: 'text',
       class: 'w-250 m-r-15 m-b-15',
-      type: 'number',
+      inputType: 'number',
       id: 'iccid',
     },
     {
