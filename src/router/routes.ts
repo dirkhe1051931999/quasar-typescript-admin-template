@@ -17,6 +17,10 @@ import { PermissionModule } from 'src/store/modules/permission';
     affix: true                  if true, 标签将粘贴在标签视图中
   }
 */
+function redirect(to: any) {
+  const routes = PermissionModule.routes;
+  return `${routes[1].path}${routes[1].children![0].path ? '/' : ''}`;
+}
 export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
@@ -79,7 +83,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/charts',
     component: shallowRef(Layout),
     name: 'Charts',
-    redirect: '/charts/relationship',
+    redirect: redirect,
     meta: {
       title: 'charts',
       icon: 'bar_chart',
@@ -146,7 +150,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/components',
     component: shallowRef(Layout),
     name: 'Components',
-    redirect: '/components/editer',
+    redirect: redirect,
     meta: {
       title: 'components',
       icon: 'extension',
@@ -385,7 +389,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
     component: shallowRef(Layout),
     name: 'Copy0',
     meta: { pagePermissionId: ['copy'] },
-    redirect: '/copy',
     children: [
       {
         path: '',
@@ -459,7 +462,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     path: '/table',
     component: shallowRef(Layout),
     name: 'Table',
-    redirect: '/table/index',
+    redirect: redirect,
     meta: {
       pagePermissionId: ['table', 'table-index', 'table-beta'],
       title: 'table',
@@ -493,7 +496,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/menu',
     component: shallowRef(Layout),
-    redirect: '/menu/menu1',
+    redirect: redirect,
     name: 'Menu',
     meta: {
       title: 'nested',
@@ -513,7 +516,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
       {
         path: 'menu1',
         component: () => import('src/pages/menu/menu1/index.vue'),
-        redirect: '/menu/menu1/menu1-1',
+        redirect: redirect,
         name: 'Menu1',
         meta: {
           title: 'nested1',
@@ -532,7 +535,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           {
             path: 'menu1-2',
             component: () => import('src/pages/menu/menu1/menu1-2/index.vue'),
-            redirect: '/menu/menu1/menu1-2/menu1-2-1',
+            redirect: redirect,
             name: 'Menu1-2',
             meta: {
               title: 'nested1_2',
@@ -603,9 +606,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    redirect: (to) => {
-      const routes = PermissionModule.routes;
-      return `${routes[1].path}${routes[1].children![0].path ? '/' : ''}`;
-    },
+    redirect: redirect,
   },
 ];

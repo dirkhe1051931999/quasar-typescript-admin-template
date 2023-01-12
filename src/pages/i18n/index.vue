@@ -39,7 +39,6 @@ export default class myComponentI18n extends Vue {
   ];
   public locale = '';
   public checkLang(language: string) {
-    console.log(language);
     if (language === 'en-US') {
       AppModule.SET_LANGUAGE(language);
       this.$i18n.locale = language;

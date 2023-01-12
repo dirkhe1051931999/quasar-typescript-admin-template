@@ -36,7 +36,13 @@
         </q-tooltip>
       </q-btn>
       <q-separator dark vertical />
-      <q-btn-dropdown stretch flat align="center" icon="font_download">
+      <q-btn-dropdown
+        stretch
+        flat
+        align="center"
+        icon="font_download"
+        dropdown-icon="app:topbar-arrow-bottom-white"
+      >
         <q-list>
           <q-item
             :clickable="lang === 'zh-CN'"
@@ -61,7 +67,12 @@
         </q-list>
       </q-btn-dropdown>
       <q-separator dark vertical />
-      <q-btn-dropdown stretch flat align="center">
+      <q-btn-dropdown
+        stretch
+        flat
+        align="center"
+        dropdown-icon="app:topbar-arrow-bottom-white"
+      >
         <template v-slot:label>
           <q-avatar class="m-r-10 fs-38">
             <img src="~assets/avatar.jpg" />

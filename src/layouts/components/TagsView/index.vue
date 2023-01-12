@@ -4,7 +4,10 @@
       <router-link
         v-for="tag in visitedViews"
         :key="tag.path"
-        :class="isActive(tag) ? 'active' : ''"
+        :class="[
+          isActive(tag) ? 'active' : '',
+          tag.meta.breadcrumb === false ? 'hide' : '',
+        ]"
         :to="{ path: tag.path, query: tag.query }"
         class="tags-view-item"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
@@ -53,6 +56,9 @@ import { AppModule } from 'src/store/modules/app';
 export default class TagsViewComponent extends Vue {
   get visitedViews() {
     return TagsViewModule.visitedViews;
+  }
+  get isCollapse() {
+    return !AppModule.sidebar.opened;
   }
   @Watch('$route', { deep: true })
   onchange1() {
@@ -177,19 +183,20 @@ export default class TagsViewComponent extends Vue {
   public openMenu(tag: ITagsView, e: MouseEvent) {
     const menuMinWidth = 105;
     const sidebarWidth = getCssVariableValue('--v3-sidebar-width');
-    console.log();
     // container margin left
     const offsetLeft = this.$el.getBoundingClientRect().left;
     // container width
     const offsetWidth = this.$el.offsetWidth;
     // left boundary
-    const maxLeft = offsetWidth - menuMinWidth;
+    const maxLeft = offsetWidth;
     // 15: margin right
     const left15 =
       e.clientX -
       offsetLeft +
       15 +
-      Number(sidebarWidth.replace('px', '').replace('', ''));
+      (!this.isCollapse
+        ? Number(sidebarWidth.replace('px', '').replace('', ''))
+        : 0);
     if (left15 > maxLeft) {
       this.left = maxLeft;
     } else {

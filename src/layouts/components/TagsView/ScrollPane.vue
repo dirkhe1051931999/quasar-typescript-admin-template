@@ -1,8 +1,8 @@
 <template>
   <div class="scroll-container">
     <q-icon
-      class="arrow left fs-26"
-      name="arrow_left"
+      class="arrow left"
+      name="app:navigation-arrow-left"
       @click="scrollTo('left')"
     ></q-icon>
     <el-scrollbar ref="scrollbarRef" @scroll="scroll">
@@ -11,8 +11,8 @@
       </div>
     </el-scrollbar>
     <q-icon
-      class="arrow right fs-26"
-      name="arrow_right"
+      class="arrow right"
+      name="app:navigation-arrow-right"
       @click="scrollTo('right')"
     ></q-icon>
   </div>
@@ -70,7 +70,7 @@ export default class ScrollPaneComponent extends Vue {
   display: flex;
   justify-content: space-between;
   .arrow {
-    width: 40px;
+    width: 28px;
     height: 100%;
     cursor: pointer;
     &.left {

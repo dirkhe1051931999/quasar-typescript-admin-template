@@ -12,6 +12,7 @@ export const myIcons: { [key: string]: string } = {
   'app:navigation-close': 'svg/navigation-close.svg',
   'app:my-checked': 'svg/my-checked.svg',
   'app:topbar-arrow-bottom': 'svg/topbar-arrow-bottom.svg',
+  'app:topbar-arrow-bottom-white': 'svg/topbar-arrow-bottom-white.svg',
   'app:banner-info': 'svg/banner-info.svg',
   'app:text-to-input-close': 'svg/text-to-input-close.svg',
   'app:text-to-input-confirm': 'svg/text-to-input-confirm.svg',

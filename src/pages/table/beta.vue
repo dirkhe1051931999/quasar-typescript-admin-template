@@ -180,37 +180,25 @@
                   </span>
                   <span
                     class="in-table-link-button m-l-10"
-                    style="width: 100px"
+                    style="min-width: 100px"
                   >
                     {{ $t(`action.more`) }}
                     <q-icon name="o_expand_more"></q-icon>
-                    <q-popup-proxy>
+                    <q-popup-proxy style="min-width: 100px">
                       <q-list>
                         <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
-                            <span
-                              class="in-table-delete-button"
-                              @click="handlerClickDelete(props.row)"
-                              >{{ $t(`action.delete`) }}
-                            </span>
+                            123123
                           </q-item-section>
                         </q-item>
                         <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
-                            <span
-                              class="in-table-delete-button"
-                              @click="handlerClickDelete(props.row)"
-                              >{{ $t(`action.delete`) }}
-                            </span>
+                            123123
                           </q-item-section>
                         </q-item>
                         <q-item clickable dense v-close-popup>
                           <q-item-section class="text-center">
-                            <span
-                              class="in-table-delete-button"
-                              @click="handlerClickDelete(props.row)"
-                              >{{ $t(`action.delete`) }}
-                            </span>
+                            123123
                           </q-item-section>
                         </q-item>
                       </q-list>

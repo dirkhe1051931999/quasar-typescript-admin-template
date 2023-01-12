@@ -22,7 +22,6 @@ export default class myThreeEarthComponent extends Vue {
       'c-three-earth'
     ) as HTMLCanvasElement;
     const canvas = container.getElementsByTagName('canvas')[0];
-    console.log(canvas);
     const globeRadius = 100;
     const globeWidth = 4098 / 2;
     const globeHeight = 1968 / 2;

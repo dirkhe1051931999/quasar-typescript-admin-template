@@ -128,5 +128,6 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-non-null-assert': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'vue/no-use-v-if-with-v-for': 'off',
   },
 };

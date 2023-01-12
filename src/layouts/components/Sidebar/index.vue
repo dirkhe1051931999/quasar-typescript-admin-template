@@ -27,14 +27,14 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 import { getCssVariableValue } from 'src/utils/tools';
 import { PermissionModule } from 'src/store/modules/permission';
 import { AppModule } from 'src/store/modules/app';
 import { SettingModule } from 'src/store/modules/setting';
 import SidebarItem from './SidebarItem.vue';
 import SidebarLogo from './SidebarLogo.vue';
-
+import { arrowSvg } from './arrow';
 @Component({
   name: 'SidebarLogoComponent',
   components: {
@@ -59,6 +59,13 @@ export default class SidebarLogoComponent extends Vue {
   get routes() {
     return PermissionModule.routes;
   }
+  @Watch('isCollapse')
+  onchnage() {
+    this.setArrowSvg();
+  }
+  mounted() {
+    this.setArrowSvg();
+  }
   public v3SidebarMenuBgColor = getCssVariableValue(
     '--v3-sidebar-menu-bg-color'
   );
@@ -68,11 +75,26 @@ export default class SidebarLogoComponent extends Vue {
   public v3SidebarMenuActiveTextColor = getCssVariableValue(
     '--v3-sidebar-menu-active-text-color'
   );
+
+  public setArrowSvg() {
+    this.$nextTick(() => {
+      const arr = document.querySelectorAll(
+        '.sidebar-container .el-icon.el-sub-menu__icon-arrow'
+      );
+      arr.forEach((data: any) => {
+        data.innerHTML = arrowSvg;
+      });
+    });
+  }
 }
 </script>
 
 
 <style lang="scss" scoped>
+:deep(.el-icon svg) {
+  width: 1.5em;
+  height: 1.5em;
+}
 @mixin tip-line {
   &::before {
     content: '';

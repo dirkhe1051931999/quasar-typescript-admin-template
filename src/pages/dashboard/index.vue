@@ -1,25 +1,27 @@
 <template>
   <div class="dashboard-container">
-    <div class="col-12 m-b-16">
-      <q-card class="p-32 bg-gradient-primary">
-        <div class="row items-center justify-center">
-          <div class="col-10">
-            <div class="numbers">
-              <p class="text-white">Wheather today</p>
-              <h5 class="text-white">San Francisco - 29°C</h5>
+    <q-intersection once transition="jump-up">
+      <div class="col-12 m-b-16">
+        <q-card class="p-32 bg-gradient-primary">
+          <div class="row items-center justify-center">
+            <div class="col-10">
+              <div class="numbers">
+                <p class="text-white">Wheather today</p>
+                <h5 class="text-white">San Francisco - 29°C</h5>
+              </div>
+            </div>
+            <div class="col-2 text-left">
+              <img
+                class="w-50"
+                src="~assets/icon-sun-cloud.png"
+                alt="image sun"
+              />
+              <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
             </div>
           </div>
-          <div class="col-2 text-left">
-            <img
-              class="w-50"
-              src="~assets/icon-sun-cloud.png"
-              alt="image sun"
-            />
-            <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
-          </div>
-        </div>
-      </q-card>
-    </div>
+        </q-card>
+      </div>
+    </q-intersection>
     <div class="row items-start">
       <div class="col-6 row items-center justify-between">
         <q-card

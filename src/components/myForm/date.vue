@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative-position">
     <p class="f-bold fs-12 p-b-8 row items-center">
       <span class="m-r-6">
         {{ myDateData.rules.length ? '*' : '' }} {{ myDateData.label }}
