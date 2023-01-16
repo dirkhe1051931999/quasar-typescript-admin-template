@@ -103,7 +103,7 @@ export default class dialogConfirmComponent extends Vue {
     }
   }
   .content {
-    padding: 16px 22px 16px 24px;
+    padding: 16px;
     font-size: 14px;
     line-height: 21px;
   }

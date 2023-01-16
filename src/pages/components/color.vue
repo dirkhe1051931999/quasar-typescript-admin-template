@@ -6,6 +6,25 @@
       }}</q-avatar>
       {{ item }}
     </q-chip>
+    <div class="row">
+      <div class="my-status grey">my-status grey</div>
+      <div class="my-status green">my-status green</div>
+      <div class="my-status red">my-status red</div>
+      <div class="my-status yellow">my-status yellow</div>
+      <div class="my-status blue">my-status blue</div>
+    </div>
+    <div class="row">
+      <span class="my-button outline primary">my-button outline primary</span>
+      <span class="my-button outline negative">my-button outline negative</span>
+      <span class="my-button disabled">my-button outline</span>
+    </div>
+    <div class="row">
+      <span class="my-label blue">my-label blue</span>
+      <span class="my-label green">my-label green</span>
+      <span class="my-label yellow">my-label yellow</span>
+      <span class="my-label red">my-label red</span>
+      <span class="my-label grey">my-label grey</span>
+    </div>
   </div>
 </template>
 

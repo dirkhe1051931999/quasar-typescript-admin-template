@@ -1,5 +1,11 @@
 <template>
-  <q-input outlined class="text-to-input" v-model="text" :loading="_loading">
+  <q-input
+    outlined
+    class="text-to-input"
+    v-model="text"
+    :loading="_loading"
+    dense
+  >
     <template v-slot:append>
       <q-icon
         name="app:text-to-input-close"

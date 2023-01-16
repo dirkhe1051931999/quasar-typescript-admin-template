@@ -1,4 +1,3 @@
-// https://gitee.com/LongbowEnterprise/SliderCaptcha
 /*eslint no-prototype-builtins: "off"*/
 /*eslint eqeqeq: "off"*/
 export class sliderCaptcha {

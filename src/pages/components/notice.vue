@@ -1,5 +1,39 @@
 <template>
   <div class="q-pa-md q-gutter-y-sm column items-center">
+    <MyTooltip
+      content="tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip"
+      style="width: 100px"
+    >
+    </MyTooltip>
+    <TextToInput
+      value="text text"
+      :that="textToInputThat"
+      :loading="textToInputLoading"
+      @confirm="textToInputConfirm"
+      @close="textToInputClose"
+    >
+    </TextToInput>
+    <MyBanner
+      content="ok ok ok ok ok ok ok ok ok ok ok ok"
+      bid="notice-banner-1"
+      bannerType="warn"
+      :showClose="true"
+    ></MyBanner>
+    <MyBanner
+      content="ok ok ok ok ok ok ok ok ok ok ok ok"
+      bid="notice-banner-2"
+      bannerType="success"
+    ></MyBanner>
+    <MyBanner
+      content="ok ok ok ok ok ok ok ok ok ok ok ok"
+      bid="notice-banner-3"
+      bannerType="negative"
+    ></MyBanner>
+    <MyBanner
+      content="ok ok ok ok ok ok ok ok ok ok ok ok"
+      bid="notice-banner-4"
+      bannerType="primary"
+    ></MyBanner>
     <div class="q-pa-md q-gutter-sm">
       <q-banner dense class="bg-primary text-white">
         Unfortunately, the credit card did not go through, please try again.
@@ -18,7 +52,6 @@
           <q-btn flat color="primary" label="Turn on Wifi" />
         </template>
       </q-banner>
-
       <q-banner dense inline-actions class="text-white bg-red">
         You have lost connection to the internet. This app is offline.
         <template v-slot:action>
@@ -205,6 +238,16 @@ const alerts = [
   name: 'myComponentNotice',
 })
 export default class myComponentNotice extends Vue {
+  private textToInputLoading = false;
+  private textToInputThat = { a: 1, b: 2 };
+  private textToInputConfirm({ value, that }: { value: string; that: any }) {
+    console.log(value);
+    console.log(that);
+  }
+  private textToInputClose({ value, that }: { value: string; that: any }) {
+    console.log(value);
+    console.log(that);
+  }
   private showNotif(position: any) {
     const { color, multiLine, icon, message, avatar } =
       alerts[Math.floor(Math.random() * 10) % alerts.length];

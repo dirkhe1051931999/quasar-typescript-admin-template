@@ -184,6 +184,18 @@
   user-select: none;
   position: relative;
   &.outline {
+    background: #ffffff;
+    box-sizing: border-box;
+    font-family: NotoSansSC-SemiBold, NotoSansSC-Bold;
+  }
+  &.negative {
+    border: solid 1px $negative;
+    color: $negative;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-family: NotoSansSC-SemiBold, NotoSansSC-Bold;
+  }
+  &.primary {
     border: solid 1px $primary;
     color: $primary;
     background: #ffffff;
@@ -213,6 +225,12 @@
     height: 6px;
     border-radius: 50%;
     background-color: $black;
+  }
+  &.grey {
+    color: $grey;
+    &::before {
+      background-color: $grey;
+    }
   }
   &.green {
     color: $green;

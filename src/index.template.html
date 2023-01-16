@@ -41,9 +41,77 @@
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/china.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/threejs.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/orbit-controls.js"></script>
+    <style>
+      .q-spinner-html {
+        vertical-align: middle;
+      }
+      .q-spinner-mat-html {
+        animation: q-spin 2s linear infinite;
+        transform-origin: center center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #3b4170;
+      }
+      .q-spinner-mat-html .path {
+        stroke-dasharray: 1, 200 /* rtl:ignore */;
+        stroke-dashoffset: 0 /* rtl:ignore */;
+        animation: q-mat-dash 1.5s ease-in-out infinite;
+      }
+      @keyframes q-spin {
+        0% {
+          transform: rotate3d(0, 0, 1, 0deg) /* rtl:ignore */;
+        }
+        25% {
+          transform: rotate3d(0, 0, 1, 90deg) /* rtl:ignore */;
+        }
+        50% {
+          transform: rotate3d(0, 0, 1, 180deg) /* rtl:ignore */;
+        }
+        75% {
+          transform: rotate3d(0, 0, 1, 270deg) /* rtl:ignore */;
+        }
+        100% {
+          transform: rotate3d(0, 0, 1, 359deg) /* rtl:ignore */;
+        }
+      }
+      @keyframes q-mat-dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+        50% {
+          stroke-dasharray: 89, 200;
+          stroke-dashoffset: -35px;
+        }
+        100% {
+          stroke-dasharray: 89, 200;
+          stroke-dashoffset: -124px;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->
-    <div id="q-app"></div>
+    <div id="q-app">
+      <svg
+        class="q-spinner-html q-spinner-mat-html"
+        width="68"
+        height="68"
+        viewBox="25 25 50 50"
+      >
+        <circle
+          class="path"
+          cx="50"
+          cy="50"
+          r="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="5"
+          stroke-miterlimit="10"
+        ></circle>
+      </svg>
+    </div>
   </body>
 </html>

@@ -1,5 +1,10 @@
 <template>
-  <q-banner dense class="my-banner" v-show="show" :class="bannerType">
+  <q-banner
+    dense
+    class="my-banner"
+    v-show="show"
+    :class="[bannerType, showClose ? 'p-r-32' : 'p-r-16']"
+  >
     <template v-slot:avatar>
       <q-icon
         name="info"
@@ -15,8 +20,8 @@
       />
     </template>
     <div class="content" :id="bid + '-' + bannerType + '-banner-content'"></div>
-    <div class="close" @click.prevent.stop="show = false" v-if="showCLose">
-      <q-icon name="app:navigation-close"></q-icon>
+    <div class="close" @click.prevent.stop="show = false" v-if="showClose">
+      <q-icon name="cancel"></q-icon>
     </div>
   </q-banner>
 </template>
@@ -28,7 +33,7 @@ import { Component, Prop, Vue } from 'vue-facing-decorator';
 export default class BannerComponent extends Vue {
   @Prop({ default: '' }) content!: string;
   @Prop({ default: '' }) bid!: string;
-  @Prop({ default: false }) showCLose?: boolean;
+  @Prop({ default: false }) showClose?: boolean;
   @Prop({ default: 'success' }) bannerType!: string;
   public show = true;
   mounted() {
@@ -47,7 +52,9 @@ export default class BannerComponent extends Vue {
 <style lang="scss" scoped>
 .my-banner {
   border-radius: 8px;
-  padding: 12px 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
   position: relative;
   &.warn {
     background: $yellow-1;
@@ -62,7 +69,7 @@ export default class BannerComponent extends Vue {
     border: 1px solid rgba($negative, 0.5);
   }
   &.primary {
-    background: $blue-1;
+    background: rgba($blue, 0.2);
     border: 1px solid rgba($primary, 0.5);
   }
   .icon {
@@ -70,10 +77,14 @@ export default class BannerComponent extends Vue {
   }
   .close {
     position: absolute;
-    right: 16px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    color: $grey-5;
+    &:hover {
+      color: $grey-3;
+    }
   }
 }
 </style>

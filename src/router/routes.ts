@@ -19,7 +19,9 @@ import { PermissionModule } from 'src/store/modules/permission';
 */
 function redirect(to: any) {
   const routes = PermissionModule.routes;
-  return `${routes[1].path}${routes[1].children![0].path ? '/' : ''}`;
+  return `${routes[1].path}${
+    routes[1] && routes[1].children && routes[1].children![0].path ? '/' : ''
+  }`;
 }
 export const constantRoutes: RouteRecordRaw[] = [
   {
