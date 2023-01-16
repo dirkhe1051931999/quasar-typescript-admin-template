@@ -8,9 +8,9 @@ import { AppModule } from 'src/store/modules/app';
 import i18n from 'src/i18n';
 import store from 'src/store';
 import { getUserinfo } from 'src/utils/localStorage';
-const whiteList = ['/login'];
+const whiteList = ['/login', '/login2'];
 const getPageTitle = (to: any) => {
-  if (to.path === '/login') {
+  if (whiteList.indexOf(to.path) !== -1) {
     return `${setting.title}`;
   }
   if (!to.matched[1]) {
@@ -30,9 +30,13 @@ const getPageTitle = (to: any) => {
 router.beforeEach(async (to, _from, next) => {
   // 判断该用户是否登录
   if (getToken() && getUserinfo() && getUsername()) {
-    if (to.path === '/login') {
-      // 如果已经登录，并准备进入 Login 页面，则重定向到主页
-      next({ path: '/dashboard' });
+    if (whiteList.indexOf(to.path) !== -1) {
+      // 如果已经登录，并且没有带query token 参数，并准备进入 Login 页面，则重定向到主页
+      if (to.query.token && to.query.creationId) {
+        next();
+      } else {
+        next({ path: '/dashboard' });
+      }
       LoadingBar.stop();
     } else {
       // 检查用户是否已获得其权限角色

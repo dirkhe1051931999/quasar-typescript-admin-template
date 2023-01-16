@@ -83,6 +83,16 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.absolute-x-center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.absolute-y-center {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
 .split-line {
   background-image: linear-gradient(
     90deg,

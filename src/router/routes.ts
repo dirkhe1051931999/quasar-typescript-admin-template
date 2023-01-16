@@ -29,6 +29,13 @@ export const constantRoutes: RouteRecordRaw[] = [
       import(/* webpackChunkName: "login" */ 'src/pages/login/index.vue'),
     meta: { hidden: true },
   },
+  {
+    path: '/login2',
+    name: 'Login2',
+    component: () =>
+      import(/* webpackChunkName: "login2" */ 'src/pages/login/index2.vue'),
+    meta: { hidden: true },
+  },
 ];
 /**
  * 动态路由
