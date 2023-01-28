@@ -8,5 +8,5 @@ declare namespace NodeJS {
   }
 }
 // declare interface Window {
-//   THREE: unknown;
+//   jsVectorMap: unknown;
 // }

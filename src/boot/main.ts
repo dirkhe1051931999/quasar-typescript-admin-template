@@ -24,6 +24,7 @@ export default boot(({ app }) => {
   app.use(vue3PhotoPreview);
   app.use(ElementPlus);
   app.config.globalProperties.$globalMessage = globalMessage;
+  app.config.globalProperties.$window = window;
   app.config.globalProperties.$globalConfirm = globalConfirm;
   app.config.globalProperties.defaultFill = defaultFill;
   app.config.globalProperties.parseTime = (

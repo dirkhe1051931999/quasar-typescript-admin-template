@@ -36,11 +36,17 @@
       as="font"
       crossorigin
     />
+    <link
+      rel="stylesheet"
+      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.css"
+    />
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>less.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/echarts.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/china.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/threejs.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/orbit-controls.js"></script>
+    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.js"></script>
+    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/world-merc.js"></script>
     <style>
       .q-spinner-html {
         vertical-align: middle;

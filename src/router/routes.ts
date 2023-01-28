@@ -98,6 +98,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
       icon: 'bar_chart',
       pagePermissionId: [
         'charts',
+        'charts-world',
         'charts-relationship',
         'charts-map',
         'charts-province',
@@ -105,6 +106,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
       ],
     },
     children: [
+      {
+        path: 'world',
+        name: 'World',
+        meta: {
+          title: 'world',
+          icon: 'label',
+          pagePermissionId: ['charts-world'],
+        },
+        component: () =>
+          import(/* webpackChunkName: "world" */ 'src/pages/charts/world.vue'),
+      },
       {
         path: 'relationship',
         name: 'Relationship',
@@ -115,7 +127,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         },
         component: () =>
           import(
-            /* webpackChunkName: "line" */ 'src/pages/charts/relationship.vue'
+            /* webpackChunkName: "relationship" */ 'src/pages/charts/relationship.vue'
           ),
       },
       {

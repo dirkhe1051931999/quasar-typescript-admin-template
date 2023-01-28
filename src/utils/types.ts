@@ -12,7 +12,7 @@ declare module '@vue/runtime-core' {
     parseTime: (data: number | string | null | undefined) => string;
   }
   // export interface Window {
-  //   THREE: any;
+  //   jsVectorMap: any;
   // }
 }
 export {};

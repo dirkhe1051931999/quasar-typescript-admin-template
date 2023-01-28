@@ -33,6 +33,7 @@ export default {
     dialog: '弹窗',
     profile: '个人中心',
     parallax: '视差',
+    world: '世界地图标记',
     relationship: '关系图',
     map: '中国地图',
     province: '省份地图',

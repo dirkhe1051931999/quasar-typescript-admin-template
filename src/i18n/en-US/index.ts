@@ -34,6 +34,7 @@ export default {
     colors: 'Colors',
     profile: 'Profile',
     parallax: 'Parallax',
+    world: 'World',
     relationship: 'Relationship',
     map: 'China map',
     province: 'Province map',
