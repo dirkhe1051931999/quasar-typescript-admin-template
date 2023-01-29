@@ -20,7 +20,9 @@ import { PermissionModule } from 'src/store/modules/permission';
 function redirect(to: any) {
   const routes = PermissionModule.routes;
   return `${routes[1].path}${
-    routes[1] && routes[1].children && routes[1].children![0].path ? '/' : ''
+    routes[1] && routes[1].children && routes[1].children![0].path
+      ? '/dashboard'
+      : ''
   }`;
 }
 export const constantRoutes: RouteRecordRaw[] = [
@@ -629,7 +631,10 @@ export const asyncRoutes: RouteRecordRaw[] = [
     name: 'largeDisplay0',
     children: [
       {
-        path: `${location.origin}/pageA.html#/large-display`,
+        path:
+          process.env.NODE_ENV === 'production'
+            ? `${location.origin}/v3-admin/pageA.html#/large-display`
+            : `${location.origin}/pageA.html#/large-display`,
         component: () => {},
         name: 'largeDisplay',
         meta: {

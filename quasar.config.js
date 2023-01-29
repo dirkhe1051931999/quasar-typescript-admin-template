@@ -93,7 +93,7 @@ module.exports = configure(function (ctx) {
           ...cfg.resolve.alias,
           src2: path.resolve(__dirname, './src2'),
         };
-        cfg.entry = Object.assign(cfg.entry, multiplePage.getEntryPages());
+        cfg.entry = Object.assign(multiplePage.getEntryPages(), cfg.entry);
         cfg.plugins.push(...multiplePage.htmlPlugins());
       },
     },

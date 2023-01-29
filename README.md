@@ -1,8 +1,11 @@
 # Quasar Project (quasar-vue3-admin-template)
 
 Use **vue-facing-decorator(Class syntax)** to Write Vue3 , discard setup syntax , embrace OOP , try my self do it
+Support vue multi-page, a vue project can have multiple html entry
 
 ### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
+
+### multi-page demo https://dirkhe1051931999.github.io/v3-admin/pageA.html#/large-display
 
 ### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
