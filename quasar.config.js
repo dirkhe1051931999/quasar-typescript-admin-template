@@ -12,7 +12,10 @@
 
 const { configure } = require('quasar/wrappers');
 const setting = require('./src/setting.json');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const multiplePage = require('./multiple.page');
+const path = require('path');
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -20,7 +23,10 @@ module.exports = configure(function (ctx) {
       tsCheckerConfig: {
         eslint: {
           enabled: true,
-          files: './src/**/*.{ts,tsx,js,jsx,vue}',
+          files: [
+            './src/**/*.{ts,tsx,js,jsx,vue}',
+            './src2/**/*.{ts,tsx,js,jsx,vue}',
+          ],
         },
       },
     },
@@ -83,6 +89,12 @@ module.exports = configure(function (ctx) {
         if (ctx.prod) {
           cfg.plugins.push(new CleanWebpackPlugin());
         }
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          src2: path.resolve(__dirname, './src2'),
+        };
+        cfg.entry = Object.assign(cfg.entry, multiplePage.getEntryPages());
+        cfg.plugins.push(...multiplePage.htmlPlugins());
       },
     },
 

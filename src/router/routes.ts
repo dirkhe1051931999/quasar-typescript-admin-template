@@ -623,6 +623,22 @@ export const asyncRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '',
+    component: shallowRef(Layout),
+    name: 'largeDisplay0',
+    children: [
+      {
+        path: `${location.origin}/pageA.html#/large-display`,
+        component: () => {},
+        name: 'largeDisplay',
+        meta: {
+          title: 'largeDisplay',
+          icon: 'link',
+        },
+      },
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

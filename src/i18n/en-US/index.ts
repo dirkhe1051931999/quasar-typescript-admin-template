@@ -52,6 +52,7 @@ export default {
     nested3_1: 'Nested3_1',
     nested3_2: 'Nested3_2',
     link: 'Link',
+    largeDisplay: 'Big data display',
   },
   layouts: {
     profile: 'Profile',

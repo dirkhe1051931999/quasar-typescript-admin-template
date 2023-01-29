@@ -52,6 +52,7 @@ export default {
     nested3_1: '嵌套3-1',
     nested3_2: '嵌套3-2',
     link: '外链',
+    largeDisplay: '大屏展示',
   },
   layouts: {
     profile: '个人中心',
