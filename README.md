@@ -5,21 +5,28 @@ Support vue multi-page, a vue project can have multiple html entry
 
 ### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
 
-### multi-page demo https://dirkhe1051931999.github.io/v3-admin/pageA.html#/large-display
+### multi-page demo https://dirkhe1051931999.github.io/v3-admin/index2.html#/large-display
 
 ### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
-#### Login
+#### Two Login page
 
 <img src="https://s1.ax1x.com/2022/11/22/z1OeIO.png" >
 
-#### Dashboard
+[![pSdf8bT.png](https://s1.ax1x.com/2023/01/30/pSdf8bT.png)](https://imgse.com/i/pSdf8bT)
 
-<img src="https://s1.ax1x.com/2022/11/22/z1OuJe.png" >
+#### multi-page Dashboard (index.html)
+
+[![pSdf3rV.png](https://s1.ax1x.com/2023/01/30/pSdf3rV.png)](https://imgse.com/i/pSdf3rV)
+
+#### multi-page large data display (index2.html)
+
+[![pSdfJVU.png](https://s1.ax1x.com/2023/01/30/pSdfJVU.png)](https://imgse.com/i/pSdfJVU)
 
 #### Table
 
-<img src="https://s1.ax1x.com/2022/11/22/z1OniD.png" >
+[![pSdf1K0.png](https://s1.ax1x.com/2023/01/30/pSdf1K0.png)](https://imgse.com/i/pSdf1K0)
+
 ## Install the dependencies
 
 ```bash

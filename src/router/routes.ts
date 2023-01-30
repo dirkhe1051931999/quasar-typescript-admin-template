@@ -633,8 +633,8 @@ export const asyncRoutes: RouteRecordRaw[] = [
       {
         path:
           process.env.NODE_ENV === 'production'
-            ? `${location.origin}/v3-admin/pageA.html#/large-display`
-            : `${location.origin}/pageA.html#/large-display`,
+            ? `${location.origin}${setting.publicPath}index2.html#/large-display`
+            : `${location.origin}/index2.html#/large-display`,
         component: () => {},
         name: 'largeDisplay',
         meta: {

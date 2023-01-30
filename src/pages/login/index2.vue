@@ -530,7 +530,7 @@ import { getCurrentInstance } from 'vue';
 import { isValidEmail, isValidPassword } from 'src/utils/validate';
 import { sleep } from 'src/utils/tools';
 import { getToken } from 'src/utils/cookie';
-
+import setting from 'src/setting.json';
 @Component({ name: 'LoginPage2' })
 export default class LoginPage2 extends Vue {
   declare $refs: any;

@@ -4,8 +4,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-@Component({ name: 'enterPageAComponent' })
-export default class enterPageAComponent extends Vue {}
+@Component({ name: 'enterIndex2Component' })
+export default class enterIndex2Component extends Vue {}
 </script>
 
 <style lang="scss" scoped>
