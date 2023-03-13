@@ -44,15 +44,19 @@ export default class FormMaskInputComponent extends Vue {
   declare $refs: any;
   @Prop({ default: {} }) option!: {
     model: string;
-    type?: string;
+    type: string;
     inputPlaceholder?: string;
     classes?: string;
     rules: any[];
     label: string;
-    hint?: string;
+    hint: string;
     mask: string;
-    readonly?: boolean;
+    readonly: boolean;
   };
+  @Watch('option.model')
+  onModelchange(newVal: any) {
+    this.model = newVal;
+  }
   @Watch('model')
   onchange(newVal: string) {
     this.$emit('input', newVal);
@@ -64,9 +68,9 @@ export default class FormMaskInputComponent extends Vue {
   private classes = '';
   private rules: any[] = [];
   private label = '';
-  private hint?: string;
-  private mask?: string;
-  private readonly?: boolean;
+  private hint: string = '';
+  private mask: string = '';
+  private readonly: boolean = false;
   mounted() {
     this.model = this.option.model ?? '';
     this.type = this.option?.type ?? 'text';
@@ -76,11 +80,11 @@ export default class FormMaskInputComponent extends Vue {
     this.rules = this.option?.rules;
     this.label = this.option?.label;
     this.hint = this.option.hint ?? '';
-    this.mask = this.option.mask ?? '';
+    this.mask = this.option.mask;
     this.readonly = this.option.readonly ?? false;
   }
-  public validForm() {
-    this.$refs['inputDom'].validate();
+  public async validForm() {
+    return this.$refs['inputDom'].validate();
   }
 }
 </script>

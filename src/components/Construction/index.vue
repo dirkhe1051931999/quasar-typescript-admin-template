@@ -206,7 +206,7 @@ export default class ConstructionComponent extends Vue {}
       z-index: 1;
       width: 60px;
       height: 60px;
-      right: -24px;
+      right: -16px;
       bottom: -20px;
       border-radius: 50%;
       position: absolute;

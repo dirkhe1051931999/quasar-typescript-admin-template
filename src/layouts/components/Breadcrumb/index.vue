@@ -45,6 +45,7 @@ export default class BreadcrumbComponent extends Vue {
     return toPath(params);
   }
   public handleLink(item: RouteLocationMatched) {
+    return;
     const { redirect, path } = item;
     if (redirect) {
       this.$router.push(redirect as string);

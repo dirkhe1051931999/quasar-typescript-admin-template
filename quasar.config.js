@@ -57,12 +57,8 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       transpile: false,
-      publicPath:
-        process.env.NODE_ENV !== 'production' ? null : setting.publicPath,
-      distDir:
-        ctx.modeName === 'spa'
-          ? `dist${setting.publicPath}`
-          : `dist/${ctx.modeName}`,
+      publicPath: process.env.NODE_ENV !== 'production' ? null : setting.publicPath,
+      distDir: ctx.modeName === 'spa' ? `dist${setting.publicPath}` : `dist/${ctx.modeName}`,
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -89,10 +85,7 @@ module.exports = configure(function (ctx) {
           ...cfg.resolve.alias,
           src2: path.resolve(__dirname, './src2'),
         };
-        cfg.entry = Object.assign(
-          multiplePage.getEntryPages('src2'),
-          cfg.entry
-        );
+        cfg.entry = Object.assign(multiplePage.getEntryPages('src2'), cfg.entry);
         cfg.plugins.push(...multiplePage.htmlPlugins('src2'));
       },
     },
@@ -117,7 +110,11 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
+        screen: {
+          bodyClasses: true,
+        },
         brand: {
+          white: '#ffffff',
           negative: '#e93030',
           primary: '#5469d4',
           black: '#252631',
@@ -147,14 +144,7 @@ module.exports = configure(function (ctx) {
       directives: ['Ripple', 'Mutation', 'Scroll'],
 
       // Quasar plugins
-      plugins: [
-        'Notify',
-        'AppFullscreen',
-        'LoadingBar',
-        'Loading',
-        'Dialog',
-        'BottomSheet',
-      ],
+      plugins: ['Notify', 'AppFullscreen', 'LoadingBar', 'Loading', 'Dialog', 'BottomSheet'],
     },
 
     // animations: 'all', // --- includes all animations

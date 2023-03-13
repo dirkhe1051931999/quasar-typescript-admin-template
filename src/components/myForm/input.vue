@@ -12,6 +12,7 @@
       :rules="rules"
       :hint="hint"
       :readonly="readonly"
+      :disable="disable"
       ref="inputDom"
       autocapitalize="off"
       autocomplete="new-password"
@@ -23,6 +24,9 @@
       clear-icon="app:clear"
       :spellcheck="false"
     >
+      <template #append>
+        <slot name="append"> </slot>
+      </template>
     </q-input>
   </div>
 </template>
@@ -41,12 +45,33 @@ export default class FormInputComponent extends Vue {
     classes?: string;
     rules: any[];
     label: string;
-    hint?: string;
-    readonly?: boolean;
+    hint: string;
+    readonly: boolean;
+    disable: boolean;
   };
+  @Watch('option.disable', { deep: true })
+  onDisablechange(newVal: boolean) {
+    this.disable = newVal;
+  }
+  @Watch('option.model', { deep: true })
+  onModelchange(newVal: string) {
+    this.model = newVal;
+  }
   @Watch('model')
   onchange(newVal: string) {
     this.$emit('input', newVal);
+  }
+  @Watch('option.classes')
+  onClassesChange(newVal: string) {
+    this.classes = newVal;
+  }
+  @Watch('option.rules', { deep: true })
+  onRulesChange(newVal: any[]) {
+    this.rules = newVal;
+  }
+  @Watch('option.label', { deep: true })
+  onLabelChange(newVal: string) {
+    this.label = newVal;
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private model = '';
@@ -55,8 +80,9 @@ export default class FormInputComponent extends Vue {
   private classes = '';
   private rules: any[] = [];
   private label = '';
-  private hint?: string;
-  private readonly?: boolean;
+  private hint: string = '';
+  private readonly: boolean = false;
+  private disable: boolean = false;
   mounted() {
     this.model = this.option.model ?? '';
     this.type = this.option?.type ?? 'text';
@@ -65,11 +91,12 @@ export default class FormInputComponent extends Vue {
     this.classes = this.option?.classes ?? '';
     this.rules = this.option?.rules;
     this.label = this.option?.label;
-    this.hint = this.option.hint ?? '';
-    this.readonly = this.option.readonly ?? false;
+    this.hint = this.option.hint;
+    this.readonly = this.option.readonly;
+    this.disable = this.option.disable || false;
   }
-  public validForm() {
-    this.$refs['inputDom'].validate();
+  public async validForm() {
+    return await this.$refs['inputDom'].validate();
   }
 }
 </script>

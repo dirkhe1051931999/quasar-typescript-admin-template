@@ -1,11 +1,7 @@
 
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div
-      v-if="classObj.mobile && classObj.openSidebar"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    />
+    <div v-if="classObj.mobile && classObj.openSidebar" class="drawer-bg" @click="handleClickOutside" />
     <Sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
@@ -85,7 +81,7 @@ export default class LayoutIndexComponents extends Vue {
 }
 
 .main-container {
-  min-height: 100%;
+  height: 100%;
   transition: margin-left 0.28s;
   margin-left: var(--v3-sidebar-width);
   position: relative;
@@ -104,6 +100,7 @@ export default class LayoutIndexComponents extends Vue {
   left: 0;
   z-index: 1001;
   overflow: hidden;
+  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
 }
 
 .fixed-header {

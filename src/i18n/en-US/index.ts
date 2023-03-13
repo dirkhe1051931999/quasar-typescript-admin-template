@@ -78,9 +78,8 @@ export default {
     changePassword: 'Change password',
     forgotPassword2: 'Forgot password',
     forgotPasswordSub: 'Please enter email to reset password',
-    illustrationDescription: 'TITLE TITLE TITLE TITLE TITLE',
-    illustrationaDescriptionSub:
-      'description description description description description description description description description description ',
+    illustrationDescription: 'Quasar admin Vue3',
+    illustrationaDescriptionSub: 'description description description description description description description description description description ',
     rules: 'Rules',
     resetToLogin: 'Modify successfully, please login again',
     forgotPasswordSuccess: 'Please check your email to reset your password',

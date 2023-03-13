@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="query-form-and-action">
-      <div class="action"></div>
       <q-form ref="queryFrom">
         <div class="row">
           <div class="row items-start">
@@ -44,29 +43,13 @@
             </div>
           </div>
           <div>
-            <q-btn
-              color="primary"
-              icon="search"
-              :label="$t('action.search')"
-              no-caps
-              class="m-r-15"
-              :loading="queryParams.queryLoading"
-              @click="handleQuery"
-            />
-            <q-btn
-              icon="restart_alt"
-              :label="$t('action.reset')"
-              outline
-              color="primary"
-              no-caps
-              :loading="queryParams.resetLoading"
-              @click="handleResetQuery"
-            />
+            <q-btn color="primary" icon="search" :label="$t('action.search')" no-caps class="m-r-15" :loading="queryParams.queryLoading" @click="handleQuery" />
+            <q-btn icon="restart_alt" :label="$t('action.reset')" outline color="primary" no-caps :loading="queryParams.resetLoading" @click="handleResetQuery" />
           </div>
         </div>
       </q-form>
     </div>
-    <div class="p-12 bg-white b-r-8">
+    <div class="thin-shadow q-pa-md">
       <q-table
         flat
         bordered
@@ -77,31 +60,15 @@
         hide-pagination
         :no-data-label="$t(`tip.noData`)"
         class="my-table"
-        :selected-rows-label="
-          (numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`
-        "
+        :selected-rows-label="(numberOfRows) => `select ${numberOfRows} ${$t(`table.per`)}`"
         selection="multiple"
         v-model:selected="tableParams.selected"
         row-key="name"
       >
         <template #top>
           <div class="full-width justify-end row">
-            <q-btn
-              color="primary"
-              icon="o_add"
-              label="Add"
-              no-caps
-              class="m-r-15"
-              @click="handleClickAdd"
-            />
-            <q-btn
-              icon="o_upload"
-              label="Upload"
-              outline
-              color="primary"
-              no-caps
-              @click="handleClickUpload"
-            />
+            <q-btn color="primary" icon="o_add" label="Add" no-caps class="m-r-15" @click="handleClickAdd" />
+            <q-btn icon="o_upload" label="Upload" outline color="primary" no-caps @click="handleClickUpload" />
           </div>
         </template>
         <template v-slot:header="props">
@@ -113,18 +80,8 @@
             <!-- expand -->
             <q-th auto-width>Expand</q-th>
             <!-- other -->
-            <q-th
-              v-for="col in props.cols"
-              :key="col.name"
-              :props="props"
-              style="text-align: left"
-            >
-              <!-- {{ col.label+'123' }} -->
-              {{
-                col.label.indexOf('$') !== -1
-                  ? $t(`table.${col.label.replace('$', '')}`)
-                  : col.label
-              }}
+            <q-th v-for="col in props.cols" :key="col.name" :props="props" style="text-align: left">
+              {{ col.label.indexOf('$') !== -1 ? $t(`table.${col.label.replace('$', '')}`) : col.label }}
             </q-th>
           </q-tr>
         </template>
@@ -139,19 +96,10 @@
             </q-td>
             <!-- expand -->
             <q-td auto-width>
-              <q-toggle
-                v-model="props.expand"
-                checked-icon="add"
-                unchecked-icon="remove"
-              />
+              <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove" />
             </q-td>
             <!-- other -->
-            <q-td
-              v-for="col in props.cols"
-              :key="col.name"
-              :props="props"
-              class="text-left"
-            >
+            <q-td v-for="col in props.cols" :key="col.name" :props="props" class="text-left">
               <span v-if="!col.inSlot">{{ col.value }}</span>
               <div class="text-left" v-else>
                 <!-- id -->
@@ -160,46 +108,25 @@
                 </div>
                 <!-- name -->
                 <div v-if="col.name === 'name'">
-                  <span
-                    class="link-type"
-                    @click="handlerClickDetail(props.row)"
-                    >{{ props.row.name }}</span
-                  >
+                  <span class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
                 </div>
                 <!-- action -->
                 <div v-if="col.name === 'action'">
-                  <span
-                    class="in-table-link-button"
-                    @click="handlerClickUpdate(props.row)"
-                    >{{ $t(`action.update`) }}
-                  </span>
-                  <span
-                    class="in-table-delete-button m-l-10"
-                    @click="handlerClickDelete(props.row)"
-                    >{{ $t(`action.delete`) }}
-                  </span>
-                  <span
-                    class="in-table-link-button m-l-10"
-                    style="min-width: 100px"
-                  >
+                  <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }} </span>
+                  <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }} </span>
+                  <span class="in-table-link-button m-l-10" style="min-width: 100px">
                     {{ $t(`action.more`) }}
                     <q-icon name="o_expand_more"></q-icon>
                     <q-popup-proxy style="min-width: 100px">
                       <q-list>
                         <q-item clickable dense v-close-popup>
-                          <q-item-section class="text-center">
-                            123123
-                          </q-item-section>
+                          <q-item-section class="text-center"> 123123 </q-item-section>
                         </q-item>
                         <q-item clickable dense v-close-popup>
-                          <q-item-section class="text-center">
-                            123123
-                          </q-item-section>
+                          <q-item-section class="text-center"> 123123 </q-item-section>
                         </q-item>
                         <q-item clickable dense v-close-popup>
-                          <q-item-section class="text-center">
-                            123123
-                          </q-item-section>
+                          <q-item-section class="text-center"> 123123 </q-item-section>
                         </q-item>
                       </q-list>
                     </q-popup-proxy>
@@ -212,10 +139,7 @@
             <!-- expand detail -->
             <q-td colspan="100%">
               <div class="text-left">Name:{{ props.row.name }}</div>
-              <div>
-                this is expand detail , it maybe json string or other special
-                text
-              </div>
+              <div>this is expand detail , it maybe json string or other special text</div>
             </q-td>
           </q-tr>
         </template>
@@ -224,11 +148,7 @@
           <q-inner-loading color="primary" showing />
         </template>
       </q-table>
-      <MyPagination
-        :paginationParams="tableParams.pagination"
-        v-if="tableParams.pagination.rowsNumber > 0"
-        @pagination="paginationInput"
-      ></MyPagination>
+      <MyPagination :paginationParams="tableParams.pagination" v-if="tableParams.pagination.rowsNumber > 0" @pagination="paginationInput"></MyPagination>
     </div>
     <MyDialog
       :option="{
@@ -245,11 +165,7 @@
       @before-hide="dialogAddUpdateBeforeHideEvent"
     >
       <div class="row q-col-gutter-x-md">
-        <div
-          v-for="(item, index) in dialogAddUpdateParams.input"
-          :key="index"
-          class="col-6"
-        >
+        <div v-for="(item, index) in dialogAddUpdateParams.input" :key="index" class="col-6">
           <MyFormSelect
             v-if="item.type === 'select'"
             :option="{
@@ -288,24 +204,10 @@
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           >
             <template #subTitle>
-              <el-popover
-                placement="top"
-                title="popover-title"
-                :width="320"
-                popper-style="z-index:9999"
-                trigger="hover"
-              >
-                <p
-                  v-for="(item, index) in ['test1', 'test2', 'test3']"
-                  :key="index"
-                >
-                  {{ index + 1 }}. {{ item }}
-                </p>
+              <el-popover placement="top" title="popover-title" :width="320" popper-style="z-index:9999" trigger="hover">
+                <p v-for="(item, index) in ['test1', 'test2', 'test3']" :key="index">{{ index + 1 }}. {{ item }}</p>
                 <template #reference>
-                  <q-icon
-                    name="o_info"
-                    class="text-grey-4 cursor-pointer fs-16"
-                  />
+                  <q-icon name="o_info" class="text-grey-4 cursor-pointer" />
                 </template>
               </el-popover>
             </template>
@@ -321,24 +223,10 @@
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           >
             <template #subTitle>
-              <el-popover
-                placement="top"
-                title="popover-title"
-                :width="320"
-                popper-style="z-index:9999"
-                trigger="hover"
-              >
-                <p
-                  v-for="(item, index) in ['test1', 'test2', 'test3']"
-                  :key="index"
-                >
-                  {{ index + 1 }}. {{ item }}
-                </p>
+              <el-popover placement="top" title="popover-title" :width="320" popper-style="z-index:9999" trigger="hover">
+                <p v-for="(item, index) in ['test1', 'test2', 'test3']" :key="index">{{ index + 1 }}. {{ item }}</p>
                 <template #reference>
-                  <q-icon
-                    name="o_info"
-                    class="text-grey-4 cursor-pointer fs-16"
-                  />
+                  <q-icon name="o_info" class="text-grey-4 cursor-pointer" />
                 </template>
               </el-popover>
             </template>
@@ -371,26 +259,14 @@
       }"
       width="30vw"
       @close="dialogUploadCloseEvent"
-      @confirm="hanleCLickUploadConfirm"
+      @confirm="hanleClickUploadConfirm"
       @before-hide="dialogUploadBeforeHideEvent"
     >
       <div class="dialog-upload-form">
-        <input
-          type="file"
-          class="hide"
-          :ref="dialogUpload.fileID"
-          :accept="dialogUpload.accept"
-          :draggable="false"
-          @change="uploadFileSuccess"
-        />
+        <input type="file" class="hide" :ref="dialogUpload.fileID" :accept="dialogUpload.accept" :draggable="false" @change="uploadFileSuccess" />
         <div class="container">
           <div class="center" @click="handleClickUploadFile">
-            <!-- <img src="~assets/inbox.png" alt /> -->
-            <q-icon
-              name="o_cloud_upload"
-              class="fs-50"
-              color="primary"
-            ></q-icon>
+            <q-icon name="o_cloud_upload" class="fs-50" color="primary"></q-icon>
             <p class="click">Click to upload</p>
             <p class="format">File type is: xlsx</p>
             <p class="fileName" v-if="dialogUpload.params.fileName">
@@ -419,12 +295,7 @@
       @before-hide="dialogDetailBeforeHideEvent"
     >
       <q-list class="row q-col-gutter-x-md">
-        <q-item
-          v-for="(item, index) in dialogDetailParams.params"
-          :key="index"
-          :clickable="false"
-          class="col-6"
-        >
+        <q-item v-for="(item, index) in dialogDetailParams.params" :key="index" :clickable="false" class="col-6">
           <q-item-section>
             <q-item-label caption>{{ item.label }}：</q-item-label>
             <q-item-label :class="item.class">{{ item.value }}</q-item-label>
@@ -633,10 +504,7 @@ export default class myComponentTableBeta extends Vue {
         type: 'text',
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         label: 'Username',
@@ -646,10 +514,7 @@ export default class myComponentTableBeta extends Vue {
         type: 'text',
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         classes: 'input-password',
@@ -670,10 +535,7 @@ export default class myComponentTableBeta extends Vue {
         ],
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         label: 'select',
@@ -694,10 +556,7 @@ export default class myComponentTableBeta extends Vue {
         ],
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         label: 'Multipl Select',
@@ -707,10 +566,7 @@ export default class myComponentTableBeta extends Vue {
         type: 'date',
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         label: 'Date',
@@ -720,10 +576,7 @@ export default class myComponentTableBeta extends Vue {
         type: 'mask-input',
         rules: [
           (val: string | number | undefined | null) => {
-            return (
-              (val && String(val).length > 0) ||
-              this.globals.$t('messages.required')
-            );
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
           },
         ],
         label: 'Mask Input',
@@ -759,7 +612,8 @@ export default class myComponentTableBeta extends Vue {
     ],
   };
   /**event */
-  private paginationInput() {
+  private paginationInput(data: any) {
+    this.tableParams.pagination = data;
     this.getData();
   }
   private async handleQuery() {
@@ -895,21 +749,23 @@ export default class myComponentTableBeta extends Vue {
   }
   private async handlerClickDelete(row: any) {
     try {
-      await this.$globalConfirm.show({
+      const result = await this.$globalConfirm.show({
         title: this.$t('messages.tishi'),
         color: 'primary',
         content: this.$t('messages.areYouSure'),
         confirmButtonText: this.$t('action.yes'),
       });
-      // await HTTP_REQUEST()
-      this.$globalMessage.show({
-        type: 'success',
-        content: this.$t('messages.success'),
-      });
-      this.getData();
+      if (result) {
+        // await HTTP_REQUEST()
+        this.$globalMessage.show({
+          type: 'success',
+          content: this.$t('messages.success'),
+        });
+        this.getData();
+      }
     } catch (error) {}
   }
-  private async hanleCLickUploadConfirm() {
+  private async hanleClickUploadConfirm() {
     try {
       const form = new FormData();
       form.append('file', this.dialogUpload.params.file);

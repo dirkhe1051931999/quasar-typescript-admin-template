@@ -10,6 +10,7 @@ import {
   VuexModule,
 } from 'vuex-module-decorators';
 import { UserModule } from './user';
+import { getDynamicRoutes, setDynamicRoutes } from 'src/utils/cookie';
 
 const hasPermission = (pagePermissionId: string[], route: RouteRecordRaw) => {
   if (route.meta && route.meta.pagePermissionId) {
@@ -48,10 +49,18 @@ export interface IPermissionState {
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
-  public routes: RouteRecordRaw[] = [];
+  public routes: RouteRecordRaw[] = getDynamicRoutes()
+    ? JSON.parse(getDynamicRoutes())
+    : [];
   public dynamicRoutes: RouteRecordRaw[] = [];
   @Mutation
   private SET_ROUTES(routes: RouteRecordRaw[]) {
+    this.routes = constantRoutes.concat(routes);
+    this.dynamicRoutes = routes;
+    setDynamicRoutes(JSON.stringify(routes));
+  }
+  @Mutation
+  public REMOVE_ROUTES(routes: RouteRecordRaw[]) {
     this.routes = constantRoutes.concat(routes);
     this.dynamicRoutes = routes;
   }

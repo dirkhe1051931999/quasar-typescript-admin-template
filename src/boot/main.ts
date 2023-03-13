@@ -9,6 +9,8 @@ import 'vue3-photo-preview/dist/index.css';
 import globalMessage from 'src/utils/notify';
 import globalConfirm from 'src/utils/dialogConfirm';
 import 'src/utils/types';
+import VueSidePanel from 'vue3-side-panel';
+import 'vue3-side-panel/dist/vue3-side-panel.css';
 import { defaultFill } from 'src/utils/tools';
 import { date } from 'quasar';
 import { Platform } from 'quasar';
@@ -22,6 +24,7 @@ export default boot(({ app }) => {
     app.directive(key, (directives as { [key: string]: Directive })[key]);
   });
   app.use(vue3PhotoPreview);
+  app.use(VueSidePanel);
   app.use(ElementPlus);
   app.config.globalProperties.$globalMessage = globalMessage;
   app.config.globalProperties.$window = window;
@@ -30,15 +33,30 @@ export default boot(({ app }) => {
   app.config.globalProperties.parseTime = (
     time: number | string | null | undefined
   ) => {
-    if (!time || !/^\d+$/g.test(time.toString()) || String(time).length < 10)
-      return '--';
     let timeStamp = '';
-    if (String(time).length === 10) timeStamp = time += '000';
-    const formattedString = date.formatDate(
-      timeStamp,
-      'YYYY-MM-DDTHH:mm:ss.SSSZ'
-    );
-    return formattedString;
+    if (!time || String(time).length < 10) return '--';
+    if (!/^\d+$/g.test(time.toString())) {
+      if (
+        String(time).indexOf('T') !== -1 &&
+        !Number.isNaN(new Date(time).getTimezoneOffset())
+      ) {
+        const formattedString = date.formatDate(
+          +new Date(time),
+          'YYYY-MM-DD HH:mm:ss'
+        );
+        return formattedString;
+      } else {
+        return String(time);
+      }
+    } else {
+      if (String(time).length === 10) timeStamp = time += '000';
+      else timeStamp = String(time);
+      const formattedString = date.formatDate(
+        Number(timeStamp),
+        'YYYY-MM-DD HH:mm:ss'
+      );
+      return formattedString;
+    }
   };
   document.querySelector('body')?.classList.add(Platform.is.platform);
 });

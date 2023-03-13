@@ -1,32 +1,20 @@
 <template>
-  <div class="tags-view-container thin-shadow">
+  <div class="tags-view-container">
     <ScrollPane class="tags-view-wrapper">
       <router-link
         v-for="tag in visitedViews"
         :key="tag.path"
-        :class="[
-          isActive(tag) ? 'active' : '',
-          tag.meta.breadcrumb === false ? 'hide' : '',
-        ]"
+        :class="[isActive(tag) ? 'active' : '', tag.meta.breadcrumb === false ? 'hide' : '']"
         :to="{ path: tag.path, query: tag.query }"
         class="tags-view-item"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ $t(`routes.${tag.meta?.title}`) }}
-        <q-icon
-          name="close"
-          class="fs-12"
-          v-if="!isAffix(tag)"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        ></q-icon>
+        <q-icon name="close" class="fs-12" v-if="!isAffix(tag)" @click.prevent.stop="closeSelectedTag(tag)"></q-icon>
       </router-link>
     </ScrollPane>
-    <ul
-      v-show="visible"
-      :style="{ left: left + 'px', top: top + 'px' }"
-      class="contextmenu"
-    >
+    <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="refreshSelectedTag()">{{ $t('action.refresh') }}</li>
       <li v-if="!isAffix()" @click="closeSelectedTag()">
         {{ $t('action.close') }}
@@ -143,10 +131,7 @@ export default class TagsViewComponent extends Vue {
     }
   }
   public closeOthersTags() {
-    if (
-      this.selectedTag.fullPath !== this.$route.path &&
-      this.selectedTag.fullPath !== undefined
-    ) {
+    if (this.selectedTag.fullPath !== this.$route.path && this.selectedTag.fullPath !== undefined) {
       this.$router.push(this.selectedTag.fullPath);
     }
     TagsViewModule.delOtherViews(this.selectedTag);
@@ -190,13 +175,7 @@ export default class TagsViewComponent extends Vue {
     // left boundary
     const maxLeft = offsetWidth;
     // 15: margin right
-    const left15 =
-      e.clientX -
-      offsetLeft +
-      15 +
-      (!this.isCollapse
-        ? Number(sidebarWidth.replace('px', '').replace('', ''))
-        : 0);
+    const left15 = e.clientX - offsetLeft + 15 + (!this.isCollapse ? Number(sidebarWidth.replace('px', '').replace('', '')) : 0);
     if (left15 > maxLeft) {
       this.left = maxLeft;
     } else {
@@ -218,6 +197,7 @@ export default class TagsViewComponent extends Vue {
   height: var(--v3-tagsview-height);
   line-height: var(--v3-tagsview-height);
   background-color: var(--v3-main-container-background);
+  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
   position: fixed;
   overflow: hidden;
   left: var(--v3-sidebar-width);

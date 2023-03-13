@@ -63,6 +63,7 @@ export default class dialogConfirmComponent extends Vue {
   }
   public onCancelClick() {
     this.hide();
+    this.$emit('hide');
   }
   public getJsx(content: string) {
     this.$nextTick(() => {
@@ -108,7 +109,7 @@ export default class dialogConfirmComponent extends Vue {
     line-height: 21px;
   }
   .action {
-    padding: 24px;
+    padding: 16px;
     text-align: right;
   }
 }

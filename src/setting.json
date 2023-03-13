@@ -4,13 +4,18 @@
   "policy": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/",
   "publicPath": "/v3-admin/",
   "pro": "",
-  "version": "V1.0.4",
+  "version": "V1.3.1",
   "devServerPort": 9002,
-  "ip": "10.18.2.207",
+  "ip": "",
   "adminName": ["admin"],
   "errorCode": [],
   "succCode": ["111"],
   "defaultErrorMsg": "Network Error, please contact engineer",
+  "passwordRules": [
+    "10 - 20 characters",
+    "Include upper and lower case letters, include numbers and special characters (#?!) @+. $%^&*-,:;\")",
+    "Can not contain spaces, Chinese and Chinese special characters"
+  ],
   "pagePermissionId": [
     "dashboard",
     "account",

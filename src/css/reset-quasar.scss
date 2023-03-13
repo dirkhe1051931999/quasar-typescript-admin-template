@@ -4,7 +4,7 @@
   border-radius: 16px !important;
   vertical-align: top;
   position: relative;
-  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px !important;
+  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
   border: none !important;
 }
 // 搜索栏
@@ -12,7 +12,7 @@
   background: #ffffff;
   border-radius: 8px;
   padding: 25px 20px 20px;
-  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
+  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
   margin-bottom: 15px;
 }
 
@@ -22,9 +22,9 @@
 }
 .q-field__control,
 .q-btn {
-  padding: 0 24px;
+  padding: 0 16px;
   &.q-btn--outline {
-    font-family: NotoSans-SemiBold, NotoSansSC-Bold;
+    font-family: PingFang SC, NotoSans-SemiBold, NotoSansSC-Bold;
   }
 }
 .q-date__content {
@@ -72,7 +72,7 @@
       box-sizing: border-box;
     }
     &.text-primary {
-      font-family: NotoSans-SemiBold, NotoSansSC-Bold;
+      font-family: PingFang SC, NotoSans-SemiBold, NotoSansSC-Bold;
     }
   }
 }
@@ -178,10 +178,12 @@
       .format {
         color: #8c8c8c;
         font-size: 12px;
-        padding-top: 5px;
+        padding-top: 8px;
       }
       .fileName {
         font-size: 12px;
+        word-break: break-all;
+        padding-top: 8px;
       }
     }
   }
@@ -194,4 +196,12 @@
 /* tooltip */
 .hide-tooltip {
   z-index: -1 !important;
+}
+.el-popover.el-popper {
+  z-index: 10000 !important;
+}
+/* tree */
+.q-tree__node-header:before,
+.q-tree__node:after {
+  border-color: #e0e1e8 !important;
 }

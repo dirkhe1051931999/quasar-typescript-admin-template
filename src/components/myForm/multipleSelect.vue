@@ -60,8 +60,14 @@
       </template>
       <template v-slot:option="scope">
         <q-item v-bind="scope.itemProps">
-          <q-item-section>
-            <q-item-label v-close-popup>{{ scope.opt.label }}</q-item-label>
+          <q-item-section v-close-popup>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label
+              caption
+              v-if="scope.opt.description"
+              class="text-grey"
+              >{{ scope.opt.description }}</q-item-label
+            >
           </q-item-section>
         </q-item>
       </template>
@@ -83,11 +89,11 @@ export default class FormMultipleSelectComponent extends Vue {
     rules: any[];
     label: string;
     inputSelectOption: any[];
-    showClose?: boolean;
-    readonly?: boolean;
-    userInput?: boolean;
+    showClose: boolean;
+    readonly: boolean;
+    userInput: boolean;
     inputId: string;
-    hint?: string;
+    hint: string;
   };
   @Watch('inputModel')
   onchange() {
@@ -109,11 +115,11 @@ export default class FormMultipleSelectComponent extends Vue {
   private label = '';
   private inputSelectOption: any[] = [];
   private inputSelectOptionBak: any[] = [];
-  private showClose?: boolean;
-  private readonly?: boolean;
-  private userInput?: boolean;
+  private showClose: boolean = true;
+  private readonly: boolean = false;
+  private userInput: boolean = false;
   private inputId: string = '';
-  private hint?: string;
+  private hint: string = '';
   private showPlaceholder = true;
   mounted() {
     this.inputModel = this.option.model;
@@ -124,11 +130,14 @@ export default class FormMultipleSelectComponent extends Vue {
     this.label = this.option?.label;
     this.inputSelectOption = this.option?.inputSelectOption;
     this.inputSelectOptionBak = this.option?.inputSelectOption;
-    this.showClose = this.option?.showClose ?? true;
-    this.readonly = this.option?.readonly ?? false;
-    this.userInput = this.option?.userInput ?? false;
+    this.showClose = this.option.showClose ?? true;
+    this.readonly = this.option.readonly ?? false;
+    this.userInput = this.option.userInput ?? false;
     this.inputId = this.option.inputId;
     this.hint = this.option.hint ?? '';
+  }
+  public async validForm() {
+    return this.$refs[this.inputId].validate();
   }
   private popShow() {
     if (this.userInput) {

@@ -79,14 +79,12 @@ export default {
     confirmPassword: '确认密码',
     changePassword: '修改密码',
     forgotPassword2: '忘记密码',
-    illustrationDescription: '这是标题这是标题这是标题这是标题',
-    illustrationaDescriptionSub:
-      '这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述',
+    illustrationDescription: 'Quasar admin Vue3',
+    illustrationaDescriptionSub: '这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述',
     rules: '规则',
     resetToLogin: '修改成功，请重新登录',
     forgotPasswordSuccess: '请检查您的电子邮件以重置您的密码',
-    passwordRules:
-      "包含10 - 20个字符{'{}'}包含大小写字母{'{}'}包含数字和特殊字符（{'#?!@+.$%^&*-'}）{'{}' }不能包含空格、中文和中文特殊字符",
+    passwordRules: "包含10 - 20个字符{'{}'}包含大小写字母{'{}'}包含数字和特殊字符（{'#?!@+.$%^&*-'}）{'{}' }不能包含空格、中文和中文特殊字符",
   },
   charts: {},
   components: {},

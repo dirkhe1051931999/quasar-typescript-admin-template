@@ -13,18 +13,23 @@ export interface IGlobalConfirm {
 class GlobalConfirm {
   constructor() {}
   public async show({ title, color, content, confirmButtonText }: showParams) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       Dialog.create({
         component: ConfirmDialogComponent,
+        cancel: true,
         componentProps: {
           title,
           color,
           content,
           confirmButtonText,
         },
-      }).onOk(() => {
-        resolve(true);
-      });
+      })
+        .onOk(() => {
+          return resolve(true);
+        })
+        .onCancel(() => {
+          return resolve(false);
+        });
     });
   }
 }

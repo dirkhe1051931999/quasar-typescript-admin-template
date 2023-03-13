@@ -26,3 +26,24 @@ export const getUsername = (): any => Cookies.get(usernameKey);
 export const setUsername = (username: string) =>
   Cookies.set(usernameKey, username, config);
 export const removeUsername = () => Cookies.remove(usernameKey);
+
+const pagePermissionIDKey = `${setting.title.replace(
+  /\s/g,
+  '_'
+)}_pagePermissionID`;
+export const getPagePermissionID = (): any =>
+  localStorage.getItem(pagePermissionIDKey)
+    ? localStorage.getItem(pagePermissionIDKey)?.split(',')
+    : [];
+export const setPagePermissionID = (data: any) =>
+  localStorage.setItem(pagePermissionIDKey, data);
+export const removePagePermissionID = () =>
+  localStorage.removeItem(pagePermissionIDKey);
+
+const dynamicRoutesKey = `${setting.title.replace(/\s/g, '_')}_dynamicRoutes`;
+export const getDynamicRoutes = (): any =>
+  localStorage.getItem(dynamicRoutesKey);
+export const setDynamicRoutes = (data: any) =>
+  localStorage.setItem(dynamicRoutesKey, data);
+export const removeDynamicRoutes = () =>
+  localStorage.removeItem(dynamicRoutesKey);

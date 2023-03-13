@@ -3,7 +3,9 @@ import Layout from 'src/layouts/index.vue';
 import { markRaw, shallowRef } from 'vue';
 import setting from 'src/setting.json';
 import { PermissionModule } from 'src/store/modules/permission';
-
+import globalMessage from 'src/utils/notify';
+import { UserModule } from 'src/store/modules/user';
+import { sleep } from 'src/utils/tools';
 /*
   name:'router-name'             the name field is required when using <keep-alive>, it should also match its component's name property
                                  detail see : https://vuejs.org/v2/guide/components-dynamic-async.html#keep-alive-with-Dynamic-Components
@@ -17,13 +19,24 @@ import { PermissionModule } from 'src/store/modules/permission';
     affix: true                  if true, 标签将粘贴在标签视图中
   }
 */
-function redirect(to: any) {
+function redirect(to: any): any {
   const routes = PermissionModule.routes;
-  return `${routes[1].path}${
-    routes[1] && routes[1].children && routes[1].children![0].path
-      ? '/dashboard'
-      : ''
-  }`;
+  const item: any = routes.find(
+    (item: any) =>
+      item.meta && item.path && item.component && item.name !== 'Login'
+  );
+  if (!item || (item && !item.children.length)) {
+    globalMessage.show({
+      type: 'error',
+      content: `当前账号：${UserModule.username} 权限异常`,
+    });
+    UserModule.ResetToken();
+    return '/login';
+  } else {
+    return `${item.path}${
+      item.children[0].path ? `/${item.children[0].path}` : ''
+    }`;
+  }
 }
 export const constantRoutes: RouteRecordRaw[] = [
   {

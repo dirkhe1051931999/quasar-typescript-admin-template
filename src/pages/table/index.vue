@@ -31,23 +31,8 @@
           :spellcheck="false"
         />
       </div>
-      <q-btn
-        color="primary"
-        icon="search"
-        label="Query"
-        no-caps
-        class="m-r-15 h-40"
-        :loading="queryLoading"
-      />
-      <q-btn
-        icon="youtube_searched_for"
-        label="Reset"
-        outline
-        color="primary"
-        no-caps
-        class="h-40"
-        :loading="resetLoading"
-      />
+      <q-btn color="primary" icon="search" label="Query" no-caps class="m-r-15 h-40" :loading="queryLoading" />
+      <q-btn icon="youtube_searched_for" label="Reset" outline color="primary" no-caps class="h-40" :loading="resetLoading" />
     </q-form>
     <q-table
       flat
@@ -64,40 +49,22 @@
       <template v-slot:top>
         <div class="row justify-between full-width items-center">
           <span class="fs-20">Table</span>
-          <q-btn
-            color="primary"
-            label="New"
-            class="w-100"
-            icon="add"
-            dense
-            @click="handlerClickTableAdd"
-          />
+          <q-btn color="primary" label="New" class="w-100" icon="add" dense @click="handlerClickTableAdd" />
         </div>
       </template>
       <!-- detail -->
       <template v-slot:body-cell-iccid="props">
         <q-td class="text-left">
-          <span class="link-type" @click="handlerClickDetail">{{
-            props.row.iccid
-          }}</span>
+          <span class="link-type" @click="handlerClickDetail">{{ props.row.iccid }}</span>
         </q-td>
       </template>
       <!-- image -->
       <template v-slot:body-cell-img="props">
         <q-td class="text-left relative">
           <photo-provider>
-            <photo-consumer
-              v-for="src in [props.row.img]"
-              :intro="src"
-              :key="src"
-              :src="src"
-            >
+            <photo-consumer v-for="src in [props.row.img]" :intro="src" :key="src" :src="src">
               <img :src="src" style="height: 170px; width: 300px" />
-              <div
-                class="absolute-bottom text-subtitle4 text-center view-subtitle"
-              >
-                Preview image
-              </div>
+              <div class="absolute-bottom text-subtitle4 text-center view-subtitle">Preview image</div>
             </photo-consumer>
           </photo-provider>
         </q-td>
@@ -108,11 +75,7 @@
       </template>
       <template v-slot:header-cell-action="props">
         <q-th :props="props">
-          {{
-            props.col.label.indexOf('$') !== -1
-              ? $t(`table.${props.col.label.replace('$', '')}`)
-              : props.col.label
-          }}
+          {{ props.col.label.indexOf('$') !== -1 ? $t(`table.${props.col.label.replace('$', '')}`) : props.col.label }}
         </q-th>
       </template>
       <!--      actions-->
@@ -123,25 +86,13 @@
         </q-td>
       </template>
     </q-table>
-    <div
-      class="row items-center justify-end q-mt-md"
-      v-if="tableParams.pagination.rowsNumber"
-    >
+    <div class="row items-center justify-end q-mt-md" v-if="tableParams.pagination.rowsNumber">
       <p class="m-r-10">Total {{ tableParams.pagination.rowsNumber }}</p>
       <q-pagination
         v-model="tableParams.pagination.page"
         :input="false"
         :max-pages="6"
-        :max="
-          tableParams.pagination.rowsNumber /
-            tableParams.pagination.rowsPerPage <
-          1
-            ? 1
-            : Math.ceil(
-                tableParams.pagination.rowsNumber /
-                  tableParams.pagination.rowsPerPage
-              )
-        "
+        :max="tableParams.pagination.rowsNumber / tableParams.pagination.rowsPerPage < 1 ? 1 : Math.ceil(tableParams.pagination.rowsNumber / tableParams.pagination.rowsPerPage)"
         @update:model-value="paginationInput"
         ellipses
         outline
@@ -156,42 +107,21 @@
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
-        <q-card-section
-          class="q-pt-none"
-          style="width: 1000px; max-width: 1000px"
-        >
+        <q-card-section class="q-pt-none" style="width: 1000px; max-width: 1000px">
           <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-            <q-input
-              filled
-              v-model="name"
-              label="Your name *"
-              hint="Name and surname"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please type something',
-              ]"
-            />
+            <q-input filled v-model="name" label="Your name *" hint="Name and surname" lazy-rules :rules="[(val) => (val && val.length > 0) || 'Please type something']" />
             <q-input
               filled
               type="number"
               v-model="age"
               label="Your age *"
               lazy-rules
-              :rules="[
-                (val) => (val !== null && val !== '') || 'Please type your age',
-                (val) => (val > 0 && val < 100) || 'Please type a real age',
-              ]"
+              :rules="[(val) => (val !== null && val !== '') || 'Please type your age', (val) => (val > 0 && val < 100) || 'Please type a real age']"
             />
             <q-toggle v-model="accept" label="I accept the license and terms" />
             <div class="text-right">
               <q-btn label="Submit" type="submit" color="primary" />
-              <q-btn
-                label="Reset"
-                type="reset"
-                color="primary"
-                flat
-                class="q-ml-sm"
-              />
+              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
             </div>
           </q-form>
         </q-card-section>
@@ -300,8 +230,7 @@ export default class myComponentMenu2TableIndex extends Vue {
       {
         imsi: 'fixed this column',
         iccid: 'iccid+iccid+iccid+iccid+iccid',
-        carrierName:
-          'carrierName+carrierName+carrierName+carrierName+carrierName',
+        carrierName: 'carrierName+carrierName+carrierName+carrierName+carrierName',
         area: 'area+area+area+area+area',
         bundleName: 'bundleName+bundleName+bundleName+bundleName',
         bundleTypeId: '1',
@@ -388,12 +317,7 @@ export default class myComponentMenu2TableIndex extends Vue {
   private previewImgUrl = '';
   private accept = false;
   private paginationInput() {
-    if (
-      this.tableParams.pagination.rowsNumber /
-        this.tableParams.pagination.rowsPerPage <
-      1
-    )
-      return;
+    if (this.tableParams.pagination.rowsNumber / this.tableParams.pagination.rowsPerPage < 1) return;
     this.getData();
   }
   private handlerClickTableAdd() {
@@ -442,7 +366,7 @@ export default class myComponentMenu2TableIndex extends Vue {
   background-color: #fff;
 }
 .my-table td:first-child {
-  background-color: #f3f3f3;
+  background-color: #fff;
 }
 .my-table th:first-child,
 .my-table td:first-child {

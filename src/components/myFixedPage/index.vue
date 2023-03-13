@@ -27,7 +27,7 @@ export default class MyFixedPageComponent extends Vue {
     return !AppModule.sidebar.opened;
   }
   @Watch('isCollapse', { immediate: true })
-  onchnage(newVal: boolean) {
+  onchange(newVal: boolean) {
     if (newVal) {
       this.calcStyle =
         'width:calc(100vw - 58px - 24px - 24px);left:calc(58px + 24px)';
@@ -57,7 +57,7 @@ export default class MyFixedPageComponent extends Vue {
   background: #ffffff;
   z-index: 10;
   box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 16px;
   .inner {
     height: 100%;

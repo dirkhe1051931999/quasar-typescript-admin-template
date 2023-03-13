@@ -4,6 +4,7 @@ export const downloadFile = (
   downloadFileName: string,
   downloadFileType?: string
 ) => {
+  downloadFileName = window.decodeURI(downloadFileName);
   const reader: any = new FileReader();
   reader.readAsBinaryString(result);
   reader.addEventListener('loadend', () => {

@@ -27,7 +27,7 @@
           v-if="myDateData.model"
           @click.prevent.stop="clickDateClear"
         ></q-icon>
-        <q-icon name="o_calendar_month" class="cursor-pointer text-grey-5">
+        <q-icon name="o_calendar_month" class="cursor-pointer text-grey fs-16">
           <q-popup-proxy transition-show="jump-up" transition-hide="jump-down">
             <q-date v-model="myDateData.dateModel" mask="YYYY-MM-DD">
               <div class="row items-center justify-end">
@@ -43,7 +43,7 @@
             </q-date>
           </q-popup-proxy>
         </q-icon>
-        <q-icon name="o_schedule" class="cursor-pointer text-grey-5">
+        <q-icon name="o_schedule" class="cursor-pointer text-grey fs-16">
           <q-popup-proxy transition-show="jump-up" transition-hide="jump-down">
             <q-time
               v-model="myDateData.timeModel"

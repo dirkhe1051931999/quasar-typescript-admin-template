@@ -37,6 +37,7 @@ export function loadBdScript(
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 export function defaultFill(val: any) {
+  if (val === 0 || String(val) === '0') return val;
   if (!!!val) return '--';
   else return val;
 }

@@ -5,6 +5,8 @@ import setting from 'src/setting.json';
 import { UserModule } from 'src/store/modules/user';
 import router from 'src/router';
 import { Loading } from 'quasar';
+import { v4 as uuidv4 } from 'uuid';
+import SHA256 from 'sha256';
 import { AppModule } from 'src/store/modules/app';
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -18,13 +20,9 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-
-axios.defaults.timeout = 25000;
-// axios.defaults.headers = {
-//   'Access-Control-Allow-Origin': '*',
-//   'X-Requested-With': 'XMLHttpRequest',
-// };
-axios.defaults.baseURL = '';
+const isPro = process.env.NODE_ENV === 'production';
+axios.defaults.timeout = 1500 * 1000;
+axios.defaults.baseURL = isPro ? setting.pro : setting.ip;
 // Request interceptors
 axios.interceptors.request.use(
   (config: any) => {
@@ -84,7 +82,7 @@ axios.interceptors.response.use(
         router.push(`/login?redirect=${router.currentRoute.value.path}`);
         globalMessage.show({
           type: 'error',
-          content: msg ?? setting.defaultErrorMsg,
+          content: msg || setting.defaultErrorMsg,
         });
         Loading.hide();
         return Promise.reject(status);
@@ -92,7 +90,7 @@ axios.interceptors.response.use(
         /* 错误提示 */
         globalMessage.show({
           type: 'error',
-          content: msg ?? setting.defaultErrorMsg,
+          content: msg || setting.defaultErrorMsg,
         });
         Loading.hide();
         return Promise.reject('error');
@@ -104,15 +102,24 @@ axios.interceptors.response.use(
         if (response.data instanceof Blob) {
           // 如果是blob获取header头内容
           return Promise.resolve(
-            Object.assign({ blob: response.data }, response.headers)
+            Object.assign(
+              { blob: response.data },
+              {
+                ...response.headers,
+                'content-disposition': window.decodeURIComponent(
+                  response.headers['content-disposition'] || ''
+                ),
+              }
+            )
+            // Object.assign({ blob: response.data }, response.headers)
           );
         } else {
           return Promise.resolve(
-            Object.assign(response.data, response.headers)
+            Object.assign(response.data.data, response.headers)
           );
         }
       } else {
-        return Promise.resolve(response.data);
+        return Promise.resolve(response.data.data || {});
       }
     };
     if (response.data instanceof Blob) {
@@ -122,7 +129,11 @@ axios.interceptors.response.use(
         var reader: any = new FileReader();
         reader.readAsBinaryString(response.data);
         reader.addEventListener('loadend', () => {
-          if (reader.result.indexOf('status') !== -1) {
+          if (
+            reader.result.indexOf('status') !== -1 &&
+            reader.result.indexOf('message') !== -1 &&
+            reader.result.indexOf('pdf') === -1
+          ) {
             response.data = JSON.parse(reader.result);
             resolve(errorFuc(response));
           } else {

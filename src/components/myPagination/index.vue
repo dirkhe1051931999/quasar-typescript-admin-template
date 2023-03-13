@@ -30,7 +30,7 @@
         v-model="_paginationParams.rowsPerPage"
         :options="_rowNumbersArr"
         dropdown-icon="app:topbar-arrow-bottom"
-        @update:model-value="_paginationInput"
+        @update:model-value="selectChange"
         dense
         :display-value="`${globals.$t('table.pieces_page')} ${
           _paginationParams.rowsPerPage
@@ -76,6 +76,15 @@ export default class MyPaginationComponent extends Vue {
 
   private _paginationInput() {
     this.$emit('pagination', this._paginationParams);
+  }
+  private selectChange() {
+    let { rowsPerPage, rowsNumber } = this._paginationParams;
+    if (rowsPerPage < rowsNumber) {
+      this.$emit('pagination', this._paginationParams);
+    } else {
+      this._paginationParams.page = 1;
+      this.$emit('pagination', this._paginationParams);
+    }
   }
   mounted() {
     this._paginationParams.page = this.paginationParams.page;

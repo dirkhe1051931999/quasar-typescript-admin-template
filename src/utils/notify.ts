@@ -1,17 +1,8 @@
 //globalMessage.ts
 import { Notify, QNotifyCreateOptions } from 'quasar';
+import { useQuasar } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
-type Position =
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'center'
-  | undefined;
+type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top' | 'bottom' | 'left' | 'right' | 'center' | undefined;
 type showParams = {
   type: string;
   content: string;
@@ -34,13 +25,8 @@ class GlobalMessage {
     const data = Object.assign(DEFAULT_PARAMS, {
       message: content,
       position: position ?? 'top',
-      multiLine: isNotify,
-      icon:
-        type === 'error'
-          ? 'o_highlight_off'
-          : type === 'warn'
-          ? 'o_error_outline'
-          : 'o_check_circle', // error warn success
+      multiLine: isNotify ?? false,
+      icon: type === 'error' ? 'o_highlight_off' : type === 'warn' ? 'o_error_outline' : 'o_check_circle', // error warn success
       actions: isNotify
         ? [
             {
@@ -51,7 +37,11 @@ class GlobalMessage {
         : [],
       classes: `q-message-${type}-style min-h-36`,
     });
-    Notify.create(data);
+    try {
+      Notify.create(data);
+    } catch (error) {
+      alert(data.message);
+    }
   }
 }
 

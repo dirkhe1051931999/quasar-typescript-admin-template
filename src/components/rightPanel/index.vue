@@ -10,12 +10,13 @@
       body-class="VueSidePanel"
       :overlay-opacity="0"
     >
-      <div class="title f-bold">
+      <div class="title f-bold q-pa-md fs-18">
         {{ title }}
         <div class="close" @click="isOpened = false">
           <q-icon name="app:navigation-close" class="icon"></q-icon>
         </div>
       </div>
+      <div class="split-line h-1"></div>
       <div class="content">
         <slot></slot>
       </div>
@@ -46,12 +47,10 @@ export default class RightPanelComponent extends Vue {
 <style lang="scss" scoped>
 .VueSidePanel {
   .title {
-    font-size: 16px;
-    padding: 24px;
     position: relative;
     .close {
       position: absolute;
-      right: 24px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
       width: 20px;

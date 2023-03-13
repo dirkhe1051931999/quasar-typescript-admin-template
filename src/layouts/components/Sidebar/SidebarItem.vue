@@ -10,8 +10,29 @@
     <template
       v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
     >
+      <a
+        v-if="isExternal(resolvePath(theOnlyOneChild.path))"
+        :href="resolvePath(theOnlyOneChild.path)"
+        target="_blank"
+        class="el-menu-item"
+        rel="noopener"
+      >
+        <q-icon
+          :name="theOnlyOneChild.meta.icon"
+          v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"
+        ></q-icon>
+        <q-icon
+          :name="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)"
+          v-else-if="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)"
+          class="m-r-10"
+        />
+        <q-icon name="fiber_manual_record" v-else class="record" />
+        {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
+      </a>
       <SidebarItemLink
-        v-if="theOnlyOneChild.meta"
+        v-if="
+          theOnlyOneChild.meta && !isExternal(resolvePath(theOnlyOneChild.path))
+        "
         :to="resolvePath(theOnlyOneChild.path)"
       >
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
@@ -114,6 +135,26 @@ export default class SidebarItemLinkComponent extends Vue {
         }
       }
       return isRoot;
+    };
+  }
+  get getPermissionSigleOnlyOneChildIcon() {
+    return (data: any) => {
+      if (data.path) {
+        const dynamicRoutes = PermissionModule.dynamicRoutes;
+        let father: any;
+        for (let item of dynamicRoutes) {
+          if (item.children) {
+            for (let child of item.children) {
+              if (child.name === data.name) {
+                father = item;
+              }
+            }
+          }
+        }
+        return father.meta.icon;
+      } else {
+        return undefined;
+      }
     };
   }
   public isExternal = isExternal;

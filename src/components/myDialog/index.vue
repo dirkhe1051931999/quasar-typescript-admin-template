@@ -8,34 +8,38 @@
       @before-hide="handlerBeforeHide"
     >
       <q-card class="my-dialog" :style="'width:' + width">
-        <div class="title f-bold">
+        <div class="title f-bold q-pa-md fs-18">
           {{ myDialogParams.title }}
           <div class="close">
             <q-icon name="close" class="icon" @click="handlerClickCancel()" />
           </div>
         </div>
-        <q-separator />
-        <div class="scroll content" style="max-height: 50vh">
+        <div class="split-line h-1"></div>
+        <div class="scroll content" style="max-height: 500px">
           <q-form :ref="myDialogParams.id">
             <slot></slot>
           </q-form>
         </div>
-        <q-separator v-show="myDialogParams.showAction" />
-        <div class="text-right p-16" v-show="myDialogParams.showAction">
+        <div class="split-line h-1" v-show="myDialogParams.showAction"></div>
+        <div
+          class="text-center q-pa-md row justify-end"
+          v-show="myDialogParams.showAction"
+        >
           <q-btn
             :label="$t(`action.cancel`)"
             :disable="myDialogParams.clickLoading"
             @click="handlerClickCancel()"
             outline
             no-caps
+            class="w-80"
             color="primary"
           />
           <q-btn
             :label="$t(`action.confirm`)"
             color="primary"
             no-caps
+            class="w-80 q-ml-md"
             @click="handlerClickDialogConfirmButton()"
-            class="m-l-12"
             :loading="myDialogParams.clickLoading"
           />
         </div>
@@ -65,6 +69,7 @@ export default class MyDialogComponent extends Vue {
       title: '',
       showAction: true,
       params: {},
+      customComfirm: false,
     },
   })
   option!: {
@@ -76,6 +81,7 @@ export default class MyDialogComponent extends Vue {
     title: string;
     showAction: boolean;
     params: any;
+    customComfirm: boolean;
   };
   @Watch('option.visiable')
   onVisiableChange(newVal: boolean) {
@@ -128,25 +134,31 @@ export default class MyDialogComponent extends Vue {
   }
   /* event */
   private handlerClickCancel() {
-    this.$refs[this.myDialogParams.id].resetValidation();
     this.$nextTick(() => {
       this.$emit('close', { type: this.myDialogParams.dialogType });
+      this.$refs[this.myDialogParams.id].resetValidation();
     });
   }
   private handlerClickDialogConfirmButton() {
+    if (!this.option.customComfirm) {
     this.$refs[this.myDialogParams.id]
       .validate()
       .then(async (valid: boolean) => {
         if (valid) {
-          await this.$globalConfirm.show({
+            const result = await this.$globalConfirm.show({
             title: this.$t('messages.tishi'),
             color: 'primary',
             content: this.$t('messages.areYouSure'),
             confirmButtonText: this.$t('action.yes'),
           });
+            if (result) {
           this.$emit('confirm', { type: this.myDialogParams.dialogType });
         }
+          }
       });
+    } else {
+      this.$emit('confirm', { type: this.myDialogParams.dialogType });
+    }
   }
   private handlerBeforeHide() {
     this.myDialogParams.params = cloneDeep(this.bakParams);

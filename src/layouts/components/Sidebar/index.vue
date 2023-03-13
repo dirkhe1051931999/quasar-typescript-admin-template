@@ -60,7 +60,7 @@ export default class SidebarLogoComponent extends Vue {
     return PermissionModule.routes;
   }
   @Watch('isCollapse')
-  onchnage() {
+  onchange() {
     this.setArrowSvg();
   }
   mounted() {

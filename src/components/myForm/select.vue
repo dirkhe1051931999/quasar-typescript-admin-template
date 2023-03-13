@@ -12,6 +12,7 @@
       :rules="rules"
       :clearable="showClose"
       :readonly="readonly"
+      :disable="disable"
       :hint="hint"
       :use-input="model ? false : userInput"
       :input-class="inputId"
@@ -34,7 +35,12 @@
       clear-icon="app:clear"
     >
       <template #selected>
-        <template v-if="model && model.length">
+        <template
+          v-if="
+            (typeof model === 'object' && model && model.length) ||
+            (typeof model !== 'object' && model)
+          "
+        >
           {{
             inputSelectOptionBak.find(
               (data) => String(data.value) === String(model)
@@ -42,7 +48,12 @@
           }}
         </template>
         <template
-          v-if="(!model || (model && !model.length)) && showPlaceholder"
+          v-if="
+            (!model ||
+              (typeof model === 'object' && !model.length) ||
+              (typeof model !== 'object' && !model)) &&
+            showPlaceholder
+          "
         >
           <span class="fs-12 text-grey-5 user-select-none">
             {{ inputPlaceholder }}
@@ -51,8 +62,14 @@
       </template>
       <template v-slot:option="scope">
         <q-item v-bind="scope.itemProps">
-          <q-item-section>
-            <q-item-label v-close-popup>{{ scope.opt.label }}</q-item-label>
+          <q-item-section v-close-popup>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label
+              caption
+              v-if="scope.opt.description"
+              class="text-grey"
+              >{{ scope.opt.description }}</q-item-label
+            >
           </q-item-section>
         </q-item>
       </template>
@@ -74,12 +91,26 @@ export default class FormSelectComponent extends Vue {
     rules: any[];
     label: string;
     inputSelectOption: any[];
-    showClose?: boolean;
-    readonly?: boolean;
-    hint?: string;
-    userInput?: boolean;
+    showClose: boolean;
+    readonly: boolean;
+    hint: string;
+    userInput: boolean;
     inputId: string;
+    disable: boolean;
   };
+  @Watch('option.inputSelectOption', { deep: true })
+  onInputSelectOptionchange(newVal: any) {
+    this.inputSelectOption = newVal;
+    this.inputSelectOptionBak = newVal;
+  }
+  @Watch('option.model', { deep: true })
+  onModelchange(newVal: any) {
+    this.model = newVal;
+  }
+  @Watch('option.disable', { deep: true })
+  onDisablechange(newVal: boolean) {
+    this.disable = newVal;
+  }
   @Watch('model')
   onchange() {
     this.$refs[this.inputId] && this.$refs[this.inputId].updateInputValue('');
@@ -100,26 +131,30 @@ export default class FormSelectComponent extends Vue {
   private label = '';
   private inputSelectOption: any[] = [];
   private inputSelectOptionBak: any[] = [];
-  private showClose?: boolean;
-  private readonly?: boolean;
-  private hint?: string;
+  private showClose: boolean = true;
+  private readonly: boolean = false;
+  private hint: string = '';
   private inputId: string = '';
-  private userInput?: boolean;
+  private userInput: boolean = false;
   private showPlaceholder = true;
+  private disable = false;
   mounted() {
     this.model = this.option?.model ?? '';
-    this.inputPlaceholder =
-      this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseSelect');
+    this.inputPlaceholder = this.option?.inputPlaceholder ?? '«Î—°‘Ò';
     this.classes = this.option?.classes ?? '';
     this.rules = this.option?.rules;
     this.label = this.option?.label;
     this.inputSelectOption = this.option?.inputSelectOption;
     this.inputSelectOptionBak = this.option?.inputSelectOption;
-    this.showClose = this.option?.showClose ?? true;
-    this.readonly = this.option?.readonly ?? false;
-    this.userInput = this.option?.userInput ?? false;
-    this.hint = this.option.hint ?? '';
+    this.showClose = this.option.showClose ?? true;
+    this.readonly = this.option?.readonly;
+    this.userInput = this.option?.userInput;
+    this.hint = this.option.hint;
     this.inputId = this.option.inputId;
+    this.disable = this.option.disable || false;
+  }
+  public async validForm() {
+    return this.$refs[this.inputId].validate();
   }
   private popShow() {
     if (this.userInput) {

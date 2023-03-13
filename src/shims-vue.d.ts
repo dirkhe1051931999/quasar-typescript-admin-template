@@ -14,3 +14,6 @@ declare module 'sass.js';
 declare module 'vue3-photo-preview';
 declare module 'prismjs';
 declare module 'less';
+declare module 'uuid';
+declare module 'sha256';
+declare module 'jsencrypt';
