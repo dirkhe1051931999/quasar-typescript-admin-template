@@ -27,9 +27,9 @@ export default class AppMainComponent extends Vue {
   get key() {
     this.$nextTick(() => {
       if (this.$refs.appMain.offsetHeight === this.$refs.appMain.scrollHeight) {
-        this.calcStyle2 = 'padding:16px 16px 16px 28px';
-      } else {
         this.calcStyle2 = 'padding:16px 28px';
+      } else {
+        this.calcStyle2 = 'padding:16px 16px 16px 28px';
       }
     });
     return this.$route.path;
@@ -61,7 +61,7 @@ export default class AppMainComponent extends Vue {
   bottom: 0;
   right: 0;
   transition: all 0.2s;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   overflow: auto;
   &::-webkit-scrollbar {
     background: transparent;

@@ -44,7 +44,7 @@ export default class ConstructionComponent extends Vue {}
   position: absolute;
   margin-top: -72.5px;
   margin-left: -237.5px;
-  border-bottom: 5px solid #323232;
+  border-bottom: 5px solid var(--q-dark-1);
   .road {
     .mud {
       &:before {
@@ -53,7 +53,7 @@ export default class ConstructionComponent extends Vue {}
         width: 20px;
         height: 20px;
         border-radius: 4px;
-        background: #323232;
+        background: var(--q-dark-1);
         transform: rotate(45deg);
         left: 0;
         bottom: -17px;
@@ -64,7 +64,7 @@ export default class ConstructionComponent extends Vue {}
         width: 20px;
         height: 20px;
         border-radius: 4px;
-        background: #323232;
+        background: var(--q-dark-1);
         transform: rotate(45deg);
         right: 0;
         bottom: -20px;
@@ -118,8 +118,8 @@ export default class ConstructionComponent extends Vue {}
     height: 60px;
     bottom: -1px;
     position: relative;
-    background: #ffffff;
-    border: 15px solid #323232;
+    background: var(--q-white);
+    border: 15px solid var(--q-dark-1);
     border-bottom: none;
     .machine-silencer {
       &:before {
@@ -128,7 +128,7 @@ export default class ConstructionComponent extends Vue {}
         height: 0;
         bottom: 100%;
         width: inherit;
-        border: 6px solid #323232;
+        border: 6px solid var(--q-dark-1);
         border-top: 4px solid transparent;
         border-left: 8px solid transparent;
       }
@@ -147,7 +147,7 @@ export default class ConstructionComponent extends Vue {}
       height: 12px;
       bottom: -1px;
       position: absolute;
-      background: #323232;
+      background: var(--q-dark-1);
       .machine-smoke {
         left: -5px;
         width: 16px;
@@ -155,7 +155,7 @@ export default class ConstructionComponent extends Vue {}
         bottom: 20px;
         border-radius: 50%;
         position: absolute;
-        background: #323232;
+        background: var(--q-dark-1);
         transform: scale(0);
         animation: moveSmoke 0.5s linear infinite;
       }
@@ -169,7 +169,7 @@ export default class ConstructionComponent extends Vue {}
         position: absolute;
         width: 75px;
         height: 45px;
-        background: #ffffff;
+        background: var(--q-white);
         border-radius: 50% 50% 0 0 / 85% 85% 0 0;
       }
       &:after {
@@ -183,7 +183,7 @@ export default class ConstructionComponent extends Vue {}
         margin-top: -15px;
         margin-left: -30px;
         background: transparent;
-        border: 15px solid #323232;
+        border: 15px solid var(--q-dark-1);
       }
       bottom: -1px;
       width: 75px;
@@ -201,7 +201,7 @@ export default class ConstructionComponent extends Vue {}
         margin-top: -10px;
         margin-left: -40px;
         background: inherit;
-        border: 2px solid #ffffff;
+        border: 2px solid var(--q-white);
       }
       z-index: 1;
       width: 60px;
@@ -210,14 +210,14 @@ export default class ConstructionComponent extends Vue {}
       bottom: -20px;
       border-radius: 50%;
       position: absolute;
-      background: #323232;
-      border-top: 2px solid #ffffff;
+      background: var(--q-dark-1);
+      border-top: 2px solid var(--q-white);
     }
     .machine-body {
       height: inherit;
       width: inherit;
       position: relative;
-      background: #323232;
+      background: var(--q-dark-1);
       &:before {
         left: -15px;
         width: 30px;
@@ -230,7 +230,7 @@ export default class ConstructionComponent extends Vue {}
         right: 15px;
         width: 35px;
         height: 41px;
-        background: #ffffff;
+        background: var(--q-white);
       }
     }
   }

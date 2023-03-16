@@ -12,9 +12,8 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$dark: #1d1d1d;
+$dark: #252631;
 $white: #ffffff;
-$black: #252631;
 $primary: #5469d4;
 $blue: #5469d4;
 $blue-1: rgba(85, 105, 212, 0.5);
@@ -44,3 +43,29 @@ $font-size-rem-decimal-through: 5 !default;
 $line-height-through: 20 !default;
 $line-height-decimal-through: 5 !default;
 $line-height-px-through: 100 !default;
+
+:root {
+  /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
+  --q-dark-1: #323232;
+  --q-shadow-1: rgba(0, 0, 0, 0.05);
+  --q-shadow-2: rgba(0, 0, 0, 0.4);
+  --q-transparent: rgba(0, 0, 0, 0);
+  --q-grey-1: #fafafb;
+  --q-grey-4: #0000008a;
+  --q-grey-5: #bec8d6;
+  --q-grey-6: #e0e1e8;
+  --q-grey-7: #8392ab;
+  --q-grey-8: rgba(0, 0, 0, 0.3);
+  --q-grey-9: #e9ecef;
+  --q-label-error-red: #f56c6c;
+  --q-label-warn-yellow: #e6a23c;
+  --q-label-warn-major: #f28500;
+  --q-label-warn-minor: #e6b800;
+  --q-label-warn-warning: #0062ff;
+  --q-label-warn-cleared: #000000;
+  --q-label-success-green: #67c23a;
+  .body--light {
+  }
+  .body--dark {
+  }
+}

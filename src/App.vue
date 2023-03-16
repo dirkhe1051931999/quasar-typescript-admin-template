@@ -15,6 +15,8 @@ const path = development ? 'img:/icons/' : `img:${setting.publicPath}icons/`;
 })
 export default class myComponentApp extends Vue {
   mounted() {
+    this.$q.dark.set(true);
+    document.querySelector('html')?.classList.add('dark');
     const iconPath = path;
     this.$q.iconMapFn = (iconName) => {
       const icon = myIcons[iconName];

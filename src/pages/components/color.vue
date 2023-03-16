@@ -1,9 +1,7 @@
 <template>
   <div>
     <q-chip v-for="(item, index) in colors" :key="index">
-      <q-avatar :style="`background-color:${item}`" text-color="white">{{
-        index
-      }}</q-avatar>
+      <q-avatar :style="`background-color:${item}`" text-color="white">{{ index }}</q-avatar>
       {{ item }}
     </q-chip>
     <div class="row">
@@ -36,10 +34,10 @@ import { Component, Vue } from 'vue-facing-decorator';
 })
 export default class myComponentColor extends Vue {
   private colors = [
-    '#323232',
+    'var(--q-dark-1)',
     '#5d5d5d',
     '#d0e3fc',
-    '#f5f5f5',
+    'var(--q-grey-1)',
     '#0080ff',
     '#03a6ff',
     '#a3daff',

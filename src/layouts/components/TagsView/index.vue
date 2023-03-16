@@ -196,8 +196,8 @@ export default class TagsViewComponent extends Vue {
   width: calc(100% - var(--v3-sidebar-width));
   height: var(--v3-tagsview-height);
   line-height: var(--v3-tagsview-height);
-  background-color: var(--v3-main-container-background);
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  background-color: var(--q-white);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   position: fixed;
   overflow: hidden;
   left: var(--v3-sidebar-width);
@@ -208,10 +208,10 @@ export default class TagsViewComponent extends Vue {
       cursor: pointer;
       height: 30px;
       line-height: 30px;
-      border: 1px solid var(--v3-tagsview-tag-border-color);
-      border-radius: var(--v3-tagsview-tag-border-radius);
-      color: var(--v3-tagsview-tag-text-color);
-      background-color: var(--v3-tagsview-tag-bg-color);
+      border: 1px solid #d8dce5;
+      border-radius: 8px;
+      color: var(--el-text-color-primary);
+      background-color: var(--q-white);
       padding: 0 8px;
       font-size: 12px;
       margin-left: 5px;
@@ -224,11 +224,11 @@ export default class TagsViewComponent extends Vue {
       }
       &.active {
         background-color: var(--v3-tagsview-tag-active-bg-color);
-        color: var(--v3-tagsview-tag-active-text-color);
+        color: var(--q-white);
         border-color: var(--v3-tagsview-tag-active-border-color);
         &::before {
           content: '';
-          background-color: var(--v3-tagsview-tag-active-before-color);
+          background-color: var(--q-white);
           display: inline-block;
           width: 8px;
           height: 8px;
@@ -242,15 +242,15 @@ export default class TagsViewComponent extends Vue {
         vertical-align: -2px;
         border-radius: 50%;
         &:hover {
-          background-color: var(--v3-tagsview-tag-icon-hover-bg-color);
-          color: var(--v3-tagsview-tag-icon-hover-color);
+          background-color: #00000030;
+          color: var(--q-white);
         }
       }
     }
   }
   .contextmenu {
     margin: 0;
-    background-color: #fff;
+    background-color: var(--q-white);
     z-index: 3000;
     position: fixed;
     list-style-type: none;

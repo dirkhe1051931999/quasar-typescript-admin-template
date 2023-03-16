@@ -110,6 +110,7 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
+        dark: 'auto',
         screen: {
           bodyClasses: true,
         },
@@ -117,7 +118,6 @@ module.exports = configure(function (ctx) {
           white: '#ffffff',
           negative: '#e93030',
           primary: '#5469d4',
-          black: '#252631',
         },
         loadingBar: {
           color: 'primary',

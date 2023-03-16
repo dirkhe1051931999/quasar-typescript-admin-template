@@ -3,21 +3,13 @@
   <div class="actual-total">
     <div class="expect-total">可预约总量<i>999999</i>人</div>
     <div class="actual-total">
-      <div
-        class="actual-item"
-        v-for="(item, index) in actualTotal.split('')"
-        :key="index"
-      >
+      <div class="actual-item" v-for="(item, index) in actualTotal.split('')" :key="index">
         {{ item }}
       </div>
       <div class="actual-item">人</div>
     </div>
   </div>
-  <div
-    class="echarts"
-    id="RealTimeAccessChart"
-    style="width: 100%; height: calc(100% - 50px)"
-  ></div>
+  <div class="echarts" id="RealTimeAccessChart" style="width: 100%; height: calc(100% - 50px)"></div>
 </template>
 
 
@@ -30,9 +22,7 @@ import 'echarts-liquidfill';
 export default class myComponent extends Vue {
   private actualTotal = '216908';
   public initChart(data: number = 1): ECharts {
-    const charEle = document.getElementById(
-      'RealTimeAccessChart'
-    ) as HTMLElement;
+    const charEle = document.getElementById('RealTimeAccessChart') as HTMLElement;
     const charEch: ECharts = init(charEle);
     const option = {
       title: [
@@ -47,7 +37,7 @@ export default class myComponent extends Vue {
             color: '#ffffff',
             align: 'center',
             textBorderColor: 'rgba(0, 0, 0, 0)',
-            textShadowColor: '#000',
+            textShadowColor: '#252631',
             textShadowBlur: 0,
             textShadowOffsetX: 0,
             textShadowOffsetY: 1,
@@ -64,7 +54,7 @@ export default class myComponent extends Vue {
             color: '#ffffff',
             align: 'center',
             textBorderColor: 'rgba(0, 0, 0, 0)',
-            textShadowColor: '#000',
+            textShadowColor: '#252631',
             textShadowBlur: 0,
             textShadowOffsetX: 0,
             textShadowOffsetY: 1,

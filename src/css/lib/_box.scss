@@ -92,7 +92,7 @@
 }
 @each $position in bottom, top, left, right {
   .b-#{$position} {
-    border-#{$position}: solid 1px #e9ecef;
+    border-#{$position}: solid 1px var(--q-grey-9);
   }
 }
 

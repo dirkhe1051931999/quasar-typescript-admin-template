@@ -15,9 +15,7 @@ interface ChartProp {
 @Component({ name: 'myPlatformSourceChartComponent' })
 export default class myPlatformSourceChartComponent extends Vue {
   public initChart(data: any = {}): ECharts {
-    const charEle = document.getElementById(
-      'PlatformSourceChart'
-    ) as HTMLElement;
+    const charEle = document.getElementById('PlatformSourceChart') as HTMLElement;
     const charEch: ECharts = init(charEle);
     const option: EChartsOption = {
       grid: {
@@ -40,7 +38,7 @@ export default class myPlatformSourceChartComponent extends Vue {
         align: 'auto',
         itemWidth: 10,
         textStyle: {
-          color: '#fff',
+          color: 'var(--q-white)',
         },
         itemGap: 20,
         formatter: function (name: string) {
@@ -59,14 +57,7 @@ export default class myPlatformSourceChartComponent extends Vue {
           type: 'pie',
           radius: ['60%', '85%'],
           center: ['68%', '45%'],
-          color: [
-            '#0E7CE2',
-            '#FF8352',
-            '#E271DE',
-            '#F8456B',
-            '#00FFFF',
-            '#4AEAB0',
-          ],
+          color: ['#0E7CE2', '#FF8352', '#E271DE', '#F8456B', '#00FFFF', '#4AEAB0'],
           itemStyle: {
             borderColor: '#031845',
             borderWidth: 10,
@@ -153,14 +144,7 @@ export default class myPlatformSourceChartComponent extends Vue {
           type: 'pie',
           radius: ['96%', '97%'],
           center: ['68%', '45%'],
-          color: [
-            '#007afe',
-            'transparent',
-            '#007afe',
-            'transparent',
-            '#007afe',
-            'transparent',
-          ],
+          color: ['#007afe', 'transparent', '#007afe', 'transparent', '#007afe', 'transparent'],
           data: [
             {
               value: 17,
@@ -214,7 +198,7 @@ export default class myPlatformSourceChartComponent extends Vue {
                 name: (index + 1).toString(),
                 value: 10,
                 itemStyle: {
-                  color: '#fff',
+                  color: 'var(--q-white)',
                   borderWidth: 0,
                   borderColor: 'rgba(0,0,0,0)',
                 },

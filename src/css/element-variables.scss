@@ -1,6 +1,4 @@
 :root {
-  /** 全局背景色 */
-  --v3-main-container-background: #ffffff;
   /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
   --v3-tagsview-height: 48px;
   --v3-header-height: var(--v3-tagsview-height);
@@ -12,27 +10,19 @@
   --v3-sidebar-hide-width: 58px;
   --v3-sidebar-menu-item-height: 48px;
   --v3-sidebar-menu-tip-line-bg-color: var(--q-primary);
-  --v3-sidebar-menu-bg-color: #ffffff;
-  --v3-sidebar-menu-hover-bg-color: #5469d420;
-  --v3-sidebar-menu-text-color: var(--q-black);
   --v3-sidebar-menu-active-text-color: var(--q-primary);
-  /** SidebarLogo 组件 */
-  --v3-sidebarlogo-bg-color: #ffffff;
   /** TagsView 组件 */
-  --v3-tagsview-tag-text-color: var(--q-black);
-  --v3-tagsview-tag-active-text-color: #ffffff;
-  --v3-tagsview-tag-bg-color: #ffffff;
   --v3-tagsview-tag-active-bg-color: var(--q-primary);
   --v3-tagsview-tag-border-radius: 8px;
-  --v3-tagsview-tag-border-color: #d8dce5;
   --v3-tagsview-tag-active-border-color: var(--q-primary);
-  --v3-tagsview-tag-active-before-color: #ffffff;
-  --v3-tagsview-tag-icon-hover-bg-color: #00000030;
-  --v3-tagsview-tag-icon-hover-color: #ffffff;
   /** RightPanel 组件  */
   --v3-rightpanel-button-bg-color: var(--q-primary);
-
-  --el-color-white: #ffffff !important;
-  --el-color-black: var(--q-black) !important;
+  /* 强制修改el css变量 */
   --el-color-primary: var(--q-primary) !important;
+  --el-menu-active-color: var(--q-primary) !important;
+  .body--light {
+    --el-color-text-base: var(--q-dark) !important;
+    --el-color-black: var(--q-dark) !important;
+    --el-text-color-primary: var(--q-dark) !important;
+  }
 }

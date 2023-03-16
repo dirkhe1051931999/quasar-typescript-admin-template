@@ -11,11 +11,7 @@
               </div>
             </div>
             <div class="col-2 text-left">
-              <img
-                class="w-50"
-                src="~assets/icon-sun-cloud.png"
-                alt="image sun"
-              />
+              <img class="w-50" src="~assets/icon-sun-cloud.png" alt="image sun" />
               <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
             </div>
           </div>
@@ -24,27 +20,12 @@
     </q-intersection>
     <div class="row items-start">
       <div class="col-6 row items-center justify-between">
-        <q-card
-          class="w-p-49 text-left p-16 flex justify-between items-center m-b-24"
-          v-for="(item, index) in count"
-          :key="index"
-        >
-          <q-card-section
-            class="column items-start justify-center"
-            style="padding: 0"
-          >
+        <q-card class="w-p-49 text-left p-16 flex justify-between items-center m-b-24" v-for="(item, index) in count" :key="index">
+          <q-card-section class="column items-start justify-center" style="padding: 0">
             <p class="fs-16 text-grey p-b-10">{{ item.name }}</p>
-            <CountTo
-              :startVal="0"
-              :endVal="item.num"
-              :duration="4000"
-              class="fs-20 f-bold"
-            ></CountTo>
+            <CountTo :startVal="0" :endVal="item.num" :duration="4000" class="fs-20 f-bold"></CountTo>
           </q-card-section>
-          <q-card-section
-            style="padding: 10px; border-radius: 6px"
-            class="bg-gradient-primary"
-          >
+          <q-card-section style="padding: 10px; border-radius: 6px" class="bg-gradient-primary">
             <q-icon :name="item.icon" class="fs-22 text-white" />
           </q-card-section>
         </q-card>
@@ -54,10 +35,7 @@
           <div>
             <p class="fs-18 f-bold p-b-10">Overview</p>
             <p>
-              <q-icon
-                name="arrow_upward"
-                class="text-green fs-18 f-bold"
-              ></q-icon>
+              <q-icon name="arrow_upward" class="text-green fs-18 f-bold"></q-icon>
               4% more in 2022
             </p>
           </div>
@@ -68,18 +46,14 @@
         <div class="p-l-16 m-b-16 row m-t-16">
           <div class="col-6">
             <q-card class="text-center p-16">
-              <p class="text-primary fs-48 f-bold">
-                87 <span class="fs-18">m³</span>
-              </p>
+              <p class="text-primary fs-48 f-bold">87 <span class="fs-18">m³</span></p>
               <p class="fs-18 p-t-16 p-b-16">Water</p>
               <p class="fs-14 text-grey">Consumption</p>
             </q-card>
           </div>
           <div class="col-6 p-l-16">
             <q-card class="text-center p-16">
-              <p class="text-primary fs-48 f-bold">
-                417 <span class="fs-18">GB</span>
-              </p>
+              <p class="text-primary fs-48 f-bold">417 <span class="fs-18">GB</span></p>
               <p class="fs-18 p-t-16 p-b-16">Internet</p>
               <p class="fs-14 text-grey">All devices</p>
             </q-card>
@@ -126,11 +100,7 @@
           <div class="row items-start">
             <div class="left relative w-300">
               <div class="chart">
-                <canvas
-                  id="chart-consumption"
-                  height="200"
-                  width="300"
-                ></canvas>
+                <canvas id="chart-consumption" height="200" width="300"></canvas>
               </div>
               <div class="w-300 h-200 absolute left-16 top-52">
                 <div class="f-bold absolute absolute-center text-center">
@@ -142,89 +112,35 @@
             <div class="right col-7">
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span
-                    class="
-                      badge
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      m-r-16
-                      bg-gradient-primary
-                    "
-                  ></span>
+                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-primary"></span>
                   <span>Living Room</span>
                 </div>
                 <span class="col-2 text-center">15%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span
-                    class="
-                      badge
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      m-r-16
-                      bg-gradient-secondary
-                    "
-                  ></span>
+                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-secondary"></span>
                   <span>Kitchen</span>
                 </div>
                 <span class="col-2 text-center">20%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span
-                    class="
-                      badge
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      m-r-16
-                      bg-gradient-success
-                    "
-                  ></span>
+                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-success"></span>
                   <span>Attic</span>
                 </div>
                 <span class="col-2 text-center">13%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span
-                    class="
-                      badge
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      m-r-16
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      bg-gradient-info
-                    "
-                  ></span>
+                  <span class="badge w-20 h-20 b-r-7 block m-r-16 w-20 h-20 b-r-7 block bg-gradient-info"></span>
                   <span>Garage</span>
                 </div>
                 <span class="col-2 text-center">32%</span>
               </div>
               <div class="row p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span
-                    class="
-                      badge
-                      w-20
-                      h-20
-                      b-r-7
-                      block
-                      m-r-16
-                      bg-gradient-warning
-                    "
-                  ></span>
+                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-warning"></span>
                   <span>Basement</span>
                 </div>
                 <span class="col-2 text-center">20%</span>
@@ -238,11 +154,7 @@
           <q-card class="p-16">
             <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
             <div>
-              <canvas
-                id="chart-cons-week"
-                class="chart-canvas"
-                height="200"
-              ></canvas>
+              <canvas id="chart-cons-week" class="chart-canvas" height="200"></canvas>
             </div>
           </q-card>
         </div>
@@ -250,18 +162,7 @@
           <q-card class="p-16">
             <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
             <div class="text-center h-200">
-              <q-circular-progress
-                show-value
-                font-size="12px"
-                :value="81"
-                size="165px"
-                :thickness="0.1"
-                color="primary"
-                track-color="grey-3"
-                class="q-ma-md"
-              >
-                81%
-              </q-circular-progress>
+              <q-circular-progress show-value font-size="12px" :value="81" size="165px" :thickness="0.1" color="primary" track-color="grey-3" class="q-ma-md"> 81% </q-circular-progress>
             </div>
           </q-card>
         </div>
@@ -277,12 +178,7 @@
               <q-toggle v-model="toggle_switch.value1" />
             </div>
             <div class="middle">
-              <svg
-                width="60"
-                viewBox="0 0 296 179"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="60" viewBox="0 0 296 179" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter1_f)">
                   <path
                     d="M165.907 34.625C165.907 34.625 156.143 47.861 148.512 47.425C138.946 46.863 137.312 35.325 128.444 34.625C119.166 34.764 118.219 46.725 108.163 47.425C99.1529 47.264 95.3359 34.843 86.7469 34.625C78.1579 34.407 69.0029 47.425 69.0029 47.425"
@@ -320,29 +216,10 @@
                   ></path>
                 </g>
                 <defs>
-                  <filter
-                    id="filter1_f"
-                    x="0"
-                    y="0"
-                    width="295.154"
-                    height="178.435"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="0.5"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter1_f" x="0" y="0" width="295.154" height="178.435" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
                 </defs>
               </svg>
@@ -362,12 +239,7 @@
               <q-toggle v-model="toggle_switch.value2" color="white" />
             </div>
             <div class="middle">
-              <svg
-                width="40"
-                viewBox="0 0 217 342"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="40" viewBox="0 0 217 342" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter3_f)">
                   <path
                     d="M67 178.583C93.5097 178.583 115 157.092 115 130.583C115 104.073 93.5097 82.5825 67 82.5825C40.4903 82.5825 19 104.073 19 130.583C19 157.092 40.4903 178.583 67 178.583Z"
@@ -403,108 +275,28 @@
                   fill="white"
                 ></path>
                 <defs>
-                  <filter
-                    id="filter30_f"
-                    x="2"
-                    y="65.5825"
-                    width="130"
-                    height="130"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="1"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter30_f" x="2" y="65.5825" width="130" height="130" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
-                  <filter
-                    id="filter30_f"
-                    x="0.122314"
-                    y="59.2585"
-                    width="104.381"
-                    height="87.9562"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="10"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter30_f" x="0.122314" y="59.2585" width="104.381" height="87.9562" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
-                  <filter
-                    id="filter2_d"
-                    x="36.7441"
-                    y="0"
-                    width="180.001"
-                    height="341.351"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    ></feColorMatrix>
+                  <filter id="filter2_d" x="36.7441" y="0" width="180.001" height="341.351" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix>
                     <feOffset dx="10" dy="2"></feOffset>
                     <feGaussianBlur stdDeviation="15"></feGaussianBlur>
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0.302 0"
-                    ></feColorMatrix>
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow"
-                    ></feBlend>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect1_dropShadow"
-                      result="shape"
-                    ></feBlend>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0.302 0"></feColorMatrix>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend>
                   </filter>
-                  <linearGradient
-                    id="paint0_linear"
-                    x1="161.625"
-                    y1="141.948"
-                    x2="43.5768"
-                    y2="169.912"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop
-                      offset="1"
-                      stop-color="white"
-                      stop-opacity="0.596"
-                    ></stop>
-                    <stop
-                      offset="1"
-                      stop-color="#F7F7F7"
-                      stop-opacity="0.204"
-                    ></stop>
+                  <linearGradient id="paint0_linear" x1="161.625" y1="141.948" x2="43.5768" y2="169.912" gradientUnits="userSpaceOnUse">
+                    <stop offset="1" stop-color="white" stop-opacity="0.596"></stop>
+                    <stop offset="1" stop-color="#F7F7F7" stop-opacity="0.204"></stop>
                   </linearGradient>
                 </defs>
               </svg>
@@ -524,12 +316,7 @@
               <q-toggle v-model="toggle_switch.value3" />
             </div>
             <div class="middle">
-              <svg
-                width="70"
-                viewBox="0 0 306 180"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="70" viewBox="0 0 306 180" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f)">
                   <path
                     d="M165.907 35.625C165.907 35.625 156.143 48.861 148.512 48.425C138.946 47.863 137.312 36.325 128.444 35.625C119.166 35.764 118.219 47.725 108.163 48.425C99.1529 48.264 95.3359 35.843 86.7469 35.625C78.1579 35.407 69.0029 48.425 69.0029 48.425"
@@ -549,122 +336,28 @@
                     stroke-width="16"
                     stroke-linecap="round"
                   ></path>
-                  <path
-                    d="M220.25 19.4441L257.266 111.061"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M229.482 41.7656L207.122 31.8528"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M229.482 41.7655L239.189 18.897"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M249.223 90.6272L240.025 113.29"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M249.223 90.6271L272.091 100.334"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M190.205 58.6675L288.055 72.4195"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M214.151 61.834L194.387 76.2415"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M214.151 61.834L199.2 41.9931"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M266.338 69.1682L281.365 88.4654"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M266.338 69.1682L286.179 54.217"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M209.151 104.299L269.986 26.4342"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M223.866 85.1443L226.461 109.465"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M223.866 85.1442L199.208 88.1718"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M256.311 43.6169L280.536 40.2513"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
-                  <path
-                    d="M256.311 43.6168L253.283 18.9585"
-                    stroke="#CED4DA"
-                    stroke-width="10"
-                    stroke-linecap="round"
-                  ></path>
+                  <path d="M220.25 19.4441L257.266 111.061" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M229.482 41.7656L207.122 31.8528" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M229.482 41.7655L239.189 18.897" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M249.223 90.6272L240.025 113.29" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M249.223 90.6271L272.091 100.334" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M190.205 58.6675L288.055 72.4195" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M214.151 61.834L194.387 76.2415" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M214.151 61.834L199.2 41.9931" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M266.338 69.1682L281.365 88.4654" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M266.338 69.1682L286.179 54.217" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M209.151 104.299L269.986 26.4342" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M223.866 85.1443L226.461 109.465" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M223.866 85.1442L199.208 88.1718" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M256.311 43.6169L280.536 40.2513" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
+                  <path d="M256.311 43.6168L253.283 18.9585" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
                   <circle cx="239.321" cy="66.5" r="8.5" fill="white"></circle>
                 </g>
                 <defs>
-                  <filter
-                    id="filter0_f"
-                    x="0"
-                    y="10.9402"
-                    width="294.703"
-                    height="168.495"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="0.5"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter0_f" x="0" y="10.9402" width="294.703" height="168.495" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
                 </defs>
               </svg>
@@ -684,21 +377,9 @@
               <q-toggle v-model="toggle_switch.value4" />
             </div>
             <div class="middle">
-              <svg
-                width="72"
-                viewBox="0 0 301 157"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="72" viewBox="0 0 301 157" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_f)">
-                  <mask
-                    mask-type="alpha"
-                    maskUnits="userSpaceOnUse"
-                    x="0"
-                    y="0"
-                    width="301"
-                    height="156"
-                  >
+                  <mask mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="301" height="156">
                     <rect width="301" height="156" fill="#C4C4C4"></rect>
                   </mask>
                   <g mask="url(#mask0)">
@@ -719,66 +400,20 @@
                         fill="white"
                       ></path>
                     </g>
-                    <path
-                      d="M182 143.435H122V156.435H182V143.435Z"
-                      fill="white"
-                    ></path>
-                    <path
-                      d="M6.5 151.935H124.063L151.927 133.325L180.5 151.935H294.5"
-                      stroke="#CED4DA"
-                      stroke-width="10"
-                      stroke-linecap="round"
-                    ></path>
+                    <path d="M182 143.435H122V156.435H182V143.435Z" fill="white"></path>
+                    <path d="M6.5 151.935H124.063L151.927 133.325L180.5 151.935H294.5" stroke="#CED4DA" stroke-width="10" stroke-linecap="round"></path>
                   </g>
                 </g>
                 <defs>
-                  <filter
-                    id="filter0_f"
-                    x="0.5"
-                    y="3.8252"
-                    width="300"
-                    height="153.175"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="0.5"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter0_f" x="0.5" y="3.8252" width="300" height="153.175" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
-                  <filter
-                    id="filter1_f"
-                    x="24"
-                    y="9"
-                    width="187.337"
-                    height="167.116"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood
-                      flood-opacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    ></feBlend>
-                    <feGaussianBlur
-                      stdDeviation="10"
-                      result="effect1_foregroundBlur"
-                    ></feGaussianBlur>
+                  <filter id="filter1_f" x="24" y="9" width="187.337" height="167.116" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur"></feGaussianBlur>
                   </filter>
                 </defs>
               </svg>
@@ -798,21 +433,9 @@
               <q-toggle v-model="toggle_switch.value5" color="white" />
             </div>
             <div class="middle">
-              <svg
-                width="45px"
-                viewBox="0 0 41 31"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
+              <svg width="45px" viewBox="0 0 41 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>wifi</title>
-                <g
-                  id="Page-1"
-                  stroke="none"
-                  stroke-width="1"
-                  fill="none"
-                  fill-rule="evenodd"
-                >
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="wifi" transform="translate(3.000000, 3.000000)">
                     <path
                       d="M7.37102658,14.6156105 C12.9664408,9.02476091 22.0335592,9.02476091 27.6289734,14.6156105"
@@ -821,12 +444,7 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                     ></path>
-                    <circle
-                      fill="#FFFFFF"
-                      cx="17.5039082"
-                      cy="22.7484921"
-                      r="4.9082855"
-                    ></circle>
+                    <circle fill="#FFFFFF" cx="17.5039082" cy="22.7484921" r="4.9082855"></circle>
                     <path
                       d="M0,7.24718945 C9.66583791,-2.41572982 25.3341621,-2.41572982 35,7.24718945"
                       stroke="#FFFFFF"
@@ -875,11 +493,7 @@
                   <q-icon color="primary" name="bluetooth" />
                 </q-item-section>
               </q-item>
-              <q-item
-                clickable
-                v-ripple
-                class="bg-gradient-faded-primary text-white b-r-16"
-              >
+              <q-item clickable v-ripple class="bg-gradient-faded-primary text-white b-r-16">
                 <q-item-section>Avatar-type icon</q-item-section>
                 <q-item-section avatar>
                   <q-avatar color="teal" text-color="white" icon="bluetooth" />
@@ -888,12 +502,7 @@
               <q-item clickable v-ripple class="q-px-none">
                 <q-item-section>Rounded avatar-type icon</q-item-section>
                 <q-item-section avatar>
-                  <q-avatar
-                    rounded
-                    color="purple"
-                    text-color="white"
-                    icon="bluetooth"
-                  />
+                  <q-avatar rounded color="purple" text-color="white" icon="bluetooth" />
                 </q-item-section>
               </q-item>
               <q-item clickable v-ripple class="q-px-none">
@@ -903,11 +512,7 @@
                 </q-item-section>
               </q-item>
               <q-separator />
-              <q-item
-                clickable
-                v-ripple
-                class="bg-gradient-faded-info text-white b-r-16"
-              >
+              <q-item clickable v-ripple class="bg-gradient-faded-info text-white b-r-16">
                 <q-item-section>Image avatar</q-item-section>
                 <q-item-section avatar>
                   <q-avatar>
@@ -953,32 +558,20 @@
       <div class="col-6">
         <div class="p-r-16">
           <q-card flat class="p-16">
-            <q-video
-              src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0"
-              class="h-300"
-            />
+            <q-video src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0" class="h-300" />
             <q-card-section class="q-px-none">
               <div class="text-h6">What Is A Quasar?</div>
               <div class="text-subtitle2">by Fraser Cain</div>
             </q-card-section>
             <q-card-section class="q-pa-none l-h-2">
-              In this short video explainer, Universe Today publisher Fraser
-              Cain investigates the most powerful objects in the Universe:
-              quasars. In just the last few decades, our understanding of
+              In this short video explainer, Universe Today publisher Fraser Cain investigates the most powerful objects in the Universe: quasars. In just the last few decades, our understanding of
               quasars has developed in leaps and bounds.
             </q-card-section>
             <q-card-section class="q-pa-none l-h-2">
-              I love it when scientists discover something unusual in nature.
-              They have no idea what it is, and then over decades of research,
-              evidence builds, and scientists grow to understand what's going
-              on.. My favorite example? Quasars. Astronomers first knew they had
-              a mystery on their hands in the nineteen-sixties (1960s) when they
-              turned the first radio telescopes to the sky. They detected the
-              radio waves streaming off the Sun, the Milky Way and a few stars,
-              but they also turned up bizarre objects they couldn't explain.
-              These objects were small and incredibly bright. They named them
-              quasi-stellar-objects or "quasars", and then began to argue about
-              what might be causing them.
+              I love it when scientists discover something unusual in nature. They have no idea what it is, and then over decades of research, evidence builds, and scientists grow to understand what's
+              going on.. My favorite example? Quasars. Astronomers first knew they had a mystery on their hands in the nineteen-sixties (1960s) when they turned the first radio telescopes to the sky.
+              They detected the radio waves streaming off the Sun, the Milky Way and a few stars, but they also turned up bizarre objects they couldn't explain. These objects were small and incredibly
+              bright. They named them quasi-stellar-objects or "quasars", and then began to argue about what might be causing them.
             </q-card-section>
           </q-card>
         </div>
@@ -995,35 +588,17 @@
           <div>
             <q-card class="p-16" flat>
               <div>
-                <q-chat-message
-                  name="me"
-                  avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-                  :text="['hey, how are you?']"
-                  stamp="7 minutes ago"
-                  sent
-                  bg-color="amber-7"
-                />
+                <q-chat-message name="me" avatar="https://cdn.quasar.dev/img/avatar3.jpg" :text="['hey, how are you?']" stamp="7 minutes ago" sent bg-color="amber-7" />
                 <q-chat-message
                   name="Jane"
                   avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-                  :text="[
-                    'doing fine, how r you?',
-                    'I just feel like typing a really, really, REALY long message to annoy you...',
-                  ]"
+                  :text="['doing fine, how r you?', 'I just feel like typing a really, really, REALY long message to annoy you...']"
                   size="6"
                   stamp="4 minutes ago"
                   text-color="white"
                   bg-color="primary"
                 />
-                <q-chat-message
-                  name="Jane"
-                  avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-                  :text="['Did it work?']"
-                  stamp="1 minutes ago"
-                  size="8"
-                  text-color="white"
-                  bg-color="primary"
-                />
+                <q-chat-message name="Jane" avatar="https://cdn.quasar.dev/img/avatar5.jpg" :text="['Did it work?']" stamp="1 minutes ago" size="8" text-color="white" bg-color="primary" />
               </div>
             </q-card>
           </div>
@@ -1175,8 +750,6 @@ export default class DashboardComponent extends Vue {
     this.initBar();
     this.initTang();
     this.initRose();
-    // this.initGauge();
-    // this.initRadar();
   }
   public initBar() {
     const xAxisData = [];
@@ -1185,9 +758,7 @@ export default class DashboardComponent extends Vue {
       xAxisData.push(item.name);
       seriesData.push(item.num);
     }
-    var chartDom: CanvasRenderingContext2D | null = (
-      document.getElementById('chart1') as HTMLCanvasElement
-    )?.getContext('2d');
+    var chartDom: CanvasRenderingContext2D | null = (document.getElementById('chart1') as HTMLCanvasElement)?.getContext('2d');
     // var gradientStroke1 = chartDom!.createLinearGradient(0, 0, 0, 450);
 
     // gradientStroke1.addColorStop(0, 'rgba(66,134,121,0.15)');
@@ -1298,9 +869,7 @@ export default class DashboardComponent extends Vue {
     });
   }
   public initTang() {
-    var chartDom: CanvasRenderingContext2D | null = (
-      document.getElementById('chart-consumption') as HTMLCanvasElement
-    )?.getContext('2d');
+    var chartDom: CanvasRenderingContext2D | null = (document.getElementById('chart-consumption') as HTMLCanvasElement)?.getContext('2d');
     var gradientStroke1 = chartDom?.createLinearGradient(0, 230, 0, 50);
 
     gradientStroke1?.addColorStop(1, 'rgba(203,12,159,0.2)');
@@ -1317,13 +886,7 @@ export default class DashboardComponent extends Vue {
             weight: 9,
             borderRadius: 2,
             borderWidth: 2,
-            backgroundColor: [
-              '#FF0080',
-              '#A8B8D8',
-              '#21d4fd',
-              '#98ec2d',
-              '#ff667c',
-            ],
+            backgroundColor: ['#FF0080', '#A8B8D8', '#21d4fd', '#98ec2d', '#ff667c'],
             data: [15, 20, 13, 32, 20],
           },
         ],
@@ -1373,9 +936,7 @@ export default class DashboardComponent extends Vue {
     });
   }
   public initRose() {
-    var ctx = (
-      document.getElementById('chart-cons-week') as HTMLCanvasElement
-    )?.getContext('2d');
+    var ctx = (document.getElementById('chart-cons-week') as HTMLCanvasElement)?.getContext('2d');
 
     new Chart(ctx!, {
       type: 'bar',
@@ -1442,116 +1003,6 @@ export default class DashboardComponent extends Vue {
       },
     });
   }
-  public initGauge() {
-    // var chartDom: any = document.getElementById('chart4');
-    // var myChart = echarts.init(chartDom);
-    // var option;
-    // option = {
-    //   series: [
-    //     {
-    //       type: 'gauge',
-    //       axisLine: {
-    //         lineStyle: {
-    //           width: 30,
-    //           color: [
-    //             [0.3, '#67e0e3'],
-    //             [0.7, '#37a2da'],
-    //             [1, '#fd666d'],
-    //           ],
-    //         },
-    //       },
-    //       pointer: {
-    //         itemStyle: {
-    //           color: 'auto',
-    //         },
-    //       },
-    //       axisTick: {
-    //         distance: -30,
-    //         length: 8,
-    //         lineStyle: {
-    //           color: '#fff',
-    //           width: 2,
-    //         },
-    //       },
-    //       splitLine: {
-    //         distance: -30,
-    //         length: 30,
-    //         lineStyle: {
-    //           color: '#fff',
-    //           width: 4,
-    //         },
-    //       },
-    //       axisLabel: {
-    //         color: 'auto',
-    //         distance: 40,
-    //         fontSize: 20,
-    //       },
-    //       detail: {
-    //         valueAnimation: true,
-    //         formatter: '{value} km/h',
-    //         color: 'auto',
-    //       },
-    //       data: [
-    //         {
-    //           value: 70,
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // };
-    // setInterval(() => {
-    //   myChart.setOption({
-    //     series: [
-    //       {
-    //         data: [
-    //           {
-    //             value: +(Math.random() * 100).toFixed(2),
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   });
-    // }, 2000);
-    // option && myChart.setOption(option);
-  }
-  public initRadar() {
-    // var chartDom: any = document.getElementById('chart5');
-    // var myChart = echarts.init(chartDom);
-    // var option;
-    // option = {
-    //   legend: {
-    //     data: ['Allocated Budget', 'Actual Spending'],
-    //   },
-    //   radar: {
-    //     // shape: 'circle',
-    //     indicator: [
-    //       { name: 'Sales', max: 6500 },
-    //       { name: 'Administration', max: 16000 },
-    //       { name: 'Information Technology', max: 30000 },
-    //       { name: 'Customer Support', max: 38000 },
-    //       { name: 'Development', max: 52000 },
-    //       { name: 'Marketing', max: 25000 },
-    //     ],
-    //   },
-    //   series: [
-    //     {
-    //       name: 'Budget vs spending',
-    //       type: 'radar',
-    //       data: [
-    //         {
-    //           value: [4200, 3000, 20000, 35000, 50000, 18000],
-    //           name: 'Allocated Budget',
-    //         },
-    //         {
-    //           value: [5000, 14000, 28000, 26000, 42000, 21000],
-    //           name: 'Actual Spending',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // };
-    // option && myChart.setOption(option);
-  }
 }
 </script>
 <style lang="scss">
@@ -1566,7 +1017,7 @@ Docs & License: https://fullcalendar.io/
 }
 .fc-theme-standard td,
 .fc-theme-standard th {
-  border-color: #e9ecef;
+  border-color: var(--q-grey-9);
 }
 .fc-theme-standard thead tr th {
   border-right: none;
@@ -1606,8 +1057,7 @@ Docs & License: https://fullcalendar.io/
 }
 .fc .fc-button {
   padding-top: 4px;
-  box-shadow: 0 4px 7px -1px rgba(0, 0, 0, 0.11),
-    0 2px 4px -1px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 7px -1px rgba(0, 0, 0, 0.11), 0 2px 4px -1px rgba(0, 0, 0, 0.07);
   transition: all 0.15s ease-in;
 }
 .fc .fc-button,
@@ -1623,8 +1073,7 @@ Docs & License: https://fullcalendar.io/
 .fc .fc-button-primary:not(:disabled):active,
 .fc .fc-button-primary:not(:disabled):active:focus {
   transform: scale(1.02);
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09),
-    0 2px 3px -1px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07);
   background-color: #8392ab;
   border-color: #8392ab;
 }

@@ -170,7 +170,7 @@ export default class NavigationBarComponent extends Vue {
     float: left;
     padding: 0 12px;
     cursor: pointer;
-    color: #ffffff;
+    color: var(--q-white);
   }
   .breadcrumb {
     float: left;
@@ -185,7 +185,7 @@ export default class NavigationBarComponent extends Vue {
     height: 100%;
     display: flex;
     align-items: center;
-    color: #ffffff;
+    color: var(--q-white);
     .right-menu-item {
       padding: 0 12px;
     }

@@ -17,13 +17,7 @@
         </template>
       </q-input>
 
-      <q-input
-        filled
-        v-model="secondColor"
-        :rules="['anyColor']"
-        hint="With validation"
-        class="my-input"
-      >
+      <q-input filled v-model="secondColor" :rules="['anyColor']" hint="With validation" class="my-input">
         <template v-slot:append>
           <q-icon name="colorize" class="cursor-pointer">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -43,7 +37,7 @@ import { Component, Vue } from 'vue-facing-decorator';
   name: 'myComponentColorPicker',
 })
 export default class myComponentColorPicker extends Vue {
-  private hex = '#e93030';
+  private hex = 'var(--q-negative)';
   private hexa = '#0f0';
   private rgb = 'rgb(0,0,0)';
   private rgba = 'rgba(66,0,1,0.8)';

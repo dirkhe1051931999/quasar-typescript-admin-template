@@ -1,20 +1,12 @@
 <template>
   <div>
     <div class="row items-center justify-end m-t-26">
-      <p class="m-r-10">
-        {{ $t('table.total') }} {{ _paginationParams.rowsNumber }}
-      </p>
+      <p class="m-r-10">{{ $t('table.total') }} {{ _paginationParams.rowsNumber }}</p>
       <q-pagination
         v-model="_paginationParams.page"
         :input="false"
         :max-pages="6"
-        :max="
-          _paginationParams.rowsNumber / _paginationParams.rowsPerPage < 1
-            ? 1
-            : Math.ceil(
-                _paginationParams.rowsNumber / _paginationParams.rowsPerPage
-              )
-        "
+        :max="_paginationParams.rowsNumber / _paginationParams.rowsPerPage < 1 ? 1 : Math.ceil(_paginationParams.rowsNumber / _paginationParams.rowsPerPage)"
         @update:model-value="_paginationInput"
         direction-links
         icon-prev="app:navigation-arrow-left"
@@ -32,9 +24,7 @@
         dropdown-icon="app:topbar-arrow-bottom"
         @update:model-value="selectChange"
         dense
-        :display-value="`${globals.$t('table.pieces_page')} ${
-          _paginationParams.rowsPerPage
-        } `"
+        :display-value="`${globals.$t('table.pieces_page')} ${_paginationParams.rowsPerPage} `"
         options-dense
       />
     </div>
@@ -78,13 +68,8 @@ export default class MyPaginationComponent extends Vue {
     this.$emit('pagination', this._paginationParams);
   }
   private selectChange() {
-    let { rowsPerPage, rowsNumber } = this._paginationParams;
-    if (rowsPerPage < rowsNumber) {
-      this.$emit('pagination', this._paginationParams);
-    } else {
-      this._paginationParams.page = 1;
-      this.$emit('pagination', this._paginationParams);
-    }
+    this._paginationParams.page = 1;
+    this.$emit('pagination', this._paginationParams);
   }
   mounted() {
     this._paginationParams.page = this.paginationParams.page;

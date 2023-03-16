@@ -7,8 +7,7 @@ export const replaceEmpty: Directive = {
     const { value } = binding;
     if ([null, undefined, ''].includes(value)) {
       el.innerHTML = '--';
-      el.style =
-        'cursor:text;color:var(--q-black); pointer-events: none! important;font-family:inherit';
+      el.style = 'cursor:text;color:var(--q-dark); pointer-events: none! important;font-family:inherit';
     }
   },
 };

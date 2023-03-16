@@ -40,7 +40,7 @@ export default class myChartWorldComponent extends Vue {
           from: 'Russia',
           to: 'Greenland',
           style: {
-            stroke: '#000',
+            stroke: '#252631',
           },
         },
       ],

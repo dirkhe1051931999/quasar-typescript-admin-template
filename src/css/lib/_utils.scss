@@ -35,7 +35,7 @@
   }
 }
 .detail-link-type:hover {
-  color: $black;
+  color: $dark;
   text-decoration: underline;
 }
 .link-type,
@@ -44,7 +44,7 @@
   cursor: pointer;
 }
 .link-type:hover {
-  color: $black;
+  color: $dark;
   text-decoration: underline;
 }
 .delete-type,
@@ -65,14 +65,14 @@
   color: var(--q-primary);
   cursor: pointer;
   height: 26px;
-  background: #ffffff;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  background: var(--q-white);
+  box-shadow: 0px 1px 2px 0px var(var(--q-transparent));
   border-radius: 4px;
   border: solid 1px var(--q-primary);
 }
 .in-table-link-button:hover {
   background: var(--q-primary);
-  color: #ffffff;
+  color: var(--q-white);
 }
 // table里的删除按钮 delete/negative
 .in-table-delete-button {
@@ -84,12 +84,12 @@
   cursor: pointer;
   height: 26px;
   border: solid 1px var(--el-color-danger);
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 1px 2px 0px var(var(--q-transparent));
   border-radius: 4px;
 }
 .in-table-delete-button:hover {
   background: var(--q-negative);
-  color: #ffffff;
+  color: var(--q-white);
 }
 .input-password {
   font-family: password !important;
@@ -114,7 +114,7 @@
   transform: translate(0, -50%);
 }
 .split-line {
-  background-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4), transparent);
+  background-image: linear-gradient(90deg, transparent, var(--q-shadow-2), transparent);
   background-color: transparent;
   opacity: 0.2;
 }
@@ -131,28 +131,28 @@
 }
 .thin-shadow {
   border-radius: 8px;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
 }
 .text-black {
-  color: var(--q-black) !important;
+  color: var(--q-dark) !important;
 }
 .q-message-error-style {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--q-transparent);
   @include bg-gradient-faded-danger;
   box-shadow: none;
-  color: #f56c6c !important;
+  color: var(--q-label-error-red) !important;
 }
 .q-message-warn-style {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--q-transparent);
   @include bg-gradient-faded-warning;
   box-shadow: none;
-  color: #e6a23c !important;
+  color: var(--q-label-warn-yellow) !important;
 }
 .q-message-success-style {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--q-transparent);
   @include bg-gradient-faded-success;
   box-shadow: none;
-  color: #67c23a !important;
+  color: var(--q-label-success-green) !important;
 }
 .my-label {
   padding: 4px 6px;
@@ -195,31 +195,31 @@
   align-items: center;
   justify-content: center;
   background: $primary;
-  color: #ffffff;
+  color: var(--q-white);
   cursor: pointer;
   user-select: none;
   position: relative;
   &.outline {
-    background: #ffffff;
+    background: var(--q-white);
     box-sizing: border-box;
     font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
   }
   &.negative {
     border: solid 1px $negative;
     color: $negative;
-    background: #ffffff;
+    background: var(--q-white);
     box-sizing: border-box;
     font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
   }
   &.primary {
     border: solid 1px $primary;
     color: $primary;
-    background: #ffffff;
+    background: var(--q-white);
     box-sizing: border-box;
     font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
   }
   &.disabled {
-    background: #ffffff;
+    background: var(--q-white);
     border: solid 1px $primary;
     opacity: 0.5;
     cursor: not-allowed;
@@ -230,7 +230,7 @@
   padding: 0 16px;
   font-size: 14px;
   position: relative;
-  color: $black;
+  color: $dark;
   &::before {
     position: absolute;
     left: 0;
@@ -240,7 +240,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: $black;
+    background-color: $dark;
   }
   &.grey {
     color: $grey;
@@ -277,13 +277,13 @@
   padding: 4px 6px;
   border-radius: 4px;
   &.critical {
-    background: #e93030;
+    background: var(--q-negative);
   }
   &.text-critical {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: #e93030 !important;
+    color: var(--q-negative) !important;
     line-height: 1.2;
     &::before {
       content: '';
@@ -294,17 +294,17 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #e93030 !important;
+      background-color: var(--q-negative) !important;
     }
   }
   &.major {
-    background: #f28500;
+    background: var(--q-label-warn-major);
   }
   &.text-major {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: #f28500 !important;
+    color: var(--q-label-warn-major) !important;
     &::before {
       content: '';
       position: absolute;
@@ -314,17 +314,17 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #f28500 !important;
+      background-color: var(--q-label-warn-major) !important;
     }
   }
   &.minor {
-    background: #e6b800;
+    background: var(--q-label-warn-minor);
   }
   &.text-minor {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: #e6b800 !important;
+    color: var(--q-label-warn-minor) !important;
     &::before {
       content: '';
       position: absolute;
@@ -334,17 +334,17 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #e6b800 !important;
+      background-color: var(--q-label-warn-minor) !important;
     }
   }
   &.warning {
-    background: #0062ff;
+    background: var(--q-label-warn-warning);
   }
   &.text-warning {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: #0062ff !important;
+    color: var(--q-label-warn-warning) !important;
     &::before {
       content: '';
       position: absolute;
@@ -354,17 +354,17 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #0062ff !important;
+      background-color: var(--q-label-warn-warning) !important;
     }
   }
   &.cleared {
-    background: #000000;
+    background: var(--q-label-warn-cleared);
   }
   &.text-cleared {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: #000000 !important;
+    color: var(--q-label-warn-cleared) !important;
     &::before {
       content: '';
       position: absolute;
@@ -374,7 +374,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #000000 !important;
+      background-color: var(--q-label-warn-cleared) !important;
     }
   }
 }

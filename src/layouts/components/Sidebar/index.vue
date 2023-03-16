@@ -3,23 +3,8 @@
   <div :class="{ 'has-logo': showSidebarLogo }">
     <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
-        :background-color="v3SidebarMenuBgColor"
-        :text-color="v3SidebarMenuTextColor"
-        :active-text-color="v3SidebarMenuActiveTextColor"
-        :unique-opened="true"
-        :collapse-transition="false"
-        mode="vertical"
-      >
-        <SidebarItem
-          v-for="route in routes"
-          :key="route.path"
-          :item="route"
-          :basePath="route.path"
-          :isCollapse="isCollapse"
-        />
+      <el-menu :default-active="activeMenu" :collapse="isCollapse" :unique-opened="true" :collapse-transition="false" mode="vertical">
+        <SidebarItem v-for="route in routes" :key="route.path" :item="route" :basePath="route.path" :isCollapse="isCollapse" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -66,21 +51,9 @@ export default class SidebarLogoComponent extends Vue {
   mounted() {
     this.setArrowSvg();
   }
-  public v3SidebarMenuBgColor = getCssVariableValue(
-    '--v3-sidebar-menu-bg-color'
-  );
-  public v3SidebarMenuTextColor = getCssVariableValue(
-    '--v3-sidebar-menu-text-color'
-  );
-  public v3SidebarMenuActiveTextColor = getCssVariableValue(
-    '--v3-sidebar-menu-active-text-color'
-  );
-
   public setArrowSvg() {
     this.$nextTick(() => {
-      const arr = document.querySelectorAll(
-        '.sidebar-container .el-icon.el-sub-menu__icon-arrow'
-      );
+      const arr = document.querySelectorAll('.sidebar-container .el-icon.el-sub-menu__icon-arrow');
       arr.forEach((data: any) => {
         data.innerHTML = arrowSvg;
       });
@@ -144,7 +117,7 @@ export default class SidebarLogoComponent extends Vue {
   line-height: var(--v3-sidebar-menu-item-height);
   &.is-active,
   &:hover {
-    background-color: var(--v3-sidebar-menu-hover-bg-color);
+    background-color: #5469d420;
   }
   display: block;
   * {
@@ -152,7 +125,7 @@ export default class SidebarLogoComponent extends Vue {
   }
 }
 :deep(.el-menu-item) {
-  color: (--v3-sidebar-menu-text-color) !important;
+  color: var(--el-text-color-primary);
   font-size: 14px !important;
   .record {
     color: rgba(58, 65, 111, 0.5);

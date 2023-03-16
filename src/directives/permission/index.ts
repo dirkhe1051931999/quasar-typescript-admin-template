@@ -15,7 +15,7 @@ export const permissionReplace: Directive = {
     //   el.innerHTML = '--';
     //   el.setAttribute(
     //     'style',
-    //     'color:#252631;pointer-events: none;border:none;box-shadow:none'
+    //     'color:#var(--q-dark);pointer-events: none;border:none;box-shadow:none'
     //   );
     // } else {
     //   return 0;

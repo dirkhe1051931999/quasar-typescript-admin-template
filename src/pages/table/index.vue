@@ -363,10 +363,10 @@ export default class myComponentMenu2TableIndex extends Vue {
 }
 .my-table thead tr:first-child th:first-child {
   /* bg color is important for th; just specify one */
-  background-color: #fff;
+  background-color: var(--q-white);
 }
 .my-table td:first-child {
-  background-color: #fff;
+  background-color: var(--q-white);
 }
 .my-table th:first-child,
 .my-table td:first-child {
@@ -389,7 +389,7 @@ export default class myComponentMenu2TableIndex extends Vue {
   background: rgba(0, 0, 0, 0.3);
   height: 32px;
   line-height: 32px;
-  color: #ffffff;
+  color: var(--q-white);
   width: 300px;
   margin: 0 auto;
 }

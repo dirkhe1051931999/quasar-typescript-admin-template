@@ -12,12 +12,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import { ECharts, EChartsOption, init } from 'echarts';
-import {
-  ranking1,
-  ranking2,
-  ranking3,
-  ranking4,
-} from 'src2/pages/data/ranking-icon';
+import { ranking1, ranking2, ranking3, ranking4 } from 'src2/pages/data/ranking-icon';
 interface ChartProp {
   name: string;
   value: number;
@@ -75,16 +70,11 @@ export default class myHotPlateChartComponent extends Vue {
             show: false,
           },
           axisLabel: {
-            color: '#fff',
+            color: 'var(--q-white)',
             formatter: function (value: any) {
               let str = value.length > 6 ? `${value.slice(0, 6)}...` : value;
-              let index =
-                data.data.map((item: ChartProp) => item.name).indexOf(value) +
-                1;
-              return [
-                `{${index > 3 ? 'lg' : `lg${index}`}|NO.${index}}`,
-                `{title| ${str}}`,
-              ].join(' ');
+              let index = data.data.map((item: ChartProp) => item.name).indexOf(value) + 1;
+              return [`{${index > 3 ? 'lg' : `lg${index}`}|NO.${index}}`, `{title| ${str}}`].join(' ');
             },
             rich: {
               lg1: {
@@ -92,7 +82,7 @@ export default class myHotPlateChartComponent extends Vue {
                 backgroundColor: {
                   image: ranking1,
                 },
-                color: '#fff',
+                color: 'var(--q-white)',
                 align: 'center',
                 height: 20,
                 fontSize: 13,
@@ -102,7 +92,7 @@ export default class myHotPlateChartComponent extends Vue {
                 backgroundColor: {
                   image: ranking2,
                 },
-                color: '#fff',
+                color: 'var(--q-white)',
                 align: 'center',
 
                 height: 20,
@@ -113,7 +103,7 @@ export default class myHotPlateChartComponent extends Vue {
                 backgroundColor: {
                   image: ranking3,
                 },
-                color: '#fff',
+                color: 'var(--q-white)',
                 align: 'center',
                 height: 20,
                 fontSize: 13,
@@ -123,7 +113,7 @@ export default class myHotPlateChartComponent extends Vue {
                 backgroundColor: {
                   image: ranking4,
                 },
-                color: '#fff',
+                color: 'var(--q-white)',
                 align: 'center',
 
                 height: 20,
@@ -145,7 +135,7 @@ export default class myHotPlateChartComponent extends Vue {
           data: data.data,
           axisLabel: {
             fontSize: 14,
-            color: '#fff',
+            color: 'var(--q-white)',
             // align: "right",
             margin: 20,
             formatter: (value: any) => {
@@ -182,7 +172,7 @@ export default class myHotPlateChartComponent extends Vue {
             show: true,
             position: [12, 0],
             lineHeight: 14,
-            color: '#fff',
+            color: 'var(--q-white)',
             formatter: (params: any) => {
               return params.data.percentage;
             },

@@ -9,7 +9,9 @@ import MyDialog from 'src/components/myDialog/index.vue';
 import MyFormInput from 'src/components/myForm/input.vue';
 import MyFormSelect from 'src/components/myForm/select.vue';
 import MyFormMultipleSelect from 'src/components/myForm/multipleSelect.vue';
-import MyFormDate from 'src/components/myForm/date.vue';
+import MyFormDateRange from 'src/components/myForm/dateRange.vue';
+import MyFormDateRangeWithTime from 'src/components/myForm/dateRangeWithTime.vue';
+import MyFormSlider from 'src/components/myForm/slider.vue';
 import MyFormRadio from 'src/components/myForm/radio.vue';
 import MyMaskInput from 'src/components/myForm/maskInput.vue';
 
@@ -25,6 +27,8 @@ export default boot(({ app }) => {
   app.component('MyMaskInput', MyMaskInput);
   app.component('MyFormSelect', MyFormSelect);
   app.component('MyFormMultipleSelect', MyFormMultipleSelect);
-  app.component('MyFormDate', MyFormDate);
+  app.component('MyFormDateRange', MyFormDateRange);
+  app.component('MyFormDateRangeWithTime', MyFormDateRangeWithTime);
+  app.component('MyFormSlider', MyFormSlider);
   app.component('MyFormRadio', MyFormRadio);
 });

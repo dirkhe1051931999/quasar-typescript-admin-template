@@ -179,13 +179,51 @@
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
-          <MyFormDate
+          <MyFormDateRange
             v-if="item.type === 'date'"
             :option="{
               rules: item.rules,
               classes: item.classes,
               model: dialogAddUpdateParams.params[item.model],
+              dateRange: dialogAddUpdateParams.params[item.dateRange],
               label: item.label,
+            }"
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
+          />
+          <MyFormDateRangeWithTime
+            v-if="item.type === 'date-time'"
+            :ref="dialogAddUpdateParams.id + '-date-time-' + item.model"
+            :option="{
+              rules: item.rules,
+              classes: item.classes,
+              startModel: dialogAddUpdateParams.params[item.startModel],
+              endModel: dialogAddUpdateParams.params[item.endModel],
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
+            }"
+          />
+          <MyFormSlider
+            v-if="item.type === 'slider'"
+            :option="{
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
+              min: item.min,
+              max: item.max,
+              step: item.step,
+            }"
+          />
+          <MyFormRadio
+            v-if="item.type === 'radio'"
+            :option="{
+              inputId: `${dialogAddUpdateParams.id}-select-${item.model}`,
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
+              inputSelectOption: item.inputSelectOption,
+              disable: item.disable,
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
@@ -313,7 +351,7 @@ import { defaultFill } from 'src/utils/tools';
 import { getCurrentInstance } from 'vue';
 const CONST_PARAMS: any = {
   query: { a: '', b: '', c: '' },
-  dialog_add_update: { a: '', b: '', c: '', d: [], e: '' },
+  dialog_add_update: { a: '', b: '', c: '', d: [], e: '', e_dateRange: { from: '', to: '' }, f: '', g: '', g_startModel: '', g_endModel: '', h: 10, i: 'true' },
 };
 @Component({
   name: 'myComponentTableBeta',
@@ -563,6 +601,7 @@ export default class myComponentTableBeta extends Vue {
       },
       {
         model: 'e',
+        dateRange: 'e_dateRange',
         type: 'date',
         rules: [
           (val: string | number | undefined | null) => {
@@ -570,6 +609,51 @@ export default class myComponentTableBeta extends Vue {
           },
         ],
         label: 'Date',
+      },
+      {
+        model: 'g',
+        startModel: 'g_startModel',
+        endModel: 'g_endModel',
+        type: 'date-time',
+        rules: [
+          (val: string | number | undefined | null) => {
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
+          },
+        ],
+        label: 'Date and time',
+      },
+      {
+        model: 'h',
+        type: 'slider',
+        min: 0,
+        max: 100,
+        step: 1,
+        rules: [
+          (val: string | number | undefined | null) => {
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
+          },
+        ],
+        label: 'slider',
+      },
+      {
+        model: 'i',
+        type: 'radio',
+        rules: [
+          (val: string | number | undefined | null) => {
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
+          },
+        ],
+        inputSelectOption: [
+          {
+            label: 'one',
+            value: 'true',
+          },
+          {
+            label: 'two',
+            value: 'false',
+          },
+        ],
+        label: 'radio',
       },
       {
         model: 'f',
@@ -733,6 +817,7 @@ export default class myComponentTableBeta extends Vue {
     }
   }
   private async dialogAddUpdateConfirmEvent() {
+    console.log(this.$refs[`${this.dialogAddUpdateParams.id}-date-time-g`][0].dateParams.model);
     try {
       this.dialogAddUpdateParams.clickLoading = true;
       // await HTTP_REQUEST()
@@ -792,10 +877,10 @@ export default class myComponentTableBeta extends Vue {
 }
 .my-table thead tr:last-child th:last-child {
   /* bg color is important for th; just specify one */
-  background-color: #fff;
+  background-color: var(--q-white);
 }
 .my-table td:last-child {
-  background-color: #fff;
+  background-color: var(--q-white);
 }
 .my-table th:last-child,
 .my-table td:last-child {

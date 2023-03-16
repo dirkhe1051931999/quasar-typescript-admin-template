@@ -1,133 +1,40 @@
 <template>
   <div>
     <div class="login-root">
-      <div
-        class="box-root flex-flex flex-direction--column"
-        style="min-height: 100vh; flex-grow: 1"
-      >
+      <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh; flex-grow: 1">
         <div class="loginbackground padding-top--64">
           <div class="loginbackground-gridContainer">
-            <div
-              class="box-root flex-flex"
-              style="grid-area: top / start / 8 / end"
-            >
-              <div
-                class="box-root"
-                style="
-                  background-image: linear-gradient(
-                    white 0%,
-                    rgb(247, 250, 252) 33%
-                  );
-                  flex-grow: 1;
-                "
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: top / start / 8 / end">
+              <div class="box-root" style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1"></div>
             </div>
             <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5">
-              <div
-                class="
-                  box-root
-                  box-divider--light-all-2
-                  animationLeftRight
-                  tans3s
-                "
-                style="flex-grow: 1"
-              ></div>
+              <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 6 / start / auto / 2"
-            >
-              <div
-                class="box-root box-background--blue800"
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2">
+              <div class="box-root box-background--blue800" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 7 / start / auto / 4"
-            >
-              <div
-                class="box-root box-background--blue animationLeftRight"
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4">
+              <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1"></div>
             </div>
             <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6">
-              <div
-                class="
-                  box-root
-                  box-background--gray100
-                  animationLeftRight
-                  tans3s
-                "
-                style="flex-grow: 1"
-              ></div>
+              <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 2 / 15 / auto / end"
-            >
-              <div
-                class="
-                  box-root
-                  box-background--cyan200
-                  animationRightLeft
-                  tans4s
-                "
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end">
+              <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 3 / 14 / auto / end"
-            >
-              <div
-                class="box-root box-background--blue animationRightLeft"
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end">
+              <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 4 / 17 / auto / 20"
-            >
-              <div
-                class="
-                  box-root
-                  box-background--gray100
-                  animationRightLeft
-                  tans4s
-                "
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20">
+              <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1"></div>
             </div>
-            <div
-              class="box-root flex-flex"
-              style="grid-area: 5 / 14 / auto / 17"
-            >
-              <div
-                class="
-                  box-root
-                  box-divider--light-all-2
-                  animationRightLeft
-                  tans3s
-                "
-                style="flex-grow: 1"
-              ></div>
+            <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17">
+              <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1"></div>
             </div>
           </div>
         </div>
-        <div
-          class="box-root padding-top--24 flex-flex flex-direction--column"
-          style="flex-grow: 1; z-index: 9"
-        >
-          <div
-            class="
-              box-root
-              padding-top--48
-              padding-bottom--24
-              flex-flex
-              flex-justifyContent--center
-            "
-          >
+        <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9">
+          <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
             <h3 class="text-primary bg-gradient-primary text-gradient">
               {{ PrdTitle }}
             </h3>
@@ -139,13 +46,7 @@
                 <form id="stripe-login">
                   <div class="field padding-bottom--24">
                     <label for="email">Username</label>
-                    <input
-                      type="text"
-                      name="email"
-                      autocapitalize="off"
-                      v-model="username"
-                      autocomplete="new-password"
-                    />
+                    <input type="text" name="email" autocapitalize="off" v-model="username" autocomplete="new-password" />
                   </div>
                   <div class="field padding-bottom--24">
                     <div class="grid--50-50">
@@ -154,85 +55,32 @@
                         <a href="#">Forgot your password?</a>
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      name="password"
-                      class="input-password"
-                      v-model="password"
-                      autocapitalize="off"
-                      autocomplete="new-password"
-                    />
+                    <input type="text" name="password" class="input-password" v-model="password" autocapitalize="off" autocomplete="new-password" />
                   </div>
                   <div class="field padding-bottom--24" v-show="useVerifyCode">
                     <label for="verifyCode">Code</label>
                     <div class="flex justify-between">
-                      <input
-                        type="text"
-                        name="verifyCode"
-                        v-model="verifyCode"
-                        autocapitalize="off"
-                        style="width: 55%; height: 100%"
-                        autocomplete="new-password"
-                      />
-                      <div
-                        id="verify-code-login"
-                        style="width: 40%; height: 44px"
-                      ></div>
+                      <input type="text" name="verifyCode" v-model="verifyCode" autocapitalize="off" style="width: 55%; height: 100%" autocomplete="new-password" />
+                      <div id="verify-code-login" style="width: 40%; height: 44px"></div>
                     </div>
                   </div>
-                  <div
-                    class="
-                      field field-checkbox
-                      padding-bottom--24
-                      flex-flex
-                      align-center
-                    "
-                  >
-                    <label
-                      for="checkbox"
-                      @click="useSwipeVerifyCode = !useSwipeVerifyCode"
-                    >
-                      <input
-                        type="checkbox"
-                        name="checkbox"
-                        v-model="useSwipeVerifyCode"
-                      />
+                  <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
+                    <label for="checkbox" @click="useSwipeVerifyCode = !useSwipeVerifyCode">
+                      <input type="checkbox" name="checkbox" v-model="useSwipeVerifyCode" />
                       Use swipe verification code to verify?
                     </label>
                   </div>
-                  <div
-                    class="
-                      field field-checkbox
-                      padding-bottom--24
-                      flex-flex
-                      align-center
-                    "
-                  >
-                    <label
-                      for="checkbox"
-                      @click="useVerifyCode = !useVerifyCode"
-                    >
-                      <input
-                        type="checkbox"
-                        name="checkbox"
-                        v-model="useVerifyCode"
-                      />
+                  <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
+                    <label for="checkbox" @click="useVerifyCode = !useVerifyCode">
+                      <input type="checkbox" name="checkbox" v-model="useVerifyCode" />
                       Use verification code to verify?
                     </label>
                   </div>
                   <div class="field padding-bottom--24">
-                    <div
-                      class="login-submit-button bg-gradient-primary"
-                      @click.prevent="handLogin"
-                      v-ripple
-                    >
-                      Login
-                    </div>
+                    <div class="login-submit-button bg-gradient-primary" @click.prevent="handLogin" v-ripple>Login</div>
                   </div>
                   <div class="field">
-                    <a class="ssolink" href="#"
-                      >Use single sign-on (Google) instead</a
-                    >
+                    <a class="ssolink" href="#">Use single sign-on (Google) instead</a>
                   </div>
                 </form>
               </div>
@@ -242,27 +90,11 @@
                 Don't have an account?
                 <a href="#">Sign up</a>
               </span>
-              <div
-                class="
-                  listing
-                  padding-top--24
-                  padding-bottom--24
-                  flex-flex
-                  center-center
-                "
-              >
+              <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
                 <span>
-                  <a
-                    href="https://dirkhe1051931999.github.io/quasar/"
-                    target="__blank"
-                    class="bg-gradient-primary text-gradient"
-                    >vue2 with quasar and use vue-class-decorator</a
-                  >
+                  <a href="https://dirkhe1051931999.github.io/quasar/" target="__blank" class="bg-gradient-primary text-gradient">vue2 with quasar and use vue-class-decorator</a>
                 </span>
-                <q-icon
-                  name="arrow_forward_ios"
-                  class="fs-18 text-primary bg-gradient-primary text-gradient"
-                ></q-icon>
+                <q-icon name="arrow_forward_ios" class="fs-18 text-primary bg-gradient-primary text-gradient"></q-icon>
               </div>
             </div>
           </div>
@@ -416,7 +248,7 @@ export default class LoginPage extends Vue {
 }
 .sliderContainer_fail .slider,
 .sliderContainer_success .slider {
-  color: #ffffff;
+  color: var(--q-white);
 }
 .sliderContainer_active .sliderText,
 .sliderContainer_success .sliderText,
@@ -437,7 +269,7 @@ export default class LoginPage extends Vue {
   left: 0;
   width: 40px;
   height: 40px;
-  background: #ffffff;
+  background: var(--q-white);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: background 0.1s linear;
@@ -448,7 +280,7 @@ export default class LoginPage extends Vue {
 }
 .slider:hover {
   background: $light-blue-5;
-  color: #ffffff;
+  color: var(--q-white);
 }
 .sliderText {
   position: relative;
@@ -464,7 +296,7 @@ export default class LoginPage extends Vue {
   transition: color 0.3s linear;
 }
 .refreshIcon:hover {
-  color: #323232;
+  color: var(--q-dark-1);
 }
 </style>
 <style lang="scss" scoped>

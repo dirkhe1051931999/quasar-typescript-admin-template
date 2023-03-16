@@ -7,9 +7,9 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 import * as echarts from 'echarts';
 
 const colors: any = [
-  '#e93030',
-  '#e93030',
-  '#e93030',
+  'var(--q-negative)',
+  'var(--q-negative)',
+  'var(--q-negative)',
   'hsl(130, 50%, 45%)',
   'hsl(130, 60%, 15%)',
   'hsl(130, 60%, 45%)',
@@ -136,15 +136,7 @@ export default class myComponentTopology extends Vue {
       tooltip: {
         show: true,
         formatter(a: any) {
-          return a.dataType === 'node'
-            ? a.data.root
-              ? a.data.type === '0'
-                ? 'Primary'
-                : a.data.name
-              : `${a.data.name}`
-            : a.data.status === false
-            ? 'Error'
-            : 'Normal';
+          return a.dataType === 'node' ? (a.data.root ? (a.data.type === '0' ? 'Primary' : a.data.name) : `${a.data.name}`) : a.data.status === false ? 'Error' : 'Normal';
         },
         trigger: 'item',
         padding: 10,
@@ -169,7 +161,7 @@ export default class myComponentTopology extends Vue {
           },
           data: graphData,
           itemStyle: {
-            borderColor: '#fff',
+            borderColor: 'var(--q-white)',
             borderWidth: 1,
             shadowBlur: 50,
             shadowOffsetY: 20,

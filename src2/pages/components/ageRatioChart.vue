@@ -18,14 +18,7 @@ export default class myAgeRatioChartComponent extends Vue {
     const charEle = document.getElementById('AgeRatioChart') as HTMLElement;
     const charEch: ECharts = init(charEle);
     /* echarts colors */
-    const colors = [
-      '#F6C95C',
-      '#EF7D33',
-      '#1F9393',
-      '#184EA1',
-      '#81C8EF',
-      '#9270CA',
-    ];
+    const colors = ['#F6C95C', '#EF7D33', '#1F9393', '#184EA1', '#81C8EF', '#9270CA'];
     const option: EChartsOption = {
       color: colors,
       tooltip: {
@@ -49,7 +42,7 @@ export default class myAgeRatioChartComponent extends Vue {
           return text;
         },
         textStyle: {
-          color: '#fff',
+          color: 'var(--q-white)',
         },
       },
       grid: {
@@ -70,7 +63,7 @@ export default class myAgeRatioChartComponent extends Vue {
           label: {
             position: 'inside',
             show: true,
-            color: '#fff',
+            color: 'var(--q-white)',
             formatter: function (params: any) {
               return params.data.percentage;
             },
@@ -78,7 +71,7 @@ export default class myAgeRatioChartComponent extends Vue {
               b: {
                 fontSize: 16,
                 lineHeight: 30,
-                color: '#fff',
+                color: 'var(--q-white)',
               },
             },
           },

@@ -36,7 +36,7 @@ export default class SidebarLogoComponent extends Vue {
   zoom: 1;
   height: var(--v3-header-height);
   line-height: var(--v3-header-height);
-  background-color: var(--v3-sidebarlogo-bg-color);
+  background-color: var(--q-white);
   text-align: center;
   overflow: hidden;
   .sidebar-logo {

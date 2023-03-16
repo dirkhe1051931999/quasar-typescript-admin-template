@@ -4,15 +4,15 @@
   border-radius: 16px !important;
   vertical-align: top;
   position: relative;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   border: none !important;
 }
 // 搜索栏
 .query-form-and-action {
-  background: #ffffff;
+  background: var(--q-white);
   border-radius: 8px;
   padding: 25px 20px 20px;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   margin-bottom: 15px;
 }
 
@@ -57,7 +57,7 @@
       margin-left: 8px !important;
       &::before {
         border-radius: 8px;
-        border: 1px solid #e0e1e8;
+        border: 1px solid var(--q-grey-6);
       }
     }
     span {
@@ -68,7 +68,7 @@
       box-shadow: none;
       height: 32px !important;
       border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0);
+      border: 1px solid var(--q-transparent);
       box-sizing: border-box;
     }
     &.text-primary {
@@ -82,7 +82,7 @@
 // 输入框
 .q-field {
   .q-field__label {
-    color: #99979c;
+    color: var(--q-grey-4);
   }
 }
 // 表格
@@ -91,13 +91,13 @@
 }
 .q-table {
   th {
-    color: #8392ab;
+    color: var(--q-grey-7);
   }
   tbody {
     tr {
       td {
         &::before {
-          background: rgba(0, 0, 0, 0) !important;
+          background: var(--q-transparent) !important;
         }
       }
     }
@@ -106,7 +106,7 @@
 .q-table__bottom--nodata {
   position: relative;
   height: 150px !important;
-  color: #8c8c8c;
+  color: var(--q-grey-7);
   i {
     display: none;
   }
@@ -131,7 +131,7 @@
   height: 1em;
 }
 .scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--q-grey-8);
   border-radius: 99999px;
   border: 0.3125em solid transparent;
   background-clip: content-box;
@@ -155,9 +155,9 @@
   }
   .container {
     height: 195px;
-    background: #f5f5f5;
+    background: var(--q-grey-1);
     border-radius: 6px;
-    color: $black;
+    color: $dark;
     position: relative;
     .center {
       width: 50%;
@@ -176,7 +176,7 @@
         padding-top: 10px;
       }
       .format {
-        color: #8c8c8c;
+        color: var(--q-grey-7);
         font-size: 12px;
         padding-top: 8px;
       }
@@ -190,18 +190,19 @@
   .upload-limit {
     padding-top: 10px;
     font-size: 14px;
-    color: #595959;
+    color: var(--q-grey-4);
   }
 }
 /* tooltip */
 .hide-tooltip {
   z-index: -1 !important;
 }
-.el-popover.el-popper {
+.el-popover.el-popper,
+.el-popper.el-picker__popper {
   z-index: 10000 !important;
 }
 /* tree */
 .q-tree__node-header:before,
 .q-tree__node:after {
-  border-color: #e0e1e8 !important;
+  border-color: var(--q-grey-6) !important;
 }

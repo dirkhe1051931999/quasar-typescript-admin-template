@@ -41,12 +41,12 @@ export default class myChinaMapChartComponent extends Vue {
           min: 0.8,
         },
         label: {
-          color: '#fff',
+          color: 'var(--q-white)',
           show: true,
         },
         emphasis: {
           label: {
-            color: '#fff',
+            color: 'var(--q-white)',
             show: true,
           },
           itemStyle: {
@@ -127,7 +127,7 @@ export default class myChinaMapChartComponent extends Vue {
             symbolSize: 3,
           },
           lineStyle: {
-            color: '#fff',
+            color: 'var(--q-white)',
             width: 0,
             curveness: 0.2,
           },
@@ -148,7 +148,7 @@ export default class myChinaMapChartComponent extends Vue {
             symbolSize: 15,
           },
           lineStyle: {
-            color: '#fff',
+            color: 'var(--q-white)',
             width: 1,
             opacity: 0.6,
             curveness: 0.2,

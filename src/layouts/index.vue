@@ -71,7 +71,7 @@ export default class LayoutIndexComponents extends Vue {
 }
 
 .drawer-bg {
-  background-color: #000;
+  background-color: var(--q-dark);
   opacity: 0.2;
   width: 100%;
   top: 0;
@@ -85,13 +85,11 @@ export default class LayoutIndexComponents extends Vue {
   transition: margin-left 0.28s;
   margin-left: var(--v3-sidebar-width);
   position: relative;
-  background: var(--v3-main-container-background);
+  background: var(--q-white);
 }
 
 .sidebar-container {
-  // transition: width 0.28s;
   width: var(--v3-sidebar-width) !important;
-  // border-right: 1px solid #d8dce5;
   height: 100%;
   position: fixed;
   font-size: 0px;
@@ -100,7 +98,7 @@ export default class LayoutIndexComponents extends Vue {
   left: 0;
   z-index: 1001;
   overflow: hidden;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
 }
 
 .fixed-header {

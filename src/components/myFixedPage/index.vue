@@ -1,16 +1,8 @@
 <template>
-  <transition
-    appear
-    enter-active-class="animated fadeInUp"
-    leave-active-class="animated fadeOutDown"
-  >
+  <transition appear enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
     <div class="inner-page" :style="calcStyle">
       <div class="inner">
-        <q-icon
-          name="arrow_back"
-          class="fs-20 absolute left-52 top-45 cursor-pointer"
-          @click="back"
-        ></q-icon>
+        <q-icon name="arrow_back" class="fs-20 absolute left-52 top-45 cursor-pointer" @click="back"></q-icon>
         <slot></slot>
       </div>
     </div>
@@ -29,11 +21,9 @@ export default class MyFixedPageComponent extends Vue {
   @Watch('isCollapse', { immediate: true })
   onchange(newVal: boolean) {
     if (newVal) {
-      this.calcStyle =
-        'width:calc(100vw - 58px - 24px - 24px);left:calc(58px + 24px)';
+      this.calcStyle = 'width:calc(100vw - 58px - 24px - 24px);left:calc(58px + 24px)';
     } else {
-      this.calcStyle =
-        'width:calc(100vw - 254px - 24px - 24px);left:calc(254px + 24px)';
+      this.calcStyle = 'width:calc(100vw - 254px - 24px - 24px);left:calc(254px + 24px)';
     }
   }
   private calcStyle = '';
@@ -48,15 +38,13 @@ export default class MyFixedPageComponent extends Vue {
 .inner-page {
   position: fixed;
   transition: all 0.3s;
-  height: calc(
-    100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px
-  );
+  height: calc(100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px);
   right: 16px;
   top: calc(var(--v3-navigationbar-height) + var(--v3-header-height) + 16px);
   bottom: 16px;
-  background: #ffffff;
+  background: var(--q-white);
   z-index: 10;
-  box-shadow: 0px 6px 16px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   border-radius: 8px;
   padding: 16px;
   .inner {

@@ -35,26 +35,10 @@
       clear-icon="app:clear"
     >
       <template #selected>
-        <template
-          v-if="
-            (typeof model === 'object' && model && model.length) ||
-            (typeof model !== 'object' && model)
-          "
-        >
-          {{
-            inputSelectOptionBak.find(
-              (data) => String(data.value) === String(model)
-            )?.label ?? model
-          }}
+        <template v-if="(typeof model === 'object' && model && model.length) || (typeof model !== 'object' && model)">
+          {{ inputSelectOptionBak.find((data) => String(data.value) === String(model))?.label ?? model }}
         </template>
-        <template
-          v-if="
-            (!model ||
-              (typeof model === 'object' && !model.length) ||
-              (typeof model !== 'object' && !model)) &&
-            showPlaceholder
-          "
-        >
+        <template v-if="(!model || (typeof model === 'object' && !model.length) || (typeof model !== 'object' && !model)) && showPlaceholder">
           <span class="fs-12 text-grey-5 user-select-none">
             {{ inputPlaceholder }}
           </span>
@@ -64,12 +48,7 @@
         <q-item v-bind="scope.itemProps">
           <q-item-section v-close-popup>
             <q-item-label>{{ scope.opt.label }}</q-item-label>
-            <q-item-label
-              caption
-              v-if="scope.opt.description"
-              class="text-grey"
-              >{{ scope.opt.description }}</q-item-label
-            >
+            <q-item-label caption v-if="scope.opt.description" class="text-grey">{{ scope.opt.description }}</q-item-label>
           </q-item-section>
         </q-item>
       </template>
@@ -116,11 +95,11 @@ export default class FormSelectComponent extends Vue {
     this.$refs[this.inputId] && this.$refs[this.inputId].updateInputValue('');
     if (!this.model || (this.model && !this.model.length)) {
       this.showPlaceholder = true;
-      this.$nextTick(() => {
-        this.$refs[this.inputId] && this.$refs[this.inputId].blur();
-        this.$refs[this.inputId] && this.$refs[this.inputId].hidePopup();
-      });
     }
+    this.$nextTick(() => {
+      this.$refs[this.inputId] && this.$refs[this.inputId].blur();
+      this.$refs[this.inputId] && this.$refs[this.inputId].hidePopup();
+    });
     this.$emit('input', this.model);
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
@@ -140,7 +119,7 @@ export default class FormSelectComponent extends Vue {
   private disable = false;
   mounted() {
     this.model = this.option?.model ?? '';
-    this.inputPlaceholder = this.option?.inputPlaceholder ?? '«Î—°‘Ò';
+    this.inputPlaceholder = this.option?.inputPlaceholder ?? 'Please select';
     this.classes = this.option?.classes ?? '';
     this.rules = this.option?.rules;
     this.label = this.option?.label;

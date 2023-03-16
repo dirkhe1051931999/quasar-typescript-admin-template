@@ -94,145 +94,73 @@
 }
 
 @mixin bg-gradient-faded-primary {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    rgba(203, 12, 159, 0.6) 0,
-    var(--q-primary) 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(203, 12, 159, 0.6) 0, var(--q-primary) 100%);
 }
 
 @mixin bg-gradient-faded-secondary {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    rgba(131, 146, 171, 0.6) 0,
-    #657796 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(131, 146, 171, 0.6) 0, #657796 100%);
 }
 
 @mixin bg-gradient-faded-success {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    #f0f9eb 0,
-    #67c23a 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, #f0f9eb 0, var(--q-label-success-green) 100%);
 }
 
 @mixin bg-gradient-faded-info {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    rgba(23, 193, 232, 0.6) 0,
-    #129aba 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(23, 193, 232, 0.6) 0, #129aba 100%);
 }
 
 @mixin bg-gradient-faded-warning {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    #fdf6ec 0,
-    #e6a23c 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, #fdf6ec 0, var(--q-label-warn-yellow) 100%);
 }
 
 @mixin bg-gradient-faded-danger {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    #fef0f0 0,
-    #f56c6c 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, #fef0f0 0, var(--q-label-error-red) 100%);
 }
 
 @mixin bg-gradient-faded-light {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    rgba(233, 236, 239, 0.6) 0,
-    #cbd3da 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(233, 236, 239, 0.6) 0, #cbd3da 100%);
 }
 
 @mixin bg-gradient-faded-dark {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    rgba(52, 71, 103, 0.6) 0,
-    #233045 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(52, 71, 103, 0.6) 0, #233045 100%);
 }
 
 @mixin bg-gradient-faded-white {
-  background-image: radial-gradient(
-    370px circle at 80% 50%,
-    hsla(0, 0%, 100%, 0.6) 0,
-    #e6e6e6 100%
-  );
+  background-image: radial-gradient(370px circle at 80% 50%, hsla(0, 0%, 100%, 0.6) 0, #e6e6e6 100%);
 }
 
 @mixin bg-gradient-faded-primary-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(203, 12, 159, 0.3) 0,
-    #cb0c9f 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(203, 12, 159, 0.3) 0, #cb0c9f 100%);
 }
 
 @mixin bg-gradient-faded-secondary-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(131, 146, 171, 0.3) 0,
-    #8392ab 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(131, 146, 171, 0.3) 0, #8392ab 100%);
 }
 
 @mixin bg-gradient-faded-success-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(130, 214, 22, 0.3) 0,
-    #82d616 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(130, 214, 22, 0.3) 0, #82d616 100%);
 }
 
 @mixin bg-gradient-faded-info-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(23, 193, 232, 0.3) 0,
-    #17c1e8 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(23, 193, 232, 0.3) 0, #17c1e8 100%);
 }
 
 @mixin bg-gradient-faded-warning-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(251, 207, 51, 0.3) 0,
-    #fbcf33 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(251, 207, 51, 0.3) 0, #fbcf33 100%);
 }
 
 @mixin bg-gradient-faded-danger-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(234, 6, 6, 0.3) 0,
-    #ea0606 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(234, 6, 6, 0.3) 0, #ea0606 100%);
 }
 
 @mixin bg-gradient-faded-light-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(233, 236, 239, 0.3) 0,
-    #e9ecef 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(233, 236, 239, 0.3) 0, var(--q-grey-9) 100%);
 }
 
 @mixin bg-gradient-faded-dark-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    rgba(52, 71, 103, 0.3) 0,
-    #344767 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(52, 71, 103, 0.3) 0, #344767 100%);
 }
 
 @mixin bg-gradient-faded-white-vertical {
-  background-image: radial-gradient(
-    200px circle at 50% 70%,
-    hsla(0, 0%, 100%, 0.3) 0,
-    #fff 100%
-  );
+  background-image: radial-gradient(200px circle at 50% 70%, hsla(0, 0%, 100%, 0.3) 0, #fff 100%);
 }

@@ -17,7 +17,7 @@ const DEFAULT_PARAMS: QNotifyCreateOptions = {
   html: true,
   progress: true,
   iconSize: '20px',
-  badgeStyle: 'background-color:#f56c6c',
+  badgeStyle: 'background-color:var(--q-label-error-red)',
 };
 class GlobalMessage {
   constructor() {}

@@ -1,38 +1,18 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    transition-show="jump-up"
-    transition-hide="jump-down"
-  >
+  <q-dialog ref="dialogRef" transition-show="jump-up" transition-hide="jump-down">
     <q-card class="q-dialog-confirm-plugin">
       <div class="title f-bold">
         {{ title }}
         <div class="close">
-          <q-icon
-            name="app:navigation-close"
-            class="icon"
-            @click="onCancelClick"
-          ></q-icon>
+          <q-icon name="app:navigation-close" class="icon" @click="onCancelClick"></q-icon>
         </div>
       </div>
       <div class="content">
         {{ getJsx(content) }}
       </div>
       <div class="action">
-        <q-btn
-          :color="color"
-          :label="confirmButtonText"
-          @click="onOKClick"
-          no-caps
-          class="m-r-12"
-        />
-        <q-btn
-          :color="color"
-          outline
-          no-caps
-          :label="$t('action.cancel')"
-          @click="onCancelClick"
-        />
+        <q-btn :color="color" :label="confirmButtonText" @click="onOKClick" no-caps class="m-r-12" />
+        <q-btn :color="color" outline no-caps :label="$t('action.cancel')" @click="onCancelClick" />
       </div>
     </q-card>
   </q-dialog>
@@ -67,8 +47,7 @@ export default class dialogConfirmComponent extends Vue {
   }
   public getJsx(content: string) {
     this.$nextTick(() => {
-      document.querySelector('.q-dialog-confirm-plugin .content')!.innerHTML =
-        content;
+      document.querySelector('.q-dialog-confirm-plugin .content')!.innerHTML = content;
     });
   }
 }
@@ -78,7 +57,7 @@ export default class dialogConfirmComponent extends Vue {
 <style lang="scss" scoped>
 .q-dialog-confirm-plugin {
   width: 480px;
-  background: #ffffff;
+  background: var(--q-white);
   border-radius: 12px;
   .title {
     padding: 16px;
@@ -95,10 +74,10 @@ export default class dialogConfirmComponent extends Vue {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #ffffff;
+      background: var(--q-white);
       transition: all 0.2s;
       &:hover {
-        background: #f5f5f6;
+        background: var(--q-grey-1);
         cursor: pointer;
       }
     }
