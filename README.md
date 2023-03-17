@@ -14,11 +14,14 @@ To sum up, using **vue-facing-decorator** to write Vue3 code in class syntax is 
 
 ### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
 
-#### Two Login page
+#### page preview
 
-<img src="https://s1.ax1x.com/2022/11/22/z1OeIO.png" >
-
-[![pSdf8bT.png](https://s1.ax1x.com/2023/01/30/pSdf8bT.png)](https://imgse.com/i/pSdf8bT)
+<img src="https://s1.ax1x.com/2023/03/17/ppG6v2q.png" >
+<img src="https://s1.ax1x.com/2023/03/17/ppG6xx0.png" >
+<img src="https://s1.ax1x.com/2023/03/17/ppG6jGn.png" >
+<img src="https://s1.ax1x.com/2023/03/17/ppG6XPs.png" >
+<img src="https://s1.ax1x.com/2023/03/17/ppG6L5j.png" >
+<img src="https://s1.ax1x.com/2023/03/17/ppGcSMV.png" >
 
 #### multi-page Dashboard (index.html)
 
@@ -27,10 +30,6 @@ To sum up, using **vue-facing-decorator** to write Vue3 code in class syntax is 
 #### multi-page large data display (index2.html)
 
 [![pSdfJVU.png](https://s1.ax1x.com/2023/01/30/pSdfJVU.png)](https://imgse.com/i/pSdfJVU)
-
-#### Table
-
-[![pSdf1K0.png](https://s1.ax1x.com/2023/01/30/pSdf1K0.png)](https://imgse.com/i/pSdf1K0)
 
 ## Install the dependencies
 
