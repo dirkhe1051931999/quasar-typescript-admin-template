@@ -33,7 +33,7 @@ export default class RightPanelComponent extends Vue {
   z-index: 10;
   cursor: pointer;
   pointer-events: auto;
-  color: var(--q-white);
+  color: var(--my-white);
   display: flex;
   align-items: center;
   justify-content: center;

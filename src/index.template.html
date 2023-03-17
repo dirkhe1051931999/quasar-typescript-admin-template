@@ -12,34 +12,11 @@
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
     />
     <link href="favicon.ico" rel="icon" type="image/ico" />
-    <link
-      rel="preload"
-      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosans-regular-webfont.woff"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosans-semibold-webfont.woff"
-      as="font"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosanssc-bold-webfont.woff"
-      as="font"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosanssc-regular-webfont.woff"
-      as="font"
-      crossorigin
-    />
-    <link
-      rel="stylesheet"
-      href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.css"
-    />
+    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosans-regular-webfont.woff" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosans-semibold-webfont.woff" as="font" crossorigin />
+    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosanssc-bold-webfont.woff" as="font" crossorigin />
+    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/notosanssc-regular-webfont.woff" as="font" crossorigin />
+    <link rel="stylesheet" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.css" />
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>less.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/echarts.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/china.js"></script>
@@ -101,22 +78,8 @@
   <body>
     <!-- DO NOT touch the following DIV -->
     <div id="q-app">
-      <svg
-        class="q-spinner-html q-spinner-mat-html"
-        width="68"
-        height="68"
-        viewBox="25 25 50 50"
-      >
-        <circle
-          class="path"
-          cx="50"
-          cy="50"
-          r="20"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="5"
-          stroke-miterlimit="10"
-        ></circle>
+      <svg class="q-spinner-html q-spinner-mat-html" width="68" height="68" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-miterlimit="10"></circle>
       </svg>
     </div>
   </body>

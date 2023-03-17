@@ -17,7 +17,6 @@ const DEFAULT_PARAMS: QNotifyCreateOptions = {
   html: true,
   progress: true,
   iconSize: '20px',
-  badgeStyle: 'background-color:var(--q-label-error-red)',
 };
 class GlobalMessage {
   constructor() {}
@@ -35,7 +34,7 @@ class GlobalMessage {
             },
           ]
         : [],
-      classes: `q-message-${type}-style min-h-36`,
+      classes: type === 'success' ? `q-message-${type}-style min-h-36 m-t-55` : `q-message-${type}-style min-h-36`,
     });
     try {
       Notify.create(data);

@@ -1,29 +1,14 @@
 <template>
   <div>
-    <q-select
-      outlined
-      v-model="type"
-      bg-color="white"
-      :options="['less', 'scss']"
-      :label="`${type} to css`"
-    />
-    <q-splitter
-      v-model="splitterValue"
-      class="relative bg-white q-table--bordered"
-    >
+    <q-select outlined v-model="type" :options="['less', 'scss']" :label="`${type} to css`" />
+    <q-splitter v-model="splitterValue" class="splitter q-mt-md">
       <template v-slot:before>
         <div class="q-pa-md">
           <div class="text-h4 q-mb-md">{{ type }}</div>
           <textarea name="less" id="source" v-model="style"></textarea>
         </div>
       </template>
-      <q-btn
-        round
-        color="primary"
-        icon="arrow_forward"
-        class="confirm-btn"
-        @click="convert"
-      />
+      <q-btn round color="primary" icon="arrow_forward" class="confirm-btn" @click="convert" />
       <template v-slot:after>
         <div class="q-pa-md">
           <div class="text-h4 q-mb-md">css</div>
@@ -41,8 +26,7 @@ import 'prismjs/themes/prism.css';
 import 'codemirror/lib/codemirror.css';
 import 'src/utils/cssConvert';
 import CodeMirror from 'codeMirror';
-const lessStr =
-  '@width:500px;@height:300px;@font_size:12px;textarea {width:@width;height:@height;font-size:@font_size;}';
+const lessStr = '@width:500px;@height:300px;@font_size:12px;textarea {width:@width;height:@height;font-size:@font_size;}';
 const scssStr = '';
 const less = (window as any).less;
 @Component({
@@ -85,7 +69,17 @@ export default class myComponentConvert extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style  lang='scss'>
+.body--dark {
+  .splitter {
+    background: $dark;
+  }
+}
+.body--light {
+  .splitter {
+    background: #ffffff;
+  }
+}
 .confirm-btn {
   position: absolute;
   left: 50%;

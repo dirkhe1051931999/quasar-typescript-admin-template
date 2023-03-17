@@ -817,7 +817,6 @@ export default class myComponentTableBeta extends Vue {
     }
   }
   private async dialogAddUpdateConfirmEvent() {
-    console.log(this.$refs[`${this.dialogAddUpdateParams.id}-date-time-g`][0].dateParams.model);
     try {
       this.dialogAddUpdateParams.clickLoading = true;
       // await HTTP_REQUEST()
@@ -870,6 +869,18 @@ export default class myComponentTableBeta extends Vue {
 }
 </script>
 <style lang="scss">
+.body--dark {
+  .my-table th:last-child,
+  .my-table td:last-child {
+    box-shadow: rgba($color: #ffffff, $alpha: 0.05) 0px 20px 27px 0px;
+  }
+}
+.body--light {
+  .my-table th:last-child,
+  .my-table td:last-child {
+    box-shadow: rgba($color: #000000, $alpha: 0.05) 0px 20px 27px 0px;
+  }
+}
 .my-table {
   /* specifying max-width so the example can
     highlight the sticky column on any browser window */
@@ -877,14 +888,13 @@ export default class myComponentTableBeta extends Vue {
 }
 .my-table thead tr:last-child th:last-child {
   /* bg color is important for th; just specify one */
-  background-color: var(--q-white);
+  background-color: var(--my-white);
 }
 .my-table td:last-child {
-  background-color: var(--q-white);
+  background-color: var(--my-white);
 }
 .my-table th:last-child,
 .my-table td:last-child {
-  box-shadow: rgb(0 0 0 / 5%) 0px 20px 27px 0px;
   position: sticky;
   right: 0;
   z-index: 1;

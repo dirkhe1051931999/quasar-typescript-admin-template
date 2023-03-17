@@ -1,29 +1,15 @@
 <template>
   <div class="row">
-    <q-btn :label="$t('messages.success')" class="m-r-20" />
-    <q-btn :label="$t('messages.failed')" />
-    <q-select
-      v-model="locale"
-      :options="localeOptions"
-      label="Quasar Language"
-      @update:model-value="checkLang"
-      bg-color="white"
-      dense
-      borderless
-      emit-value
-      map-options
-      options-dense
-      style="min-width: 150px"
-    />
+    <q-btn :label="$t('messages.success')" class="q-mr-md" color="primary" />
+    <q-btn :label="$t('messages.failed')" color="primary" class="q-mr-md" />
+    <q-select v-model="locale" :options="localeOptions" label="Quasar Language" @update:model-value="checkLang" dense outlined emit-value map-options options-dense style="min-width: 150px" />
   </div>
 </template>
 <script lang="ts">
 import languages from 'quasar/lang/index.json';
 import { AppModule } from 'src/store/modules/app';
 import setting from 'src/setting.json';
-const appLanguages = languages.filter((lang) =>
-  ['de', 'en-us'].includes(lang.isoName)
-);
+const appLanguages = languages.filter((lang) => ['de', 'en-us'].includes(lang.isoName));
 import { Component, Vue, Watch } from 'vue-facing-decorator';
 
 @Component({
@@ -35,7 +21,7 @@ export default class myComponentI18n extends Vue {
   }
   public localeOptions = [
     { value: 'en-US', label: 'English' },
-    { value: 'zh-CN', label: 'Chinese' },
+    { value: 'zh-CN', label: '中文' },
   ];
   public locale = '';
   public checkLang(language: string) {

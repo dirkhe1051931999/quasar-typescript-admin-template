@@ -148,10 +148,34 @@ export default class MyDialogComponent extends Vue {
 
 
 <style lang="scss" scoped>
+.body--dark {
+  .my-dialog {
+    background: $dark;
+  }
+  .title {
+    .close {
+      &:hover {
+        color: #000000;
+        background: #eeeeee;
+      }
+    }
+  }
+}
+.body--light {
+  .my-dialog {
+    background: #ffffff;
+  }
+  .title {
+    .close {
+      &:hover {
+        background: var(--my-grey-1);
+      }
+    }
+  }
+}
 .my-dialog {
   max-width: 70vw;
   width: 60vw;
-  background: var(--q-white);
   border-radius: 12px;
   .title {
     padding: 16px;
@@ -166,10 +190,9 @@ export default class MyDialogComponent extends Vue {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--q-white);
+      background: var(--my-white);
       transition: all 0.2s;
       &:hover {
-        background: var(--q-grey-1);
         cursor: pointer;
       }
     }

@@ -192,12 +192,66 @@ export default class TagsViewComponent extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.body--dark {
+  .tags-view-container {
+    box-shadow: 0px 6px 16px -1px rgba($color: #ffffff, $alpha: 0.05);
+    background-color: var(--my-dark-1);
+    .tags-view-wrapper {
+      .tags-view-item {
+        background-color: #1a1a1a;
+        &.active {
+          color: var(--el-text-color-primary);
+          &::before {
+            background-color: #ffffff;
+          }
+        }
+        :deep(.q-icon) {
+          &:hover {
+            color: var(--my-white);
+            background-color: rgba($color: #ffffff, $alpha: 0.3);
+          }
+        }
+      }
+    }
+    .contextmenu {
+      background-color: #1a1a1a;
+      box-shadow: 2px 2px 3px 0 rgba($color: #ffffff, $alpha: 0.3);
+      color: #ffffff;
+    }
+  }
+}
+.body--light {
+  .tags-view-container {
+    box-shadow: 0px 6px 16px -1px rgba($color: #000000, $alpha: 0.05);
+    background-color: var(--my-white);
+    .tags-view-wrapper {
+      .tags-view-item {
+        background-color: var(--my-white);
+        &.active {
+          color: #ffffff;
+          &::before {
+            background-color: var(--my-white);
+          }
+        }
+        :deep(.q-icon) {
+          &:hover {
+            color: var(--my-white);
+            background-color: rgba($color: #000000, $alpha: 0.3);
+          }
+        }
+      }
+    }
+    .contextmenu {
+      background-color: var(--my-white);
+      box-shadow: 2px 2px 3px 0 rgba($color: #000000, $alpha: 0.3);
+      color: var(--q-dark);
+    }
+  }
+}
 .tags-view-container {
   width: calc(100% - var(--v3-sidebar-width));
   height: var(--v3-tagsview-height);
   line-height: var(--v3-tagsview-height);
-  background-color: var(--q-white);
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   position: fixed;
   overflow: hidden;
   left: var(--v3-sidebar-width);
@@ -208,10 +262,8 @@ export default class TagsViewComponent extends Vue {
       cursor: pointer;
       height: 30px;
       line-height: 30px;
-      border: 1px solid #d8dce5;
+      border: 1px solid var(--my-grey-5);
       border-radius: 8px;
-      color: var(--el-text-color-primary);
-      background-color: var(--q-white);
       padding: 0 8px;
       font-size: 12px;
       margin-left: 5px;
@@ -224,11 +276,9 @@ export default class TagsViewComponent extends Vue {
       }
       &.active {
         background-color: var(--v3-tagsview-tag-active-bg-color);
-        color: var(--q-white);
         border-color: var(--v3-tagsview-tag-active-border-color);
         &::before {
           content: '';
-          background-color: var(--q-white);
           display: inline-block;
           width: 8px;
           height: 8px;
@@ -241,16 +291,11 @@ export default class TagsViewComponent extends Vue {
         margin: 0 2px;
         vertical-align: -2px;
         border-radius: 50%;
-        &:hover {
-          background-color: #00000030;
-          color: var(--q-white);
-        }
       }
     }
   }
   .contextmenu {
     margin: 0;
-    background-color: var(--q-white);
     z-index: 3000;
     position: fixed;
     list-style-type: none;
@@ -258,8 +303,6 @@ export default class TagsViewComponent extends Vue {
     border-radius: 4px;
     font-size: 12px;
     font-weight: 400;
-    color: #333;
-    box-shadow: 2px 2px 3px 0 #00000030;
     li {
       margin: 0;
       padding: 0 12px;
@@ -268,7 +311,7 @@ export default class TagsViewComponent extends Vue {
       height: 24px;
       line-height: 24px;
       &:hover {
-        background-color: #eee;
+        background-color: var(--my-grey-5);
       }
     }
   }

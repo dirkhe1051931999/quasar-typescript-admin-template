@@ -64,6 +64,40 @@ export default class SidebarLogoComponent extends Vue {
 
 
 <style lang="scss" scoped>
+.body--dark {
+  :deep(.el-menu-item) {
+    .record {
+      color: rgba($color: #ffffff, $alpha: 0.541);
+    }
+  }
+  :deep(.el-menu-item),
+  :deep(.el-sub-menu__title),
+  :deep(.el-sub-menu .el-menu-item) {
+    height: var(--v3-sidebar-menu-item-height);
+    line-height: var(--v3-sidebar-menu-item-height);
+    &.is-active,
+    &:hover {
+      background-color: #a7a7a7;
+    }
+  }
+}
+.body--light {
+  :deep(.el-menu-item) {
+    .record {
+      color: rgba($color: #000000, $alpha: 0.541);
+    }
+  }
+  :deep(.el-menu-item),
+  :deep(.el-sub-menu__title),
+  :deep(.el-sub-menu .el-menu-item) {
+    height: var(--v3-sidebar-menu-item-height);
+    line-height: var(--v3-sidebar-menu-item-height);
+    &.is-active,
+    &:hover {
+      background-color: var(--my-grey-1);
+    }
+  }
+}
 :deep(.el-icon svg) {
   width: 1.5em;
   height: 1.5em;
@@ -115,10 +149,6 @@ export default class SidebarLogoComponent extends Vue {
 :deep(.el-sub-menu .el-menu-item) {
   height: var(--v3-sidebar-menu-item-height);
   line-height: var(--v3-sidebar-menu-item-height);
-  &.is-active,
-  &:hover {
-    background-color: #5469d420;
-  }
   display: block;
   * {
     vertical-align: middle;
@@ -128,7 +158,6 @@ export default class SidebarLogoComponent extends Vue {
   color: var(--el-text-color-primary);
   font-size: 14px !important;
   .record {
-    color: rgba(58, 65, 111, 0.5);
     font-size: 3px;
     width: 3px;
     height: 3px;

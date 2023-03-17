@@ -1,5 +1,45 @@
 @import './mixins';
 @import '../quasar.variables.scss';
+.body--dark {
+  .in-table-link-button {
+    box-shadow: 0px 1px 2px 0px rgba($color: #ffffff, $alpha: 0);
+  }
+  .in-table-delete-button {
+    box-shadow: 0px 1px 2px 0px rgba($color: #ffffff, $alpha: 0);
+  }
+  .split-line {
+    background-image: linear-gradient(90deg, transparent, rgba($color: #ffffff, $alpha: 0.4), transparent);
+  }
+  .thin-shadow {
+    box-shadow: 0px 6px 16px -1px rgba($color: #ffffff, $alpha: 0.05);
+  }
+  .detail-link-type:hover {
+    color: #ffffff;
+  }
+  .link-type:hover {
+    color: #ffffff;
+  }
+}
+.body--light {
+  .in-table-link-button {
+    box-shadow: 0px 1px 2px 0px rgba($color: #000000, $alpha: 0);
+  }
+  .in-table-delete-button {
+    box-shadow: 0px 1px 2px 0px rgba($color: #000000, $alpha: 0);
+  }
+  .split-line {
+    background-image: linear-gradient(90deg, transparent, rgba($color: #000000, $alpha: 0.4), transparent);
+  }
+  .thin-shadow {
+    box-shadow: 0px 6px 16px -1px rgba($color: #000000, $alpha: 0.05);
+  }
+  .detail-link-type:hover {
+    color: #000000;
+  }
+  .link-type:hover {
+    color: #000000;
+  }
+}
 // 可点击的link
 // explanation
 .eg {
@@ -35,7 +75,6 @@
   }
 }
 .detail-link-type:hover {
-  color: $dark;
   text-decoration: underline;
 }
 .link-type,
@@ -44,7 +83,6 @@
   cursor: pointer;
 }
 .link-type:hover {
-  color: $dark;
   text-decoration: underline;
 }
 .delete-type,
@@ -65,14 +103,13 @@
   color: var(--q-primary);
   cursor: pointer;
   height: 26px;
-  background: var(--q-white);
-  box-shadow: 0px 1px 2px 0px var(var(--q-transparent));
+  background: var(--my-white);
   border-radius: 4px;
   border: solid 1px var(--q-primary);
 }
 .in-table-link-button:hover {
   background: var(--q-primary);
-  color: var(--q-white);
+  color: var(--my-white);
 }
 // table里的删除按钮 delete/negative
 .in-table-delete-button {
@@ -84,12 +121,11 @@
   cursor: pointer;
   height: 26px;
   border: solid 1px var(--el-color-danger);
-  box-shadow: 0px 1px 2px 0px var(var(--q-transparent));
   border-radius: 4px;
 }
 .in-table-delete-button:hover {
   background: var(--q-negative);
-  color: var(--q-white);
+  color: var(--my-white);
 }
 .input-password {
   font-family: password !important;
@@ -114,7 +150,6 @@
   transform: translate(0, -50%);
 }
 .split-line {
-  background-image: linear-gradient(90deg, transparent, var(--q-shadow-2), transparent);
   background-color: transparent;
   opacity: 0.2;
 }
@@ -131,28 +166,23 @@
 }
 .thin-shadow {
   border-radius: 8px;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
 }
 .text-black {
   color: var(--q-dark) !important;
 }
 .q-message-error-style {
-  background-color: var(--q-transparent);
-  @include bg-gradient-faded-danger;
+  background-color: $negative;
   box-shadow: none;
-  color: var(--q-label-error-red) !important;
+  color: #ffffff !important;
 }
 .q-message-warn-style {
-  background-color: var(--q-transparent);
-  @include bg-gradient-faded-warning;
+  background-color: var(--my-label-warn-major);
   box-shadow: none;
-  color: var(--q-label-warn-yellow) !important;
+  color: #ffffff !important;
 }
 .q-message-success-style {
-  background-color: var(--q-transparent);
-  @include bg-gradient-faded-success;
-  box-shadow: none;
-  color: var(--q-label-success-green) !important;
+  background-color: $primary;
+  color: #ffffff !important;
 }
 .my-label {
   padding: 4px 6px;
@@ -163,29 +193,29 @@
   align-items: center;
   line-height: 1;
   &.blue {
-    background: $blue-2;
+    background: rgba($blue, 0.08);
     color: $blue;
-    border: solid 1px rgba($color: $blue, $alpha: 0.5);
+    border: solid 1px rgba($blue, 0.5);
   }
   &.green {
     background: $green-2;
     color: $green;
-    border: solid 1px rgba($color: $green, $alpha: 0.5);
+    border: solid 1px rgba($green, 0.5);
   }
   &.yellow {
     background: $yellow-2;
     color: $yellow;
-    border: solid 1px rgba($color: $yellow, $alpha: 0.5);
+    border: solid 1px rgba($yellow, 0.5);
   }
   &.red {
     background: $negative-2;
     color: $negative;
-    border: solid 1px rgba($color: $negative, $alpha: 0.5);
+    border: solid 1px rgba($negative, 0.5);
   }
   &.grey {
-    background: $grey-2;
+    background: var(--my-grey-1);
     color: $grey;
-    border: solid 1px rgba($color: $grey, $alpha: 0.5);
+    border: solid 1px rgba($grey, 0.5);
   }
 }
 .my-button {
@@ -195,31 +225,26 @@
   align-items: center;
   justify-content: center;
   background: $primary;
-  color: var(--q-white);
+  color: var(--my-white);
   cursor: pointer;
   user-select: none;
   position: relative;
-  &.outline {
-    background: var(--q-white);
-    box-sizing: border-box;
-    font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
-  }
   &.negative {
     border: solid 1px $negative;
     color: $negative;
-    background: var(--q-white);
+    background: var(--my-white);
     box-sizing: border-box;
     font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
   }
   &.primary {
     border: solid 1px $primary;
     color: $primary;
-    background: var(--q-white);
+    background: var(--my-white);
     box-sizing: border-box;
     font-family: PingFang SC, NotoSansSC-SemiBold, NotoSansSC-Bold;
   }
   &.disabled {
-    background: var(--q-white);
+    background: var(--my-white);
     border: solid 1px $primary;
     opacity: 0.5;
     cursor: not-allowed;
@@ -277,6 +302,7 @@
   padding: 4px 6px;
   border-radius: 4px;
   &.critical {
+    padding: 4px 10px;
     background: var(--q-negative);
   }
   &.text-critical {
@@ -285,6 +311,7 @@
     position: relative;
     color: var(--q-negative) !important;
     line-height: 1.2;
+    padding-left: 12px;
     &::before {
       content: '';
       position: absolute;
@@ -298,13 +325,15 @@
     }
   }
   &.major {
-    background: var(--q-label-warn-major);
+    padding: 4px 10px;
+    background: var(--my-label-warn-major);
   }
   &.text-major {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: var(--q-label-warn-major) !important;
+    color: var(--my-label-warn-major) !important;
+    padding-left: 12px;
     &::before {
       content: '';
       position: absolute;
@@ -314,17 +343,19 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: var(--q-label-warn-major) !important;
+      background-color: var(--my-label-warn-major) !important;
     }
   }
   &.minor {
-    background: var(--q-label-warn-minor);
+    padding: 4px 10px;
+    background: var(--my-label-warn-minor);
   }
   &.text-minor {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: var(--q-label-warn-minor) !important;
+    color: var(--my-label-warn-minor) !important;
+    padding-left: 12px;
     &::before {
       content: '';
       position: absolute;
@@ -334,17 +365,19 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: var(--q-label-warn-minor) !important;
+      background-color: var(--my-label-warn-minor) !important;
     }
   }
   &.warning {
-    background: var(--q-label-warn-warning);
+    padding: 4px 10px;
+    background: var(--my-label-warn-warning);
   }
   &.text-warning {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: var(--q-label-warn-warning) !important;
+    color: var(--my-label-warn-warning) !important;
+    padding-left: 12px;
     &::before {
       content: '';
       position: absolute;
@@ -354,17 +387,19 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: var(--q-label-warn-warning) !important;
+      background-color: var(--my-label-warn-warning) !important;
     }
   }
   &.cleared {
-    background: var(--q-label-warn-cleared);
+    padding: 4px 10px;
+    background: var(--my-label-warn-cleared);
   }
   &.text-cleared {
     padding: 0;
     border-radius: 0;
     position: relative;
-    color: var(--q-label-warn-cleared) !important;
+    color: var(--my-label-warn-cleared) !important;
+    padding-left: 12px;
     &::before {
       content: '';
       position: absolute;
@@ -374,7 +409,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: var(--q-label-warn-cleared) !important;
+      background-color: var(--my-label-warn-cleared) !important;
     }
   }
 }

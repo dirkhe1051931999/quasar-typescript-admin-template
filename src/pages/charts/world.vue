@@ -112,7 +112,13 @@ export default class myChartWorldComponent extends Vue {
   }
 }
 </script>
-
+<style lang="scss">
+.body--dark {
+  .jvm-series-container .jvm-legend {
+    background: $dark;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 #charts-world-map {

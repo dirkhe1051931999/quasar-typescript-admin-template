@@ -5,11 +5,12 @@
     <Sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <NavigationBar />
+        <NavigationBar @toggleThemeChange="toggleThemeChange" />
         <TagsView v-if="showTagsView" />
       </div>
       <AppMain />
     </div>
+    <div class="sun" ref="sun"></div>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import AppMain from './components/AppMain.vue';
   mixins: [UseResize],
 })
 export default class LayoutIndexComponents extends Vue {
+  $refs: any;
   get showSettings() {
     return SettingModule.showSettings;
   }
@@ -53,9 +55,27 @@ export default class LayoutIndexComponents extends Vue {
   public handleClickOutside() {
     AppModule.CLOSE_SIDEBAR(false);
   }
+  private toggleThemeChange() {
+    if (!this.$q.dark.isActive) {
+      this.$refs.sun.classList.add('down');
+      setTimeout(() => {
+        this.$refs.sun.classList.remove('down');
+      }, 2200);
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
+.body--dark {
+  .sidebar-container {
+    box-shadow: 0px 6px 16px -1px rgba($color: #ffffff, $alpha: 0.05);
+  }
+}
+.body--light {
+  .sidebar-container {
+    box-shadow: 0px 6px 16px -1px rgba($color: #000000, $alpha: 0.05);
+  }
+}
 @mixin clearfix {
   &:after {
     content: '';
@@ -85,7 +105,7 @@ export default class LayoutIndexComponents extends Vue {
   transition: margin-left 0.28s;
   margin-left: var(--v3-sidebar-width);
   position: relative;
-  background: var(--q-white);
+  background: var(--my-white);
 }
 
 .sidebar-container {
@@ -98,7 +118,6 @@ export default class LayoutIndexComponents extends Vue {
   left: 0;
   z-index: 1001;
   overflow: hidden;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
 }
 
 .fixed-header {
@@ -160,6 +179,46 @@ export default class LayoutIndexComponents extends Vue {
   .main-container,
   .sidebar-container {
     transition: none;
+  }
+}
+
+.sun {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 99999;
+  transform: translateY(-1300px);
+  background-color: #fdd835;
+  box-shadow: 0px 0px 15px #fdd835, 0px 0px 25px #fdd835, 0px 0px 50px #fdd835, 0px 0px 100px #fdd835;
+  &.up {
+    animation: sunRise 4s forwards;
+  }
+  &.down {
+    animation: sunDown 4s forwards;
+  }
+}
+
+@keyframes sunRise {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(300px);
+    opacity: 1;
+  }
+}
+@keyframes sunDown {
+  from {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 </style>

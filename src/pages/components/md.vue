@@ -1,14 +1,8 @@
 <template>
   <div>
-    <q-splitter v-model="splitterModel" class="bg-white q-table--bordered">
+    <q-splitter v-model="splitterModel" class="splitter">
       <template v-slot:before>
-        <q-input
-          v-model="mdString"
-          type="textarea"
-          borderless
-          autofocus
-          class="border p-10"
-        />
+        <q-input v-model="mdString" type="textarea" borderless autofocus class="border p-10" />
       </template>
       <template v-slot:after>
         <div v-html="calac" class="border p-10"></div>
@@ -45,4 +39,14 @@ export default class myComponentMd extends Vue {
 </script>
 
 <style scoped lang='scss'>
+.body--dark {
+  .splitter {
+    background: $dark;
+  }
+}
+.body--light {
+  .splitter {
+    background: #ffffff;
+  }
+}
 </style>

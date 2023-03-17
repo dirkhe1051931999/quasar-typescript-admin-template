@@ -80,5 +80,15 @@ export default class MyPaginationComponent extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
+.body--dark {
+  .q-pagination__middle button {
+    background: #121212 !important;
+  }
+}
+.body--light {
+  .q-pagination__middle {
+    background: #ffffff !important;
+  }
+}
 </style>

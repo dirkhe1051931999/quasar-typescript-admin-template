@@ -32,8 +32,19 @@ export default class RightPanelComponent extends Vue {
 }
 </script>
 <style lang="scss">
-.VueSidePanel {
-  box-shadow: -12px 0px 16px -8px var(var(--q-transparent));
+.body--dark {
+}
+.body--light {
+}
+.body--dark {
+  .VueSidePanel {
+    box-shadow: -12px 0px 16px -8px rgba($color: #ffffff, $alpha: 0);
+  }
+}
+.body--light {
+  .VueSidePanel {
+    box-shadow: -12px 0px 16px -8px rgba($color: #000000, $alpha: 0);
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -51,10 +62,10 @@ export default class RightPanelComponent extends Vue {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--q-white);
+      background: var(--my-white);
       transition: all 0.2s;
       &:hover {
-        background: var(--q-grey-1);
+        background: var(--my-grey-1);
         cursor: pointer;
       }
     }

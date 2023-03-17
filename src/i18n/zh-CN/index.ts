@@ -95,6 +95,7 @@ export default {
   auth: {},
   tip: {
     refreshCurPage: '刷新当前页',
+    toggleTheme: '黑夜或白天模式',
     cancelFullscreen: '取消全屏',
     fullscreen: '全屏',
     noData: '暂无数据',

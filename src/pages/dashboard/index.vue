@@ -1006,6 +1006,40 @@ export default class DashboardComponent extends Vue {
 }
 </script>
 <style lang="scss">
+.body--dark {
+  .fc .fc-button {
+    box-shadow: 0 4px 7px -1px rgba($color: #ffffff, $alpha: 0.11), 0 2px 4px -1px rgba($color: #ffffff, $alpha: 0.07);
+  }
+  .fc .fc-button-primary:focus,
+  .fc .fc-button-primary:hover,
+  .fc .fc-button-primary:not(:disabled):active,
+  .fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: 0 3px 5px -1px rgba($color: #ffffff, $alpha: 0.09), 0 2px 3px -1px rgba($color: #ffffff, $alpha: 0.07);
+  }
+  .fc .fc-daygrid-day-number {
+    color: #fafafa;
+  }
+  .fc .fc-col-header-cell-cushion {
+    color: #d0d3d5;
+  }
+}
+.body--light {
+  .fc .fc-button {
+    box-shadow: 0 4px 7px -1px rgba($color: #000000, $alpha: 0.11), 0 2px 4px -1px rgba($color: #000000, $alpha: 0.07);
+  }
+  .fc .fc-button-primary:focus,
+  .fc .fc-button-primary:hover,
+  .fc .fc-button-primary:not(:disabled):active,
+  .fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: 0 3px 5px -1px rgba($color: #000000, $alpha: 0.09), 0 2px 3px -1px rgba($color: #000000, $alpha: 0.07);
+  }
+  .fc .fc-daygrid-day-number {
+    color: #495057;
+  }
+  .fc .fc-col-header-cell-cushion {
+    color: #adb5bd;
+  }
+}
 /*!
 FullCalendar v5.6.0
 Docs & License: https://fullcalendar.io/
@@ -1017,7 +1051,7 @@ Docs & License: https://fullcalendar.io/
 }
 .fc-theme-standard td,
 .fc-theme-standard th {
-  border-color: var(--q-grey-9);
+  border-color: var(--my-grey-9);
 }
 .fc-theme-standard thead tr th {
   border-right: none;
@@ -1043,10 +1077,8 @@ Docs & License: https://fullcalendar.io/
 .fc .fc-col-header-cell-cushion {
   font-size: 14px;
   font-weight: 600;
-  color: #adb5bd;
 }
 .fc .fc-daygrid-day-number {
-  color: #495057;
   font-size: 14px;
   font-weight: 600;
   width: 100%;
@@ -1057,7 +1089,6 @@ Docs & License: https://fullcalendar.io/
 }
 .fc .fc-button {
   padding-top: 4px;
-  box-shadow: 0 4px 7px -1px rgba(0, 0, 0, 0.11), 0 2px 4px -1px rgba(0, 0, 0, 0.07);
   transition: all 0.15s ease-in;
 }
 .fc .fc-button,
@@ -1073,7 +1104,6 @@ Docs & License: https://fullcalendar.io/
 .fc .fc-button-primary:not(:disabled):active,
 .fc .fc-button-primary:not(:disabled):active:focus {
   transform: scale(1.02);
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07);
   background-color: #8392ab;
   border-color: #8392ab;
 }

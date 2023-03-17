@@ -6,7 +6,6 @@
 }
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: var(--q-transparent);
 }
 *:before,
 *:after {
@@ -262,7 +261,7 @@ button:-moz-focusring,
  */
 
 fieldset {
-  border: 1px solid var(--q-grey-5);
+  border: 1px solid var(--my-grey-5);
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
@@ -389,7 +388,7 @@ textarea {
   &::placeholder {
     font-family: PingFang SC, NotoSans-Regular, NotoSansSC-Regular;
     font-size: 12px;
-    color: var(--q-grey-5) !important;
+    color: var(--my-grey-7) !important;
   }
 }
 

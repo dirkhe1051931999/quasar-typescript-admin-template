@@ -35,6 +35,24 @@ export default class MyFixedPageComponent extends Vue {
 
 
 <style lang="scss" scoped>
+.body--dark {
+  .inner-page {
+    box-shadow: 0px 6px 16px -1px rgba(#ffffff, 0.05);
+    background: #000000;
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color: #ffffff, $alpha: 0.4);
+    }
+  }
+}
+.body--light {
+  .app-main {
+    box-shadow: 0px 6px 16px -1px rgba(#000000, 0.05);
+    background: #ffffff;
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color: #000000, $alpha: 0.4);
+    }
+  }
+}
 .inner-page {
   position: fixed;
   transition: all 0.3s;
@@ -42,9 +60,7 @@ export default class MyFixedPageComponent extends Vue {
   right: 16px;
   top: calc(var(--v3-navigationbar-height) + var(--v3-header-height) + 16px);
   bottom: 16px;
-  background: var(--q-white);
   z-index: 10;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   border-radius: 8px;
   padding: 16px;
   .inner {
@@ -60,7 +76,6 @@ export default class MyFixedPageComponent extends Vue {
       height: 1em;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.3);
       border-radius: 99999px;
       border: 0.3125em solid transparent;
       background-clip: content-box;

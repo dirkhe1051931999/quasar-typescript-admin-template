@@ -7,13 +7,13 @@
         <q-tab name="movies" icon="movie" label="Movies" />
       </q-tabs>
 
-      <q-tabs v-model="tab" inline-label class="bg-purple text-white shadow-2">
+      <q-tabs v-model="tab" inline-label class="bg-purple shadow-2">
         <q-tab name="mails" icon="mail" label="Mails" />
         <q-tab name="alarms" icon="alarm" label="Alarms" />
         <q-tab name="movies" icon="movie" label="Movies" />
       </q-tabs>
 
-      <q-tabs v-model="tab" no-caps class="bg-orange text-white shadow-2">
+      <q-tabs v-model="tab" no-caps class="bg-orange shadow-2">
         <q-tab name="mails" label="Mails" />
         <q-tab name="alarms" label="Alarms" />
         <q-tab name="movies" label="Movies" />
@@ -25,7 +25,7 @@
         <q-tab name="movies" icon="movie" />
       </q-tabs>
 
-      <q-tabs v-model="tab" inline-label class="bg-primary text-white shadow-2">
+      <q-tabs v-model="tab" inline-label class="bg-primary shadow-2">
         <q-tab name="mails" icon="mail" label="Mails" />
         <q-tab name="alarms" icon="alarm" label="Alarms" />
         <q-tab name="movies" icon="movie" label="Movies" />
@@ -36,10 +36,7 @@
     </div>
     <q-card class="m-t-30">
       <div class="row items-center justify-between p-10">
-        <q-splitter
-          v-model="splitterModel"
-          class="w-p-48 bg-white q-table--bordered"
-        >
+        <q-splitter v-model="splitterModel" class="w-p-48 splitter">
           <template v-slot:before>
             <q-tabs v-model="tab" vertical class="text-teal">
               <q-tab name="mails" icon="mail" label="Mails" />
@@ -49,63 +46,44 @@
           </template>
 
           <template v-slot:after>
-            <q-tab-panels
-              v-model="tab"
-              animated
-              transition-prev="jump-up"
-              transition-next="jump-up"
-            >
+            <q-tab-panels v-model="tab" animated transition-prev="jump-up" transition-next="jump-up">
               <q-tab-panel name="mails">
                 <div class="text-h4 q-mb-md">Mails</div>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
               </q-tab-panel>
 
               <q-tab-panel name="alarms">
                 <div class="text-h4 q-mb-md">Alarms</div>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
               </q-tab-panel>
 
               <q-tab-panel name="movies">
                 <div class="text-h4 q-mb-md">Movies</div>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                  praesentium cumque magnam odio iure quidem, quod illum numquam
-                  possimus obcaecati commodi minima assumenda consectetur culpa
-                  fuga nulla ullam. In, libero.
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur
+                  culpa fuga nulla ullam. In, libero.
                 </p>
               </q-tab-panel>
             </q-tab-panels>
@@ -113,13 +91,7 @@
         </q-splitter>
         <div class="q-gutter-y-md w-p-50">
           <q-list>
-            <q-item
-              v-for="item in allTabs"
-              :key="item.tab.name"
-              tag="label"
-              dense
-              v-ripple
-            >
+            <q-item v-for="item in allTabs" :key="item.tab.name" tag="label" dense v-ripple>
               <q-item-section side>
                 <q-checkbox
                   :value="item.selected"
@@ -141,7 +113,7 @@
             </q-item>
           </q-list>
 
-          <q-toolbar class="bg-purple text-white shadow-2 rounded-borders">
+          <q-toolbar class="bg-purple shadow-2 rounded-borders">
             <q-btn flat label="Homepage" />
             <q-space />
 
@@ -197,4 +169,14 @@ export default class myComponentTabs extends Vue {
 </script>
 
 <style scoped lang='scss'>
+.body--dark {
+  .splitter {
+    background: $dark;
+  }
+}
+.body--light {
+  .splitter {
+    background: #ffffff;
+  }
+}
 </style>

@@ -55,9 +55,33 @@ export default class dialogConfirmComponent extends Vue {
 
 
 <style lang="scss" scoped>
+.body--dark {
+  .q-dialog-confirm-plugin {
+    background: $dark;
+  }
+  .title {
+    .close {
+      &:hover {
+        color: #000000;
+        background: #eeeeee;
+      }
+    }
+  }
+}
+.body--light {
+  .q-dialog-confirm-plugin {
+    background: #ffffff;
+  }
+  .title {
+    .close {
+      &:hover {
+        background: var(--my-grey-1);
+      }
+    }
+  }
+}
 .q-dialog-confirm-plugin {
   width: 480px;
-  background: var(--q-white);
   border-radius: 12px;
   .title {
     padding: 16px;
@@ -68,16 +92,13 @@ export default class dialogConfirmComponent extends Vue {
       right: 16px;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border-radius: 3px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--q-white);
+      background: var(--my-white);
       transition: all 0.2s;
       &:hover {
-        background: var(--q-grey-1);
         cursor: pointer;
       }
     }

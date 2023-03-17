@@ -2,7 +2,7 @@ a {
   color: var(--q-primary);
 }
 .login-root {
-  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  background-image: linear-gradient(to top, var(--my-grey-6) 0%, var(--my-grey-9) 100%);
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -47,22 +47,22 @@ a {
   transform: rotate(-12deg) skew(-12deg);
 }
 .box-divider--light-all-2 {
-  box-shadow: inset 0 0 0 2px #e3e8ee;
+  box-shadow: inset 0 0 0 2px var(--my-grey-9);
 }
 .box-background--blue {
-  background-color: #5469d4;
+  background-color: var(--q-primary);
 }
 .box-background--white {
-  background-color: var(--q-white);
+  background-color: var(--my-white);
 }
 .box-background--blue800 {
-  background-color: #212d63;
+  background-color: var(--q-blue-1);
 }
 .box-background--gray100 {
-  background-color: #e3e8ee;
+  background-color: var(--my-grey-9);
 }
 .box-background--cyan200 {
-  background-color: #7fd3ed;
+  background-color: var(--my-blue-2);
 }
 .padding-top--64 {
   padding-top: 64px;
@@ -94,13 +94,13 @@ a {
   max-width: 448px;
   background: white;
   border-radius: 4px;
-  box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+  box-shadow: var(--my-grey-9) 0px 7px 14px 0px, rgba($color: #000000, $alpha: 0.12) 0px 3px 6px 0px;
 }
 span {
   display: block;
   font-size: 20px;
   line-height: 28px;
-  color: #1a1f36;
+  color: var(--q-blue-1);
 }
 label {
   margin-bottom: 10px;
@@ -129,16 +129,16 @@ label {
   min-height: 44px;
   border: unset;
   border-radius: 4px;
-  outline-color: rgb(84 105 212 / 0.5);
-  background-color: rgb(255, 255, 255);
-  box-shadow: var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
-    var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px;
+  outline-color: rgba(var(--q-primary), 0.5);
+  background-color: var(--my-white);
+  box-shadow: rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, var(--my-grey-9) 0px 0px 0px 1px,
+    rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px;
 }
 
 .login-submit-button {
-  box-shadow: var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgb(84, 105, 212) 0px 0px 0px 1px, var(--q-transparent) 0px 0px 0px 0px,
-    var(--q-transparent) 0px 0px 0px 0px, rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
-  color: var(--q-white);
+  box-shadow: rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0.12) 0px 1px 1px 0px, var(--q-primary) 0px 0px 0px 1px,
+    rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, var(--my-grey-9) 0px 2px 5px 0px;
+  color: var(--my-white);
   font-weight: 600;
   cursor: pointer;
   font-size: 16px;
@@ -149,9 +149,9 @@ label {
   border: unset;
   text-align: center;
   border-radius: 4px;
-  outline-color: rgb(84 105 212 / 0.5);
-  box-shadow: var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
-    var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px, var(--q-transparent) 0px 0px 0px 0px;
+  outline-color: rgba(var(--q-primary), 0.5);
+  box-shadow: rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, var(--my-grey-6) 0px 0px 0px 1px,
+    rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px, rgba($color: #000000, $alpha: 0) 0px 0px 0px 0px;
 }
 .field-checkbox input {
   width: 20px;

@@ -214,6 +214,16 @@ export default class LoginPage extends Vue {
 </script>
 
 <style lang="scss">
+.body--dark {
+  .slider {
+    box-shadow: 0 0 3px rgba($color: #ffffff, $alpha: 0.4);
+  }
+}
+.body--light {
+  .slider {
+    box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.4);
+  }
+}
 .slidercaptcha-block {
   position: absolute;
   left: 0;
@@ -223,7 +233,7 @@ export default class LoginPage extends Vue {
   position: relative;
   text-align: center;
   line-height: 40px;
-  background: $grey-3;
+  background: var(--my-grey-7);
   border-radius: 2px;
 }
 .sliderbg {
@@ -231,7 +241,7 @@ export default class LoginPage extends Vue {
   left: 0;
   right: 0;
   top: 0;
-  background-color: $grey-3;
+  background-color: var(--my-grey-7);
   height: 40px;
 }
 .sliderContainer_success .slider {
@@ -248,7 +258,7 @@ export default class LoginPage extends Vue {
 }
 .sliderContainer_fail .slider,
 .sliderContainer_success .slider {
-  color: var(--q-white);
+  color: var(--my-white);
 }
 .sliderContainer_active .sliderText,
 .sliderContainer_success .sliderText,
@@ -269,8 +279,7 @@ export default class LoginPage extends Vue {
   left: 0;
   width: 40px;
   height: 40px;
-  background: var(--q-white);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  background: var(--my-white);
   cursor: pointer;
   transition: background 0.1s linear;
   border-radius: 2px;
@@ -280,7 +289,7 @@ export default class LoginPage extends Vue {
 }
 .slider:hover {
   background: $light-blue-5;
-  color: var(--q-white);
+  color: var(--my-white);
 }
 .sliderText {
   position: relative;
@@ -296,7 +305,7 @@ export default class LoginPage extends Vue {
   transition: color 0.3s linear;
 }
 .refreshIcon:hover {
-  color: var(--q-dark-1);
+  color: var(--my-dark-1);
 }
 </style>
 <style lang="scss" scoped>

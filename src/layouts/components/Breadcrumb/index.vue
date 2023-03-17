@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb class="app-breadcrumb">
     <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
-      <span v-if="item.redirect === 'noRedirect' || index === breadcrumbs.length - 1" class="no-redirect">{{ $t(`routes.${item.meta.title}`) }}</span>
+      <span v-if="item.redirect === 'noRedirect' || index === breadcrumbs.length - 1">{{ $t(`routes.${item.meta.title}`) }}</span>
       <a v-else @click.prevent="handleLink(item)">{{ $t(`routes.${item.meta.title}`) }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -47,13 +47,25 @@ export default class BreadcrumbComponent extends Vue {
   }
 }
 </script>
+<style lang="scss">
+.body--dark {
+  .app-breadcrumb.el-breadcrumb .el-breadcrumb__inner {
+    color: #ffffff !important;
+  }
+}
+.body--light {
+  .app-breadcrumb.el-breadcrumb .el-breadcrumb__inner {
+    color: #ffffff !important;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
-  color: var(--q-white);
+  color: var(--my-white);
   &:hover {
-    color: var(--q-white);
+    color: var(--my-white);
   }
 }
 
@@ -61,12 +73,8 @@ export default class BreadcrumbComponent extends Vue {
   display: inline-block;
   font-size: 14px;
   line-height: var(--v3-navigationbar-height);
-  .no-redirect {
-    color: var(-q-grey-9);
-    cursor: text;
-  }
 }
 :deep(.el-breadcrumb__separator) {
-  color: var(--q-white);
+  color: var(--my-white);
 }
 </style>

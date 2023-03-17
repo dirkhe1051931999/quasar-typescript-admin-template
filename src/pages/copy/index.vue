@@ -1,12 +1,7 @@
 <template>
   <div>
-    <q-input
-      v-model="loremipsum"
-      type="textarea"
-      label="Copy"
-      bg-color="white"
-    />
-    <q-btn color="primary" icon="content_cut" label="copy" @click="onClick" />
+    <q-input v-model="loremipsum" type="textarea" label="Copy" outlined class="input" />
+    <q-btn color="primary" icon="content_cut" label="copy" @click="onClick" class="q-mt-md" />
   </div>
 </template>
 
@@ -19,8 +14,7 @@ import { date } from 'quasar';
   name: 'myComponentCopy',
 })
 export default class myComponentCopy extends Vue {
-  private loremipsum =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, ';
+  private loremipsum = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, ';
   private onClick() {
     copyToClipboard(this.loremipsum)
       .then(() => {
@@ -46,6 +40,16 @@ export default class myComponentCopy extends Vue {
 </script>
 
 <style scoped lang='scss'>
+.body--dark {
+  .input {
+    background: $dark;
+  }
+}
+.body--light {
+  .input {
+    background: #ffffff;
+  }
+}
 .animate-bounce {
   animation: q-bounce 2s infinite;
 }

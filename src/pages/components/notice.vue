@@ -1,39 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-y-sm column items-center">
-    <MyTooltip
-      content="tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip"
-      style="width: 100px"
-    >
-    </MyTooltip>
-    <TextToInput
-      value="text text"
-      :that="textToInputThat"
-      :loading="textToInputLoading"
-      @confirm="textToInputConfirm"
-      @close="textToInputClose"
-    >
-    </TextToInput>
-    <MyBanner
-      content="ok ok ok ok ok ok ok ok ok ok ok ok"
-      bid="notice-banner-1"
-      bannerType="warn"
-      :showClose="true"
-    ></MyBanner>
-    <MyBanner
-      content="ok ok ok ok ok ok ok ok ok ok ok ok"
-      bid="notice-banner-2"
-      bannerType="success"
-    ></MyBanner>
-    <MyBanner
-      content="ok ok ok ok ok ok ok ok ok ok ok ok"
-      bid="notice-banner-3"
-      bannerType="negative"
-    ></MyBanner>
-    <MyBanner
-      content="ok ok ok ok ok ok ok ok ok ok ok ok"
-      bid="notice-banner-4"
-      bannerType="primary"
-    ></MyBanner>
+    <MyTooltip content="tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip" style="width: 100px"> </MyTooltip>
+    <TextToInput value="text text" :that="textToInputThat" :loading="textToInputLoading" @confirm="textToInputConfirm" @close="textToInputClose"> </TextToInput>
+    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-1" bannerType="warn" :showClose="true"></MyBanner>
+    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-2" bannerType="success" :showClose="true"></MyBanner>
+    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-3" bannerType="negative" :showClose="true"></MyBanner>
+    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-4" bannerType="primary" :showClose="true"></MyBanner>
     <div class="q-pa-md q-gutter-sm">
       <q-banner dense class="bg-primary text-white">
         Unfortunately, the credit card did not go through, please try again.
@@ -43,7 +15,7 @@
         </template>
       </q-banner>
 
-      <q-banner dense class="bg-grey-3">
+      <q-banner dense>
         <template v-slot:avatar>
           <q-icon name="signal_wifi_off" color="primary" />
         </template>
@@ -59,14 +31,7 @@
         </template>
       </q-banner>
     </div>
-    <q-btn
-      no-caps
-      push
-      color="white"
-      text-color="primary"
-      label="Grid BottomSheet"
-      @click="show(true)"
-    />
+    <q-btn no-caps push color="white" text-color="primary" label="Grid BottomSheet" @click="show(true)" />
 
     <div class="q-pa-md q-gutter-sm">
       <q-btn push color="white" text-color="primary" label="Unread Mails">
@@ -104,35 +69,22 @@
       <div class="q-gutter-sm">
         <q-btn color="primary">
           Hover
-          <q-tooltip content-class="bg-indigo" :offset="[10, 10]"
-            >Here I am!</q-tooltip
-          >
+          <q-tooltip content-class="bg-indigo" :offset="[10, 10]">Here I am!</q-tooltip>
         </q-btn>
 
         <q-btn color="primary">
           Over
-          <q-tooltip content-class="bg-red" :offset="[10, 10]"
-            >Here I am!</q-tooltip
-          >
+          <q-tooltip content-class="bg-red" :offset="[10, 10]">Here I am!</q-tooltip>
         </q-btn>
 
         <q-btn color="primary">
           These
-          <q-tooltip
-            content-class="bg-purple"
-            content-style="font-size: 16px"
-            :offset="[10, 10]"
-            >Here I am!</q-tooltip
-          >
+          <q-tooltip content-class="bg-purple" content-style="font-size: 16px" :offset="[10, 10]">Here I am!</q-tooltip>
         </q-btn>
 
         <q-btn color="primary">
           Buttons
-          <q-tooltip
-            content-class="bg-amber text-black shadow-4"
-            :offset="[10, 10]"
-            >Here I am!</q-tooltip
-          >
+          <q-tooltip content-class="bg-amber  shadow-4" :offset="[10, 10]">Here I am!</q-tooltip>
         </q-btn>
       </div>
     </div>
@@ -149,12 +101,7 @@
         <q-btn round size="sm" color="accent" @click="showNotif('top')">
           <q-icon name="arrow_upward" />
         </q-btn>
-        <q-btn
-          round
-          size="sm"
-          color="secondary"
-          @click="showNotif('top-right')"
-        >
+        <q-btn round size="sm" color="secondary" @click="showNotif('top-right')">
           <q-icon name="arrow_upward" class="rotate-45" />
         </q-btn>
       </div>
@@ -183,12 +130,7 @@
     <div>
       <div class="row q-gutter-sm">
         <div>
-          <q-btn
-            round
-            size="sm"
-            color="secondary"
-            @click="showNotif('bottom-left')"
-          >
+          <q-btn round size="sm" color="secondary" @click="showNotif('bottom-left')">
             <q-icon name="arrow_forward" class="rotate-135" />
           </q-btn>
         </div>
@@ -198,12 +140,7 @@
           </q-btn>
         </div>
         <div>
-          <q-btn
-            round
-            size="sm"
-            color="secondary"
-            @click="showNotif('bottom-right')"
-          >
+          <q-btn round size="sm" color="secondary" @click="showNotif('bottom-right')">
             <q-icon name="arrow_forward" class="rotate-45" />
           </q-btn>
         </div>
@@ -249,8 +186,7 @@ export default class myComponentNotice extends Vue {
     console.log(that);
   }
   private showNotif(position: any) {
-    const { color, multiLine, icon, message, avatar } =
-      alerts[Math.floor(Math.random() * 10) % alerts.length];
+    const { color, multiLine, icon, message, avatar } = alerts[Math.floor(Math.random() * 10) % alerts.length];
     const random = Math.random() * 100;
 
     const twoActions = random > 70;

@@ -5,7 +5,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'changePassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16 text-black">Change password</div>
+            <div class="f-bold bold fs-24 p-b-16">Change password</div>
             <div class="p-b-24 fs-16">Please enter the following information to change your password</div>
             <q-form ref="changePasswordForm">
               <div class="field">
@@ -109,7 +109,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'forgotPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16 text-black">Forgot password</div>
+            <div class="f-bold bold fs-24 p-b-16">Forgot password</div>
             <div class="p-b-24 fs-16">Please enter your username and email address to reset your password.</div>
             <q-form ref="forgotPasswordForm">
               <div class="field">
@@ -159,7 +159,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'resetPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16 text-black">Reset Password</div>
+            <div class="f-bold bold fs-24 p-b-16">Reset Password</div>
             <div class="p-b-24 fs-16">Please reset your password.</div>
             <q-form ref="resetPasswordForm">
               <div class="field">
@@ -225,7 +225,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'signIn'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16 text-black">Sign In</div>
+            <div class="f-bold bold fs-24 p-b-16">Sign In</div>
             <div class="p-b-24 fs-16">Please enter your username and password.</div>
             <q-form>
               <div class="field">
@@ -326,7 +326,7 @@
           <div class="img">
             <q-img src="~assets/500.png" alt="chat-img" fit="fit" />
           </div>
-          <div class="text-black intro">
+          <div class="intro">
             <h4 class="f-bold lh-48" style="font-size: 2.5em">“{{ $t('login.illustrationDescription') }}”</h4>
           </div>
         </div>
@@ -706,11 +706,20 @@ export default class LoginPage2 extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+.body--dark {
+  .cover {
+    box-shadow: 0px 6px 16px 3px rgba($color: #ffffff, $alpha: 0.09);
+  }
+}
+.body--light {
+  .cover {
+    box-shadow: 0px 6px 16px 3px rgba($color: #000000, $alpha: 0.09);
+  }
+}
 .cover {
   width: 100%;
   height: 100%;
-  background: #fbfbfb;
-  box-shadow: 0px 6px 16px 3px rgba(0, 0, 0, 0.09);
+  background: var(--my-grey-1);
   border-radius: 16px;
   .intro {
     text-align: center;

@@ -2,11 +2,11 @@
 
 Using **vue-facing-decorator** allows you to write Vue3 code using class syntax, making the code more structured and object-oriented, and thus easier to read and maintain. Compared to using setup syntax, using class syntax allows you to organize your code more clearly and put related functions together, reducing redundancy and repetition in your code. In addition, using class syntax makes the code more reusable and extensible, which makes it easier to respond to different needs and changes.
 
-In particular, using vue-facing-decorator also supports vue multi-page, making it possible to have multiple HTML entries for a vue project. This makes it easy to handle the code of multiple pages without having to write similar code over and over again. Also, using class syntax makes it easier to modularize development and improve code reusability and maintainability.
+In particular, using **vue-facing-decorator** also supports vue multi-page, making it possible to have multiple HTML entries for a vue project. This makes it easy to handle the code of multiple pages without having to write similar code over and over again. Also, using class syntax makes it easier to modularize development and improve code reusability and maintainability.
 
-To sum up, using vue-facing-decorator to write Vue3 code in class syntax is a much better choice for improving code readability, maintainability, and flexibility.
+Commonly used components are encapsulated, including text box, time picker, slider, radio box and multi-select box, etc. Blackout mode is also added to allow users to use them comfortably under different visual environments. I continue to work on optimizing and improving these components, and will continue to introduce more new components to meet different needs.
 
-
+To sum up, using **vue-facing-decorator** to write Vue3 code in class syntax is a much better choice for improving code readability, maintainability, and flexibility.
 
 ### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
 

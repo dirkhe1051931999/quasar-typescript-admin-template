@@ -7,9 +7,9 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 import * as echarts from 'echarts';
 
 const colors: any = [
-  'var(--q-negative)',
-  'var(--q-negative)',
-  'var(--q-negative)',
+  'rgb(234, 6, 6)',
+  'rgb(234, 6, 6)',
+  'rgb(234, 6, 6)',
   'hsl(130, 50%, 45%)',
   'hsl(130, 60%, 15%)',
   'hsl(130, 60%, 45%)',
@@ -161,7 +161,7 @@ export default class myComponentTopology extends Vue {
           },
           data: graphData,
           itemStyle: {
-            borderColor: 'var(--q-white)',
+            borderColor: 'var(--my-white)',
             borderWidth: 1,
             shadowBlur: 50,
             shadowOffsetY: 20,

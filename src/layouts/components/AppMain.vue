@@ -27,9 +27,9 @@ export default class AppMainComponent extends Vue {
   get key() {
     this.$nextTick(() => {
       if (this.$refs.appMain.offsetHeight === this.$refs.appMain.scrollHeight) {
-        this.calcStyle2 = 'padding:16px 28px';
+        this.calcStyle2 = 'padding:16px';
       } else {
-        this.calcStyle2 = 'padding:16px 16px 16px 28px';
+        this.calcStyle2 = 'padding:16px';
       }
     });
     return this.$route.path;
@@ -54,6 +54,23 @@ export default class AppMainComponent extends Vue {
 
 
 <style lang="scss" scoped>
+.body--dark {
+  .app-main {
+    box-shadow: 0px 6px 16px -1px rgba(#ffffff, 0.05);
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color: #ffffff, $alpha: 0.4);
+    }
+  }
+}
+.body--light {
+  .app-main {
+    box-shadow: 0px 6px 16px -1px rgba(#000000, 0.05);
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($color: #000000, $alpha: 0.4);
+    }
+  }
+}
+
 .app-main {
   position: fixed;
   height: calc(100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px);
@@ -61,7 +78,6 @@ export default class AppMainComponent extends Vue {
   bottom: 0;
   right: 0;
   transition: all 0.2s;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   overflow: auto;
   &::-webkit-scrollbar {
     background: transparent;
@@ -73,7 +89,6 @@ export default class AppMainComponent extends Vue {
     height: 16px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 99999px;
     border: 0.3125em solid transparent;
     background-clip: content-box;

@@ -102,7 +102,7 @@
 }
 
 @mixin bg-gradient-faded-success {
-  background-image: radial-gradient(370px circle at 80% 50%, #f0f9eb 0, var(--q-label-success-green) 100%);
+  background-image: radial-gradient(370px circle at 80% 50%, #f0f9eb 0, var(--my-label-success-green) 100%);
 }
 
 @mixin bg-gradient-faded-info {
@@ -110,11 +110,11 @@
 }
 
 @mixin bg-gradient-faded-warning {
-  background-image: radial-gradient(370px circle at 80% 50%, #fdf6ec 0, var(--q-label-warn-yellow) 100%);
+  background-image: radial-gradient(370px circle at 80% 50%, #fdf6ec 0, var(--my-label-warn-yellow) 100%);
 }
 
 @mixin bg-gradient-faded-danger {
-  background-image: radial-gradient(370px circle at 80% 50%, #fef0f0 0, var(--q-label-error-red) 100%);
+  background-image: radial-gradient(370px circle at 80% 50%, #fef0f0 0, var(--my-label-error-red) 100%);
 }
 
 @mixin bg-gradient-faded-light {
@@ -154,7 +154,7 @@
 }
 
 @mixin bg-gradient-faded-light-vertical {
-  background-image: radial-gradient(200px circle at 50% 70%, rgba(233, 236, 239, 0.3) 0, var(--q-grey-9) 100%);
+  background-image: radial-gradient(200px circle at 50% 70%, rgba(233, 236, 239, 0.3) 0, var(--my-grey-9) 100%);
 }
 
 @mixin bg-gradient-faded-dark-vertical {

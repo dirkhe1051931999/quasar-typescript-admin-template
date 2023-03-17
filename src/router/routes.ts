@@ -21,10 +21,7 @@ import { sleep } from 'src/utils/tools';
 */
 function redirect(to: any): any {
   const routes = PermissionModule.routes;
-  const item: any = routes.find(
-    (item: any) =>
-      item.meta && item.path && item.component && item.name !== 'Login'
-  );
+  const item: any = routes.find((item: any) => item.meta && item.path && item.component && item.name !== 'Login');
   if (!item || (item && !item.children.length)) {
     globalMessage.show({
       type: 'error',
@@ -33,24 +30,20 @@ function redirect(to: any): any {
     UserModule.ResetToken();
     return '/login';
   } else {
-    return `${item.path}${
-      item.children[0].path ? `/${item.children[0].path}` : ''
-    }`;
+    return `${item.path}${item.children[0].path ? `/${item.children[0].path}` : ''}`;
   }
 }
 export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'Login',
-    component: () =>
-      import(/* webpackChunkName: "login" */ 'src/pages/login/index.vue'),
+    component: () => import(/* webpackChunkName: "login" */ 'src/pages/login/index2.vue'),
     meta: { hidden: true },
   },
   {
     path: '/login2',
     name: 'Login2',
-    component: () =>
-      import(/* webpackChunkName: "login2" */ 'src/pages/login/index2.vue'),
+    component: () => import(/* webpackChunkName: "login2" */ 'src/pages/login/index2.vue'),
     meta: { hidden: true },
   },
 ];
@@ -70,10 +63,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () =>
-          import(
-            /* webpackChunkName: "dashboard" */ 'src/pages/dashboard/index.vue'
-          ),
+        component: () => import(/* webpackChunkName: "dashboard" */ 'src/pages/dashboard/index.vue'),
         name: 'Dashboard',
         meta: {
           title: 'dashboard',
@@ -98,8 +88,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: 'account',
           icon: 'people',
         },
-        component: () =>
-          import(/* webpackChunkName: "account" */ 'pages/account/index.vue'),
+        component: () => import(/* webpackChunkName: "account" */ 'pages/account/index.vue'),
       },
     ],
   },
@@ -111,14 +100,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       title: 'charts',
       icon: 'bar_chart',
-      pagePermissionId: [
-        'charts',
-        'charts-world',
-        'charts-relationship',
-        'charts-map',
-        'charts-province',
-        'charts-city',
-      ],
+      pagePermissionId: ['charts', 'charts-world', 'charts-relationship', 'charts-map', 'charts-province', 'charts-city'],
     },
     children: [
       {
@@ -129,8 +111,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['charts-world'],
         },
-        component: () =>
-          import(/* webpackChunkName: "world" */ 'src/pages/charts/world.vue'),
+        component: () => import(/* webpackChunkName: "world" */ 'src/pages/charts/world.vue'),
       },
       {
         path: 'relationship',
@@ -140,10 +121,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['charts-relationship'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "relationship" */ 'src/pages/charts/relationship.vue'
-          ),
+        component: () => import(/* webpackChunkName: "relationship" */ 'src/pages/charts/relationship.vue'),
       },
       {
         path: 'map',
@@ -153,8 +131,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['charts-map'],
         },
-        component: () =>
-          import(/* webpackChunkName: "map" */ 'src/pages/charts/map.vue'),
+        component: () => import(/* webpackChunkName: "map" */ 'src/pages/charts/map.vue'),
       },
       {
         path: 'province',
@@ -164,10 +141,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['charts-province'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "province" */ 'src/pages/charts/province.vue'
-          ),
+        component: () => import(/* webpackChunkName: "province" */ 'src/pages/charts/province.vue'),
       },
       {
         path: 'city',
@@ -177,8 +151,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['charts-city'],
         },
-        component: () =>
-          import(/* webpackChunkName: "city" */ 'src/pages/charts/city.vue'),
+        component: () => import(/* webpackChunkName: "city" */ 'src/pages/charts/city.vue'),
       },
     ],
   },
@@ -220,10 +193,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-editer'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "editer" */ 'src/pages/components/editer.vue'
-          ),
+        component: () => import(/* webpackChunkName: "editer" */ 'src/pages/components/editer.vue'),
       },
       {
         path: 'md',
@@ -233,8 +203,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-md'],
         },
-        component: () =>
-          import(/* webpackChunkName: "md" */ 'src/pages/components/md.vue'),
+        component: () => import(/* webpackChunkName: "md" */ 'src/pages/components/md.vue'),
       },
       {
         path: 'splitter',
@@ -244,10 +213,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-splitter'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "splitter" */ 'src/pages/components/splitter.vue'
-          ),
+        component: () => import(/* webpackChunkName: "splitter" */ 'src/pages/components/splitter.vue'),
       },
       {
         path: 'jsonEditor',
@@ -257,10 +223,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-jsonEditor'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonEditor.vue'
-          ),
+        component: () => import(/* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonEditor.vue'),
       },
       {
         path: 'jsonView',
@@ -270,10 +233,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-jsonView'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'
-          ),
+        component: () => import(/* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'),
       },
       {
         path: 'tabs',
@@ -283,10 +243,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-tabs'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "tabs" */ 'src/pages/components/tabs.vue'
-          ),
+        component: () => import(/* webpackChunkName: "tabs" */ 'src/pages/components/tabs.vue'),
       },
       {
         path: 'sticky',
@@ -296,10 +253,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-sticky'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "sticky" */ 'src/pages/components/sticky.vue'
-          ),
+        component: () => import(/* webpackChunkName: "sticky" */ 'src/pages/components/sticky.vue'),
       },
       {
         path: 'dialog',
@@ -309,10 +263,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-dialog'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "dialog" */ 'src/pages/components/dialog.vue'
-          ),
+        component: () => import(/* webpackChunkName: "dialog" */ 'src/pages/components/dialog.vue'),
       },
       {
         path: 'carousel',
@@ -322,10 +273,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-carousel'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "carousel" */ 'src/pages/components/carousel.vue'
-          ),
+        component: () => import(/* webpackChunkName: "carousel" */ 'src/pages/components/carousel.vue'),
       },
       {
         path: 'colorPicker',
@@ -335,10 +283,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-colorPicker'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "colorPicker" */ 'src/pages/components/colorPicker.vue'
-          ),
+        component: () => import(/* webpackChunkName: "colorPicker" */ 'src/pages/components/colorPicker.vue'),
       },
       {
         path: 'skeleton',
@@ -348,10 +293,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-skeleton'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "skeleton" */ 'src/pages/components/skeleton.vue'
-          ),
+        component: () => import(/* webpackChunkName: "skeleton" */ 'src/pages/components/skeleton.vue'),
       },
       {
         path: 'spinners',
@@ -361,10 +303,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-spinners'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "spinners" */ 'src/pages/components/spinners.vue'
-          ),
+        component: () => import(/* webpackChunkName: "spinners" */ 'src/pages/components/spinners.vue'),
       },
       {
         path: 'notice',
@@ -374,10 +313,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-notice'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "notice" */ 'src/pages/components/notice.vue'
-          ),
+        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/notice.vue'),
       },
       {
         path: 'transfer',
@@ -387,10 +323,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-transfer'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "notice" */ 'src/pages/components/transfer.vue'
-          ),
+        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/transfer.vue'),
       },
       {
         path: 'parallax',
@@ -400,10 +333,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-parallax'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "notice" */ 'src/pages/components/parallax.vue'
-          ),
+        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/parallax.vue'),
       },
       {
         path: 'colors',
@@ -413,10 +343,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-colors'],
         },
-        component: () =>
-          import(
-            /* webpackChunkName: "notice" */ 'src/pages/components/color.vue'
-          ),
+        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/color.vue'),
       },
     ],
   },
@@ -433,8 +360,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: 'copy',
           icon: 'content_cut',
         },
-        component: () =>
-          import(/* webpackChunkName: "copy" */ 'pages/copy/index.vue'),
+        component: () => import(/* webpackChunkName: "copy" */ 'pages/copy/index.vue'),
       },
     ],
   },
@@ -451,8 +377,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: 'i18n',
           icon: 'g_translate',
         },
-        component: () =>
-          import(/* webpackChunkName: "i18n" */ 'pages/i18n/index.vue'),
+        component: () => import(/* webpackChunkName: "i18n" */ 'pages/i18n/index.vue'),
       },
     ],
   },
@@ -469,8 +394,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: 'icon',
           icon: 'face',
         },
-        component: () =>
-          import(/* webpackChunkName: "icon" */ 'pages/icon/index.vue'),
+        component: () => import(/* webpackChunkName: "icon" */ 'pages/icon/index.vue'),
       },
     ],
   },
@@ -489,8 +413,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           title: 'convert',
           icon: 'code',
         },
-        component: () =>
-          import(/* webpackChunkName: "convert" */ 'pages/convert/index.vue'),
+        component: () => import(/* webpackChunkName: "convert" */ 'pages/convert/index.vue'),
       },
     ],
   },
@@ -513,8 +436,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['table-index'],
         },
-        component: () =>
-          import(/* webpackChunkName: "table-index" */ 'pages/table/index.vue'),
+        component: () => import(/* webpackChunkName: "table-index" */ 'pages/table/index.vue'),
       },
       {
         path: 'beta',
@@ -524,8 +446,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['table-beta'],
         },
-        component: () =>
-          import(/* webpackChunkName: "table-beta" */ 'pages/table/beta.vue'),
+        component: () => import(/* webpackChunkName: "table-beta" */ 'pages/table/beta.vue'),
       },
     ],
   },
@@ -537,16 +458,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       title: 'nested',
       icon: 'menu',
-      pagePermissionId: [
-        'menu',
-        'menu-menu1',
-        'menu-menu1-1',
-        'menu-menu1-2',
-        'menu-menu1-2-1',
-        'menu-menu1-2-2',
-        'menu-menu1-3',
-        'menu-menu2',
-      ],
+      pagePermissionId: ['menu', 'menu-menu1', 'menu-menu1-1', 'menu-menu1-2', 'menu-menu1-2-1', 'menu-menu1-2-2', 'menu-menu1-3', 'menu-menu2'],
     },
     children: [
       {
@@ -580,8 +492,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
             children: [
               {
                 path: 'menu1-2-1',
-                component: () =>
-                  import('src/pages/menu/menu1/menu1-2/menu1-2-1/index.vue'),
+                component: () => import('src/pages/menu/menu1/menu1-2/menu1-2-1/index.vue'),
                 name: 'Menu1-2-1',
                 meta: {
                   title: 'nested1_2_1',
@@ -590,8 +501,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
               },
               {
                 path: 'menu1-2-2',
-                component: () =>
-                  import('src/pages/menu/menu1/menu1-2/menu1-2-2/index.vue'),
+                component: () => import('src/pages/menu/menu1/menu1-2/menu1-2-2/index.vue'),
                 name: 'Menu1-2-2',
                 meta: {
                   title: 'nested1_2_2',
@@ -644,10 +554,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     name: 'largeDisplay0',
     children: [
       {
-        path:
-          process.env.NODE_ENV === 'production'
-            ? `${location.origin}${setting.publicPath}index2.html#/large-display`
-            : `${location.origin}/index2.html#/large-display`,
+        path: process.env.NODE_ENV === 'production' ? `${location.origin}${setting.publicPath}index2.html#/large-display` : `${location.origin}/index2.html#/large-display`,
         component: () => {},
         name: 'largeDisplay',
         meta: {

@@ -96,6 +96,7 @@ export default {
   auth: {},
   tip: {
     refreshCurPage: 'Refresh the current page',
+    toggleTheme: 'Dark mode or light mode',
     cancelFullscreen: 'Cancel fullscreen',
     fullscreen: 'fullscreen',
     noData: 'no data',

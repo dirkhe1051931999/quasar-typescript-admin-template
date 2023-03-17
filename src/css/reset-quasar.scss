@@ -1,21 +1,92 @@
 @import './quasar.variables.scss';
 // 卡片
+.body--dark {
+  .q-card {
+    box-shadow: 0px 6px 16px -1px rgba($color: #ffffff, $alpha: 0.05);
+  }
+  .query-form-and-action {
+    box-shadow: 0px 6px 16px -1px rgba($color: #ffffff, $alpha: 0.05);
+  }
+  .q-pagination {
+    &::before {
+      border: 1px solid rgba($color: #ffffff, $alpha: 0);
+    }
+  }
+  .q-field {
+    .q-field__label {
+      color: rgba($color: #ffffff, $alpha: 0.541);
+    }
+  }
+  .q-table {
+    tbody {
+      tr {
+        td {
+          &::before {
+            background: rgba($color: #ffffff, $alpha: 0) !important;
+          }
+        }
+      }
+    }
+  }
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: rgba($color: #ffffff, $alpha: 0.3);
+  }
+  .dialog-upload-form {
+    .upload-limit {
+      color: rgba($color: #ffffff, $alpha: 0.541);
+    }
+  }
+}
+.body--light {
+  .q-card {
+    box-shadow: 0px 6px 16px -1px rgba($color: #000000, $alpha: 0.05);
+  }
+  .query-form-and-action {
+    box-shadow: 0px 6px 16px -1px rgba($color: #000000, $alpha: 0.05);
+  }
+  .q-pagination {
+    &::before {
+      border: 1px solid rgba($color: #000000, $alpha: 0);
+    }
+  }
+  .q-field {
+    .q-field__label {
+      color: rgba($color: #000000, $alpha: 0.541);
+    }
+  }
+  .q-table {
+    tbody {
+      tr {
+        td {
+          &::before {
+            background: rgba($color: #000000, $alpha: 0) !important;
+          }
+        }
+      }
+    }
+  }
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: rgba($color: #000000, $alpha: 0.3);
+  }
+  .dialog-upload-form {
+    .upload-limit {
+      color: rgba($color: #000000, $alpha: 0.541);
+    }
+  }
+}
 .q-card {
   border-radius: 16px !important;
   vertical-align: top;
   position: relative;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   border: none !important;
 }
 // 搜索栏
 .query-form-and-action {
-  background: var(--q-white);
+  background: var(--my-white);
   border-radius: 8px;
   padding: 25px 20px 20px;
-  box-shadow: 0px 6px 16px -1px var(--q-shadow-1);
   margin-bottom: 15px;
 }
-
 // 按钮
 .q-btn--rectangle {
   border-radius: 8px;
@@ -57,7 +128,7 @@
       margin-left: 8px !important;
       &::before {
         border-radius: 8px;
-        border: 1px solid var(--q-grey-6);
+        border: 1px solid var(--my-grey-6);
       }
     }
     span {
@@ -68,7 +139,6 @@
       box-shadow: none;
       height: 32px !important;
       border-radius: 8px;
-      border: 1px solid var(--q-transparent);
       box-sizing: border-box;
     }
     &.text-primary {
@@ -79,34 +149,19 @@
 .q-field--outlined .q-field__control {
   border-radius: 8px;
 }
-// 输入框
-.q-field {
-  .q-field__label {
-    color: var(--q-grey-4);
-  }
-}
 // 表格
 .q-table__container {
   border: none !important;
 }
 .q-table {
   th {
-    color: var(--q-grey-7);
-  }
-  tbody {
-    tr {
-      td {
-        &::before {
-          background: var(--q-transparent) !important;
-        }
-      }
-    }
+    color: var(--my-grey-7);
   }
 }
 .q-table__bottom--nodata {
   position: relative;
   height: 150px !important;
-  color: var(--q-grey-7);
+  color: var(--my-grey-7);
   i {
     display: none;
   }
@@ -131,7 +186,6 @@
   height: 1em;
 }
 .scroll::-webkit-scrollbar-thumb {
-  background-color: var(--q-grey-8);
   border-radius: 99999px;
   border: 0.3125em solid transparent;
   background-clip: content-box;
@@ -155,7 +209,7 @@
   }
   .container {
     height: 195px;
-    background: var(--q-grey-1);
+    background: var(--my-grey-1);
     border-radius: 6px;
     color: $dark;
     position: relative;
@@ -176,7 +230,7 @@
         padding-top: 10px;
       }
       .format {
-        color: var(--q-grey-7);
+        color: var(--my-grey-7);
         font-size: 12px;
         padding-top: 8px;
       }
@@ -190,7 +244,6 @@
   .upload-limit {
     padding-top: 10px;
     font-size: 14px;
-    color: var(--q-grey-4);
   }
 }
 /* tooltip */
@@ -204,5 +257,5 @@
 /* tree */
 .q-tree__node-header:before,
 .q-tree__node:after {
-  border-color: var(--q-grey-6) !important;
+  border-color: var(--my-grey-6) !important;
 }

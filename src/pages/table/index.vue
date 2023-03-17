@@ -356,6 +356,16 @@ export default class myComponentMenu2TableIndex extends Vue {
 }
 </script>
 <style lang="scss">
+.body--dark {
+  :deep(.view-subtitle) {
+    background: rgba($color: #ffffff, $alpha: 0.4);
+  }
+}
+.body--light {
+  :deep(.view-subtitle) {
+    background: rgba($color: #000000, $alpha: 0.4);
+  }
+}
 .my-table {
   /* specifying max-width so the example can
     highlight the sticky column on any browser window */
@@ -363,10 +373,10 @@ export default class myComponentMenu2TableIndex extends Vue {
 }
 .my-table thead tr:first-child th:first-child {
   /* bg color is important for th; just specify one */
-  background-color: var(--q-white);
+  background-color: var(--my-white);
 }
 .my-table td:first-child {
-  background-color: var(--q-white);
+  background-color: var(--my-white);
 }
 .my-table th:first-child,
 .my-table td:first-child {
@@ -386,10 +396,9 @@ export default class myComponentMenu2TableIndex extends Vue {
   opacity: 0;
 }
 :deep(.view-subtitle) {
-  background: rgba(0, 0, 0, 0.3);
   height: 32px;
   line-height: 32px;
-  color: var(--q-white);
+  color: var(--my-white);
   width: 300px;
   margin: 0 auto;
 }

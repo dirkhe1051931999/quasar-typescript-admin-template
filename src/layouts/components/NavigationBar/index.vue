@@ -12,6 +12,10 @@
         <q-tooltip>{{ $t('tip.refreshCurPage') }}</q-tooltip>
       </q-btn>
       <q-separator dark vertical />
+      <q-btn stretch flat :icon="darkIsActive ? 'dark_mode' : 'light_mode'" @click="toggleTheme()">
+        <q-tooltip>{{ $t('tip.toggleTheme') }}</q-tooltip>
+      </q-btn>
+      <q-separator dark vertical />
       <q-btn stretch flat @click="$q.fullscreen.toggle()" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'">
         <q-tooltip>
           {{ !$q.fullscreen.isActive ? `${$t('tip.fullscreen')}` : `${$t('tip.cancelFullscreen')}` }}
@@ -96,6 +100,7 @@ import { SettingModule } from 'src/store/modules/setting';
     Breadcrumb,
     Hamburger,
   },
+  emits: ['toggleThemeChange'],
 })
 export default class NavigationBarComponent extends Vue {
   get username() {
@@ -106,6 +111,9 @@ export default class NavigationBarComponent extends Vue {
   }
   get sidebar() {
     return AppModule.sidebar;
+  }
+  get darkIsActive() {
+    return this.$q.dark.isActive;
   }
   /* setting */
   get showNotify() {
@@ -141,6 +149,16 @@ export default class NavigationBarComponent extends Vue {
   public refreshCurPage() {
     AppModule.refreshCurPage();
   }
+  public toggleTheme() {
+    if (this.$q.dark.isActive) {
+      this.$q.dark.set(false);
+      document.querySelector('html')?.classList.remove('dark');
+    } else {
+      this.$q.dark.set(true);
+      document.querySelector('html')?.classList.add('dark');
+    }
+    this.$emit('toggleThemeChange');
+  }
   public toggleSidebar() {
     AppModule.TOGGLE_SIDEBAR(false);
   }
@@ -159,7 +177,7 @@ export default class NavigationBarComponent extends Vue {
 
 <style lang="scss" scoped>
 .navigation-bar {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--my-grey-5);
   height: var(--v3-navigationbar-height);
   overflow: hidden;
   background: var(--v3-navigationbar-background);
@@ -170,7 +188,7 @@ export default class NavigationBarComponent extends Vue {
     float: left;
     padding: 0 12px;
     cursor: pointer;
-    color: var(--q-white);
+    color: var(--my-white);
   }
   .breadcrumb {
     float: left;
@@ -185,7 +203,7 @@ export default class NavigationBarComponent extends Vue {
     height: 100%;
     display: flex;
     align-items: center;
-    color: var(--q-white);
+    color: var(--my-white);
     .right-menu-item {
       padding: 0 12px;
     }
