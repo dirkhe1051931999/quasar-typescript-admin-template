@@ -182,6 +182,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         'components-transfer',
         'components-parallax',
         'components-colors',
+        'components-terminal',
       ],
     },
     children: [
@@ -323,7 +324,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-transfer'],
         },
-        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/transfer.vue'),
+        component: () => import(/* webpackChunkName: "transfer" */ 'src/pages/components/transfer.vue'),
       },
       {
         path: 'parallax',
@@ -333,7 +334,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-parallax'],
         },
-        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/parallax.vue'),
+        component: () => import(/* webpackChunkName: "parallax" */ 'src/pages/components/parallax.vue'),
       },
       {
         path: 'colors',
@@ -343,7 +344,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'label',
           pagePermissionId: ['components-colors'],
         },
-        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/color.vue'),
+        component: () => import(/* webpackChunkName: "colors" */ 'src/pages/components/color.vue'),
+      },
+      {
+        path: 'terminal',
+        name: 'Terminal',
+        meta: {
+          title: 'terminal',
+          icon: 'label',
+          pagePermissionId: ['components-terminal'],
+        },
+        component: () => import(/* webpackChunkName: "terminal" */ 'src/pages/components/terminal.vue'),
       },
     ],
   },

@@ -46,7 +46,7 @@ export default class myComponentMd extends Vue {
 }
 .body--light {
   .splitter {
-    background: #ffffff;
+    background: #f5f5f5;
   }
 }
 </style>

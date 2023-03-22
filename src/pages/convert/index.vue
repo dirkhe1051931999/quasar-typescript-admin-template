@@ -77,7 +77,7 @@ export default class myComponentConvert extends Vue {
 }
 .body--light {
   .splitter {
-    background: #ffffff;
+    background: #f5f5f5;
   }
 }
 .confirm-btn {

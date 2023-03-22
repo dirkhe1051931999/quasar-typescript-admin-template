@@ -176,7 +176,7 @@ export default class myComponentTabs extends Vue {
 }
 .body--light {
   .splitter {
-    background: #ffffff;
+    background: #f5f5f5;
   }
 }
 </style>

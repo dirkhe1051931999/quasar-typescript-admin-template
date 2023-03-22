@@ -28,6 +28,7 @@ export default {
     skeleton: '骨架屏',
     spinners: '加载',
     notice: '提示',
+    terminal: '终端',
     transfer: '穿梭框',
     convert: 'less转css',
     dialog: '弹窗',

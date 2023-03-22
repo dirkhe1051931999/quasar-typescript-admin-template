@@ -32,6 +32,7 @@ export default {
     convert: 'Convert',
     dialog: 'Dialog',
     colors: 'Colors',
+    terminal: 'Terminal',
     profile: 'Profile',
     parallax: 'Parallax',
     world: 'World',

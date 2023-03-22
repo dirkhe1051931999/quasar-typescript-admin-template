@@ -17,3 +17,4 @@ declare module 'less';
 declare module 'uuid';
 declare module 'sha256';
 declare module 'jsencrypt';
+declare module 'vue-shepherd';

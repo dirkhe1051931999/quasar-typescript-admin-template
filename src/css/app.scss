@@ -1,5 +1,7 @@
 // app global css in SCSS form
 @import './element-variables.scss';
+@import './plugins/shepherd/shepherd.scss';
+@import './plugins/shepherd/welcome.scss';
 @import './lib/font-face';
 @import './lib/reset';
 @import './lib/font-size';
