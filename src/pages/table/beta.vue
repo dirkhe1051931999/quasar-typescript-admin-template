@@ -201,6 +201,8 @@
               model: dialogAddUpdateParams.params[item.model],
               label: item.label,
             }"
+            @endInput="(data) => (dialogAddUpdateParams.params[item.endModel] = data)"
+            @startInput="(data) => (dialogAddUpdateParams.params[item.startModel] = data)"
           />
           <MyFormSlider
             v-if="item.type === 'slider'"
@@ -213,11 +215,25 @@
               max: item.max,
               step: item.step,
             }"
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormRadio
             v-if="item.type === 'radio'"
             :option="{
               inputId: `${dialogAddUpdateParams.id}-select-${item.model}`,
+              rules: item.rules,
+              classes: item.classes,
+              model: dialogAddUpdateParams.params[item.model],
+              label: item.label,
+              inputSelectOption: item.inputSelectOption,
+              disable: item.disable,
+            }"
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
+          />
+          <MyTreeSelect
+            v-if="item.type === 'tree-select'"
+            :option="{
+              inputId: `${dialogAddUpdateParams.id}-tree-select-${item.model}`,
               rules: item.rules,
               classes: item.classes,
               model: dialogAddUpdateParams.params[item.model],
@@ -245,7 +261,7 @@
               <el-popover placement="top" title="popover-title" :width="320" popper-style="z-index:9999" trigger="hover">
                 <p v-for="(item, index) in ['test1', 'test2', 'test3']" :key="index">{{ index + 1 }}. {{ item }}</p>
                 <template #reference>
-                  <q-icon name="o_info" class="text-grey-4 cursor-pointer" />
+                  <q-icon name="o_info" class="text-grey cursor-pointer" />
                 </template>
               </el-popover>
             </template>
@@ -264,7 +280,7 @@
               <el-popover placement="top" title="popover-title" :width="320" popper-style="z-index:9999" trigger="hover">
                 <p v-for="(item, index) in ['test1', 'test2', 'test3']" :key="index">{{ index + 1 }}. {{ item }}</p>
                 <template #reference>
-                  <q-icon name="o_info" class="text-grey-4 cursor-pointer" />
+                  <q-icon name="o_info" class="text-grey cursor-pointer" />
                 </template>
               </el-popover>
             </template>
@@ -352,7 +368,7 @@ import { getCurrentInstance } from 'vue';
 
 const CONST_PARAMS: any = {
   query: { a: '', b: '', c: '' },
-  dialog_add_update: { a: '', b: '', c: '', d: [], e: '', e_dateRange: { from: '', to: '' }, f: '', g: '', g_startModel: '', g_endModel: '', h: 10, i: 'true' },
+  dialog_add_update: { a: '', b: '', c: '', d: [], e: '', e_dateRange: { from: '', to: '' }, f: '', g: '', g_startModel: '', g_endModel: '', h: 10, i: 'true', j: '' },
 };
 @Component({
   name: 'myComponentTableBeta',
@@ -666,6 +682,83 @@ export default class myComponentTableBeta extends Vue {
         ],
         label: 'Mask Input',
       },
+      {
+        model: 'j',
+        type: 'tree-select',
+        rules: [
+          (val: string | number | undefined | null) => {
+            return (val && String(val).length > 0) || this.globals.$t('messages.required');
+          },
+        ],
+        inputSelectOption: [
+          {
+            label: 'Open...',
+            value: 1,
+            children: [],
+          },
+          {
+            label: 'New',
+            value: 2,
+            children: [],
+          },
+          {
+            label: 'Preferences',
+            children: [
+              {
+                label: 'Submenu Label 1',
+                value: 3,
+                children: [],
+              },
+              {
+                label: 'Submenu Label 2',
+                children: [
+                  {
+                    label: '3rd level Label 4',
+                    children: [],
+                    value: 4,
+                  },
+                  {
+                    label: '3rd level Label 5',
+                    children: [],
+                    value: 5,
+                  },
+                  {
+                    label: '3rd level Label 6',
+                    children: [],
+                    value: 6,
+                  },
+                ],
+              },
+              {
+                label: 'Submenu Label 3',
+                children: [
+                  {
+                    label: '3rd level Label 7',
+                    children: [],
+                    value: 7,
+                  },
+                  {
+                    label: '3rd level Label 8',
+                    children: [],
+                    value: 8,
+                  },
+                  {
+                    label: '3rd level Label 9',
+                    children: [],
+                    value: 9,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Quit',
+            value: 10,
+            children: [],
+          },
+        ],
+        label: 'Tree select',
+      },
     ],
   };
   private dialogUpload = {
@@ -821,6 +914,7 @@ export default class myComponentTableBeta extends Vue {
     try {
       this.dialogAddUpdateParams.clickLoading = true;
       // await HTTP_REQUEST()
+      console.log(this.dialogAddUpdateParams.params);
       this.dialogAddUpdateParams.clickLoading = false;
       this.dialogAddUpdateParams.visiable = false;
       this.$globalMessage.show({
@@ -901,5 +995,4 @@ export default class myComponentTableBeta extends Vue {
   z-index: 1;
 }
 </style>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

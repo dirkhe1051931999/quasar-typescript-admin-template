@@ -3,20 +3,29 @@
     <q-list>
       <div class="f-bold fs-12 q-pb-md row items-center">
         <span class="q-mr-md">
-          {{ dateParams.rules.length ? '*' : '' }} {{ dateParams.label }}
+          {{ sliderParams.rules.length ? '*' : '' }} {{ sliderParams.label }}
           <span class="q-ml-sm detail-link-type" @click="handlerClickSetSlider">Input?</span>
         </span>
       </div>
       <q-item>
         <q-item-section side class="f-bold">
-          {{ dateParams.min }}
+          {{ sliderParams.min }}
         </q-item-section>
         <q-item-section>
-          <q-slider dense v-model="dateParams.model" @update:model-value="(val) => (dateParams.model = val)" :min="dateParams.min" :step="dateParams.step" label-always label :max="dateParams.max">
+          <q-slider
+            dense
+            v-model="sliderParams.model"
+            @update:model-value="(val) => (sliderParams.model = val)"
+            :min="sliderParams.min"
+            :step="sliderParams.step"
+            label-always
+            label
+            :max="sliderParams.max"
+          >
           </q-slider>
         </q-item-section>
         <q-item-section side class="f-bold">
-          {{ dateParams.max }}
+          {{ sliderParams.max }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -34,37 +43,37 @@ export default class mySliderComponent extends Vue {
     default: {},
   })
   option!: any;
-  @Watch('dateParams.model', { deep: true })
+  @Watch('sliderParams.model', { deep: true })
   onchange2(newVal: any) {
     this.$emit('input', newVal);
   }
   @Watch('option.model', { deep: true })
   onchange3(newVal: any) {
-    this.dateParams.model = newVal;
+    this.sliderParams.model = newVal;
   }
   @Watch('option.label', { deep: true })
   onchange4(newVal: any) {
-    this.dateParams.label = newVal;
+    this.sliderParams.label = newVal;
   }
   @Watch('option.rules', { deep: true })
   onchange5(newVal: any) {
-    this.dateParams.rules = newVal;
+    this.sliderParams.rules = newVal;
   }
   @Watch('option.classes', { deep: true })
   onchange6(newVal: any) {
-    this.dateParams.classes = newVal;
+    this.sliderParams.classes = newVal;
   }
   mounted() {
-    this.dateParams.model = this.option.model;
-    this.dateParams.rules = this.option.rules;
-    this.dateParams.label = this.option.label;
-    this.dateParams.classes = this.option.classes;
-    this.dateParams.min = this.option.min;
-    this.dateParams.max = this.option.max;
-    this.dateParams.step = this.option.step || 0.1;
+    this.sliderParams.model = this.option.model;
+    this.sliderParams.rules = this.option.rules;
+    this.sliderParams.label = this.option.label;
+    this.sliderParams.classes = this.option.classes;
+    this.sliderParams.min = this.option.min;
+    this.sliderParams.max = this.option.max;
+    this.sliderParams.step = this.option.step || 0.1;
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
-  public dateParams = {
+  public sliderParams = {
     model: 0,
     rules: [],
     classes: '',
@@ -74,7 +83,7 @@ export default class mySliderComponent extends Vue {
     step: 0.1,
   };
   private handlerClickSetSlider() {
-    const item = this.dateParams;
+    const item = this.sliderParams;
     this.$q
       .dialog({
         title: item.label,
@@ -82,7 +91,7 @@ export default class mySliderComponent extends Vue {
         transitionHide: 'jump-up',
         transitionShow: 'jump-down',
         prompt: {
-          model: this.dateParams.model.toString(),
+          model: this.sliderParams.model.toString(),
           noErrorIcon: true,
           clearIcon: 'app:clear',
           isValid: (val: any) => {
@@ -129,12 +138,10 @@ export default class mySliderComponent extends Vue {
         persistent: true,
       })
       .onOk((data) => {
-        this.dateParams.model = Number(data) as any;
+        this.sliderParams.model = Number(data) as any;
       });
   }
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -14,6 +14,7 @@ import MyFormDateRangeWithTime from 'src/components/myForm/dateRangeWithTime.vue
 import MyFormSlider from 'src/components/myForm/slider.vue';
 import MyFormRadio from 'src/components/myForm/radio.vue';
 import MyMaskInput from 'src/components/myForm/maskInput.vue';
+import MyTreeSelect from 'src/components/myForm/treeSelect.vue';
 
 // 我们使用Vue全局注册了我们的组件
 export default boot(({ app }) => {
@@ -31,4 +32,5 @@ export default boot(({ app }) => {
   app.component('MyFormDateRangeWithTime', MyFormDateRangeWithTime);
   app.component('MyFormSlider', MyFormSlider);
   app.component('MyFormRadio', MyFormRadio);
+  app.component('MyTreeSelect', MyTreeSelect);
 });

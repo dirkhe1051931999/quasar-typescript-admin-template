@@ -26,7 +26,7 @@
           @click="(dateParams.model = ''), (dateParams.startModel = ''), (dateParams.endModel = ''), (dateParams.list = ['', ''])"
         >
         </q-icon>
-        <q-icon name="o_looks_one" class="cursor-pointer">
+        <q-icon :name="$q.dark.isActive ? 'app:start-time-dark' : 'app:start-time'" class="cursor-pointer q-mr-xs" size="18px">
           <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down" ref="proxy1">
             <div class="row">
               <q-date v-model="dateParams.startModel" mask="YYYY/MM/DD HH:mm:ss" flat> </q-date>
@@ -37,7 +37,7 @@
             </div>
           </q-popup-proxy>
         </q-icon>
-        <q-icon name="o_looks_two" class="cursor-pointer">
+        <q-icon :name="$q.dark.isActive ? 'app:end-time-dark' : 'app:end-time'" class="cursor-pointer" size="18px">
           <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down" ref="proxy2">
             <div class="row">
               <q-date v-model="dateParams.endModel" mask="YYYY/MM/DD HH:mm:ss" flat> </q-date>
@@ -57,7 +57,7 @@
 import { getCurrentInstance } from 'vue';
 import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 
-@Component({ name: 'myDateRangeWithTImeComponent' })
+@Component({ name: 'myDateRangeWithTImeComponent', emits: ['endInput', 'startInput'] })
 export default class myDateRangeWithTImeComponent extends Vue {
   $refs: any;
   @Prop({
@@ -73,7 +73,8 @@ export default class myDateRangeWithTImeComponent extends Vue {
       return;
     }
     if (newVal) {
-      this.dateParams.list[0] = `start: ${newVal} `;
+      this.$emit('startInput', newVal);
+      this.dateParams.list[0] = `Start: ${newVal} `;
     }
   }
   @Watch('dateParams.endModel', { deep: true })
@@ -85,7 +86,8 @@ export default class myDateRangeWithTImeComponent extends Vue {
       return;
     }
     if (newVal) {
-      this.dateParams.list[1] = `end: ${newVal}`;
+      this.$emit('endInput', newVal);
+      this.dateParams.list[1] = `End: ${newVal}`;
     }
   }
   @Watch('dateParams.list', { deep: true })
@@ -130,11 +132,9 @@ export default class myDateRangeWithTImeComponent extends Vue {
     rules: [],
     classes: '',
     label: '',
-    placeholder: 'Click 1 and 2 to select start and end times',
+    placeholder: 'Select start and end times',
   };
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

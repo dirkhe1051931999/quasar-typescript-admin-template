@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>编组 4</title>
     <defs>
-        <path d="M10.5,17 C10.244,17 9.988,16.902 9.793,16.707 C9.402,16.316 9.402,15.684 9.793,15.293 L13.098,11.988 L9.918,8.695 C9.535,8.297 9.546,7.664 9.943,7.281 C10.341,6.898 10.974,6.909 11.357,7.305 L15.219,11.305 C15.598,11.698 15.593,12.321 15.207,12.707 L11.207,16.707 C11.012,16.902 10.756,17 10.5,17" id="path-1"></path>
+        <path
+            d="M10.5,17 C10.244,17 9.988,16.902 9.793,16.707 C9.402,16.316 9.402,15.684 9.793,15.293 L13.098,11.988 L9.918,8.695 C9.535,8.297 9.546,7.664 9.943,7.281 C10.341,6.898 10.974,6.909 11.357,7.305 L15.219,11.305 C15.598,11.698 15.593,12.321 15.207,12.707 L11.207,16.707 C11.012,16.902 10.756,17 10.5,17"
+            id="path-1"></path>
     </defs>
-    <g id="物联网平台11.29" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="quasar-custom-svg" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="console设计规范" transform="translate(-393.000000, -488.000000)">
             <g id="箭头-下" transform="translate(393.000000, 488.000000)">
-                <g id="编组" transform="translate(12.000000, 12.000000) scale(1, -1) rotate(-90.000000) translate(-12.000000, -12.000000) translate(0.000000, 0.000000)">
+                <g id="编组"
+                    transform="translate(12.000000, 12.000000) scale(1, -1) rotate(-90.000000) translate(-12.000000, -12.000000) translate(0.000000, 0.000000)">
                     <rect id="矩形备份-2" x="0" y="0" width="24" height="24"></rect>
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>

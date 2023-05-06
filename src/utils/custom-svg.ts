@@ -26,4 +26,8 @@ export const myIcons: { [key: string]: string } = {
   'app:add': 'svg/add.svg',
   'app:delete': 'svg/delete.svg',
   'app:speaker': 'svg/speaker.svg',
+  'app:start-time': 'svg/start-time.svg',
+  'app:end-time': 'svg/end-time.svg',
+  'app:start-time-dark': 'svg/start-time-dark.svg',
+  'app:end-time-dark': 'svg/end-time-dark.svg',
 };

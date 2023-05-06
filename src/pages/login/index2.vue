@@ -52,7 +52,7 @@
                   <el-popover placement="top" title="Password rules" :width="320" popper-style="z-index:9999" trigger="hover">
                     <p v-for="(item, index) in passwordRules" :key="index">{{ index + 1 }}. {{ item }}</p>
                     <template #reference>
-                      <q-icon name="o_info" class="text-grey-4 cursor-pointer" />
+                      <q-icon name="o_info" class="text-grey cursor-pointer" />
                     </template>
                   </el-popover>
                 </div>
