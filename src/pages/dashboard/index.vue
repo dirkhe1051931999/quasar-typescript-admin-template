@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-container">
     <q-intersection once transition="jump-up">
-      <div class="col-12 m-b-16">
-        <q-card class="p-32 bg-gradient-primary">
+      <div class="col-12 q-mb-md">
+        <q-card class="q-pa-lg bg-gradient-primary">
           <div class="row items-center justify-center">
             <div class="col-10">
               <div class="numbers">
@@ -20,7 +20,7 @@
     </q-intersection>
     <div class="row items-start">
       <div class="col-6 row items-center justify-between">
-        <q-card class="w-p-49 text-left p-16 flex justify-between items-center m-b-24" v-for="(item, index) in count" :key="index">
+        <q-card class="w-p-49 text-left q-pa-md flex justify-between items-center m-b-24" v-for="(item, index) in count" :key="index">
           <q-card-section class="column items-start justify-center" style="padding: 0">
             <p class="fs-16 text-grey p-b-10">{{ item.name }}</p>
             <CountTo :startVal="0" :endVal="item.num" :duration="4000" class="fs-20 f-bold"></CountTo>
@@ -31,7 +31,7 @@
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="m-l-16 p-16">
+        <q-card class="q-ml-md q-pa-md">
           <div>
             <p class="fs-18 f-bold p-b-10">Overview</p>
             <p>
@@ -43,18 +43,18 @@
             <canvas id="chart1" style="width: 100%; height: 500px"></canvas>
           </div>
         </q-card>
-        <div class="p-l-16 m-b-16 row m-t-16">
+        <div class="q-pl-md q-mb-md row q-mt-md">
           <div class="col-6">
-            <q-card class="text-center p-16">
+            <q-card class="text-center q-pa-md">
               <p class="text-primary fs-48 f-bold">87 <span class="fs-18">m³</span></p>
-              <p class="fs-18 p-t-16 p-b-16">Water</p>
+              <p class="fs-18 q-pt-md q-pb-md">Water</p>
               <p class="fs-14 text-grey">Consumption</p>
             </q-card>
           </div>
-          <div class="col-6 p-l-16">
-            <q-card class="text-center p-16">
+          <div class="col-6 q-pl-md">
+            <q-card class="text-center q-pa-md">
               <p class="text-primary fs-48 f-bold">417 <span class="fs-18">GB</span></p>
-              <p class="fs-18 p-t-16 p-b-16">Internet</p>
+              <p class="fs-18 q-pt-md q-pb-md">Internet</p>
               <p class="fs-14 text-grey">All devices</p>
             </q-card>
           </div>
@@ -92,8 +92,8 @@
     <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
     <div class="row items-startm justify-between">
       <div class="col-6">
-        <q-card class="p-16">
-          <div class="header row items-center justify-between p-b-16">
+        <q-card class="q-pa-md">
+          <div class="header row items-center justify-between q-pb-md">
             <div class="title fs-18 f-bold">Consumption by room</div>
             <q-icon name="help_outline" class="fs-20"></q-icon>
           </div>
@@ -112,35 +112,35 @@
             <div class="right col-7">
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-primary"></span>
+                  <span class="badge w-20 h-20 b-r-7 block q-mr-md bg-gradient-primary"></span>
                   <span>Living Room</span>
                 </div>
                 <span class="col-2 text-center">15%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-secondary"></span>
+                  <span class="badge w-20 h-20 b-r-7 block q-mr-md bg-gradient-secondary"></span>
                   <span>Kitchen</span>
                 </div>
                 <span class="col-2 text-center">20%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-success"></span>
+                  <span class="badge w-20 h-20 b-r-7 block q-mr-md bg-gradient-success"></span>
                   <span>Attic</span>
                 </div>
                 <span class="col-2 text-center">13%</span>
               </div>
               <div class="row b-bottom p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span class="badge w-20 h-20 b-r-7 block m-r-16 w-20 h-20 b-r-7 block bg-gradient-info"></span>
+                  <span class="badge w-20 h-20 b-r-7 block q-mr-md w-20 h-20 b-r-7 block bg-gradient-info"></span>
                   <span>Garage</span>
                 </div>
                 <span class="col-2 text-center">32%</span>
               </div>
               <div class="row p-8 items-center">
                 <div class="col-10 row items-center">
-                  <span class="badge w-20 h-20 b-r-7 block m-r-16 bg-gradient-warning"></span>
+                  <span class="badge w-20 h-20 b-r-7 block q-mr-md bg-gradient-warning"></span>
                   <span>Basement</span>
                 </div>
                 <span class="col-2 text-center">20%</span>
@@ -150,17 +150,17 @@
         </q-card>
       </div>
       <div class="col-6 row">
-        <div class="p-l-16 col-6">
-          <q-card class="p-16">
-            <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
+        <div class="q-pl-md col-6">
+          <q-card class="q-pa-md">
+            <div class="header fs-18 q-pb-md f-bold">Consumption per day</div>
             <div>
               <canvas id="chart-cons-week" class="chart-canvas" height="200"></canvas>
             </div>
           </q-card>
         </div>
-        <div class="p-l-16 col-6">
-          <q-card class="p-16">
-            <div class="header fs-18 p-b-16 f-bold">Consumption per day</div>
+        <div class="q-pl-md col-6">
+          <q-card class="q-pa-md">
+            <div class="header fs-18 q-pb-md f-bold">Consumption per day</div>
             <div class="text-center h-200">
               <q-circular-progress show-value font-size="12px" :value="81" size="165px" :thickness="0.1" color="primary" track-color="grey-3" class="q-ma-md"> 81% </q-circular-progress>
             </div>
@@ -171,7 +171,7 @@
     <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
     <div class="row">
       <div class="col-2">
-        <div class="p-r-16">
+        <div class="q-pr-md">
           <q-card class="w-full p-24 h-220">
             <div class="top m-b-24 row items-center justify-between">
               <span>{{ toggle_switch.value1 ? 'On' : 'Off' }}</span>
@@ -226,15 +226,15 @@
             </div>
             <div class="bottom m-t-24">
               <p class="fs-16">Humidity</p>
-              <p class="fs-12 p-t-12">Inactive since: 2 days</p>
+              <p class="fs-12 q-pt-md">Inactive since: 2 days</p>
             </div>
           </q-card>
         </div>
       </div>
       <div class="col-2">
-        <div class="p-r-16">
+        <div class="q-pr-md">
           <q-card class="w-full p-24 h-220 bg-gradient-primary">
-            <div class="top m-b-16 row items-center justify-between text-white">
+            <div class="top q-mb-md row items-center justify-between text-white">
               <span>{{ toggle_switch.value2 ? 'On' : 'Off' }}</span>
               <q-toggle v-model="toggle_switch.value2" color="white" />
             </div>
@@ -301,17 +301,17 @@
                 </defs>
               </svg>
             </div>
-            <div class="bottom m-t-4 text-white">
+            <div class="bottom q-mt-xs text-white">
               <p class="fs-16">Temperature</p>
-              <p class="fs-12 p-t-12">Active</p>
+              <p class="fs-12 q-pt-md">Active</p>
             </div>
           </q-card>
         </div>
       </div>
       <div class="col-2">
-        <div class="p-r-16">
+        <div class="q-pr-md">
           <q-card class="w-full p-24 h-220">
-            <div class="top m-b-16 row items-center justify-between">
+            <div class="top q-mb-md row items-center justify-between">
               <span>{{ toggle_switch.value3 ? 'On' : 'Off' }}</span>
               <q-toggle v-model="toggle_switch.value3" />
             </div>
@@ -364,15 +364,15 @@
             </div>
             <div class="bottom m-t-24">
               <p class="fs-16">Air Conditioner</p>
-              <p class="fs-12 p-t-12">Inactive since: 1 hour</p>
+              <p class="fs-12 q-pt-md">Inactive since: 1 hour</p>
             </div>
           </q-card>
         </div>
       </div>
       <div class="col-2">
-        <div class="p-r-16">
+        <div class="q-pr-md">
           <q-card class="w-full p-24 h-220">
-            <div class="top m-b-16 row items-center justify-between">
+            <div class="top q-mb-md row items-center justify-between">
               <span>{{ toggle_switch.value4 ? 'On' : 'Off' }}</span>
               <q-toggle v-model="toggle_switch.value4" />
             </div>
@@ -420,15 +420,15 @@
             </div>
             <div class="bottom m-t-24">
               <p class="fs-16">Humidity</p>
-              <p class="fs-12 p-t-12">Inactive since: 2 days</p>
+              <p class="fs-12 q-pt-md">Inactive since: 2 days</p>
             </div>
           </q-card>
         </div>
       </div>
       <div class="col-2">
-        <div class="p-r-16">
+        <div class="q-pr-md">
           <q-card class="w-full p-24 h-220 bg-gradient-primary">
-            <div class="top m-b-16 row items-center justify-between text-white">
+            <div class="top q-mb-md row items-center justify-between text-white">
               <span>{{ toggle_switch.value5 ? 'On' : 'Off' }}</span>
               <q-toggle v-model="toggle_switch.value5" color="white" />
             </div>
@@ -459,7 +459,7 @@
             </div>
             <div class="bottom m-t-24 text-white">
               <p class="fs-16">Humidity</p>
-              <p class="fs-12 p-t-12">Inactive since: 2 days</p>
+              <p class="fs-12 q-pt-md">Inactive since: 2 days</p>
             </div>
           </q-card>
         </div>
@@ -469,7 +469,7 @@
           <q-card class="w-full p-24 h-220 row items-center justify-center">
             <div class="text-center">
               <q-icon name="add" class="fs-30"></q-icon>
-              <p class="fs-20 p-t-12">New device</p>
+              <p class="fs-20 q-pt-md">New device</p>
             </div>
           </q-card>
         </div>
@@ -478,8 +478,8 @@
     <div class="full-width h-1 m-t-32 m-b-32 split-line"></div>
     <div class="row">
       <div class="col-6">
-        <div class="p-r-16">
-          <q-card flat class="p-16">
+        <div class="q-pr-md">
+          <q-card flat class="q-pa-md">
             <q-list bordered>
               <q-item class="q-px-none">
                 <q-item-section>Icon as avatar</q-item-section>
@@ -556,8 +556,8 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="p-r-16">
-          <q-card flat class="p-16">
+        <div class="q-pr-md">
+          <q-card flat class="q-pa-md">
             <q-video src="https://www.youtube.com/embed/fThGKOgSo5I?rel=0" class="h-300" />
             <q-card-section class="q-px-none">
               <div class="text-h6">What Is A Quasar?</div>
@@ -576,17 +576,17 @@
           </q-card>
         </div>
       </div>
-      <div class="row full-width m-t-16">
+      <div class="row full-width q-mt-md">
         <div class="col-6">
-          <div class="p-r-16">
-            <q-card flat class="p-16">
+          <div class="q-pr-md">
+            <q-card flat class="q-pa-md">
               <FullCalendar :options="calendarOptions" />
             </q-card>
           </div>
         </div>
         <div class="col-6">
           <div>
-            <q-card class="p-16" flat>
+            <q-card class="q-pa-md" flat>
               <div>
                 <q-chat-message name="me" avatar="https://cdn.quasar.dev/img/avatar3.jpg" :text="['hey, how are you?']" stamp="7 minutes ago" sent bg-color="amber-7" />
                 <q-chat-message

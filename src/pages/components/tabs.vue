@@ -13,7 +13,7 @@
         <q-tab name="movies" icon="movie" label="Movies" />
       </q-tabs>
 
-      <q-tabs v-model="tab" no-caps class="bg-orange shadow-2">
+      <q-tabs v-model="tab" class="bg-orange shadow-2">
         <q-tab name="mails" label="Mails" />
         <q-tab name="alarms" label="Alarms" />
         <q-tab name="movies" label="Movies" />
@@ -168,10 +168,10 @@ export default class myComponentTabs extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .body--dark {
   .splitter {
-    background: $dark;
+    background: #000000;
   }
 }
 .body--light {

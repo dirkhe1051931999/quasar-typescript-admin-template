@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="p-16">
+    <q-card class="q-pa-md">
       <div class="fs-18 f-bold">Pie chart example</div>
       <div>
         <canvas id="c-pie-chart" style="width: 100%; height: 300px"></canvas>
@@ -15,9 +15,7 @@ import { Chart } from 'chart.js/auto';
 @Component({ name: 'myChartsComponent' })
 export default class myChartsComponent extends Vue {
   mounted() {
-    var ctx1 = (
-      document.getElementById('c-pie-chart') as HTMLCanvasElement
-    ).getContext('2d')!;
+    var ctx1 = (document.getElementById('c-pie-chart') as HTMLCanvasElement).getContext('2d')!;
     var gradientStroke1 = ctx1!.createLinearGradient(0, 230, 0, 50);
 
     gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
@@ -93,6 +91,4 @@ export default class myChartsComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

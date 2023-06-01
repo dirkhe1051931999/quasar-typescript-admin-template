@@ -951,10 +951,10 @@ export default class myComponentIcon extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .body--dark {
   .icon {
-    background: $dark;
+    background: #000000;
   }
 }
 .body--light {

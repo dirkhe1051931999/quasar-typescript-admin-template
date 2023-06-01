@@ -1,22 +1,8 @@
 <template>
-  <q-input
-    outlined
-    class="text-to-input"
-    v-model="text"
-    :loading="_loading"
-    dense
-  >
+  <q-input outlined class="text-to-input" v-model="text" :loading="_loading" dense>
     <template v-slot:append>
-      <q-icon
-        name="app:text-to-input-close"
-        class="cursor-pointer"
-        @click.stop.prevent="close"
-      />
-      <q-icon
-        name="app:text-to-input-confirm"
-        class="cursor-pointer"
-        @click.stop.prevent="confirm"
-      />
+      <q-icon name="app:text-to-input-close" class="cursor-pointer" @click.stop.prevent="close" />
+      <q-icon name="app:text-to-input-confirm" class="cursor-pointer comfirm-button" @click.stop.prevent="confirm" />
     </template>
   </q-input>
 </template>
@@ -57,6 +43,21 @@ export default class TextToInputComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
+<style lang="scss">
+.body--dark {
+  .comfirm-button {
+    img {
+      border-radius: 50%;
+      transform: scale(0.88);
+    }
+  }
+}
+.body--light {
+  .comfirm-button {
+    img {
+      border-radius: 50%;
+      transform: scale(1.05);
+    }
+  }
+}
 </style>

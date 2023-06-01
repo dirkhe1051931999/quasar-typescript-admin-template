@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row items-center justify-end m-t-26">
-      <p class="m-r-10">{{ $t('table.total') }} {{ _paginationParams.rowsNumber }}</p>
+      <p class="q-mr-md">{{ $t('table.total') }} {{ _paginationParams.rowsNumber }}</p>
       <q-pagination
         v-model="_paginationParams.page"
         :input="false"
@@ -17,7 +17,7 @@
         :ripple="false"
       ></q-pagination>
       <q-select
-        class="my-pagination m-l-4"
+        class="my-pagination q-ml-sm"
         borderless
         v-model="_paginationParams.rowsPerPage"
         :options="_rowNumbersArr"
@@ -78,7 +78,6 @@ export default class MyPaginationComponent extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss">
 .body--dark {

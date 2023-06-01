@@ -69,10 +69,10 @@ export default class myComponentConvert extends Vue {
 }
 </script>
 
-<style  lang='scss'>
+<style lang="scss">
 .body--dark {
   .splitter {
-    background: $dark;
+    background: #000000;
   }
 }
 .body--light {

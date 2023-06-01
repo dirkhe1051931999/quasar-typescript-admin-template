@@ -5,7 +5,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'changePassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16">Change password</div>
+            <div class="f-bold bold fs-24 q-pb-md">Change password</div>
             <div class="p-b-24 fs-16">Please enter the following information to change your password</div>
             <q-form ref="changePasswordForm">
               <div class="field">
@@ -48,7 +48,7 @@
               </div>
               <div class="field">
                 <div class="row q-py-md f-bold">
-                  <label class="m-r-5">* New password</label>
+                  <label class="q-mr-sm">* New password</label>
                   <el-popover placement="top" title="Password rules" :width="320" popper-style="z-index:9999" trigger="hover">
                     <p v-for="(item, index) in passwordRules" :key="index">{{ index + 1 }}. {{ item }}</p>
                     <template #reference>
@@ -109,7 +109,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'forgotPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16">Forgot password</div>
+            <div class="f-bold bold fs-24 q-pb-md">Forgot password</div>
             <div class="p-b-24 fs-16">Please enter your username and email address to reset your password.</div>
             <q-form ref="forgotPasswordForm">
               <div class="field">
@@ -159,12 +159,12 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'resetPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16">Reset Password</div>
+            <div class="f-bold bold fs-24 q-pb-md">Reset Password</div>
             <div class="p-b-24 fs-16">Please reset your password.</div>
             <q-form ref="resetPasswordForm">
               <div class="field">
                 <div class="row q-py-md f-bold">
-                  <label class="m-r-5">* Password</label>
+                  <label class="q-mr-sm">* Password</label>
                   <el-popover placement="top" title="Password rules" :width="320" trigger="hover">
                     <p v-for="(item, index) in passwordRules" :key="index">{{ index + 1 }}. {{ item }}</p>
                     <template #reference>
@@ -191,7 +191,7 @@
                 />
               </div>
               <div class="field">
-                <div class="row q-pb-md p-t-5 f-bold">
+                <div class="row q-pb-md q-pt-xs f-bold">
                   <label>* Confirm password</label>
                 </div>
                 <q-input
@@ -225,8 +225,8 @@
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'signIn'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
           <div class="p-24">
-            <div class="f-bold bold fs-24 p-b-16">Sign In</div>
-            <div class="p-b-24 fs-16">Please enter your username and password.</div>
+            <div class="f-bold bold fs-24 q-pb-md">Sign In</div>
+            <div class="p-b-24 fs-16 lh-24">Please enter your username and password. <span class="text-grey">(Login by typing in any username, code and password)</span></div>
             <q-form>
               <div class="field">
                 <div class="row q-pb-md f-bold">

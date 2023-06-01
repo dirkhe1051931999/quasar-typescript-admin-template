@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8 row items-center">
-      <span class="m-r-6">{{ rules.length ? '*' : '' }} {{ label }}</span>
+    <p class="f-bold fs-12 q-pb-xs row items-center">
+      <span class="q-mr-xs">{{ rules.length ? '*' : '' }} {{ label }}</span>
       <slot name="subTitle"></slot>
     </p>
     <q-select
       :ref="inputId"
       v-model="model"
       :options="inputSelectOption"
-      :class="['m-b-5', classes]"
+      :class="['q-mb-sm', classes]"
       :rules="rules"
       :clearable="showClose"
       :readonly="readonly"
@@ -175,6 +175,4 @@ export default class FormSelectComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

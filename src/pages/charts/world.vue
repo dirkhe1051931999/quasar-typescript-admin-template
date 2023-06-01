@@ -115,7 +115,7 @@ export default class myChartWorldComponent extends Vue {
 <style lang="scss">
 .body--dark {
   .jvm-series-container .jvm-legend {
-    background: $dark;
+    background: #000000;
   }
 }
 </style>

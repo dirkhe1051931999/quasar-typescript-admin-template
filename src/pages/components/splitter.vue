@@ -50,10 +50,10 @@ export default class myComponentSplitter extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .body--dark {
   .splitter {
-    background: $dark;
+    background: #000000;
   }
 }
 .body--light {

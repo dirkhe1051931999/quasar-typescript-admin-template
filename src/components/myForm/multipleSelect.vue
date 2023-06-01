@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8 row items-center">
-      <span class="m-r-6">{{ rules.length ? '*' : '' }} {{ label }}</span>
+    <p class="f-bold fs-12 q-pb-xs row items-center">
+      <span class="q-mr-xs">{{ rules.length ? '*' : '' }} {{ label }}</span>
       <slot name="subTitle"></slot>
     </p>
     <q-select
       :ref="inputId"
       v-model="inputModel"
       :options="inputSelectOption"
-      :class="['m-b-5', classes]"
+      :class="['q-mb-sm', classes]"
       :rules="rules"
       :clearable="showClose"
       :multiple="true"
@@ -36,25 +36,11 @@
     >
       <template #selected>
         <template v-if="inputModel && inputModel.length">
-          <q-chip
-            :removable="!readonly"
-            v-for="(item, index) in inputModel"
-            :key="item"
-            dense
-            @remove="inputModel.splice(index, 1)"
-            >{{
-              inputSelectOptionBak.find(
-                (data) => String(data.value) === String(item)
-              )?.label ?? item
-            }}
+          <q-chip :removable="!readonly" v-for="(item, index) in inputModel" :key="item" dense @remove="inputModel.splice(index, 1)"
+            >{{ inputSelectOptionBak.find((data) => String(data.value) === String(item))?.label ?? item }}
           </q-chip>
         </template>
-        <template
-          v-if="
-            (!inputModel || (inputModel && !inputModel.length)) &&
-            showPlaceholder
-          "
-        >
+        <template v-if="(!inputModel || (inputModel && !inputModel.length)) && showPlaceholder">
           <span class="text-grey-5 fs-12">{{ inputPlaceholder }}</span>
         </template>
       </template>
@@ -62,12 +48,7 @@
         <q-item v-bind="scope.itemProps">
           <q-item-section v-close-popup>
             <q-item-label>{{ scope.opt.label }}</q-item-label>
-            <q-item-label
-              caption
-              v-if="scope.opt.description"
-              class="text-grey"
-              >{{ scope.opt.description }}</q-item-label
-            >
+            <q-item-label caption v-if="scope.opt.description" class="text-grey">{{ scope.opt.description }}</q-item-label>
           </q-item-section>
         </q-item>
       </template>
@@ -123,8 +104,7 @@ export default class FormMultipleSelectComponent extends Vue {
   private showPlaceholder = true;
   mounted() {
     this.inputModel = this.option.model;
-    this.inputPlaceholder =
-      this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseSelect');
+    this.inputPlaceholder = this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseSelect');
     this.classes = this.option?.classes ?? '';
     this.rules = this.option?.rules;
     this.label = this.option?.label;
@@ -188,6 +168,4 @@ export default class FormMultipleSelectComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

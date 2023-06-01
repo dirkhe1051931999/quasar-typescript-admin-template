@@ -1,12 +1,12 @@
 <template>
   <div>
-    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="myDialogParams.visiable" persistent @before-hide="handlerBeforeHide">
+    <q-dialog transition-show="jump-down" transition-hide="jump-up" v-model="myDialogParams.visiable" persistent @before-hide="handlerBeforeHide">
       <q-card class="my-dialog" :style="'width:' + width">
         <div class="title f-bold q-pa-md fs-18">
           {{ myDialogParams.title }}
-          <div class="close">
+          <!-- <div class="close">
             <q-icon name="close" class="icon" @click="handlerClickCancel()" />
-          </div>
+          </div>-->
         </div>
         <div class="split-line h-1"></div>
         <div class="scroll content" style="max-height: 500px">
@@ -16,8 +16,8 @@
         </div>
         <div class="split-line h-1" v-show="myDialogParams.showAction"></div>
         <div class="text-center q-pa-md row justify-end" v-show="myDialogParams.showAction">
-          <q-btn :label="$t(`action.cancel`)" :disable="myDialogParams.clickLoading" @click="handlerClickCancel()" outline no-caps class="w-80" color="primary" />
-          <q-btn :label="$t(`action.confirm`)" color="primary" no-caps class="w-80 q-ml-md" @click="handlerClickDialogConfirmButton()" :loading="myDialogParams.clickLoading" />
+          <q-btn :label="$t(`action.cancel`)" :disable="myDialogParams.clickLoading" @click="handlerClickCancel()" outline color="primary" />
+          <q-btn :label="$t(`action.confirm`)" color="primary" class="q-ml-md" @click="handlerClickDialogConfirmButton()" :loading="myDialogParams.clickLoading" />
         </div>
       </q-card>
     </q-dialog>
@@ -46,6 +46,7 @@ export default class MyDialogComponent extends Vue {
       showAction: true,
       params: {},
       customComfirm: false,
+      noTwiceConfirm: false,
     },
   })
   option!: {
@@ -58,6 +59,7 @@ export default class MyDialogComponent extends Vue {
     showAction: boolean;
     params: any;
     customComfirm: boolean;
+    noTwiceConfirm: boolean;
   };
   @Watch('option.visiable')
   onVisiableChange(newVal: boolean) {
@@ -117,15 +119,19 @@ export default class MyDialogComponent extends Vue {
   private handlerClickDialogConfirmButton() {
     if (!this.option.customComfirm) {
       this.$refs[this.myDialogParams.id].validate().then(async (valid: boolean) => {
-        if (!valid) {
-          const result = await this.$globalConfirm.show({
-            title: this.$t('messages.tishi'),
-            color: 'primary',
-            content: this.$t('messages.areYouSure'),
-            confirmButtonText: this.$t('action.yes'),
-          });
-          if (result) {
+        if (valid) {
+          if (this.option.noTwiceConfirm) {
             this.$emit('confirm', { type: this.myDialogParams.dialogType });
+          } else {
+            const result = await this.$globalConfirm.show({
+              title: this.$t('messages.tishi'),
+              color: 'primary',
+              content: this.$t('messages.areYouSure'),
+              confirmButtonText: this.$t('action.yes'),
+            });
+            if (result) {
+              this.$emit('confirm', { type: this.myDialogParams.dialogType });
+            }
           }
         }
       });
@@ -146,11 +152,10 @@ export default class MyDialogComponent extends Vue {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .body--dark {
   .my-dialog {
-    background: $dark;
+    background: #000000;
   }
   .title {
     .close {

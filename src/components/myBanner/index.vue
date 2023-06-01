@@ -1,5 +1,5 @@
 <template>
-  <q-banner dense class="my-banner" v-show="show" :class="[bannerType, showClose ? 'p-r-32' : 'p-r-16']">
+  <q-banner dense class="my-banner" v-show="show" :class="[bannerType, showClose ? 'p-r-32' : 'q-pr-md']">
     <template v-slot:avatar>
       <q-icon
         name="info"
@@ -38,7 +38,6 @@ export default class BannerComponent extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .body--dark {

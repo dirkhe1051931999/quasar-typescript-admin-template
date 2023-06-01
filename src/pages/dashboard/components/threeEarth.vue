@@ -1,13 +1,9 @@
 <template>
   <div>
-    <q-card class="p-16">
+    <q-card class="q-pa-md">
       <div class="fs-18 f-bold">Three earth example</div>
       <div id="c-three-earth">
-        <canvas
-          width="500px"
-          height="350px"
-          style="width: 1047.08px; height: 788.547px"
-        ></canvas>
+        <canvas width="500px" height="350px" style="width: 1047.08px; height: 788.547px"></canvas>
       </div>
     </q-card>
   </div>
@@ -18,20 +14,13 @@ import { Component, Vue } from 'vue-facing-decorator';
 @Component({ name: 'myThreeEarthComponent' })
 export default class myThreeEarthComponent extends Vue {
   mounted() {
-    const container: HTMLCanvasElement = document.getElementById(
-      'c-three-earth'
-    ) as HTMLCanvasElement;
+    const container: HTMLCanvasElement = document.getElementById('c-three-earth') as HTMLCanvasElement;
     const canvas = container.getElementsByTagName('canvas')[0];
     const globeRadius = 100;
     const globeWidth = 4098 / 2;
     const globeHeight = 1968 / 2;
 
-    function convertFlatCoordsToSphereCoords(
-      x: number,
-      y: number,
-      width?: number,
-      height?: number
-    ) {
+    function convertFlatCoordsToSphereCoords(x: number, y: number, width?: number, height?: number) {
       let latitude = ((x - globeWidth) / globeWidth) * -180;
       let longitude = ((y - globeHeight) / globeHeight) * -90;
       latitude = (latitude * Math.PI) / 180;
@@ -51,10 +40,7 @@ export default class myThreeEarthComponent extends Vue {
       // 1. Setup scene
       const scene = new (<any>THREE).Scene();
       // 2. Setup camera
-      const camera: any = new (<any>THREE).PerspectiveCamera(
-        45,
-        width / height
-      );
+      const camera: any = new (<any>THREE).PerspectiveCamera(45, width / height);
       // 3. Setup renderer
       const renderer = new (<any>THREE).WebGLRenderer({
         canvas,
@@ -71,12 +57,7 @@ export default class myThreeEarthComponent extends Vue {
       });
 
       for (let point of points) {
-        const { x, y, z } = convertFlatCoordsToSphereCoords(
-          point.x,
-          point.y,
-          width,
-          height
-        );
+        const { x, y, z } = convertFlatCoordsToSphereCoords(point.x, point.y, width, height);
 
         if (x && y && z) {
           pointGeometry.translate(x, y, z);
@@ -111,8 +92,7 @@ export default class myThreeEarthComponent extends Vue {
     }
 
     function hasWebGL() {
-      const gl =
-        canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
       if (gl && gl instanceof WebGLRenderingContext) {
         return true;
       } else {
@@ -124,9 +104,7 @@ export default class myThreeEarthComponent extends Vue {
       if (hasWebGL()) {
         window;
         window
-          .fetch(
-            'https://dirkhe1051931999.github.io/v3-admin/three/points.json'
-          )
+          .fetch('https://dirkhe1051931999.github.io/v3-admin/three/points.json')
           .then((response) => response.json())
           .then((data) => {
             makeMagic(data.points);
@@ -138,6 +116,4 @@ export default class myThreeEarthComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

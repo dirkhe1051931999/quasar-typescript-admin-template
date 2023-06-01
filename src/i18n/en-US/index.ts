@@ -52,7 +52,7 @@ export default {
     nested2_1: 'Nested2_1',
     nested3_1: 'Nested3_1',
     nested3_2: 'Nested3_2',
-    link: 'Link',
+    link: 'Github link',
     largeDisplay: 'Big data display',
   },
   layouts: {
@@ -100,7 +100,7 @@ export default {
     toggleTheme: 'Dark mode or light mode',
     cancelFullscreen: 'Cancel fullscreen',
     fullscreen: 'fullscreen',
-    noData: 'no data',
+    noData: 'NO DATA',
   },
   table: {
     detail: 'Detail',

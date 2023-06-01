@@ -135,6 +135,7 @@ export default class mySliderComponent extends Vue {
           type: 'number', // optional
         },
         cancel: true,
+        color: 'primary',
         persistent: true,
       })
       .onOk((data) => {

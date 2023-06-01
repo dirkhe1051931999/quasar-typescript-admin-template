@@ -31,7 +31,7 @@
         </template>
       </q-banner>
     </div>
-    <q-btn no-caps push color="white" text-color="primary" label="Grid BottomSheet" @click="show(true)" />
+    <q-btn push color="white" text-color="primary" label="Grid BottomSheet" @click="show(true)" />
 
     <div class="q-pa-md q-gutter-sm">
       <q-btn push color="white" text-color="primary" label="Unread Mails">
@@ -331,5 +331,4 @@ export default class myComponentNotice extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
-</style>
+<style scoped lang="scss"></style>

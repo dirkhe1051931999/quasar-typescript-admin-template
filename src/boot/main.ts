@@ -40,7 +40,11 @@ export default boot(({ app }) => {
         const formattedString = date.formatDate(+new Date(time), 'YYYY-MM-DD HH:mm:ss');
         return formattedString;
       } else {
-        return String(time);
+        if (/\d/.test(String(time))) {
+          return String(time);
+        } else {
+          return '--';
+        }
       }
     } else {
       if (String(time).length === 10) timeStamp = time += '000';

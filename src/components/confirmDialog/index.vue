@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialogRef" transition-show="jump-up" transition-hide="jump-down">
+  <q-dialog ref="dialogRef" transition-show="jump-up" transition-hide="jump-down" persistent>
     <q-card class="q-dialog-confirm-plugin">
       <div class="title f-bold">
         {{ title }}
@@ -11,8 +11,8 @@
         {{ getJsx(content) }}
       </div>
       <div class="action">
-        <q-btn :color="color" :label="confirmButtonText" @click="onOKClick" no-caps class="m-r-12" />
-        <q-btn :color="color" outline no-caps :label="$t('action.cancel')" @click="onCancelClick" />
+        <q-btn :color="color" :label="confirmButtonText" @click="onOKClick" class="q-mr-md" />
+        <q-btn :color="color" outline :label="$t('action.cancel')" @click="onCancelClick" />
       </div>
     </q-card>
   </q-dialog>
@@ -53,11 +53,10 @@ export default class dialogConfirmComponent extends Vue {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .body--dark {
   .q-dialog-confirm-plugin {
-    background: $dark;
+    background: #000000;
   }
   .title {
     .close {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8 row items-center">
-      <span class="m-r-6">{{ rules.length ? '*' : '' }} {{ label }}</span>
+    <p class="f-bold fs-12 q-pb-xs row items-center">
+      <span class="q-mr-xs">{{ rules.length ? '*' : '' }} {{ label }}</span>
       <slot name="subTitle"></slot>
     </p>
     <q-option-group
@@ -80,6 +80,4 @@ export default class FormRadioComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

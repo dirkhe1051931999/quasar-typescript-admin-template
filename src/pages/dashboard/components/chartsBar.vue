@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="p-16">
+    <q-card class="q-pa-md">
       <div class="fs-18 f-bold">Bar chart example</div>
       <div>
         <canvas id="c-bar-chart" style="width: 100%; height: 300px"></canvas>
@@ -15,9 +15,7 @@ import { Chart } from 'chart.js/auto';
 @Component({ name: 'myChartsComponent' })
 export default class myChartsComponent extends Vue {
   mounted() {
-    var ctx1 = (
-      document.getElementById('c-bar-chart') as HTMLCanvasElement
-    ).getContext('2d')!;
+    var ctx1 = (document.getElementById('c-bar-chart') as HTMLCanvasElement).getContext('2d')!;
     var gradientStroke1 = ctx1!.createLinearGradient(0, 230, 0, 50);
 
     gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
@@ -34,17 +32,7 @@ export default class myChartsComponent extends Vue {
     new Chart(ctx1, {
       type: 'bar',
       data: {
-        labels: [
-          '16-20',
-          '21-25',
-          '26-30',
-          '31-36',
-          '36-42',
-          '42+',
-          'A+',
-          '$$',
-          '??',
-        ],
+        labels: ['16-20', '21-25', '26-30', '31-36', '36-42', '42+', 'A+', '$$', '??'],
         datasets: [
           {
             label: 'Sales by age',
@@ -105,6 +93,4 @@ export default class myChartsComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

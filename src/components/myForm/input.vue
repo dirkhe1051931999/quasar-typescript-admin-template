@@ -1,13 +1,13 @@
 <template>
   <div>
-    <p class="f-bold fs-12 p-b-8 row items-center">
-      <span class="m-r-6">{{ rules.length ? '*' : '' }} {{ label }}</span>
+    <p class="f-bold fs-12 q-pb-xs row items-center">
+      <span class="q-mr-xs">{{ rules.length ? '*' : '' }} {{ label }}</span>
       <slot name="subTitle"></slot>
     </p>
     <q-input
       v-model.trim="model"
       :type="type"
-      :class="['m-b-5', classes]"
+      :class="['q-mb-sm', classes]"
       :placeholder="inputPlaceholder"
       :rules="rules"
       :hint="hint"
@@ -86,8 +86,7 @@ export default class FormInputComponent extends Vue {
   mounted() {
     this.model = this.option.model ?? '';
     this.type = this.option?.type ?? 'text';
-    this.inputPlaceholder =
-      this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseEnter');
+    this.inputPlaceholder = this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseEnter');
     this.classes = this.option?.classes ?? '';
     this.rules = this.option?.rules;
     this.label = this.option?.label;
@@ -101,6 +100,4 @@ export default class FormInputComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

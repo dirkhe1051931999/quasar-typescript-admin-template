@@ -39,10 +39,10 @@ export default class myComponentCopy extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .body--dark {
   .input {
-    background: $dark;
+    background: #000000;
   }
 }
 .body--light {

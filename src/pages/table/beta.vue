@@ -43,8 +43,8 @@
             </div>
           </div>
           <div>
-            <q-btn color="primary" icon="search" :label="$t('action.search')" no-caps class="m-r-15" :loading="queryParams.queryLoading" @click="handleQuery" />
-            <q-btn icon="restart_alt" :label="$t('action.reset')" outline color="primary" no-caps :loading="queryParams.resetLoading" @click="handleResetQuery" />
+            <q-btn color="primary" icon="search" :label="$t('action.search')" class="q-mr-md" :loading="queryParams.queryLoading" @click="handleQuery" />
+            <q-btn :label="$t('action.reset')" outline color="primary" :loading="queryParams.resetLoading" @click="handleResetQuery" />
           </div>
         </div>
       </q-form>
@@ -67,8 +67,8 @@
       >
         <template #top>
           <div class="full-width justify-end row">
-            <q-btn color="primary" icon="o_add" label="Add" no-caps class="m-r-15" @click="handleClickAdd" />
-            <q-btn icon="o_upload" label="Upload" outline color="primary" no-caps @click="handleClickUpload" />
+            <q-btn color="primary" icon="o_add" label="Add" class="q-mr-md" @click="handleClickAdd" />
+            <q-btn icon="o_upload" label="Upload" outline color="primary" @click="handleClickUpload" />
           </div>
         </template>
         <template v-slot:header="props">
@@ -112,9 +112,9 @@
                 </div>
                 <!-- action -->
                 <div v-if="col.name === 'action'">
-                  <span class="in-table-link-button" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }} </span>
-                  <span class="in-table-delete-button m-l-10" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }} </span>
-                  <span class="in-table-link-button m-l-10" style="min-width: 100px">
+                  <span class="in-table-link-button q-mr-md" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }} </span>
+                  <span class="in-table-delete-button q-mr-md" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }} </span>
+                  <span class="in-table-link-button" style="min-width: 100px">
                     {{ $t(`action.more`) }}
                     <q-icon name="o_expand_more"></q-icon>
                     <q-popup-proxy style="min-width: 100px">
@@ -387,35 +387,35 @@ export default class myComponentTableBeta extends Vue {
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         id: 'a',
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         id: 'a',
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         id: 'a',
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         id: 'a',
         inputType: 'text',
       },
       {
         placeholder: 'Input2',
         type: 'select',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         selectOption: [
           {
             label: 'option 1',
@@ -431,7 +431,7 @@ export default class myComponentTableBeta extends Vue {
       {
         placeholder: 'Input3',
         type: 'text',
-        class: 'w-250 m-r-15 m-b-15',
+        class: 'w-250 q-mr-md q-mb-md',
         id: 'c',
         inputType: 'text',
       },

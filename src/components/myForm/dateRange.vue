@@ -1,7 +1,7 @@
 <template>
   <div class="relative-position">
-    <p class="f-bold fs-12 p-b-8 row items-center">
-      <span class="m-r-6"> {{ myDateData.rules.length ? '*' : '' }} {{ myDateData.label }} </span>
+    <p class="f-bold fs-12 q-pb-xs row items-center">
+      <span class="q-mr-xs"> {{ myDateData.rules.length ? '*' : '' }} {{ myDateData.label }} </span>
       <slot name="subTitle"></slot>
     </p>
     <q-input

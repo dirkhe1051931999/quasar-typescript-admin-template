@@ -8,6 +8,8 @@ Commonly used components are encapsulated, including text box, time picker, slid
 
 To sum up, using **vue-facing-decorator** to write Vue3 code in class syntax is a much better choice for improving code readability, maintainability, and flexibility.
 
+> Login by typing in any username, code and password
+
 ### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
 
 ### multi-page demo https://dirkhe1051931999.github.io/v3-admin/index2.html#/large-display

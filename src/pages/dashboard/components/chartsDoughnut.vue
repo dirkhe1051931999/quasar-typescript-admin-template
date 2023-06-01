@@ -1,12 +1,9 @@
 <template>
   <div>
-    <q-card class="p-16">
+    <q-card class="q-pa-md">
       <div class="fs-18 f-bold">Doughnut chart example</div>
       <div>
-        <canvas
-          id="c-doughnut-chart"
-          style="width: 100%; height: 300px"
-        ></canvas>
+        <canvas id="c-doughnut-chart" style="width: 100%; height: 300px"></canvas>
       </div>
     </q-card>
   </div>
@@ -18,9 +15,7 @@ import { Chart } from 'chart.js/auto';
 @Component({ name: 'myChartsComponent' })
 export default class myChartsComponent extends Vue {
   mounted() {
-    var ctx1 = (
-      document.getElementById('c-doughnut-chart') as HTMLCanvasElement
-    ).getContext('2d')!;
+    var ctx1 = (document.getElementById('c-doughnut-chart') as HTMLCanvasElement).getContext('2d')!;
     var gradientStroke1 = ctx1!.createLinearGradient(0, 230, 0, 50);
 
     gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
@@ -43,13 +38,7 @@ export default class myChartsComponent extends Vue {
             label: 'Projects',
             weight: 9,
             borderWidth: 2,
-            backgroundColor: [
-              '#2152ff',
-              '#3A416F',
-              '#f53939',
-              '#a8b8d8',
-              '#cb0c9f',
-            ],
+            backgroundColor: ['#2152ff', '#3A416F', '#f53939', '#a8b8d8', '#cb0c9f'],
             data: [15, 20, 12, 60, 20],
           },
         ],
@@ -102,6 +91,4 @@ export default class myChartsComponent extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -31,7 +31,7 @@
           :spellcheck="false"
         />
       </div>
-      <q-btn color="primary" icon="search" label="Query" no-caps class="m-r-15 h-40" :loading="queryLoading" />
+      <q-btn color="primary" icon="search" label="Query" no-caps class="q-mr-md h-40" :loading="queryLoading" />
       <q-btn icon="youtube_searched_for" label="Reset" outline color="primary" no-caps class="h-40" :loading="resetLoading" />
     </q-form>
     <q-table
@@ -42,7 +42,7 @@
       :loading="tableParams.loading"
       :pagination="tableParams.pagination"
       hide-pagination
-      no-data-label="No data"
+      no-data-label="NO DATA"
       class="my-table"
     >
       <!-- top -->
@@ -74,20 +74,18 @@
         <q-inner-loading color="primary" showing />
       </template>
       <template v-slot:header-cell-action="props">
-        <q-th :props="props">
-          {{ props.col.label.indexOf('$') !== -1 ? $t(`table.${props.col.label.replace('$', '')}`) : props.col.label }}
-        </q-th>
+        <q-th :props="props">{{ props.col.label.indexOf('$') !== -1 ? $t(`table.${props.col.label.replace('$', '')}`) : props.col.label }}</q-th>
       </template>
       <!--      actions-->
       <template v-slot:body-cell-action="props">
         <q-td class="text-left">
           <span class="in-table-link-button" v-if="props">Active</span>
-          <span class="in-table-delete-button m-l-5">Suspend</span>
+          <span class="in-table-delete-button q-ml-sm">Suspend</span>
         </q-td>
       </template>
     </q-table>
     <div class="row items-center justify-end q-mt-md" v-if="tableParams.pagination.rowsNumber">
-      <p class="m-r-10">Total {{ tableParams.pagination.rowsNumber }}</p>
+      <p class="q-mr-md">Total {{ tableParams.pagination.rowsNumber }}</p>
       <q-pagination
         v-model="tableParams.pagination.page"
         :input="false"
@@ -156,21 +154,21 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'IMSI',
       type: 'text',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       inputType: 'number',
       id: 'imsi',
     },
     {
       placeholder: 'ICCID',
       type: 'text',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       inputType: 'number',
       id: 'iccid',
     },
     {
       placeholder: 'Plan',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       id: 'package',
       selectArr: ['Plan1', 'Plan2'],
       selectArrObject: [],
@@ -178,7 +176,7 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'Operator',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       id: 'operator',
       selectArr: ['Operator1', 'Operator2'],
       selectArrObject: [],
@@ -186,7 +184,7 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'Area',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       id: 'area',
       selectArr: ['Province1', 'Province2'],
       selectArrObject: [],
@@ -194,15 +192,15 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'Profile status',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       id: 'state',
-      selectArr: ['Activated', 'Deactivate'],
+      selectArr: ['Active', 'Deactivate'],
       selectArrObject: [],
     },
     {
       placeholder: 'Occupation status',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       id: 'allocated',
       selectArr: ['Occupied', 'Unoccupied'],
       selectArrObject: [],
@@ -210,7 +208,7 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'Plan type',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       selectArr: ['Type1', 'Type2'],
       selectArrObject: [],
       id: 'statusType',
@@ -218,7 +216,7 @@ export default class myComponentMenu2TableIndex extends Vue {
     {
       placeholder: 'Affiliation',
       type: 'select',
-      class: 'w-250 m-r-15 m-b-15',
+      class: 'w-250 q-mr-md q-mb-md',
       selectArr: ['Org1', 'Org2'],
       selectArrObject: [],
       id: 'ascription',
@@ -226,19 +224,7 @@ export default class myComponentMenu2TableIndex extends Vue {
   ];
   private tableParams = {
     loading: false,
-    data: [
-      {
-        imsi: 'fixed this column',
-        iccid: 'iccid+iccid+iccid+iccid+iccid',
-        carrierName: 'carrierName+carrierName+carrierName+carrierName+carrierName',
-        area: 'area+area+area+area+area',
-        bundleName: 'bundleName+bundleName+bundleName+bundleName',
-        bundleTypeId: '1',
-        state: '1',
-        allocated: '1',
-        img: 'https://z3.ax1x.com/2021/06/15/2HILHU.png',
-      },
-    ],
+    data: [],
     pagination: {
       page: 1,
       rowsPerPage: 10,

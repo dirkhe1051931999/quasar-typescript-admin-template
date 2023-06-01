@@ -1,4 +1,3 @@
-
 <template>
   <div
     v-if="!item.meta?.hidden"
@@ -7,39 +6,16 @@
       'first-level': isFirstLevel,
     }"
   >
-    <template
-      v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
-    >
-      <a
-        v-if="isExternal(resolvePath(theOnlyOneChild.path))"
-        :href="resolvePath(theOnlyOneChild.path)"
-        target="_blank"
-        class="el-menu-item"
-        rel="noopener"
-      >
-        <q-icon
-          :name="theOnlyOneChild.meta.icon"
-          v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"
-        ></q-icon>
-        <q-icon
-          :name="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)"
-          v-else-if="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)"
-          class="m-r-10"
-        />
+    <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
+      <a v-if="isExternal(resolvePath(theOnlyOneChild.path))" :href="resolvePath(theOnlyOneChild.path)" target="_blank" class="el-menu-item" rel="noopener">
+        <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"></q-icon>
+        <q-icon :name="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" v-else-if="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" class="q-mr-md" />
         <q-icon name="fiber_manual_record" v-else class="record" />
         {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
       </a>
-      <SidebarItemLink
-        v-if="
-          theOnlyOneChild.meta && !isExternal(resolvePath(theOnlyOneChild.path))
-        "
-        :to="resolvePath(theOnlyOneChild.path)"
-      >
+      <SidebarItemLink v-if="theOnlyOneChild.meta && !isExternal(resolvePath(theOnlyOneChild.path))" :to="resolvePath(theOnlyOneChild.path)">
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
-          <q-icon
-            :name="theOnlyOneChild.meta.icon"
-            v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"
-          ></q-icon>
+          <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"></q-icon>
           <q-icon name="fiber_manual_record" v-else class="record"> </q-icon>
           <template v-if="theOnlyOneChild.meta.title" #title>
             {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
@@ -49,23 +25,11 @@
     </template>
     <el-sub-menu v-else :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <q-icon
-          :name="item.meta.icon"
-          v-if="item.meta && item.meta.icon"
-        ></q-icon>
-        <span v-if="item.meta && item.meta.title">{{
-          $t(`routes.${item.meta.title}`)
-        }}</span>
+        <q-icon :name="item.meta.icon" v-if="item.meta && item.meta.icon"></q-icon>
+        <span v-if="item.meta && item.meta.title">{{ $t(`routes.${item.meta.title}`) }}</span>
       </template>
       <template v-if="item.children">
-        <sidebar-item
-          v-for="child in item.children"
-          :key="child.path"
-          :item="child"
-          :is-collapse="isCollapse"
-          :is-first-level="false"
-          :base-path="resolvePath(child.path)"
-        />
+        <sidebar-item v-for="child in item.children" :key="child.path" :item="child" :is-collapse="isCollapse" :is-first-level="false" :base-path="resolvePath(child.path)" />
       </template>
     </el-sub-menu>
   </div>
@@ -98,11 +62,9 @@ export default class SidebarItemLinkComponent extends Vue {
   }
   get showingChildNumber() {
     if (this.item.children) {
-      const showingChildren = this.item.children.filter(
-        (item: RouteRecordRaw) => {
-          return !(item.meta && item.meta.hidden);
-        }
-      );
+      const showingChildren = this.item.children.filter((item: RouteRecordRaw) => {
+        return !(item.meta && item.meta.hidden);
+      });
       return showingChildren.length;
     }
     return 0;
@@ -126,10 +88,7 @@ export default class SidebarItemLinkComponent extends Vue {
     return (data: any) => {
       let isRoot = false;
       for (let item of PermissionModule.dynamicRoutes) {
-        if (
-          item.children?.length === 1 &&
-          item.children[0].name === data.name
-        ) {
+        if (item.children?.length === 1 && item.children[0].name === data.name) {
           isRoot = true;
           break;
         }
