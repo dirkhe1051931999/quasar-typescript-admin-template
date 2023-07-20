@@ -7,12 +7,14 @@
     }"
   >
     <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
-      <a v-if="isExternal(resolvePath(theOnlyOneChild.path))" :href="resolvePath(theOnlyOneChild.path)" target="_blank" class="el-menu-item" rel="noopener">
-        <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"></q-icon>
-        <q-icon :name="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" v-else-if="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" class="q-mr-md" />
-        <q-icon name="fiber_manual_record" v-else class="record" />
-        {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
-      </a>
+      <el-tooltip effect="dark" :content="$t(`routes.${theOnlyOneChild.meta.title}`)" placement="right" :disabled="!isCollapse" v-if="isExternal(resolvePath(theOnlyOneChild.path))">
+        <a :href="resolvePath(theOnlyOneChild.path)" target="_blank" class="el-menu-item" rel="noopener">
+          <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"></q-icon>
+          <q-icon :name="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" v-else-if="getPermissionSigleOnlyOneChildIcon(theOnlyOneChild)" class="q-mr-md" />
+          <q-icon name="fiber_manual_record" v-else class="record" />
+          <span v-show="!isCollapse">{{ $t(`routes.${theOnlyOneChild.meta.title}`) }}</span>
+        </a>
+      </el-tooltip>
       <SidebarItemLink v-if="theOnlyOneChild.meta && !isExternal(resolvePath(theOnlyOneChild.path))" :to="resolvePath(theOnlyOneChild.path)">
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
           <q-icon :name="theOnlyOneChild.meta.icon" v-if="theOnlyOneChild.meta.icon && isRootMemu(theOnlyOneChild)"></q-icon>

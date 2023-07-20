@@ -103,8 +103,8 @@ export default class myChartWorldComponent extends Vue {
       },
       markerLabelStyle: {
         initial: {
-          fontFamily: 'NotoSans-Regular, NotoSansSC-Regular',
-          fontWeight: 400,
+          fontFamily: 'Poppins',
+          fontWeight: 'normal',
           fontSize: 13,
         },
       },

@@ -509,7 +509,8 @@ pre {
 .shepherd-button {
   display: flex;
   flex-grow: 1;
-  font-family: PingFang SC, NotoSans-SemiBold, NotoSansSC-Bold;
+  font-family: Poppins;
+  font-weight: 600;
   font-size: 1rem;
   justify-content: center;
   margin: 0;
@@ -519,7 +520,8 @@ pre {
 }
 
 .shepherd-cancel-icon {
-  font-family: PingFang SC, NotoSans-SemiBold, NotoSansSC-Bold;
+  font-family: Poppins;
+  font-weight: 600;
 }
 
 .shepherd-element .shepherd-arrow {
@@ -580,7 +582,8 @@ pre {
 
 .shepherd-has-title .shepherd-content .shepherd-header {
   background: transparent;
-  font-family: PingFang SC, NotoSans-SemiBold, NotoSansSC-Bold;
+  font-family: Poppins;
+  font-weight: 600;
   padding-bottom: 0;
   padding-left: 2rem;
 }

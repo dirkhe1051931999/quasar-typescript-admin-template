@@ -21,7 +21,7 @@ body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  font-family: PingFang SC, NotoSans-Regular, NotoSansSC-Regular;
+  font-family: Poppins;
   font-size: 14px;
   line-height: 1.2;
   color: var(--q-dark);
@@ -386,7 +386,8 @@ canvas {
 input,
 textarea {
   &::placeholder {
-    font-family: PingFang SC, NotoSans-Regular, NotoSansSC-Regular;
+    font-family: Poppins;
+    font-weight: normal;
     font-size: 12px;
     color: var(--my-grey-7) !important;
   }
@@ -394,8 +395,10 @@ textarea {
 
 // q-input的label和messages都不要用password字体
 .q-field__label {
-  font-family: PingFang SC, NotoSans-Regular, NotoSansSC-Regular;
+  font-family: Poppins;
+  font-weight: normal;
 }
 .q-field__messages {
-  font-family: PingFang SC, NotoSans-Regular, NotoSansSC-Regular;
+  font-family: Poppins;
+  font-weight: normal;
 }

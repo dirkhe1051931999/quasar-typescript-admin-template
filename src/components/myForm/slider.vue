@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list>
-      <div class="f-bold fs-12 q-pb-md row items-center">
+      <div class="fs-12 q-pb-md row items-center text-weight-regular">
         <span class="q-mr-md">
           {{ sliderParams.rules.length ? '*' : '' }} {{ sliderParams.label }}
           <span class="q-ml-sm detail-link-type" @click="handlerClickSetSlider">Input?</span>

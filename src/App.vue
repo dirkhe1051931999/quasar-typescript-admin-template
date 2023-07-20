@@ -1,4 +1,3 @@
-
 <template>
   <router-view />
 </template>
@@ -35,7 +34,4 @@ export default class myComponentApp extends Vue {
 }
 </script>
 
-
-<style lang="scss">
-@import 'src/css/reset-quasar.scss';
-</style>
+<style lang="scss"></style>

@@ -1,4 +1,3 @@
-
 <template>
   <a v-if="isExternal(to)" :href="to" target="_blank" rel="noopener">
     <slot />
@@ -19,5 +18,3 @@ export default class SidebarItemLinkComponent extends Vue {
   public isExternal = isExternal;
 }
 </script>
-
-

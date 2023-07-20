@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="f-bold fs-12 q-pb-xs row items-center">
+    <p class="fs-12 q-pb-sm row items-center text-weight-regular">
       <span class="q-mr-xs"> {{ dateParams.rules.length ? '*' : '' }} {{ dateParams.label }} </span>
       <slot name="subTitle"></slot>
     </p>

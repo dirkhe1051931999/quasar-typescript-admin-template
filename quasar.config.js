@@ -15,7 +15,8 @@ const setting = require('./src/setting.json');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const multiplePage = require('./multiple.page.generate');
 const path = require('path');
-module.exports = configure(function (ctx) {
+
+module.exports = configure((ctx) => {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
     supportTS: {
@@ -52,7 +53,7 @@ module.exports = configure(function (ctx) {
       'material-icons', // optional, you are not bound to it
       'material-icons-outlined',
     ],
-
+    
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -67,7 +68,7 @@ module.exports = configure(function (ctx) {
       rtl: false, // https://quasar.dev/options/rtl-support
       preloadChunks: true,
       showProgress: true,
-      scssLoaderOptions: { additionalData: '@import "src/css/extra.variables.scss";' },
+      scssLoaderOptions: { additionalData: `$publicPath: ${process.env.NODE_ENV === 'production' ? setting.publicPath.replace(/\//g, '') : 'null'};` },
       gzip: true,
       analyze: false,
 
@@ -99,7 +100,7 @@ module.exports = configure(function (ctx) {
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
         '/api': {
-          target: 'http://127.0.0.1:' + 9004,
+          target: `http://127.0.0.1:${9004}`,
           changeOrigin: true,
           pathRewrite: {
             '^/api': '',

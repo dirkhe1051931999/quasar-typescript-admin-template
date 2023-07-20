@@ -1,50 +1,57 @@
 <template>
   <div>
     <div class="query-form-and-action">
-      <q-form ref="queryFrom">
-        <div class="row">
-          <div class="row items-start">
-            <div v-for="(item, index) in queryParams.input" :key="index">
-              <q-input
-                v-model.trim="queryParams.params[item.id]"
-                :type="item.inputType"
-                :class="['', item.class]"
-                :label="item.placeholder"
-                v-if="item.type === 'text'"
-                autocapitalize="off"
-                autocomplete="new-password"
-                autocorrect="off"
-                clearable
-                dense
-                outlined
-                dropdown-icon="app:topbar-arrow-bottom"
-                clear-icon="app:clear"
-                :spellcheck="false"
-              />
-              <q-select
-                v-if="item.type === 'select'"
-                :class="['', item.class]"
-                v-model="queryParams.params[item.id]"
-                :options="item.selectOption"
-                :label="item.placeholder"
-                :spellcheck="false"
-                autocapitalize="off"
-                autocomplete="new-password"
-                autocorrect="off"
-                clearable
-                dense
-                options-dense
-                outlined
-                emit-value
-                dropdown-icon="app:topbar-arrow-bottom"
-                clear-icon="app:clear"
-                map-options
-              />
-            </div>
+      <q-form ref="queryFrom" class="form">
+        <div class="query">
+          <div v-for="(item, index) in queryParams.input" :key="index" class="query-item" v-show="!item.collapse">
+            <q-input
+              v-model.trim="queryParams.params[item.id]"
+              :type="item.inputType"
+              :class="[item.class]"
+              :label="item.placeholder"
+              v-if="item.type === 'text'"
+              autocapitalize="off"
+              autocomplete="new-password"
+              autocorrect="off"
+              clearable
+              dense
+              outlined
+              dropdown-icon="app:topbar-arrow-bottom"
+              clear-icon="app:clear"
+              :spellcheck="false"
+            />
+            <q-select
+              v-if="item.type === 'select'"
+              :class="[item.class]"
+              v-model="queryParams.params[item.id]"
+              :options="item.selectOption"
+              :label="item.placeholder"
+              :spellcheck="false"
+              autocapitalize="off"
+              autocomplete="new-password"
+              autocorrect="off"
+              clearable
+              dense
+              options-dense
+              outlined
+              emit-value
+              dropdown-icon="app:topbar-arrow-bottom"
+              clear-icon="app:clear"
+              map-options
+            />
           </div>
-          <div>
-            <q-btn color="primary" icon="search" :label="$t('action.search')" class="q-mr-md" :loading="queryParams.queryLoading" @click="handleQuery" />
-            <q-btn :label="$t('action.reset')" outline color="primary" :loading="queryParams.resetLoading" @click="handleResetQuery" />
+          <div class="action">
+            <q-btn color="primary" icon="search" :label="$t('action.search')" :loading="queryParams.queryLoading" @click="handleQuery" class="q-mr-md" style="height: 40px" />
+            <q-btn :label="$t('action.reset')" outline color="primary" :loading="queryParams.resetLoading" @click="handleResetQuery" class="q-mr-md" style="height: 40px" />
+            <q-btn
+              :icon="queryParams.allExpand ? 'expand_less' : 'expand_more'"
+              :label="queryParams.allExpand ? 'Collapse' : 'Expand'"
+              outline
+              color="primary"
+              flat
+              @click="handleClickCollapse"
+              style="height: 40px"
+            />
           </div>
         </div>
       </q-form>
@@ -343,7 +350,7 @@
         visiable: dialogDetailParams.visiable,
         title: dialogDetailParams.title,
         params: dialogDetailParams.params,
-        showAction: false,
+        showConfirm: false,
       }"
       @close="dialogDetailCloseEvent"
       @before-hide="dialogDetailBeforeHideEvent"
@@ -382,40 +389,78 @@ export default class myComponentTableBeta extends Vue {
     id: 'query',
     queryLoading: false,
     resetLoading: false,
+    allExpand: false,
     params: cloneDeep(CONST_PARAMS.query),
     input: [
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
         id: 'a',
+        collapse: false,
+        defaultCollapse: false,
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
         id: 'a',
+        collapse: false,
+        defaultCollapse: false,
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
         id: 'a',
+        collapse: false,
+        defaultCollapse: false,
         inputType: 'text',
       },
       {
         placeholder: 'Input1',
         type: 'text',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
         id: 'a',
+        collapse: false,
+        defaultCollapse: false,
+        inputType: 'text',
+      },
+      {
+        placeholder: 'Input11',
+        type: 'text',
+        class: '',
+        id: 'a',
+        collapse: true,
+        defaultCollapse: true,
+        inputType: 'text',
+      },
+      {
+        placeholder: 'Input10',
+        type: 'text',
+        class: '',
+        id: 'a',
+        collapse: true,
+        defaultCollapse: true,
+        inputType: 'text',
+      },
+      {
+        placeholder: 'Input1',
+        type: 'text',
+        class: '',
+        id: 'a',
+        collapse: false,
+        defaultCollapse: false,
         inputType: 'text',
       },
       {
         placeholder: 'Input2',
         type: 'select',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
+        collapse: false,
+        defaultCollapse: false,
         selectOption: [
           {
             label: 'option 1',
@@ -431,7 +476,9 @@ export default class myComponentTableBeta extends Vue {
       {
         placeholder: 'Input3',
         type: 'text',
-        class: 'w-250 q-mr-md q-mb-md',
+        class: '',
+        collapse: false,
+        defaultCollapse: false,
         id: 'c',
         inputType: 'text',
       },
@@ -806,6 +853,12 @@ export default class myComponentTableBeta extends Vue {
     this.tableParams.pagination.page = 1;
     await this.getData();
     this.queryParams.resetLoading = false;
+  }
+  private handleClickCollapse() {
+    this.queryParams.allExpand = !this.queryParams.allExpand;
+    this.queryParams.input.forEach((item: any) => {
+      item.collapse = this.queryParams.allExpand ? false : item.defaultCollapse;
+    });
   }
   private handleClickAdd() {
     this.dialogAddUpdateParams.visiable = true;

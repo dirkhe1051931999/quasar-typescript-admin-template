@@ -14,10 +14,10 @@
             <slot></slot>
           </q-form>
         </div>
-        <div class="split-line h-1" v-show="myDialogParams.showAction"></div>
-        <div class="text-center q-pa-md row justify-end" v-show="myDialogParams.showAction">
+        <div class="split-line h-1"></div>
+        <div class="text-center q-pa-md row justify-end">
           <q-btn :label="$t(`action.cancel`)" :disable="myDialogParams.clickLoading" @click="handlerClickCancel()" outline color="primary" />
-          <q-btn :label="$t(`action.confirm`)" color="primary" class="q-ml-md" @click="handlerClickDialogConfirmButton()" :loading="myDialogParams.clickLoading" />
+          <q-btn :label="$t(`action.confirm`)" color="primary" class="q-ml-md" @click="handlerClickDialogConfirmButton()" :loading="myDialogParams.clickLoading" v-show="myDialogParams.showConfirm" />
         </div>
       </q-card>
     </q-dialog>
@@ -43,7 +43,7 @@ export default class MyDialogComponent extends Vue {
       getDataLoading: false,
       visiable: false,
       title: '',
-      showAction: true,
+      showConfirm: true,
       params: {},
       customComfirm: false,
       noTwiceConfirm: false,
@@ -56,7 +56,7 @@ export default class MyDialogComponent extends Vue {
     clickLoading: boolean;
     visiable: boolean;
     title: string;
-    showAction: boolean;
+    showConfirm: boolean;
     params: any;
     customComfirm: boolean;
     noTwiceConfirm: boolean;
@@ -95,7 +95,7 @@ export default class MyDialogComponent extends Vue {
     getDataLoading: false,
     visiable: false,
     title: '',
-    showAction: true,
+    showConfirm: true,
     params: {},
   };
   mounted() {
@@ -105,7 +105,7 @@ export default class MyDialogComponent extends Vue {
     this.myDialogParams.clickLoading = this.option.clickLoading;
     this.myDialogParams.visiable = this.option.visiable;
     this.myDialogParams.title = this.option.title;
-    this.myDialogParams.showAction = this.option.showAction ?? true;
+    this.myDialogParams.showConfirm = this.option.showConfirm ?? true;
     this.myDialogParams.params = this.option.params;
     this.bakParams = cloneDeep(this.option.params);
   }

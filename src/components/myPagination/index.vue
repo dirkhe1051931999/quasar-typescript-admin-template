@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row items-center justify-end m-t-26">
+    <div class="row items-center justify-end q-mt-md">
       <p class="q-mr-md">{{ $t('table.total') }} {{ _paginationParams.rowsNumber }}</p>
       <q-pagination
         v-model="_paginationParams.page"
