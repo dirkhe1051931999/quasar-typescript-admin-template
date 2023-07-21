@@ -325,7 +325,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 full-height relative-position q-pa-md" :class="$q.screen.xs || $q.screen.sm ? 'hidden' : ''">
         <div class="cover row column">
           <div class="img">
-            <q-img src="~assets/500.png" alt="chat-img" fit="fit" />
+            <q-img src="~assets/chat.png" alt="chat-img" fit="fit" />
           </div>
           <div class="intro">
             <h4 class="f-bold lh-48" style="font-size: 2.5em">“{{ $t('login.illustrationDescription') }}”</h4>
