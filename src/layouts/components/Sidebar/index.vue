@@ -1,4 +1,3 @@
-
 <template>
   <div :class="{ 'has-logo': showSidebarLogo }">
     <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
@@ -10,10 +9,8 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
-import { getCssVariableValue } from 'src/utils/tools';
 import { PermissionModule } from 'src/store/modules/permission';
 import { AppModule } from 'src/store/modules/app';
 import { SettingModule } from 'src/store/modules/setting';
@@ -61,7 +58,6 @@ export default class SidebarLogoComponent extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .body--dark {
@@ -164,6 +160,7 @@ export default class SidebarLogoComponent extends Vue {
   }
   &.is-active {
     @include tip-line;
+    color: $primary;
     .q-icon {
       color: var(--v3-sidebar-menu-active-text-color);
       &.record {

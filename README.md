@@ -1,4 +1,4 @@
-# Quasar Project (quasar-vue3-admin-template)
+# Vue3 Typescript Template With Quasar framework
 
 Using **vue-facing-decorator** allows you to write Vue3 code using class syntax, making the code more structured and object-oriented, and thus easier to read and maintain. Compared to using setup syntax, using class syntax allows you to organize your code more clearly and put related functions together, reducing redundancy and repetition in your code. In addition, using class syntax makes the code more reusable and extensible, which makes it easier to respond to different needs and changes.
 
@@ -8,28 +8,35 @@ Commonly used components are encapsulated, including text box, time picker, slid
 
 To sum up, using **vue-facing-decorator** to write Vue3 code in class syntax is a much better choice for improving code readability, maintainability, and flexibility.
 
+- Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
+
+- multi-page demo https://dirkhe1051931999.github.io/v3-admin/index2.html#/large-display
+
+- Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
+
 > Login by typing in any username, code and password
 
-### Vue3 Class syntax online preview https://dirkhe1051931999.github.io/v3-admin
+## Preview
 
-### multi-page demo https://dirkhe1051931999.github.io/v3-admin/index2.html#/large-display
+- Login
 
-### Vue2 Class syntax preview https://dirkhe1051931999.github.io/quasar
+<img src="https://s1.ax1x.com/2023/07/22/pCbvasH.png" >
 
-#### page preview
+- Dashboard
 
-<img src="https://s1.ax1x.com/2023/03/17/ppG6v2q.png" >
-<img src="https://s1.ax1x.com/2023/03/17/ppG6xx0.png" >
-<img src="https://s1.ax1x.com/2023/03/17/ppG6jGn.png" >
-<img src="https://s1.ax1x.com/2023/03/17/ppG6XPs.png" >
-<img src="https://s1.ax1x.com/2023/03/17/ppG6L5j.png" >
-<img src="https://s1.ax1x.com/2023/03/17/ppGcSMV.png" >
+<img src="https://s1.ax1x.com/2023/07/22/pCbv0eA.png" >
+<img src="https://s1.ax1x.com/2023/07/22/pCbvBdI.png" >
 
-#### multi-page Dashboard (index.html)
+- Table component
+
+<img src="https://s1.ax1x.com/2023/07/22/pCbvdLd.png" >
+<img src="https://s1.ax1x.com/2023/07/22/pCbvUQe.png" >
+
+- multi-page Dashboard (index.html)
 
 [![pSdf3rV.png](https://s1.ax1x.com/2023/01/30/pSdf3rV.png)](https://imgse.com/i/pSdf3rV)
 
-#### multi-page large data display (index2.html)
+- multi-page large data display (index2.html)
 
 [![pSdfJVU.png](https://s1.ax1x.com/2023/01/30/pSdfJVU.png)](https://imgse.com/i/pSdfJVU)
 

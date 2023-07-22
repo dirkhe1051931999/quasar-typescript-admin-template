@@ -325,7 +325,7 @@
       <div class="col-md-6 col-lg-6 col-xl-6 full-height relative-position q-pa-md" :class="$q.screen.xs || $q.screen.sm ? 'hidden' : ''">
         <div class="cover row column">
           <div class="img">
-            <q-img src="~assets/chat.png" alt="chat-img" fit="fit" />
+            <q-img src="~assets/widget.svg" alt="chat-img" fit="fit" />
           </div>
           <div class="intro">
             <h4 class="f-bold lh-48" style="font-size: 2.5em">“{{ $t('login.illustrationDescription') }}”</h4>
@@ -720,8 +720,9 @@ export default class LoginPage2 extends Vue {
 .cover {
   width: 100%;
   height: 100%;
-  background: var(--my-grey-1);
+  background: $primary;
   border-radius: 16px;
+  color: #ffffff;
   .intro {
     text-align: center;
     padding: 16px;
@@ -731,7 +732,7 @@ export default class LoginPage2 extends Vue {
   }
   .img {
     padding: 16px;
-    margin: 32px auto;
+    margin: 128px auto;
   }
 }
 
