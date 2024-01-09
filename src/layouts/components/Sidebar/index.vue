@@ -154,7 +154,7 @@ export default class SidebarLogoComponent extends Vue {
   color: var(--el-text-color-primary);
   font-size: 14px !important;
   .record {
-    font-size: 3px;
+    font-size: 14px;
     width: 3px;
     height: 3px;
   }

@@ -13,16 +13,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import marked from 'marked';
+import { marked } from 'marked';
+
 @Component({
   name: 'myComponentMd',
 })
 export default class myComponentMd extends Vue {
   private splitterModel = 50;
   private mdString = '# hello';
+
   get calac() {
     return marked(this.mdString);
   }
+
   created() {
     marked.setOptions({
       renderer: new marked.Renderer(),
@@ -44,6 +47,7 @@ export default class myComponentMd extends Vue {
     background: #000000;
   }
 }
+
 .body--light {
   .splitter {
     background: #f5f5f5;

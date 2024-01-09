@@ -67,7 +67,7 @@ export default class MyFixedPageComponent extends Vue {
   transition: all 0.3s;
   visibility: hidden;
   transform: translateY(120%);
-  height: calc(100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px);
+  height: calc(100vh - var(--v3-header-height) - var(--v3-navigationbar-height) - 16px - 16px);
   right: 16px;
   top: calc(var(--v3-navigationbar-height) + var(--v3-header-height) + 16px);
   bottom: 16px;

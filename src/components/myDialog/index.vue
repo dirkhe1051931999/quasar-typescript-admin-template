@@ -1,12 +1,9 @@
 <template>
   <div>
     <q-dialog transition-show="jump-down" transition-hide="jump-up" v-model="myDialogParams.visiable" persistent @before-hide="handlerBeforeHide">
-      <q-card class="my-dialog" :style="'width:' + width">
+      <q-card class="my-dialog" :style="calcMyDialogWidth">
         <div class="title f-bold q-pa-md fs-18">
           {{ myDialogParams.title }}
-          <!-- <div class="close">
-            <q-icon name="close" class="icon" @click="handlerClickCancel()" />
-          </div>-->
         </div>
         <div class="split-line h-1"></div>
         <div class="scroll content" style="max-height: 500px">
@@ -28,6 +25,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 import { getCurrentInstance } from 'vue';
 import { cloneDeep } from 'lodash';
+
 @Component({
   name: 'MyDialogComponent',
   emits: ['close', 'confirm', 'before-hide'],
@@ -61,6 +59,7 @@ export default class MyDialogComponent extends Vue {
     customComfirm: boolean;
     noTwiceConfirm: boolean;
   };
+
   @Watch('option.visiable')
   onVisiableChange(newVal: boolean) {
     if (newVal) {
@@ -70,21 +69,62 @@ export default class MyDialogComponent extends Vue {
     }
     this.myDialogParams.visiable = newVal;
   }
+
   @Watch('option.dialogType')
   onDialogTypeChange(newVal: string) {
     this.myDialogParams.dialogType = newVal;
   }
+
   @Watch('option.clickLoading')
   onClickLoadingChange(newVal: boolean) {
     this.myDialogParams.clickLoading = newVal;
   }
+
   @Watch('option.getDataLoading')
   onGetDataLoadingChange(newVal: boolean) {
     this.myDialogParams.getDataLoading = newVal;
   }
+
   @Watch('option.title')
   onTitleChange(newVal: string) {
     this.myDialogParams.title = newVal;
+  }
+
+  get calcMyDialogWidth() {
+    const width = Number(this.width.replace('vw', ''));
+    if (width !== 50) {
+      return {
+        width: `${width}vw`,
+      };
+    }
+    //   根据document width计算dialog width
+    const documentWidth = document.body.clientWidth;
+    if (documentWidth < 600) {
+      return {
+        width: '90vw',
+        maxWidth: '100vw',
+      };
+    } else if (documentWidth < 960) {
+      return {
+        width: '80vw',
+        maxWidth: '100vw',
+      };
+    } else if (documentWidth < 1280) {
+      return {
+        width: '80vw',
+        maxWidth: '100vw',
+      };
+    } else if (documentWidth < 1920) {
+      return {
+        width: '75vw',
+        maxWidth: '100vw',
+      };
+    } else {
+      return {
+        width: '50vw',
+        maxWidth: '100vw',
+      };
+    }
   }
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private bakParams = {};
@@ -98,6 +138,7 @@ export default class MyDialogComponent extends Vue {
     showConfirm: true,
     params: {},
   };
+
   mounted() {
     this.myDialogParams.id = this.option.id;
     this.myDialogParams.dialogType = this.option.dialogType;
@@ -109,6 +150,7 @@ export default class MyDialogComponent extends Vue {
     this.myDialogParams.params = this.option.params;
     this.bakParams = cloneDeep(this.option.params);
   }
+
   /* event */
   private handlerClickCancel() {
     this.$nextTick(() => {
@@ -116,6 +158,7 @@ export default class MyDialogComponent extends Vue {
       this.$refs[this.myDialogParams.id].resetValidation();
     });
   }
+
   private handlerClickDialogConfirmButton() {
     if (!this.option.customComfirm) {
       this.$refs[this.myDialogParams.id].validate().then(async (valid: boolean) => {
@@ -139,6 +182,7 @@ export default class MyDialogComponent extends Vue {
       this.$emit('confirm', { type: this.myDialogParams.dialogType });
     }
   }
+
   private handlerBeforeHide() {
     this.myDialogParams.params = cloneDeep(this.bakParams);
     this.$emit('before-hide', {
@@ -146,6 +190,7 @@ export default class MyDialogComponent extends Vue {
       params: this.myDialogParams.params,
     });
   }
+
   public validForm() {
     this.$refs[this.myDialogParams.id].validate();
   }
@@ -157,6 +202,7 @@ export default class MyDialogComponent extends Vue {
   .my-dialog {
     background: #000000;
   }
+
   .title {
     .close {
       &:hover {
@@ -166,10 +212,12 @@ export default class MyDialogComponent extends Vue {
     }
   }
 }
+
 .body--light {
   .my-dialog {
     background: #ffffff;
   }
+
   .title {
     .close {
       &:hover {
@@ -178,30 +226,16 @@ export default class MyDialogComponent extends Vue {
     }
   }
 }
+
 .my-dialog {
-  max-width: 70vw;
-  width: 60vw;
   border-radius: 12px;
+
   .title {
     padding: 16px;
     font-size: 16px;
     position: relative;
-    .close {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--my-white);
-      transition: all 0.2s;
-      &:hover {
-        cursor: pointer;
-      }
-    }
   }
+
   .content {
     padding: 0 16px;
     margin: 10px 0;

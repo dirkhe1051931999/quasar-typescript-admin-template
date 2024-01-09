@@ -51,8 +51,6 @@ export default class AppMainComponent extends Vue {
 }
 </script>
 
-
-
 <style lang="scss" scoped>
 .body--dark {
   .app-main {
@@ -73,7 +71,7 @@ export default class AppMainComponent extends Vue {
 
 .app-main {
   position: fixed;
-  height: calc(100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px);
+  height: calc(100vh - var(--v3-header-height) - var(--v3-navigationbar-height) - 16px - 16px);
   top: calc(var(--v3-navigationbar-height) + var(--v3-header-height));
   bottom: 0;
   right: 0;
@@ -96,7 +94,7 @@ export default class AppMainComponent extends Vue {
 }
 .hasTagsView {
   .app-main {
-    height: calc(100vh - var(--v3-header-height)-var(--v3-navigationbar-height) - 16px - 16px);
+    height: calc(100vh - var(--v3-header-height) - var(--v3-navigationbar-height) - 16px - 16px);
   }
 }
 </style>

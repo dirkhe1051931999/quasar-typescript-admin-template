@@ -25,7 +25,7 @@
       :spellcheck="false"
     >
       <template #append>
-        <slot name="append"> </slot>
+        <slot name="append"></slot>
       </template>
     </q-input>
   </div>
@@ -49,30 +49,37 @@ export default class FormInputComponent extends Vue {
     readonly: boolean;
     disable: boolean;
   };
+
   @Watch('option.disable', { deep: true })
   onDisablechange(newVal: boolean) {
     this.disable = newVal;
   }
+
   @Watch('option.model', { deep: true })
   onModelchange(newVal: string) {
     this.model = newVal;
   }
+
   @Watch('model')
   onchange(newVal: string) {
     this.$emit('input', newVal);
   }
+
   @Watch('option.classes')
   onClassesChange(newVal: string) {
     this.classes = newVal;
   }
+
   @Watch('option.rules', { deep: true })
   onRulesChange(newVal: any[]) {
     this.rules = newVal;
   }
+
   @Watch('option.label', { deep: true })
   onLabelChange(newVal: string) {
     this.label = newVal;
   }
+
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private model = '';
   private type = '';
@@ -83,17 +90,12 @@ export default class FormInputComponent extends Vue {
   private hint: string = '';
   private readonly: boolean = false;
   private disable: boolean = false;
+
   mounted() {
-    this.model = this.option.model ?? '';
-    this.type = this.option?.type ?? 'text';
-    this.inputPlaceholder = this.option?.inputPlaceholder ?? this.globals.$t('messages.pleaseEnter');
-    this.classes = this.option?.classes ?? '';
-    this.rules = this.option?.rules;
-    this.label = this.option?.label;
-    this.hint = this.option.hint;
-    this.readonly = this.option.readonly;
-    this.disable = this.option.disable || false;
+    const { model = '', type = 'text', inputPlaceholder = this.globals.$t('messages.pleaseEnter'), classes = '', rules = [], label = '', hint = '', readonly = false, disable = false } = this.option;
+    Object.assign(this, { model, type, inputPlaceholder, classes, rules, label, hint, readonly, disable });
   }
+
   public async validForm() {
     return await this.$refs['inputDom'].validate();
   }

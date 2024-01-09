@@ -92,9 +92,6 @@
             </q-th>
           </q-tr>
         </template>
-        <template v-slot:header-cell-action="props">
-          <q-th :props="props"> </q-th>
-        </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <!-- selected -->
@@ -108,20 +105,14 @@
             <!-- other -->
             <q-td v-for="col in props.cols" :key="col.name" :props="props" class="text-left">
               <span v-if="!col.inSlot">{{ col.value }}</span>
-              <div class="text-left" v-else>
-                <!-- id -->
-                <div v-if="col.name === 'id'">
-                  <span>{{ tableParams.data.indexOf(props.row) + 1 }}</span>
-                </div>
-                <!-- name -->
-                <div v-if="col.name === 'name'">
-                  <span class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
-                </div>
-                <!-- action -->
-                <div v-if="col.name === 'action'">
-                  <span class="in-table-link-button q-mr-md" @click="handlerClickUpdate(props.row)">{{ $t(`action.update`) }} </span>
-                  <span class="in-table-delete-button q-mr-md" @click="handlerClickDelete(props.row)">{{ $t(`action.delete`) }} </span>
-                  <span class="in-table-link-button" style="min-width: 100px">
+              <div v-else class="text-left">
+                <!-- simplified rendering logic for id, name, action -->
+                <div v-if="col.name === 'id'">{{ tableParams.data.indexOf(props.row) + 1 }}</div>
+                <span v-else-if="col.name === 'name'" class="link-type" @click="handlerClickDetail(props.row)">{{ props.row.name }}</span>
+                <div v-else-if="col.name === 'action'" class="action-buttons">
+                  <span class="in-table-link-button q-mr-md" @click="handlerClickUpdate(props.row)">{{ $t('action.update') }} </span>
+                  <span class="in-table-delete-button q-mr-md" @click="handlerClickDelete(props.row)">{{ $t('action.delete') }} </span>
+                  <span class="in-table-link-button">
                     {{ $t(`action.more`) }}
                     <q-icon name="o_expand_more"></q-icon>
                     <q-popup-proxy style="min-width: 100px">
@@ -172,7 +163,7 @@
       @before-hide="dialogAddUpdateBeforeHideEvent"
     >
       <div class="row q-col-gutter-x-md">
-        <div v-for="(item, index) in dialogAddUpdateParams.input" :key="index" class="col-6">
+        <div v-for="(item, index) in dialogAddUpdateParams.input" :key="index" v-responseClass="'sm:col-12 md:col-12 lg:col-6 xl:col-6'">
           <MyFormSelect
             v-if="item.type === 'select'"
             :option="{
@@ -187,29 +178,23 @@
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormDateRange
-            v-if="item.type === 'date'"
+            v-if="item.type === 'date-range'"
             :option="{
-              rules: item.rules,
-              classes: item.classes,
               model: dialogAddUpdateParams.params[item.model],
-              dateRange: dialogAddUpdateParams.params[item.dateRange],
+              required: item.required,
               label: item.label,
             }"
             @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormDateRangeWithTime
-            v-if="item.type === 'date-time'"
-            :ref="dialogAddUpdateParams.id + '-date-time-' + item.model"
+            v-if="item.type === 'date-time-range'"
+            :ref="dialogAddUpdateParams.id + '-date-time-range-' + item.model"
             :option="{
-              rules: item.rules,
-              classes: item.classes,
-              startModel: dialogAddUpdateParams.params[item.startModel],
-              endModel: dialogAddUpdateParams.params[item.endModel],
               model: dialogAddUpdateParams.params[item.model],
+              required: item.required,
               label: item.label,
             }"
-            @endInput="(data) => (dialogAddUpdateParams.params[item.endModel] = data)"
-            @startInput="(data) => (dialogAddUpdateParams.params[item.startModel] = data)"
+            @input="(data) => (dialogAddUpdateParams.params[item.model] = data)"
           />
           <MyFormSlider
             v-if="item.type === 'slider'"
@@ -318,7 +303,6 @@
         title: dialogUpload.title,
         params: dialogUpload.params,
       }"
-      width="30vw"
       @close="dialogUploadCloseEvent"
       @confirm="hanleClickUploadConfirm"
       @before-hide="dialogUploadBeforeHideEvent"
@@ -356,10 +340,17 @@
       @before-hide="dialogDetailBeforeHideEvent"
     >
       <q-list class="row q-col-gutter-x-md">
-        <q-item v-for="(item, index) in dialogDetailParams.params" :key="index" :clickable="false" class="col-6">
+        <q-item v-for="(item, index) in dialogDetailParams.params" :key="index" :clickable="false" v-responseClass="'sm:col-12 md:col-12 lg:col-6 xl:col-6'">
           <q-item-section>
             <q-item-label caption>{{ item.label }}：</q-item-label>
-            <q-item-label :class="item.class">{{ item.value }}</q-item-label>
+            <q-item-label :class="item.class" style="margin-top: 8px">
+              <span v-if="!item.inSlot">{{ item.value }}</span>
+              <div v-else class="text-left">
+                <span class="text-red" v-if="item.id === 'name'">
+                  {{ item.value }}
+                </span>
+              </div>
+            </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -369,16 +360,32 @@
 
 <script lang="ts">
 import { cloneDeep } from 'lodash';
-import { Component, Vue, Watch } from 'vue-facing-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { defaultFill } from 'src/utils/tools';
 import { getCurrentInstance } from 'vue';
 
 const CONST_PARAMS: any = {
-  query: { a: '', b: '', c: '' },
-  dialog_add_update: { a: '', b: '', c: '', d: [], e: '', e_dateRange: { from: '', to: '' }, f: '', g: '', g_startModel: '', g_endModel: '', h: 10, i: 'true', j: '' },
+  query: { a: '', b: '', c: '', d: '' },
+  dialog_add_update: {
+    a: '1',
+    b: '2',
+    c: '1',
+    d: ['2'],
+    e: { from: '2024/01/01', to: '2024/02/03' },
+    f: '1231/2312/3123/1231',
+    g: { start: '2024/01/01 00:00:00', end: '2024/02/03 00:00:00' },
+    h: 10,
+    i: 'true',
+    j: '1',
+  },
 };
 @Component({
   name: 'myComponentTableBeta',
+  methods: {
+    test() {
+      console.log('test');
+    },
+  },
 })
 export default class myComponentTableBeta extends Vue {
   /**instance */
@@ -665,25 +672,14 @@ export default class myComponentTableBeta extends Vue {
       },
       {
         model: 'e',
-        dateRange: 'e_dateRange',
-        type: 'date',
-        rules: [
-          (val: string | number | undefined | null) => {
-            return (val && String(val).length > 0) || this.globals.$t('messages.required');
-          },
-        ],
+        type: 'date-range',
+        required: true,
         label: 'Date',
       },
       {
         model: 'g',
-        startModel: 'g_startModel',
-        endModel: 'g_endModel',
-        type: 'date-time',
-        rules: [
-          (val: string | number | undefined | null) => {
-            return (val && String(val).length > 0) || this.globals.$t('messages.required');
-          },
-        ],
+        type: 'date-time-range',
+        required: true,
         label: 'Date and time',
       },
       {
@@ -740,12 +736,12 @@ export default class myComponentTableBeta extends Vue {
         inputSelectOption: [
           {
             label: 'Open...',
-            value: 1,
+            value: '1',
             children: [],
           },
           {
             label: 'New',
-            value: 2,
+            value: '2',
             children: [],
           },
           {
@@ -753,7 +749,7 @@ export default class myComponentTableBeta extends Vue {
             children: [
               {
                 label: 'Submenu Label 1',
-                value: 3,
+                value: '3',
                 children: [],
               },
               {
@@ -762,17 +758,17 @@ export default class myComponentTableBeta extends Vue {
                   {
                     label: '3rd level Label 4',
                     children: [],
-                    value: 4,
+                    value: '4',
                   },
                   {
                     label: '3rd level Label 5',
                     children: [],
-                    value: 5,
+                    value: '5',
                   },
                   {
                     label: '3rd level Label 6',
                     children: [],
-                    value: 6,
+                    value: '6',
                   },
                 ],
               },
@@ -782,17 +778,17 @@ export default class myComponentTableBeta extends Vue {
                   {
                     label: '3rd level Label 7',
                     children: [],
-                    value: 7,
+                    value: '7',
                   },
                   {
                     label: '3rd level Label 8',
                     children: [],
-                    value: 8,
+                    value: '8',
                   },
                   {
                     label: '3rd level Label 9',
                     children: [],
-                    value: 9,
+                    value: '9',
                   },
                 ],
               },
@@ -800,7 +796,7 @@ export default class myComponentTableBeta extends Vue {
           },
           {
             label: 'Quit',
-            value: 10,
+            value: '10',
             children: [],
           },
         ],
@@ -825,7 +821,7 @@ export default class myComponentTableBeta extends Vue {
     visiable: false,
     title: 'Detail',
     params: [
-      { label: 'Name', value: '', id: 'name', class: '' },
+      { label: 'Name', value: '', id: 'name', class: '', inSlot: true },
       { label: 'Sex', value: '', id: 'sex', class: '' },
       { label: 'C', value: '', id: 'c', class: '' },
       { label: 'D', value: '', id: 'd', class: '' },
@@ -836,17 +832,22 @@ export default class myComponentTableBeta extends Vue {
       { label: 'I', value: '', id: 'i', class: '' },
     ],
   };
+
+  mounted() {}
+
   /**event */
   private paginationInput(data: any) {
     this.tableParams.pagination = data;
     this.getData();
   }
+
   private async handleQuery() {
     this.queryParams.queryLoading = true;
     this.tableParams.pagination.page = 1;
     await this.getData();
     this.queryParams.queryLoading = false;
   }
+
   private async handleResetQuery() {
     this.queryParams.resetLoading = true;
     this.queryParams.params = cloneDeep(CONST_PARAMS.query);
@@ -854,22 +855,26 @@ export default class myComponentTableBeta extends Vue {
     await this.getData();
     this.queryParams.resetLoading = false;
   }
+
   private handleClickCollapse() {
     this.queryParams.allExpand = !this.queryParams.allExpand;
     this.queryParams.input.forEach((item: any) => {
       item.collapse = this.queryParams.allExpand ? false : item.defaultCollapse;
     });
   }
+
   private handleClickAdd() {
     this.dialogAddUpdateParams.visiable = true;
     this.dialogAddUpdateParams.dialogType = 'add';
     this.dialogAddUpdateParams.title = 'Add';
   }
+
   private handlerClickUpdate(row: any) {
     this.dialogAddUpdateParams.visiable = true;
     this.dialogAddUpdateParams.dialogType = 'update';
     this.dialogAddUpdateParams.title = 'Update';
   }
+
   private handleClickUpload() {
     this.dialogUpload.visiable = true;
     this.dialogUpload.title = 'Upload';
@@ -883,9 +888,11 @@ export default class myComponentTableBeta extends Vue {
       }, 100);
     });
   }
+
   private handleClickUploadFile() {
     this.$refs[this.dialogUpload.fileID].click();
   }
+
   private uploadFileSuccess() {
     const files = this.$refs[this.dialogUpload.fileID].files;
     let postFiles = Array.prototype.slice.call(files);
@@ -895,63 +902,55 @@ export default class myComponentTableBeta extends Vue {
       this.dialogUpload.params.file = rawFile;
     });
   }
+
   private handlerClickDetail(row: any) {
-    const getValue = (row: any, key: string): string => {
-      switch (key) {
-        case 'name':
-          return `${row[key]}-description`;
-        default:
-          return row[key] || '--';
-      }
-    };
-    const getClass = (row: any, key: string): string => {
-      switch (key) {
-        case 'sex':
-          return 'text-primary';
-        default:
-          return '';
-      }
-    };
     const arr = cloneDeep(this.dialogDetailParams.params);
     for (let item of arr) {
       for (let key in row) {
         if (item.id === key) {
-          item.value = getValue(row, key);
-          item.class = getClass(row, key);
+          item.value = row[key];
         }
       }
     }
     this.dialogDetailParams.params = arr;
     this.dialogDetailParams.visiable = true;
   }
+
   private monitorDialogUploadHide() {
     this.dialogUpload.params.fileName = '';
     this.dialogUpload.params.file = '';
   }
+
   private dialogAddUpdateCloseEvent(data: { type: string }) {
     this.dialogAddUpdateParams.visiable = false;
   }
+
   private dialogAddUpdateBeforeHideEvent(data: { type: string; params: any }) {
     if (data.params) {
       this.dialogAddUpdateParams.params = data.params;
     }
   }
+
   private dialogUploadCloseEvent(data: { type: string }) {
     this.dialogUpload.visiable = false;
   }
+
   private dialogUploadBeforeHideEvent(data: { type: string; params: any }) {
     if (data.params) {
       this.dialogUpload.params = data.params;
     }
   }
+
   private dialogDetailCloseEvent(data: { type: string }) {
     this.dialogDetailParams.visiable = false;
   }
+
   private dialogDetailBeforeHideEvent(data: { type: string; params: any }) {
     if (data.params) {
       this.dialogAddUpdateParams.params = data.params;
     }
   }
+
   /**http */
   private getData() {
     try {
@@ -963,6 +962,7 @@ export default class myComponentTableBeta extends Vue {
       return Promise.resolve();
     }
   }
+
   private async dialogAddUpdateConfirmEvent() {
     try {
       this.dialogAddUpdateParams.clickLoading = true;
@@ -979,6 +979,7 @@ export default class myComponentTableBeta extends Vue {
       this.dialogAddUpdateParams.clickLoading = false;
     }
   }
+
   private async handlerClickDelete(row: any) {
     try {
       const result = await this.$globalConfirm.show({
@@ -997,6 +998,7 @@ export default class myComponentTableBeta extends Vue {
       }
     } catch (error) {}
   }
+
   private async hanleClickUploadConfirm() {
     try {
       const form = new FormData();
@@ -1023,24 +1025,29 @@ export default class myComponentTableBeta extends Vue {
     box-shadow: rgba($color: #ffffff, $alpha: 0.05) 0px 20px 27px 0px;
   }
 }
+
 .body--light {
   .my-table th:last-child,
   .my-table td:last-child {
     box-shadow: rgba($color: #000000, $alpha: 0.05) 0px 20px 27px 0px;
   }
 }
+
 .my-table {
   /* specifying max-width so the example can
     highlight the sticky column on any browser window */
   max-width: 100%;
 }
+
 .my-table thead tr:last-child th:last-child {
   /* bg color is important for th; just specify one */
   background-color: var(--my-white);
 }
+
 .my-table td:last-child {
   background-color: var(--my-white);
 }
+
 .my-table th:last-child,
 .my-table td:last-child {
   position: sticky;

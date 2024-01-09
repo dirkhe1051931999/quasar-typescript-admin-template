@@ -6,7 +6,6 @@
     </p>
     <q-input
       v-model.trim="inputModel"
-      :type="type"
       :class="['q-mb-sm', classes]"
       :placeholder="inputPlaceholder"
       :rules="rules"
@@ -26,7 +25,7 @@
       :spellcheck="false"
     >
       <template #append>
-        <slot name="append"> </slot>
+        <slot name="append"></slot>
       </template>
     </q-input>
     <q-menu :offset="[0, -20]" no-refocus ref="menuRef" no-parent-event no-focus persistent @show="menuShow" @hide="menuHide">
@@ -68,40 +67,35 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 export default class MyTreeSelectComponent extends Vue {
   declare $refs: any;
   @Prop({ default: {} }) option!: any;
+
   @Watch('option.disable', { deep: true })
   onDisablechange(newVal: boolean) {
     this.disable = newVal;
   }
+
   @Watch('option.model', { deep: true })
   onModelchange(newVal: string) {
     this.model = newVal;
+    this.inputModel = this.inputSelectOptionBak.find((one: any) => one.value === this.model)?.label || '';
   }
+
   @Watch('option.classes')
   onClassesChange(newVal: string) {
     this.classes = newVal;
   }
+
   @Watch('option.rules', { deep: true })
   onRulesChange(newVal: any[]) {
     this.rules = newVal;
   }
+
   @Watch('option.label', { deep: true })
   onLabelChange(newVal: string) {
     this.label = newVal;
   }
-  mounted() {
-    this.model = this.option.model;
-    this.inputPlaceholder = this.option.inputPlaceholder ?? 'Please select';
-    this.classes = this.option?.classes || '';
-    this.rules = this.option.rules;
-    this.label = this.option.label || '';
-    this.inputSelectOptionBak = this.option.inputSelectOption;
-    this.hint = this.option.hint;
-    this.inputId = this.option.inputId;
-    this.disable = this.option.disable || false;
-  }
+
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   private model = '';
-  private type = '';
   private inputPlaceholder = '';
   private classes = '';
   private rules: any[] = [];
@@ -114,6 +108,20 @@ export default class MyTreeSelectComponent extends Vue {
   private userInput: boolean = false;
   private showPlaceholder = true;
   private inputModel = '';
+
+  mounted() {
+    this.model = this.option.model;
+    this.inputPlaceholder = this.option.inputPlaceholder ?? 'Please select';
+    this.classes = this.option?.classes || '';
+    this.rules = this.option.rules;
+    this.label = this.option.label || '';
+    this.inputSelectOptionBak = this.option.inputSelectOption;
+    this.hint = this.option.hint;
+    this.inputId = this.option.inputId;
+    this.disable = this.option.disable || false;
+    this.inputModel = this.inputSelectOptionBak.find((one: any) => one.value === this.model)?.label || '';
+  }
+
   /* event */
   private menuItemClick(item: any) {
     if (!item.children.length) {
@@ -122,22 +130,27 @@ export default class MyTreeSelectComponent extends Vue {
       this.$emit('input', item.value);
     }
   }
+
   private documentClickEvent(event: any) {
     // 检查点击事件是否发生在目标元素之外
     if (this.$refs.inputRef && !this.$refs.inputRef.$el.contains(event.target)) {
       this.$refs.menuRef.hide();
     }
   }
+
   private menuShow() {
     document.addEventListener('click', this.documentClickEvent);
   }
+
   private menuHide() {
     document.removeEventListener('click', this.documentClickEvent);
   }
+
   private inputFocus() {
     this.inputValue(this.inputModel);
     this.$refs.menuRef.show();
   }
+
   private inputValue(value: any) {
     const inputSelectOptionBak = cloneDeep(this.inputSelectOptionBak);
     if (!value) {
@@ -146,15 +159,14 @@ export default class MyTreeSelectComponent extends Vue {
       return;
     }
     value = value.toLowerCase();
-    let arr = inputSelectOptionBak.filter((one: any) => {
+    this.inputSelectOption = inputSelectOptionBak.filter((one: any) => {
       if (one.label.toLowerCase().includes(value)) return true;
       else {
         one.children = one.children.filter((two: any) => {
           if (two.label.toLowerCase().includes(value)) return true;
           else {
             two.children = two.children.filter((three: any) => {
-              if (three.label.toLowerCase().includes(value)) return true;
-              else return false;
+              return three.label.toLowerCase().includes(value);
             });
             return two.children.length;
           }
@@ -162,7 +174,6 @@ export default class MyTreeSelectComponent extends Vue {
         return one.children.length;
       }
     });
-    this.inputSelectOption = arr;
   }
 }
 </script>

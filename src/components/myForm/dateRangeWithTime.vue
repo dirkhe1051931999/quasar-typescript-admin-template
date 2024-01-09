@@ -1,140 +1,201 @@
 <template>
   <div>
     <p class="fs-12 q-pb-sm row items-center text-weight-regular">
-      <span class="q-mr-xs"> {{ dateParams.rules.length ? '*' : '' }} {{ dateParams.label }} </span>
+      <span class="q-mr-xs"> {{ dateParams.required ? '*' : '' }} {{ dateParams.label }} </span>
       <slot name="subTitle"></slot>
     </p>
-    <q-input
-      :class="dateParams.classes"
-      :rules="dateParams.rules"
-      v-model="dateParams.model"
-      :placeholder="dateParams.placeholder"
-      :spellcheck="false"
-      autocapitalize="off"
-      autocomplete="new-password"
-      autocorrect="off"
-      readonly
-      outlined
-      no-error-icon
-      dense
-    >
-      <template v-slot:append>
-        <q-icon
-          name="app:clear"
-          class="cursor-pointer"
-          v-if="dateParams.startModel"
-          @click="(dateParams.model = ''), (dateParams.startModel = ''), (dateParams.endModel = ''), (dateParams.list = ['', ''])"
+    <div class="pick-date">
+      <div class="row">
+        <span class="fs-12 q-mr-sm mt-3">Start:</span>
+        <q-input
+          ref="startInputEl"
+          :rules="dateParams.startRules"
+          :class="dateParams.startClasses"
+          v-model="dateParams.startModel"
+          :placeholder="dateParams.startPlaceholder"
+          :spellcheck="false"
+          autocapitalize="off"
+          mask="####/##/## ##:##:##"
+          autocomplete="new-password"
+          autocorrect="off"
+          outlined
+          no-error-icon
+          dense
+          clearable
+          clear-icon="app:clear"
         >
-        </q-icon>
-        <q-icon :name="$q.dark.isActive ? 'app:start-time-dark' : 'app:start-time'" class="cursor-pointer q-mr-xs" size="18px">
-          <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down" ref="proxy1">
-            <div class="row">
-              <q-date v-model="dateParams.startModel" mask="YYYY/MM/DD HH:mm:ss" flat> </q-date>
-              <q-time v-model="dateParams.startModel" mask="YYYY/MM/DD HH:mm:ss" format24h flat with-seconds> </q-time>
-            </div>
-            <div class="row items-center justify-center q-my-sm">
-              <q-btn v-close-popup label="Close" color="primary" flat />
-            </div>
-          </q-popup-proxy>
-        </q-icon>
-        <q-icon :name="$q.dark.isActive ? 'app:end-time-dark' : 'app:end-time'" class="cursor-pointer" size="18px">
-          <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down" ref="proxy2">
-            <div class="row">
-              <q-date v-model="dateParams.endModel" mask="YYYY/MM/DD HH:mm:ss" flat> </q-date>
-              <q-time v-model="dateParams.endModel" mask="YYYY/MM/DD HH:mm:ss" format24h flat with-seconds> </q-time>
-            </div>
-            <div class="row items-center justify-center q-my-sm">
-              <q-btn v-close-popup label="Close" color="primary" flat />
-            </div>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
+          <template v-slot:append>
+            <q-icon name="o_event" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down">
+                <div class="row">
+                  <q-date v-model="dateParams.startModel" mask="YYYY/MM/DD HH:mm:ss" flat></q-date>
+                  <q-time v-model="dateParams.startModel" mask="YYYY/MM/DD HH:mm:ss" format24h flat with-seconds></q-time>
+                </div>
+                <div class="row items-center justify-center q-my-sm">
+                  <q-btn v-close-popup label="Now" color="primary" flat @click="setNow('startModel')" />
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+      <div class="row">
+        <span class="fs-12 q-mr-sm mt-3">End:</span>
+        <q-input
+          ref="endInputEl"
+          :rules="dateParams.endRules"
+          :class="dateParams.endClasses"
+          v-model="dateParams.endModel"
+          :placeholder="dateParams.endPlaceholder"
+          :spellcheck="false"
+          autocapitalize="off"
+          mask="####/##/## ##:##:##"
+          autocomplete="new-password"
+          autocorrect="off"
+          outlined
+          no-error-icon
+          dense
+          clearable
+          clear-icon="app:clear"
+        >
+          <template v-slot:append>
+            <q-icon name="o_event" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="jump-up" transition-hide="jump-down" :target="!!dateParams.startModel">
+                <div class="row">
+                  <q-date v-model="dateParams.endModel" mask="YYYY/MM/DD HH:mm:ss" flat :options="endDateOption"></q-date>
+                  <q-time v-model="dateParams.endModel" mask="YYYY/MM/DD HH:mm:ss" format24h flat with-seconds></q-time>
+                </div>
+                <div class="row items-center justify-center q-my-sm q-gutter-x-md">
+                  <q-btn v-close-popup label="Now" color="primary" flat @click="setNow('endModel')" />
+                  <q-btn v-close-popup label="Close" color="primary" />
+                </div>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { getCurrentInstance } from 'vue';
 import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
+import { date } from 'quasar';
 
-@Component({ name: 'myDateRangeWithTImeComponent', emits: ['endInput', 'startInput'] })
+@Component({ name: 'myDateRangeWithTImeComponent', emits: ['input'] })
 export default class myDateRangeWithTImeComponent extends Vue {
   $refs: any;
   @Prop({
     default: {},
   })
   option!: any;
-  @Watch('dateParams.startModel', { deep: true })
-  onchange1(newVal: any) {
-    if (this.dateParams.endModel && +new Date(newVal) >= +new Date(this.dateParams.endModel)) {
-      this.$globalMessage.show({ type: 'error', content: 'start time < end time' });
-      this.$refs.proxy1 && this.$refs.proxy1.hide();
-      this.$refs.proxy2 && this.$refs.proxy2.hide();
-      return;
-    }
-    if (newVal) {
-      this.$emit('startInput', newVal);
-      this.dateParams.list[0] = `Start: ${newVal} `;
-    }
-  }
-  @Watch('dateParams.endModel', { deep: true })
-  onchange2(newVal: any) {
-    if (this.dateParams.startModel && +new Date(newVal) <= +new Date(this.dateParams.startModel)) {
-      this.$globalMessage.show({ type: 'error', content: 'start time < end time' });
-      this.$refs.proxy1 && this.$refs.proxy1.hide();
-      this.$refs.proxy2 && this.$refs.proxy2.hide();
-      return;
-    }
-    if (newVal) {
-      this.$emit('endInput', newVal);
-      this.dateParams.list[1] = `End: ${newVal}`;
-    }
-  }
-  @Watch('dateParams.list', { deep: true })
-  onchange3(newVal: any) {
-    this.dateParams.model = newVal.join('');
-  }
-  @Watch('option.startModel', { deep: true })
+
+  @Watch('option.model', { deep: true })
   onchange5(newVal: any) {
-    this.dateParams.startModel = newVal;
+    this.dateParams.model = newVal;
+    this.dateParams.startModel = newVal.start;
+    this.dateParams.endModel = newVal.end;
   }
-  @Watch('option.endModel', { deep: true })
-  onchange6(newVal: any) {
-    this.dateParams.endModel = newVal;
+
+  @Watch('dateParams.model', { deep: true })
+  onResultChange(newVal: any) {
+    this.$emit('input', newVal);
   }
-  @Watch('option.rules', { deep: true })
-  onchange7(newVal: any) {
-    this.dateParams.rules = newVal;
+
+  @Watch('option.required', { deep: true })
+  onRequiredChange(newVal: any) {
+    this.dateParams.required = newVal;
+    if (newVal) {
+      this.dateParams.startRules = [
+        (v: any) => !!v || 'Start date is required',
+        (v: any) => {
+          if (!date.isValid(v)) {
+            return 'Start date is invalid';
+          }
+          const start = new Date(v).getTime();
+          const end = new Date(this.dateParams.endModel).getTime();
+          return start < end || 'Start date must be less than end date';
+        },
+      ] as any;
+      this.dateParams.endRules = [
+        (v: any) => !!v || 'End date is required',
+        (v: any) => {
+          if (!date.isValid(v)) {
+            return 'End date is invalid';
+          }
+          const start = new Date(this.dateParams.startModel).getTime();
+          const end = new Date(v).getTime();
+          return start < end || 'Start date must be less than end date';
+        },
+      ] as any;
+    } else {
+      this.dateParams.startRules = [] as any;
+      this.dateParams.endRules = [] as any;
+    }
   }
-  @Watch('option.classes', { deep: true })
-  onchange8(newVal: any) {
-    this.dateParams.classes = newVal;
+
+  @Watch('dateParams.startModel')
+  onStartDateChange(newVal: any) {
+    if (this.dateParams.endModel) {
+      this.$refs.endInputEl && this.$refs.endInputEl.validate();
+    }
+    this.dateParams.model.start = newVal;
   }
-  @Watch('option.label', { deep: true })
-  onchange10(newVal: any) {
-    this.dateParams.label = newVal;
+
+  @Watch('dateParams.endModel')
+  onEndDateChange(newVal: any) {
+    if (this.dateParams.startModel) {
+      this.$refs.startInputEl && this.$refs.startInputEl.validate();
+    }
+    this.dateParams.model.end = newVal;
   }
+
+  get endDateOption(): any {
+    return (date: string | number | Date) => {
+      if (!this.dateParams.startModel) return false;
+      const start = this.dateParams.startModel.split(' ')[0];
+      return date >= start;
+    };
+  }
+
   mounted() {
-    this.dateParams.model = this.option.model;
-    this.dateParams.startModel = this.option.startModel;
-    this.dateParams.endModel = this.option.endModel;
-    this.dateParams.list = [this.dateParams.startModel, this.dateParams.endModel];
-    this.dateParams.rules = this.option.rules;
+    this.dateParams.startModel = this.option.model.start;
+    this.dateParams.endModel = this.option.model.end;
     this.dateParams.label = this.option.label;
-    this.dateParams.classes = this.option.classes;
+    this.dateParams.required = this.option.required;
   }
+
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
-  public dateParams = {
-    model: '',
+  private dateParams = {
+    model: {
+      start: '',
+      end: '',
+    },
     startModel: '',
     endModel: '',
-    list: ['', ''],
-    rules: [],
-    classes: '',
+    required: false,
+    startClasses: 'col',
+    endClasses: 'col',
+    startRules: [],
+    endRules: [],
+    startPlaceholder: 'Start date & time',
+    endPlaceholder: 'End date & time',
     label: '',
     placeholder: 'Select start and end times',
   };
+
+  private setNow(type: string) {
+    (this.dateParams as any)[type] = date.formatDate(new Date().getTime(), 'YYYY/MM/DD HH:mm:ss');
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.pick-date {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+</style>

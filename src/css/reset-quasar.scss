@@ -117,11 +117,11 @@
 .q-date__content {
   .q-btn {
     height: 30px;
-    width: 30px;
+    min-width: 30px;
     line-height: 30px;
-    padding: 0;
+    padding: 0 4px;
     &.q-btn--rectangle {
-      border-radius: 3 !important;
+      border-radius: 3px !important;
     }
   }
 }
@@ -161,6 +161,20 @@
       font-weight: 600;
     }
   }
+}
+.pagination-currentPage-input{
+  max-width: 68px !important;
+  margin-top: 3px;
+  .q-field__inner{
+    .q-field__control{
+      height: 32px !important;
+      &:before{
+        border-radius: 8px;
+        border: 1px solid var(--my-grey-6);
+      }
+    }
+  }
+
 }
 .q-field--outlined .q-field__control {
   border-radius: 8px;

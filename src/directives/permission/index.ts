@@ -6,6 +6,7 @@ import { type Directive } from 'vue';
 export const permission: Directive = {
   mounted(el, binding) {
     const { value } = binding;
+    console.log(value);
   },
 };
 export const permissionReplace: Directive = {

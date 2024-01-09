@@ -43,7 +43,6 @@ export default class dialogConfirmComponent extends Vue {
   }
   public onCancelClick() {
     this.hide();
-    this.$emit('hide');
   }
   public getJsx(content: string) {
     this.$nextTick(() => {

@@ -4,7 +4,7 @@
   "policy": "//github.com/dirkhe1051931999/quasar-typescript-admin-template/",
   "publicPath": "/v3-admin/",
   "pro": "",
-  "version": "V2.3.4",
+  "version": "V2.3.5",
   "devServerPort": 9002,
   "ip": "",
   "adminName": ["admin"],
