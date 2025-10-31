@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-facing-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { AppModule } from 'src/store/modules/app';
 import Breadcrumb from '../Breadcrumb/index.vue';
 import Hamburger from '../Hamburger/index.vue';
@@ -98,6 +98,8 @@ import setting from 'src/setting.json';
 import { SettingModule } from 'src/store/modules/setting';
 import { setDarkTheme } from 'src/utils/localStorage';
 import Shepherd from 'shepherd.js';
+import globalMessage from 'src/components/j-q-message';
+
 @Component({
   name: 'NavigationBarComponent',
   components: {
@@ -110,42 +112,55 @@ export default class NavigationBarComponent extends Vue {
   get appTitle() {
     return setting.title.replace(/\s+/g, '');
   }
+
   get username() {
     return UserModule.username;
   }
+
   get lang() {
     return AppModule.language;
   }
+
   get sidebar() {
     return AppModule.sidebar;
   }
+
   get darkIsActive() {
     return this.$q.dark.isActive;
   }
+
   /* setting */
   get showNotify() {
     return SettingModule.showNotify;
   }
+
   get showThemeSwitch() {
     return SettingModule.showThemeSwitch;
   }
+
   get showScreenfull() {
     return SettingModule.showScreenfull;
   }
+
   get showTagsView() {
     return SettingModule.showTagsView;
   }
+
   get showSidebarLogo() {
     return SettingModule.showSidebarLogo;
   }
+
   get fixedHeader() {
     return SettingModule.fixedHeader;
   }
+
   mounted() {
     this.initStep();
   }
+
   public tour: any;
   public version = setting.version;
+
   public checkLang(language: string) {
     if (language === 'en-US') {
       AppModule.SET_LANGUAGE(language);
@@ -157,6 +172,7 @@ export default class NavigationBarComponent extends Vue {
       setting.language = language;
     }
   }
+
   public initStep() {
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -315,12 +331,15 @@ export default class NavigationBarComponent extends Vue {
     ];
     this.tour.addSteps(steps);
   }
+
   public handleStartStep() {
     this.tour.start();
   }
+
   public refreshCurPage() {
     AppModule.refreshCurPage();
   }
+
   public toggleTheme() {
     if (this.$q.dark.isActive) {
       this.$q.dark.set(false);
@@ -332,13 +351,15 @@ export default class NavigationBarComponent extends Vue {
     setDarkTheme(this.$q.dark.isActive);
     this.$emit('toggleThemeChange');
   }
+
   public toggleSidebar() {
     AppModule.TOGGLE_SIDEBAR(false);
   }
+
   public async logout() {
     await UserModule.LogOut();
     this.$router.push('/login');
-    this.$globalMessage.show({
+    globalMessage.show({
       type: 'success',
       content: this.$t('messages.success'),
     });
@@ -352,6 +373,7 @@ export default class NavigationBarComponent extends Vue {
   height: var(--v3-navigationbar-height);
   overflow: hidden;
   background: var(--v3-navigationbar-background);
+
   .hamburger {
     display: flex;
     align-items: center;
@@ -361,6 +383,7 @@ export default class NavigationBarComponent extends Vue {
     cursor: pointer;
     color: var(--my-white);
   }
+
   .breadcrumb {
     float: left;
     // 参考 Bootstrap 的响应式设计 WIDTH = 576
@@ -368,6 +391,7 @@ export default class NavigationBarComponent extends Vue {
       display: none;
     }
   }
+
   .right-menu {
     float: right;
     margin-right: 12px;
@@ -375,6 +399,7 @@ export default class NavigationBarComponent extends Vue {
     display: flex;
     align-items: center;
     color: var(--my-white);
+
     .right-menu-item {
       padding: 0 12px;
       height: 100%;

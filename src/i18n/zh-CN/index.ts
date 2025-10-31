@@ -240,5 +240,6 @@ export default {
     end_time_required: '结束日期是必需的',
     now: '现在',
     close: '关闭',
+    invalidDateFormat: '无效的日期格式',
   },
 };

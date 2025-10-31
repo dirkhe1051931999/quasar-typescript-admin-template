@@ -4,8 +4,6 @@ import { type Directive } from 'vue';
 import 'src/router/permission';
 import vue3PhotoPreview from 'vue3-photo-preview';
 import 'vue3-photo-preview/dist/index.css';
-import globalMessage from 'src/utils/notify';
-import globalConfirm from 'src/utils/dialogConfirm';
 // import 'element-plus/dist/index.css';
 import 'element-plus/theme-chalk/dark/css-vars.css';
 import 'src/utils/types';
@@ -25,9 +23,7 @@ export default boot(({ app }) => {
   });
   app.use(vue3PhotoPreview);
   app.use(VueSidePanel);
-  app.config.globalProperties.$globalMessage = globalMessage;
   app.config.globalProperties.$window = window;
-  app.config.globalProperties.$globalConfirm = globalConfirm;
   app.config.globalProperties.defaultFill = defaultFill;
   app.config.globalProperties.parseTime = (time: number | string | null | undefined) => {
     let timeStamp = '';

@@ -1,4 +1,3 @@
-//globalMessage.ts
 import { Notify, QNotifyCreateOptions } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
 

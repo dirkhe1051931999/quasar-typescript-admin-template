@@ -2,20 +2,15 @@ export const getCssVariableValue = (cssVariableName: string) => {
   let cssVariableValue = '';
   try {
     // 没有拿到值时，会返回空串
-    cssVariableValue = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue(cssVariableName);
+    cssVariableValue = getComputedStyle(document.documentElement).getPropertyValue(cssVariableName);
   } catch (error) {
     console.error(error);
   }
   return cssVariableValue;
 };
+
 // loadBdScript
-export function loadBdScript(
-  scriptId: string,
-  url: string,
-  callback: () => void
-) {
+export function loadBdScript(scriptId: string, url: string, callback: () => void) {
   const script: any = document.createElement('script');
   script.type = 'text/javascript';
   if (script.readyState) {
@@ -36,14 +31,17 @@ export function loadBdScript(
   script.id = scriptId;
   document.getElementsByTagName('head')[0].appendChild(script);
 }
+
 export function defaultFill(val: any) {
   if (val === 0 || String(val) === '0') return val;
   if (!!!val) return '--';
   else return val;
 }
+
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
 export function xmlToJson(xml: any) {
   var obj: any = {};
   if (xml.nodeType === 1) {
@@ -74,4 +72,33 @@ export function xmlToJson(xml: any) {
     }
   }
   return obj;
+}
+
+/**
+ *
+ * 1. 首先检查值是否为数字0或字符串'0'，如果是则应用格式化或返回原值（保留0）。
+ * 2. 其次检查其他所有被视为空白的 falsy 值 (null, undefined, '', false, NaN)。
+ * 3. 否则，应用可选的自定义格式化函数。
+ *
+ * @param customFormatter 可选的自定义格式化函数。
+ * @param fallbackValue 默认的替代值，默认为 '--'。
+ * @returns QTable columns 接受的格式化函数。
+ */
+export function defaultFormat(customFormatter?: (val: any, row: any) => string | number, fallbackValue: string = '--') {
+  return (val: any, row: any) => {
+    if (val === 0 || val === '0') {
+      return customFormatter ? customFormatter(val, row) : val;
+    }
+
+    if (!val) {
+      return fallbackValue;
+    }
+
+    if (customFormatter) {
+      return customFormatter(val, row);
+    }
+
+    // 否则返回原始值
+    return val;
+  };
 }

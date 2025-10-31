@@ -1,12 +1,12 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import globalMessage from 'src/utils/notify';
 import setting from 'src/setting.json';
 import { UserModule } from 'src/store/modules/user';
 import router from 'src/router';
 import { Loading } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
 import JSONbig from 'json-bigint';
+import globalMessage from 'src/components/j-q-message';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

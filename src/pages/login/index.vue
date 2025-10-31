@@ -122,6 +122,7 @@ import { Dictionary } from 'lodash';
 import { GVerify } from 'src/utils/canvas_verify_code';
 import { sliderCaptcha } from 'src/utils/slidercaptcha';
 import { sleep } from 'src/utils/tools';
+import globalMessage from 'src/components/j-q-message';
 
 @Component({ name: 'LoginPage' })
 export default class LoginPage extends Vue {
@@ -173,7 +174,7 @@ export default class LoginPage extends Vue {
       verifyCodeResult = this.verifyCodeInstance.validate(this.verifyCode);
     }
     if (!verifyCodeResult) {
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'error',
         content: 'Wrong verification code',
       });
@@ -188,7 +189,7 @@ export default class LoginPage extends Vue {
       this.$q.loading.hide();
       this.useSwipeVerifyCode = false;
       this.useVerifyCode = false;
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'success',
         content: this.$t('messages.success'),
       });

@@ -1,11 +1,5 @@
 <template>
   <div class="q-pa-md q-gutter-y-sm column items-center">
-    <MyTooltip content="tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip tip" style="width: 100px"></MyTooltip>
-    <TextToInput value="text text" :that="textToInputThat" :loading="textToInputLoading" @confirm="textToInputConfirm" @close="textToInputClose"></TextToInput>
-    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-1" bannerType="warn" :showClose="true"></MyBanner>
-    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-2" bannerType="success" :showClose="true"></MyBanner>
-    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-3" bannerType="negative" :showClose="true"></MyBanner>
-    <MyBanner content="ok ok ok ok ok ok ok ok ok ok ok ok" bid="notice-banner-4" bannerType="primary" :showClose="true"></MyBanner>
     <div class="q-pa-md q-gutter-sm">
       <q-banner dense class="bg-primary text-white">
         Unfortunately, the credit card did not go through, please try again.

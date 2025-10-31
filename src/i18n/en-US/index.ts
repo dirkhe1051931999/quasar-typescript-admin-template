@@ -241,5 +241,6 @@ export default {
     end_time_required: 'End date is required',
     now: 'Now',
     close: 'Close',
+    invalidDateFormat: 'Invalid date format',
   },
 };

@@ -1,9 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 import Layout from 'src/layouts/index.vue';
-import { markRaw, shallowRef } from 'vue';
+import { shallowRef } from 'vue';
 import setting from 'src/setting.json';
 import { PermissionModule } from 'src/store/modules/permission';
-import globalMessage from 'src/utils/notify';
+import globalMessage from 'src/components/j-q-message';
 import { UserModule } from 'src/store/modules/user';
 
 /*

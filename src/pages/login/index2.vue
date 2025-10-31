@@ -345,6 +345,7 @@ import { isValidEmail, isValidPassword } from 'src/utils/validate';
 import { getToken } from 'src/utils/cookie';
 import { PermissionModule } from 'src/store/modules/permission';
 import setting from 'src/setting.json';
+import globalMessage from 'src/components/j-q-message';
 
 @Component({ name: 'LoginPage2' })
 export default class LoginPage2 extends Vue {
@@ -567,36 +568,36 @@ export default class LoginPage2 extends Vue {
 
   private async resetPasswordToSignIn() {
     if (getToken()) {
-      const result = await this.$globalConfirm.show({
-        title: '再次确认',
-        color: 'primary',
-        content: '您已经登录，是否要注销登录并重新登录？',
-        confirmButtonText: 'Confirm',
-      });
-      if (result) {
-        UserModule.ResetToken();
-        this.pageType = 'signIn';
-        this.$router.push('/login2');
-      } else {
-        const routes = PermissionModule.routes;
-        this.$router.push(`${routes[1].path}${routes[1] && routes[1].children && routes[1].children![0].path ? `/${routes[1].children![0].path}` : ''}`);
-      }
+      // const result = await this.$globalConfirm.show({
+      //   title: '再次确认',
+      //   color: 'primary',
+      //   content: '您已经登录，是否要注销登录并重新登录？',
+      //   confirmButtonText: 'Confirm',
+      // });
+      // if (result) {
+      //   UserModule.ResetToken();
+      //   this.pageType = 'signIn';
+      //   this.$router.push('/login2');
+      // } else {
+      //   const routes = PermissionModule.routes;
+      //   this.$router.push(`${routes[1].path}${routes[1] && routes[1].children && routes[1].children![0].path ? `/${routes[1].children![0].path}` : ''}`);
+      // }
     }
-    this.pageType = 'signIn';
-    this.$router.push('/login2');
+    // this.pageType = 'signIn';
+    // this.$router.push('/login2');
   }
 
   /* http */
   private async handlerSignIn() {
     if (!this.signInParams.username || !this.signInParams.password) {
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'error',
         content: '用户名或密码不能为空',
       });
       return;
     }
     if (!this.signInParams.code) {
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'error',
         content: '验证码不能为空',
       });
@@ -609,7 +610,7 @@ export default class LoginPage2 extends Vue {
       code: this.signInParams.code,
     });
     this.$q.loading.hide();
-    this.$globalMessage.show({
+    globalMessage.show({
       type: 'success',
       content: '登录成功',
     });
@@ -618,7 +619,7 @@ export default class LoginPage2 extends Vue {
 
   private async handleClickSendCode() {
     if (!this.signInParams.username) {
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'error',
         content: '请输入用户名',
       });
@@ -632,7 +633,7 @@ export default class LoginPage2 extends Vue {
       // });
       this.signInParams.getCodeConfig.getVerifyCodeLoading = false;
       this.signInParams.getCodeConfig.toGetVerifyCode = true;
-      this.$globalMessage.show({
+      globalMessage.show({
         type: 'success',
         content: this.signInParams.method === 'EMAIL' ? `验证码已经发送到您的邮箱（${'email'}）` : `短信验证码已发送到您的手机（${'mobile'}）`,
       });
@@ -663,7 +664,7 @@ export default class LoginPage2 extends Vue {
         //   oldPassword: this.changePasswordForm.oldPassword,
         //   newPassword: this.changePasswordForm.password,
         // });
-        this.$globalMessage.show({
+        globalMessage.show({
           type: 'success',
           content: '修改成功',
         });
@@ -686,7 +687,7 @@ export default class LoginPage2 extends Vue {
         //   username: this.forgotPasswordForm.username,
         //   email: this.forgotPasswordForm.email,
         // });
-        this.$globalMessage.show({
+        globalMessage.show({
           type: 'success',
           content: '操作成功，请检查您的电子邮件以重置您的密码',
         });
@@ -708,7 +709,7 @@ export default class LoginPage2 extends Vue {
         //   newPassword: this.resetPasswordForm.password,
         // });
         if (!getToken()) {
-          this.$globalMessage.show({
+          globalMessage.show({
             type: 'success',
             content: '修改成功，请重新登录',
           });
