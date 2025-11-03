@@ -102,3 +102,33 @@ export function defaultFormat(customFormatter?: (val: any, row: any) => string |
     return val;
   };
 }
+
+/**
+ * 格式化数据
+ * 把数字转换为指定单位
+ */
+type TSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
+
+export function formatSize(options: { maxUnit?: TSizeUnit; numberFormatOptions?: Intl.NumberFormatOptions; size: number; unit?: TSizeUnit }) {
+  const { size, unit = 'B', maxUnit, numberFormatOptions } = options;
+  const { size: finalSize, unit: finalUnit } = getUpperSize({ size, unit }, { maxUnit });
+  return `${finalSize.toLocaleString(void 0, numberFormatOptions)} ${finalUnit}`;
+}
+
+export function getUpperSize(
+  sizeUnit: { size: number; unit?: TSizeUnit },
+  options?: { maxUnit?: TSizeUnit }
+): {
+  size: number;
+  unit: TSizeUnit;
+} {
+  const SIZE_UNITS: TSizeUnit[] = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const { size, unit = 'B' } = sizeUnit;
+  const unitIndex = SIZE_UNITS.indexOf(unit);
+  if (unitIndex === -1 || unitIndex === SIZE_UNITS.length - 1) return { size, unit };
+  const maxUnit = options?.maxUnit || 'TB';
+  const maxUnitIndex = SIZE_UNITS.indexOf(maxUnit);
+  if (unitIndex === maxUnitIndex) return { size, unit };
+  if (size < 1024) return { size: size, unit };
+  return getUpperSize({ size: size / 1024, unit: SIZE_UNITS[unitIndex + 1] }, options);
+}

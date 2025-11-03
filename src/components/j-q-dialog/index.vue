@@ -162,6 +162,7 @@ $dialog-max-width: 1024px;
     overflow-x: hidden;
     overflow-y: auto;
     min-height: 320px;
+    max-height: 60vh;
 
     &::-webkit-scrollbar-thumb {
       background-color: rgba(144, 147, 153, 0.3);
@@ -211,6 +212,7 @@ $dialog-max-width: 1024px;
 
     .dialog-body {
       height: calc(100vh - 56px - 68px);
+      max-height: calc(100vh - 56px - 68px);
     }
   }
 

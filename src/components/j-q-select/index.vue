@@ -7,7 +7,7 @@
     :clearable="clearable"
     :dense="dense"
     :placeholder="filterable && !label && (!innerValue || (Array.isArray(innerValue) && innerValue.length === 0)) ? $t('messages.pleaseEnter') : ''"
-    :disable="disabled ?? disable"
+    :disable="disable"
     :display-value="computedDisplayValue"
     :dropdown-icon="dropdownIcon"
     :emit-value="computedEmitValue"
@@ -91,7 +91,6 @@ export default defineComponent({
     clearIcon: { type: String as PropType<QSelectProps['clearIcon']>, default: 'app:clear' },
     dense: { type: Boolean as PropType<QSelectProps['dense']>, default: true },
     disable: { type: Boolean as PropType<QSelectProps['disable']> },
-    disabled: { type: Boolean, default: void 0 },
     dropdownIcon: { type: String as PropType<QSelectProps['dropdownIcon']>, default: 'expand_more' },
     emptyOption: { type: Boolean, default: true },
     filterFn: { type: Function as PropType<TFilterFn> },
@@ -138,7 +137,7 @@ export default defineComponent({
       },
     });
     const inputValue = ref('');
-    const filterOptions = ref<typeof props.options | undefined>(undefined); // 存储外部 filterFn 的结果
+    const filterOptions = ref<typeof props.options | undefined>(undefined);
     const computedEmitValue = computed(() => !!props.optionValue);
     const computedOptions = computed(() => {
       if (filterOptions.value) return filterOptions.value;
