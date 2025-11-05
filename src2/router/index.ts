@@ -1,10 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 function redirect(to: any): any {
-  location.replace(
-    process.env.NODE_ENV === 'production'
-      ? '/v3-admin/index.html#/dashboard'
-      : 'index.html#/dashboard'
-  );
+  location.replace(process.env.NODE_ENV === 'production' ? '/v3-admin/index.html#/dashboard' : 'index.html#/dashboard');
 }
 
 const routes: RouteRecordRaw[] = [

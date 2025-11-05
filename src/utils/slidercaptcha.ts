@@ -126,46 +126,25 @@ export class sliderCaptcha {
     let loadCount = 0;
     img.onload = () => {
       // 随机创建滑块的位置
-      this.canvasOption.x = x = getRandomNumberByRange(
-        L + 10,
-        this.option.width - (L + 10)
-      );
-      y = getRandomNumberByRange(
-        10 + this.option.sliderR * 2,
-        this.option.height - (L + 10)
-      );
+      this.canvasOption.x = x = getRandomNumberByRange(L + 10, this.option.width - (L + 10));
+      y = getRandomNumberByRange(10 + this.option.sliderR * 2, this.option.height - (L + 10));
 
       drawImg(this.canvasOption.canvasCtx, 'fill');
       drawImg(this.canvasOption.blockCtx, 'clip');
 
-      this.canvasOption.canvasCtx.drawImage(
-        img,
-        0,
-        0,
-        this.option.width - 2,
-        this.option.height
-      );
-      this.canvasOption.blockCtx.drawImage(
-        img,
-        0,
-        0,
-        this.option.width - 2,
-        this.option.height
-      );
+      this.canvasOption.canvasCtx.drawImage(img, 0, 0, this.option.width - 2, this.option.height);
+      this.canvasOption.blockCtx.drawImage(img, 0, 0, this.option.width - 2, this.option.height);
       const Y = y - this.option.sliderR * 2 - 1;
       const ImageData = this.canvasOption.blockCtx.getImageData(x - 3, Y, L, L);
       this.canvasOption.block.width = L;
       this.canvasOption.blockCtx.putImageData(ImageData, 0, Y + 1);
-      this.canvasOption.text.textContent =
-        this.canvasOption.text.getAttribute('data-text');
+      this.canvasOption.text.textContent = this.canvasOption.text.getAttribute('data-text');
     };
     img.onerror = () => {
       loadCount++;
       if (window.location.protocol === 'file:') {
         loadCount = this.option.maxLoadCount;
-        throw new Error(
-          "can't load pic resource file from File protocal. Please try http or https"
-        );
+        throw new Error("can't load pic resource file from File protocal. Please try http or https");
       }
       if (loadCount >= this.option.maxLoadCount) {
         this.canvasOption.text.textContent = 'Image failed to load';
@@ -208,8 +187,7 @@ export class sliderCaptcha {
       const moveY = eventY - originY;
       if (moveX < 0 || moveX + 40 > this.option.width) return false;
       this.canvasOption.slider.style.left = `${moveX - 1}px`;
-      const blockLeft =
-        ((this.option.width - 40 - 20) / (this.option.width - 40)) * moveX;
+      const blockLeft = ((this.option.width - 40 - 20) / (this.option.width - 40)) * moveX;
       this.canvasOption.block.style.left = `${blockLeft}px`;
       this.canvasOption.sliderContainer.classList.add('sliderContainer_active');
       this.canvasOption.sliderMask.style.width = `${moveX + 4}px`;
@@ -221,15 +199,11 @@ export class sliderCaptcha {
       isMouseDown = false;
       const eventX = e.clientX || e.changedTouches[0].clientX;
       if (eventX === originX) return false;
-      this.canvasOption.sliderContainer.classList.remove(
-        'sliderContainer_active'
-      );
+      this.canvasOption.sliderContainer.classList.remove('sliderContainer_active');
       this.canvasOption.trail = trail;
       const data = this.verify();
       if (data.spliced && data.verified) {
-        this.canvasOption.sliderContainer.classList.add(
-          'sliderContainer_success'
-        );
+        this.canvasOption.sliderContainer.classList.add('sliderContainer_success');
         this.option.onSuccess.call(this.$element);
       } else {
         this.canvasOption.sliderContainer.classList.add('sliderContainer_fail');
@@ -258,18 +232,8 @@ export class sliderCaptcha {
     });
   }
   private clean() {
-    this.canvasOption.canvasCtx.clearRect(
-      0,
-      0,
-      this.option.width,
-      this.option.height
-    );
-    this.canvasOption.blockCtx.clearRect(
-      0,
-      0,
-      this.option.width,
-      this.option.height
-    );
+    this.canvasOption.canvasCtx.clearRect(0, 0, this.option.width, this.option.height);
+    this.canvasOption.blockCtx.clearRect(0, 0, this.option.width, this.option.height);
     this.canvasOption.block.width = this.option.width;
   }
   private verify() {
@@ -299,17 +263,12 @@ export class sliderCaptcha {
   }
   public reset() {
     this.canvasOption.sliderContainer.classList.remove('sliderContainer_fail');
-    this.canvasOption.sliderContainer.classList.remove(
-      'sliderContainer_success'
-    );
+    this.canvasOption.sliderContainer.classList.remove('sliderContainer_success');
     this.canvasOption.slider.style.left = 0;
     this.canvasOption.block.style.left = 0;
     this.canvasOption.sliderMask.style.width = 0;
     this.clean();
-    this.canvasOption.text.setAttribute(
-      'data-text',
-      this.canvasOption.text.textContent
-    );
+    this.canvasOption.text.setAttribute('data-text', this.canvasOption.text.textContent);
     this.canvasOption.text.textContent = this.option.loadingText;
     this.initImg();
   }

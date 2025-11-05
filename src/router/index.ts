@@ -1,15 +1,8 @@
-import {
-  type RouteRecordRaw,
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from 'vue-router';
+import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { constantRoutes } from './routes';
 import setting from 'src/setting.json';
 const router = createRouter({
-  history: createWebHashHistory(
-    process.env.NODE_ENV === 'production' ? setting.publicPath : '/'
-  ),
+  history: createWebHashHistory(process.env.NODE_ENV === 'production' ? setting.publicPath : '/'),
   routes: constantRoutes,
 });
 

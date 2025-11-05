@@ -145,36 +145,20 @@ export default defineComponent({
   .table-cell--fix-left {
     position: sticky;
     z-index: 1;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: 10px;
-      height: 100%;
-      pointer-events: none;
-    }
+    background-color: #ffffff;
+    box-shadow: rgba($color: #000000, $alpha: 0.05) 0px 20px 27px 0px;
   }
 
   .table-cell--fix-right {
     right: 0;
-
-    &::after {
-      left: -10px;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
-    }
   }
 
   .table-cell--fix-left {
     left: 0;
-
-    &::after {
-      left: 100%;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
-    }
   }
 }
+
+// --- 表格高度和数据样式 (保持不变) ---
 
 .j-q-table-container.table--auto-height td {
   height: auto;

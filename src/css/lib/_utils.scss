@@ -26,7 +26,9 @@
     color: #ffffff;
   }
 
-  .q-message-success-style, .q-message-warn-style, .q-message-error-style {
+  .q-message-success-style,
+  .q-message-warn-style,
+  .q-message-error-style {
     background-color: #000000;
     box-shadow: rgba(255, 255, 255, 0.1) 0 0 10px 0;
   }
@@ -60,14 +62,15 @@
     color: #000000;
   }
 
-  .q-message-success-style, .q-message-warn-style, .q-message-error-style {
+  .q-message-success-style,
+  .q-message-warn-style,
+  .q-message-error-style {
     background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 0;
   }
   .text-black000 {
     color: #000000 !important;
   }
-
 }
 
 // 可点击的link

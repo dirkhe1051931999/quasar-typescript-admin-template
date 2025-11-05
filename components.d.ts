@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Construction: typeof import('./src/components/Construction/index.vue')['default']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -17,14 +16,18 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    JCTabs: typeof import('./src/components/j-c-tabs/index.vue')['default']
+    JCTitleLine: typeof import('./src/components/j-c-title-line/index.vue')['default']
     JQConfirm: typeof import('./src/components/j-q-confirm/index.vue')['default']
     JQConfirmDialog: typeof import('./src/components/j-q-confirm-dialog/index.vue')['default']
     JQDate: typeof import('./src/components/j-q-date/index.vue')['default']
+    JQDetailList: typeof import('./src/components/j-q-detail-list/index.vue')['default']
     JQDialog: typeof import('./src/components/j-q-dialog/index.vue')['default']
     JQFile: typeof import('./src/components/j-q-file/index.vue')['default']
     JQFormLabel: typeof import('./src/components/j-q-form-label/index.vue')['default']
     JQInput: typeof import('./src/components/j-q-input/index.vue')['default']
     JQOptionGroup: typeof import('./src/components/j-q-option-group/index.vue')['default']
+    JQSearchForm: typeof import('./src/components/j-q-search-form/index.vue')['default']
     JQSelect: typeof import('./src/components/j-q-select/index.vue')['default']
     JQTable: typeof import('./src/components/j-q-table/index.vue')['default']
     JQTooltip: typeof import('./src/components/j-q-tooltip/index.vue')['default']

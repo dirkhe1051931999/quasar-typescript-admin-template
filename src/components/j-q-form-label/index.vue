@@ -1,7 +1,8 @@
 <template>
   <div class="j-q-form-label" :class="{ 'form-label--vertical': vertical, required: required }">
     <div v-if="showLabel" class="form-label" :class="[labelClass, { required: required }]">
-      <slot name="label">{{ label }}</slot>
+      {{ label }}
+      <slot name="label-hint"></slot>
     </div>
 
     <div class="form-value" :class="valueClass">
@@ -29,7 +30,7 @@ export default defineComponent({
   },
   slots: {
     default: void 0,
-    label: void 0,
+    'label-hint': void 0,
   },
   setup(props, { slots }) {
     const showLabel = computed(() => {

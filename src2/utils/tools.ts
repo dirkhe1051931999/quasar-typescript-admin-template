@@ -28,21 +28,9 @@ export let useTime = () => {
     month = date.getMonth() + 1;
     week = '日一二三四五六'.charAt(date.getDay());
     day = date.getDate();
-    hour =
-      String(date.getHours()).padStart(2, '0') ||
-      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(
-        date.getHours()
-      );
-    minute =
-      String(date.getMinutes()).padStart(2, '0') ||
-      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(
-        date.getMinutes()
-      );
-    second =
-      String(date.getSeconds())?.padStart(2, '0') ||
-      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(
-        date.getSeconds()
-      );
+    hour = String(date.getHours()).padStart(2, '0') || new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(date.getHours());
+    minute = String(date.getMinutes()).padStart(2, '0') || new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(date.getMinutes());
+    second = String(date.getSeconds())?.padStart(2, '0') || new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(date.getSeconds());
     nowTime = `${year}年${month}月${day} ${hour}:${minute}:${second}`;
   };
 

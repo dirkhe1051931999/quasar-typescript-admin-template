@@ -9,9 +9,7 @@
           <div class="header-ct">
             <div class="header-ct-title">
               <span>Visualization data display platform</span>
-              <div class="header-ct-warning">
-                Platform peak warning information (2 items)
-              </div>
+              <div class="header-ct-warning">Platform peak warning information (2 items)</div>
             </div>
           </div>
           <div class="header-rg">
@@ -208,54 +206,15 @@ let platFromData = [
 let annualData = [
   {
     label: `${new Date().getFullYear() - 2}年`,
-    value: [
-      '184',
-      '90',
-      '120',
-      '0',
-      '30',
-      '100',
-      '80',
-      '40',
-      '20',
-      '510',
-      '350',
-      '180',
-    ],
+    value: ['184', '90', '120', '0', '30', '100', '80', '40', '20', '510', '350', '180'],
   },
   {
     label: `${new Date().getFullYear() - 1}年`,
-    value: [
-      '118',
-      '509',
-      '366',
-      '162',
-      '380',
-      '123',
-      '321',
-      '158',
-      '352',
-      '474',
-      '154',
-      '22',
-    ],
+    value: ['118', '509', '366', '162', '380', '123', '321', '158', '352', '474', '154', '22'],
   },
   {
     label: `${new Date().getFullYear()}年`,
-    value: [
-      '548',
-      '259',
-      '113',
-      '90',
-      '69',
-      '512',
-      '23',
-      '49',
-      '28',
-      '420',
-      '313',
-      '156',
-    ],
+    value: ['548', '259', '113', '90', '69', '512', '23', '49', '28', '420', '313', '156'],
   },
 ];
 let mapData = [
@@ -393,12 +352,8 @@ export default class largeDisplayComponent extends Vue {
     });
   }
   private initCharts() {
-    this.dataScreen.chart1 = this.$refs.RealTimeAccessRef.initChart(
-      0.5
-    ) as ECharts;
-    this.dataScreen.chart2 = this.$refs.AgeRatioRef.initChart(
-      ageData
-    ) as ECharts;
+    this.dataScreen.chart1 = this.$refs.RealTimeAccessRef.initChart(0.5) as ECharts;
+    this.dataScreen.chart2 = this.$refs.AgeRatioRef.initChart(ageData) as ECharts;
     this.dataScreen.chart3 = this.$refs.AnnualUseRef.initChart({
       data: annualData,
       unit: annualData.map((val: any) => val.label),
@@ -422,24 +377,12 @@ export default class largeDisplayComponent extends Vue {
     }) as ECharts;
     this.dataScreen.chart7 = this.$refs.PlatformSourceRef.initChart({
       data: platFromData,
-      colors: [
-        '#078dbc',
-        '#6ad40b',
-        '#6172fc',
-        '#1786ff',
-        '#ffbe2f',
-        '#4dc89d',
-        '#b797df',
-        '#ffd3aa',
-      ],
+      colors: ['#078dbc', '#6ad40b', '#6172fc', '#1786ff', '#ffbe2f', '#4dc89d', '#b797df', '#ffd3aa'],
     }) as ECharts;
-    this.dataScreen.mapChart = this.$refs.MapchartRef.initChart(
-      mapData
-    ) as ECharts;
+    this.dataScreen.mapChart = this.$refs.MapchartRef.initChart(mapData) as ECharts;
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import 'src2/pages/styles/large-display.scss';

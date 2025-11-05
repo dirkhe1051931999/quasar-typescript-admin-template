@@ -1,49 +1,62 @@
 <template>
   <div>
-    TableAddOrUpdateComponent
     <div class="row q-gutter-sm items-center justify-end">
-      <q-btn label="修改cancel标题" @click="dialogInstance.changeCancelText('cancel')" color="primary" no-caps />
-      <q-btn label="修改confirm标题" @click="dialogInstance.changeConfirmText('confirm')" color="primary" no-caps />
-      <q-btn label="触发父级的事件" @click="hanleClickGetData" color="primary" no-caps />
+      <q-btn label="update cancel btn label" @click="dialogInstance.changeCancelText('messages.pleaseEnter')" color="primary" no-caps />
+      <q-btn label="update confirm btn label" @click="dialogInstance.changeConfirmText('messages.pleaseSelect')" color="primary" no-caps />
+      <q-btn label="trigger parent component getData" @click="hanleClickGetData" color="primary" no-caps />
       <q-btn label="global message" @click="handleClickMessage" color="primary" no-caps />
     </div>
-    <q-form ref="formRef">
-      <j-q-form-label label="Normal input" required>
-        <j-q-input v-model="dialogParams.params.name" @update:model-value="onNameChange" :rules="dialogParams.rules.required" />
-      </j-q-form-label>
-      <p>Single choice, searchable</p>
-      <j-q-select v-model="dialogParams.params.area" :options="dialogParams.areaOptions" filterable />
-      <p>Multiple selection, searchable</p>
-      <JQSelect v-model="dialogParams.params.tags" multiple use-chips filterable :filter-fn="tagFilterFn" :options="dialogParams.tagsOptions" />
-      <p>File Upload</p>
-      <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="beforeFile" :rules="dialogParams.rules.file" maxlength="1">
-        <template #hint>
-          <ul class="pl-4">
-            <li class="list-disc">
-              <a class="link-type">download</a>
-            </li>
-            <li class="list-disc">
-              <span>123123</span>
-            </li>
-          </ul>
-        </template>
-      </j-q-file>
-      <p>date</p>
-      <j-q-date v-model="dialogParams.params.date" :clearable="true" range :options="dialogParams.dateOptions" />
-      <p>radio</p>
-      <j-q-option-group v-model="dialogParams.params.level" :options="dialogParams.levelOptions" inline color="primary" :rules="dialogParams.rules.required" type="radio" />
-      <p>checkbox</p>
-      <j-q-option-group v-model="dialogParams.params.hobbys" :options="dialogParams.hobbyOptions" inline color="primary" :rules="dialogParams.rules.required" type="checkbox" />
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
-      <p class="fs-32">checkbox</p>
+    <q-form ref="formRef" class="row q-col-gutter-x-md q-mt-md">
+      <div class="col-6">
+        <j-q-form-label label="Normal input" required>
+          <j-q-input v-model="dialogParams.params.name" @update:model-value="onNameChange" :rules="dialogParams.rules.required" />
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Single choice, searchable" required>
+          <template v-slot:label-hint>
+            [this is slot icon
+            <q-icon name="question_mark" size="16px" class="q-ml-xs"> <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px"> 123123123 </q-tooltip> </q-icon>]
+          </template>
+          <j-q-select v-model="dialogParams.params.area" :options="dialogParams.areaOptions" filterable :rules="dialogParams.rules.required" />
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Multiple selection, searchable" required>
+          <JQSelect v-model="dialogParams.params.tags" multiple use-chips filterable :filter-fn="tagFilterFn" :options="dialogParams.tagsOptions" :rules="dialogParams.rules.required" />
+        </j-q-form-label>
+      </div>
+      <div class="col-12">
+        <j-q-form-label label="File Upload" required>
+          <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="beforeFile" :rules="dialogParams.rules.file" maxlength="1">
+            <template #hint>
+              <div class="download-btn">
+                <span class="btn">Download</span>
+              </div>
+              <ul class="extra-info">
+                <li class="text-grey">
+                  <span>this is slot</span>
+                </li>
+              </ul>
+            </template>
+          </j-q-file>
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Date" required>
+          <j-q-date v-model="dialogParams.params.date" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogParams.rules.required" />
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Radio" required>
+          <j-q-option-group v-model="dialogParams.params.level" :options="dialogParams.levelOptions" inline color="primary" :rules="dialogParams.rules.required" type="radio" />
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Checkbox" required>
+          <j-q-option-group v-model="dialogParams.params.hobbys" :options="dialogParams.hobbyOptions" inline color="primary" :rules="dialogParams.rules.required" type="checkbox" />
+        </j-q-form-label>
+      </div>
     </q-form>
   </div>
 </template>
@@ -72,17 +85,17 @@ export default class TableAddOrUpdateComponent extends Vue {
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   public dialogParams = {
     areaOptions: [
-      { label: '北京', value: 1 },
-      { label: '上海', value: 2 },
-      { label: '广州', value: 3 },
-      { label: '深圳', value: 4 },
+      { label: 'Beijing', value: 1 },
+      { label: 'Shanghai', value: 2 },
+      { label: 'Guangzhou', value: 3 },
+      { label: 'Shenzhen', value: 4 },
     ],
     tagsOptions: [
       { label: 'Vue3', value: 'v3' },
       { label: 'TypeScript', value: 'ts' },
       { label: 'Quasar', value: 'qs' },
       { label: 'Composition API', value: 'comp' },
-      { label: '前端框架', value: 'fe' },
+      { label: 'Options API', value: 'opt' },
     ],
     dateOptions: (date: any) => {
       const today = new Date();
@@ -90,12 +103,12 @@ export default class TableAddOrUpdateComponent extends Vue {
       return dateValue.getTime() > today.getTime();
     },
     levelOptions: [
-      { label: 'one', value: 1, checkedIcon: 'check', uncheckedIcon: 'close' },
+      { label: 'one', value: 1, checkedIcon: 'check', uncheckedIcon: 'sports_volleyball' },
       { label: 'two', value: 2 },
       { label: 'three', value: 3 },
     ],
     hobbyOptions: [
-      { label: 'Basketball', value: 1, checkedIcon: 'check', uncheckedIcon: 'close' },
+      { label: 'Basketball', value: 1, checkedIcon: 'check', uncheckedIcon: 'sports_basketball' },
       { label: 'Football', value: 2 },
       { label: 'Tennis', value: 3 },
     ],
@@ -109,7 +122,13 @@ export default class TableAddOrUpdateComponent extends Vue {
       hobbys: [],
     },
     rules: {
-      required: [(val?: any) => !!val || 'Required'],
+      required: [
+        (val?: any) => {
+          const isEmptyArray = Array.isArray(val) && val.length === 0;
+          const isFalsey = val === null || val === undefined || val === '';
+          return (!isEmptyArray && !isFalsey) || 'Required';
+        },
+      ],
       file: [(val?: any) => !!val?.length || 'Required'],
     },
   };
@@ -117,10 +136,18 @@ export default class TableAddOrUpdateComponent extends Vue {
   /* event */
   public handleClickCancel() {
     console.log('cancel');
+    globalMessage.show({
+      type: 'error',
+      content: 'just a preset position for listening cancel event :)',
+    });
   }
 
   public hanleClickGetData() {
     this.$emit('getData');
+    globalMessage.show({
+      type: 'success',
+      content: 'trigger parent component getData event',
+    });
   }
 
   public handleClickMessage() {
@@ -169,8 +196,8 @@ export default class TableAddOrUpdateComponent extends Vue {
     const valid = await this.$refs.formRef.validate();
     if (valid) {
       const result = await globalConfirm.show({
-        title: '123123',
-        content: '123123',
+        title: 'confrim title',
+        content: 'dude, this is a confirm',
       });
       if (result) {
         console.log(this.dialogParams.params);

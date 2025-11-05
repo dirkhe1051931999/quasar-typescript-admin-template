@@ -2,13 +2,7 @@ import setting from 'src/setting.json';
 import store from '../index';
 import { type RouteRecordRaw } from 'vue-router';
 import { constantRoutes, asyncRoutes } from 'src/router/routes';
-import {
-  Action,
-  getModule,
-  Module,
-  Mutation,
-  VuexModule,
-} from 'vuex-module-decorators';
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { UserModule } from './user';
 import { getDynamicRoutes, setDynamicRoutes } from 'src/utils/cookie';
 
@@ -26,10 +20,7 @@ const hasPermission = (pagePermissionId: string[], route: RouteRecordRaw) => {
   }
 };
 
-const filterAsyncRoutes = (
-  routes: RouteRecordRaw[],
-  pagePermissionId: string[]
-) => {
+const filterAsyncRoutes = (routes: RouteRecordRaw[], pagePermissionId: string[]) => {
   const res: RouteRecordRaw[] = [];
   routes.forEach((route) => {
     const r = { ...route };
@@ -49,9 +40,7 @@ export interface IPermissionState {
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
-  public routes: RouteRecordRaw[] = getDynamicRoutes()
-    ? JSON.parse(getDynamicRoutes())
-    : [];
+  public routes: RouteRecordRaw[] = getDynamicRoutes() ? JSON.parse(getDynamicRoutes()) : [];
   public dynamicRoutes: RouteRecordRaw[] = [];
   @Mutation
   private SET_ROUTES(routes: RouteRecordRaw[]) {

@@ -36,9 +36,7 @@ export default class UseResize extends Vue {
   private _resizeHandler() {
     if (!document.hidden) {
       const isMobile = this._isMobile();
-      AppModule.TOGGLE_DEVICE(
-        isMobile ? DeviceType.Mobile : DeviceType.Desktop
-      );
+      AppModule.TOGGLE_DEVICE(isMobile ? DeviceType.Mobile : DeviceType.Desktop);
       if (isMobile) {
         AppModule.CLOSE_SIDEBAR(true);
       }

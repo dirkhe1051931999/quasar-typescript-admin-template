@@ -16,7 +16,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import { ECharts, EChartsOption, init } from 'echarts';
@@ -27,9 +26,7 @@ interface ChartProp {
 @Component({ name: 'myMaleFemaleRatioChartComponent' })
 export default class myMaleFemaleRatioChartComponent extends Vue {
   public initChart(data: ChartProp): ECharts {
-    const charEle = document.getElementById(
-      'MaleFemaleRatioChart'
-    ) as HTMLElement;
+    const charEle = document.getElementById('MaleFemaleRatioChart') as HTMLElement;
     const charEch: ECharts = init(charEle);
     const option: EChartsOption = {
       xAxis: {

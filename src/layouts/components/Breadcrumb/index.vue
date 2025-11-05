@@ -7,7 +7,7 @@
   </el-breadcrumb>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 import { compile } from 'path-to-regexp';
 import { RouteLocationMatched } from 'vue-router';

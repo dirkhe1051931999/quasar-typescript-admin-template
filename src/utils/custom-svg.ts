@@ -33,5 +33,5 @@ export const myIcons: { [key: string]: string } = {
   'app:topbar-arrow-bottom-white': 'svg/topbar-arrow-bottom-white.svg',
   'app:topbar-arrow-bottom': 'svg/topbar-arrow-bottom.svg',
   'app:upload': 'svg/upload.svg',
-  'app:upload2': 'svg/upload2.svg'
+  'app:upload2': 'svg/upload2.svg',
 };

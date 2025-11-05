@@ -1,4 +1,3 @@
-
 <template>
   <!-- 热门板块 -->
   <div class="echarts-header">

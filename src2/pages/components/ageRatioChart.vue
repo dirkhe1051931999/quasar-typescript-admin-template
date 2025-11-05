@@ -1,4 +1,3 @@
-
 <template>
   <!-- 年龄比例 -->
   <div class="echarts" id="AgeRatioChart"></div>
@@ -127,11 +126,9 @@ export default class myAgeRatioChartComponent extends Vue {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .echarts {
   width: 100%;
   height: 100%;
 }
 </style>
-

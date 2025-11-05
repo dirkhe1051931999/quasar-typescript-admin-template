@@ -1,20 +1,12 @@
 <template>
   <div class="scroll-container">
-    <q-icon
-      class="arrow left"
-      name="app:navigation-arrow-left"
-      @click="scrollTo('left')"
-    ></q-icon>
+    <q-icon class="arrow left" name="app:navigation-arrow-left" @click="scrollTo('left')"></q-icon>
     <el-scrollbar ref="scrollbarRef" @scroll="scroll">
       <div ref="scrollbarContentRef" class="scrollbar-content">
         <slot />
       </div>
     </el-scrollbar>
-    <q-icon
-      class="arrow right"
-      name="app:navigation-arrow-right"
-      @click="scrollTo('right')"
-    ></q-icon>
+    <q-icon class="arrow right" name="app:navigation-arrow-right" @click="scrollTo('right')"></q-icon>
   </div>
 </template>
 
@@ -46,17 +38,13 @@ export default class ScrollPaneComponent extends Vue {
     /** 滚动可视区宽度 */
     const scrollbarRefWidth = this.scrollbarRef.$el.clientWidth;
     /** 最后剩余可滚动的宽度 */
-    const lastDistance =
-      scrollbarContentRefWidth - scrollbarRefWidth - this.currentScrollLeft;
+    const lastDistance = scrollbarContentRefWidth - scrollbarRefWidth - this.currentScrollLeft;
     // 没有横向滚动条，直接结束
     if (scrollbarRefWidth > scrollbarContentRefWidth) return;
     if (direction === 'left') {
       scrollLeft = Math.max(0, this.currentScrollLeft - this.translateDistance);
     } else {
-      scrollLeft = Math.min(
-        this.currentScrollLeft + this.translateDistance,
-        this.currentScrollLeft + lastDistance
-      );
+      scrollLeft = Math.min(this.currentScrollLeft + this.translateDistance, this.currentScrollLeft + lastDistance);
     }
     this.scrollbarRef!.setScrollLeft(scrollLeft);
   }

@@ -4,7 +4,6 @@
   <div class="echarts" id="mapChart"></div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import { ECharts, EChartsOption, init } from 'echarts';
@@ -162,7 +161,6 @@ export default class myChinaMapChartComponent extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .echarts {

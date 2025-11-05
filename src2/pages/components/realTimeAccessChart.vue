@@ -12,7 +12,6 @@
   <div class="echarts" id="RealTimeAccessChart" style="width: 100%; height: calc(100% - 50px)"></div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import { ECharts, init } from 'echarts';

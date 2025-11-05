@@ -1,15 +1,7 @@
 <template>
   <div>
-    <q-select
-      v-model="selectCity"
-      :options="selectOptionCity"
-      label="Select city"
-    />
-    <div
-      class="city-map"
-      id="city-map"
-      style="width: 100%; height: 500px"
-    ></div>
+    <q-select v-model="selectCity" :options="selectOptionCity" label="Select city" />
+    <div class="city-map" id="city-map" style="width: 100%; height: 500px"></div>
   </div>
 </template>
 
@@ -220,6 +212,4 @@ export default class myComponentCityMap extends Vue {
 }
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

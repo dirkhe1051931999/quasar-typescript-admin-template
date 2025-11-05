@@ -1,11 +1,6 @@
 <template>
   <div>
-    <Topology
-      width="54em"
-      height="51em"
-      :link="link"
-      v-if="link.length"
-    ></Topology>
+    <Topology width="54em" height="51em" :link="link" v-if="link.length"></Topology>
   </div>
 </template>
 
@@ -60,5 +55,4 @@ export default class myComponentRelationship extends Vue {
 }
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

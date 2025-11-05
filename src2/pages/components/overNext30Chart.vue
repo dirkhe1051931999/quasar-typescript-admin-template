@@ -179,14 +179,8 @@ export default class myOverNext30ChartComponent extends Vue {
     endDate.setDate(startDate.getDate() + 30);
     startDate.setDate(startDate.getDate() + 1);
     while (endDate.getTime() - startDate.getTime() >= 0) {
-      let month =
-        (startDate.getMonth() + 1).toString().length === 1
-          ? `0${(startDate.getMonth() + 1).toString()}`
-          : startDate.getMonth() + 1;
-      let day =
-        startDate.getDate().toString().length === 1
-          ? `0${startDate.getDate()}`
-          : startDate.getDate();
+      let month = (startDate.getMonth() + 1).toString().length === 1 ? `0${(startDate.getMonth() + 1).toString()}` : startDate.getMonth() + 1;
+      let day = startDate.getDate().toString().length === 1 ? `0${startDate.getDate()}` : startDate.getDate();
       dateList.push(`${month}/${day}`);
       startDate.setDate(startDate.getDate() + 1);
     }

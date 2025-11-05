@@ -10,7 +10,7 @@
         @drop.prevent="dropFile"
         @click="browseFile"
       >
-        <q-icon class="action-icon" name="app:upload" />
+        <q-icon class="action-icon" name="app:upload" size="24px" />
         <div class="text-black q-mt-sm">{{ t('jQFile.action') }}</div>
       </div>
       <ul v-show="computedValue.length" class="file-filers">
@@ -202,18 +202,14 @@ export default defineComponent({
 
   .file-action {
     padding: 16px;
-    border: 1px solid #eeeeee;
+    border: 1px solid #c2c2c2;
     border-radius: 4px;
     text-align: center;
     transition: border-color 0.25s;
     cursor: pointer;
 
-    &:hover {
-      border-color: #323232;
-    }
-
     &.file-action--dragging {
-      border-color: #323232;
+      border-style: dashed;
     }
   }
 
@@ -268,8 +264,20 @@ export default defineComponent({
 
   .file-hint {
     margin-left: 0;
-    font-size: 12px;
     color: #969799;
+
+    .download-btn {
+      .btn {
+        color: $primary;
+        cursor: pointer;
+      }
+    }
+
+    .extra-info {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+    }
 
     &:not(:empty) {
       margin-top: 2px;

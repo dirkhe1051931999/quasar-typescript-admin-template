@@ -69,10 +69,12 @@ npm run format
 ```
 
 ### generate svg
+
 ```bash
 npm run svg
 # will generate svg map file -> src/utils/custom-svg.ts
 ```
+
 ### Build the app for production
 
 ```bash

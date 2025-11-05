@@ -8,5 +8,4 @@ import { Component, Vue } from 'vue-facing-decorator';
 export default class enterIndex2Component extends Vue {}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

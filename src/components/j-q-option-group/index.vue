@@ -1,5 +1,5 @@
 <template>
-  <q-field class="j-q-option-group" :label="label" :disable="disable" :rules="rules" :outlined="outlined" :dense="dense" no-error-icon stack-label borderless>
+  <q-field class="j-q-option-group no-border-field" :label="label" :disable="disable" :rules="rules" :outlined="outlined" :dense="dense" no-error-icon stack-label borderless v-model="innerModel">
     <template #control>
       <q-option-group class="j-q-option-group" v-model="innerModel" :options="options" :type="type" :disable="disable" :inline="inline" :size="size" :color="color" @change="change" :dense="dense" />
     </template>

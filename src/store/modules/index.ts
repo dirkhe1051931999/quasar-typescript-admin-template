@@ -2,13 +2,7 @@
  * countModule
  */
 import { getUserInfo } from 'src/api/user';
-import {
-  getModule,
-  VuexModule,
-  Mutation,
-  Action,
-  Module,
-} from 'vuex-module-decorators';
+import { getModule, VuexModule, Mutation, Action, Module } from 'vuex-module-decorators';
 import store from '../index';
 
 @Module({ dynamic: true, namespaced: true, store, name: 'Count' })

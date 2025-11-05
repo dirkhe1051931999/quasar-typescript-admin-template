@@ -1,5 +1,10 @@
 <template>
   <div>
+    <j-q-search-form v-model="tableParams.query.params" :query-loading="tableParams.loading" @query="handleClickQuery" @reset="handleClickReset" class="q-mb-md">
+      <j-q-input v-model="tableParams.query.params.name" />
+      <j-q-input v-model="tableParams.query.params.age" />
+      <j-q-select v-model="tableParams.query.params.city" :options="tableParams.query.cityOptions" filterable />
+    </j-q-search-form>
     <j-q-table
       ref="JQTableRef"
       :rows="tableParams.data"
@@ -11,7 +16,7 @@
     >
       <template #top>
         <div class="row items-center">
-          <q-btn color="primary" label="Add" @click="handleClickAdd" />
+          <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
         </div>
       </template>
       <template #header-cell-selection>
@@ -51,10 +56,12 @@ import { defineAsyncComponent, getCurrentInstance } from 'vue';
 import JQConfirm from 'components/j-q-confirm/index.vue';
 import SQTooltip from 'components/j-q-tooltip/index.vue';
 import { defaultFormat } from 'src/utils/tools';
+import JQSearchForm from 'components/j-q-search-form/index.vue';
 
 @Component({
   name: 'TablePage',
   components: {
+    JQSearchForm,
     SQTooltip,
     JQConfirm,
     JQTable,
@@ -69,6 +76,32 @@ export default class extends TableSelectionMixin {
 
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   public tableParams = {
+    query: {
+      cityOptions: [
+        {
+          label: 'Shanghai',
+          value: 'shanghai',
+        },
+        {
+          label: 'Beijing',
+          value: 'beijing',
+        },
+        {
+          label: 'Guangzhou',
+          value: 'guangzhou',
+        },
+        {
+          label: 'Shenzhen',
+          value: 'shenzhen',
+        },
+      ],
+      params: {
+        name: '',
+        age: '',
+        city: '',
+      },
+      loading: false,
+    },
     selected: [],
     sortMap: {
       age: '',
@@ -101,10 +134,12 @@ export default class extends TableSelectionMixin {
         field: 'selection',
         label: '',
         align: 'left',
+        headerClasses: 'table-cell--fix-left w-20',
+        classes: 'table-cell--fix-left w-20',
       },
       { name: 'id', label: 'ID', field: 'id', align: 'left', format: defaultFormat() },
-      { name: 'name', label: '姓名', field: 'name', align: 'left' },
-      { name: 'age', label: '年龄', field: 'age', align: 'left', format: defaultFormat() },
+      { name: 'name', label: 'Name', field: 'name', align: 'left' },
+      { name: 'age', label: 'Age', field: 'age', align: 'left', format: defaultFormat() },
       {
         name: 'description',
         field: 'description',
@@ -116,12 +151,24 @@ export default class extends TableSelectionMixin {
         field: 'operation',
         label: 'Operation',
         align: 'left',
+        headerClasses: 'table-cell--fix-right',
+        classes: 'table-cell--fix-right',
       },
     ],
     loading: false,
   };
 
   /* event */
+  public handleClickQuery() {
+    console.log('query');
+    console.log(this.tableParams.query.params);
+  }
+
+  public handleClickReset() {
+    console.log('reset');
+    console.log(this.tableParams.query.params);
+  }
+
   public onPaginationChange(paginationInfo: any) {
     console.log('paginationInfo', paginationInfo);
   }
@@ -138,7 +185,11 @@ export default class extends TableSelectionMixin {
       componentBind: { type: 'add', data: [] },
       componentOn: {
         getData: () => {
-          console.log('getData');
+          this.tableParams.loading = true;
+          setTimeout(() => {
+            this.tableParams.loading = false;
+            this.tableParams.data.unshift({ id: Math.random(), name: Math.random().toString(16).slice(2), age: 31, description: 'this is description' });
+          }, 1000);
         },
       },
     });

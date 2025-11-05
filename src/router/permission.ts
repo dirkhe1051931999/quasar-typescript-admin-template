@@ -17,13 +17,9 @@ const getPageTitle = (to: any) => {
     return `${setting.title}`;
   }
   if (to.matched[0].name === to.matched[1].name) {
-    return `${setting.title} ${
-      (i18n as any)[AppModule.language]['routes'][to.meta.title]
-    }`;
+    return `${setting.title} ${(i18n as any)[AppModule.language]['routes'][to.meta.title]}`;
   } else {
-    return `${setting.title} ${
-      (i18n as any)[AppModule.language]['routes'][to.meta.title]
-    }`;
+    return `${setting.title} ${(i18n as any)[AppModule.language]['routes'][to.meta.title]}`;
   }
 };
 
@@ -85,7 +81,6 @@ store.watch(
   (state: any, getters) => state.App.language,
   // 第二参数也是箭头函数，是数据改变后的回调监听
   (newVal: string, oldVal: string) => {
-    if (router.currentRoute.value)
-      document.title = getPageTitle(router.currentRoute.value);
+    if (router.currentRoute.value) document.title = getPageTitle(router.currentRoute.value);
   }
 );
