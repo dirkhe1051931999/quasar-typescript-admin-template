@@ -1,7 +1,3 @@
-// app global css in SCSS form
-@import './element-variables.scss';
-@import './plugins/shepherd/shepherd.scss';
-@import './plugins/shepherd/welcome.scss';
 @import './lib/font-face';
 @import './lib/reset';
 @import './lib/font-size';
@@ -11,4 +7,7 @@
 @import './lib/box';
 @import './lib/utils';
 @import './lib/bg-gradient';
-@import './reset-quasar.scss';
+// app global css in SCSS form
+.q-dialog__inner--fullheight {
+  padding: 0 !important;
+}

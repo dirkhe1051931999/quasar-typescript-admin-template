@@ -31,7 +31,6 @@
     "core-js": "^3.6.5",
     "echarts": "^5.4.0",
     "echarts-liquidfill": "^3.1.0",
-    "element-plus": "^2.6.3",
     "js-cookie": "^3.0.1",
     "jsencrypt": "^3.2.1",
     "json-bigint": "^1.0.0",
@@ -62,7 +61,7 @@
     "xterm-addon-fit": "^0.7.0"
   },
   "devDependencies": {
-    "@quasar/app-webpack": "^3.13.4",
+    "@quasar/app-webpack": "^4.3.1",
     "@types/chart.js": "^2.9.41",
     "@types/codemirror": "0.0.97",
     "@types/js-cookie": "^3.0.2",
@@ -72,6 +71,7 @@
     "@typescript-eslint/parser": "^5.10.0",
     "ajv": "^7",
     "autoprefixer": "^10.4.2",
+    "babel-plugin-prismjs": "^2.1.0",
     "browserslist": "^4.21.9",
     "caniuse-lite": "^1.0.30001517",
     "cross-env": "^7.0.3",
@@ -80,9 +80,10 @@
     "eslint-plugin-vue": "^9.0.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.5.1",
-    "sass": "1.69.7",
-    "sass-loader": "^12.3.0",
-    "typescript": "^4.5.4",
+    "sass": "1.93.3",
+    "sass-loader": "^16.0.6",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
     "unplugin-auto-import": "^0.16.0",
     "unplugin-vue-components": "^0.25.2",
     "vuex-module-decorators": "^2.0.0"
@@ -99,8 +100,8 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "npm": "please-use-yarn",
-    "node": ">= 18.16.0",
-    "yarn": ">= 1.22.19"
+    "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
   }
 }

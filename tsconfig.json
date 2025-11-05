@@ -1,9 +1,48 @@
 {
-  "extends": "@quasar/app-webpack/tsconfig-preset",
   "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
     "baseUrl": ".",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true
-  }
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "noEmit": true,
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "preserve",
+    "paths": {
+      "src/*": [
+        "src/*"
+      ],
+      "app/*": [
+        "*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "layouts/*": [
+        "src/layouts/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
+      ],
+      "assets/*": [
+        "src/assets/*"
+      ],
+      "boot/*": [
+        "src/boot/*"
+      ],
+      "stores/*": [
+        "src/stores/*"
+      ]
+    }
+  },
+  "exclude": [
+    "dist",
+    ".quasar",
+    "node_modules"
+  ]
 }

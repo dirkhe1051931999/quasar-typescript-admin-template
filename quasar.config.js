@@ -1,27 +1,24 @@
-/* eslint-env node */
-
-/*
- * This file runs in a Node context (it's NOT transpiled by Babel), so use only
- * the ES6 features that are supported by your Node version. https://node.green/
- */
-
 // Configuration for your app
-// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
+// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { configure } = require('quasar/wrappers');
-const setting = require('./src/setting.json');
-const multiplePage = require('./multiple.page.generate');
-const path = require('path');
+import { defineConfig } from '#q-app/wrappers';
+import setting from 'src/setting.json';
 
-const AutoImport = require('unplugin-auto-import/webpack');
-const Components = require('unplugin-vue-components/webpack');
-const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
-
-module.exports = configure((ctx) => {
+export default defineConfig((ctx) => {
+  const isProd = process.env.NODE_ENV === 'production';
   return {
-    // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
+    eslint: {
+      // fix: true,
+      // include: [],
+      // exclude: [],
+      // cache: false,
+      // rawEsbuildEslintOptions: {},
+      // rawWebpackEslintPluginOptions: {},
+      warnings: true,
+      errors: true,
+    },
     supportTS: {
       tsCheckerConfig: {
         eslint: {
@@ -30,7 +27,6 @@ module.exports = configure((ctx) => {
         },
       },
     },
-
     // https://v2.quasar.dev/quasar-cli-webpack/prefetch-feature
     // preFetch: true,
 
@@ -39,13 +35,13 @@ module.exports = configure((ctx) => {
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
     boot: ['i18n', 'axios', 'main'],
 
-    // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
+    // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#css
     css: ['app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
-      // 'mdi-v5',
+      // 'mdi-v7',
       // 'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
@@ -57,23 +53,33 @@ module.exports = configure((ctx) => {
       'material-icons-outlined',
     ],
 
-    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
+    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      transpile: false,
       publicPath: process.env.NODE_ENV !== 'production' ? null : setting.publicPath,
       distDir: ctx.modeName === 'spa' ? `dist${setting.publicPath}` : `dist/${ctx.modeName}`,
+      webpackTranspile: true,
+
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
-      // Applies only if "transpile" is set to true.
-      transpileDependencies: ['vuex-module-decorators'],
+      // Applies only if "webpackTranspile" is set to true.
+      webpackTranspileDependencies: ['vuex-module-decorators'],
 
+      esbuildTarget: {
+        browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
+        node: 'node20',
+      },
+
+      extendWebpack(cfg) {},
+
+      typescript: {
+        strict: false,
+        vueShim: true,
+        // extendTsConfig (tsConfig) {}
+      },
       rtl: false, // https://quasar.dev/options/rtl-support
       preloadChunks: true,
       showProgress: true,
-      scssLoaderOptions: {
-        additionalData: `$publicPath: ${process.env.NODE_ENV === 'production' ? setting.publicPath.replace(/\//g, '') : 'null'};`,
-      },
       gzip: true,
       analyze: false,
 
@@ -81,72 +87,26 @@ module.exports = configure((ctx) => {
       // extractCSS: false,
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack(/* chain */) {},
-      extendWebpack(cfg) {
-        // linting is slow in TS projects, we execute it only for production builds
-        cfg.resolve.alias = {
-          ...cfg.resolve.alias,
-          src2: path.resolve(__dirname, './src2'),
-        };
-        cfg.entry = Object.assign(multiplePage.getEntryPages('src2'), cfg.entry);
-        cfg.plugins.push(
-          ...multiplePage.htmlPlugins('src2'),
-          AutoImport({
-            resolvers: [ElementPlusResolver()],
-          }),
-          Components({
-            resolvers: [ElementPlusResolver()],
-          })
-        );
-      },
+      // "chain" is a webpack-chain object https://github.com/sorrycc/webpack-chain
+      // chainWebpack (/* chain, { isClient, isServer } */) {}
     },
 
-    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-devServer
+    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#devserver
+
     devServer: {
-      https: false,
-      port: ctx.mode.ssr ? 9100 : setting.devServerPort,
-      open: true, // opens browser window automatically
-      proxy: {
-        // proxy all requests starting with /api to jsonplaceholder
-        '/api': {
-          target: `http://127.0.0.1:${9004}`,
-          changeOrigin: true,
-          pathRewrite: {
-            '^/api': '',
-          },
-        },
+      server: {
+        type: 'http',
       },
+      port: 9002,
+      open: true,
     },
 
-    // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
+    // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#framework
     framework: {
-      config: {
-        dark: 'auto',
-        screen: {
-          bodyClasses: true,
-        },
-        brand: {
-          white: '#ffffff',
-          negative: '#e93030',
-          primary: '#5469d4',
-        },
-        loadingBar: {
-          color: 'primary',
-          size: '4px',
-          position: 'top',
-        },
-        notify: {
-          position: 'bottom-right',
-          timeout: 2500,
-        },
-        loading: {
-          message: 'Loading...',
-        },
-      },
+      config: {},
 
-      iconSet: 'material-icons', // Quasar icon set
-      lang: setting.language, // Quasar language pack
+      // iconSet: 'material-icons', // Quasar icon set
+      // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
@@ -163,72 +123,56 @@ module.exports = configure((ctx) => {
     // https://quasar.dev/options/animations
     animations: ['fadeIn', 'fadeOut', 'fadeInUp', 'fadeOutDown', 'slideInLeft', 'slideOutRight'],
 
+    // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#sourcefiles
+    // sourceFiles: {
+    //   rootComponent: 'src/App.vue',
+    //   router: 'src/router/index',
+    //   store: 'src/store/index',
+    //   indexHtmlTemplate: 'index.html',
+    //   pwaRegisterServiceWorker: 'src-pwa/register-service-worker',
+    //   pwaServiceWorker: 'src-pwa/custom-service-worker',
+    //   pwaManifestFile: 'src-pwa/manifest.json',
+    //   electronMain: 'src-electron/electron-main',
+    //   electronPreload: 'src-electron/electron-preload'
+    //   bexManifestFile: 'src-bex/manifest.json
+    // },
+
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false,
-
-      // manualStoreHydration: true,
-      // manualPostHydrationTrigger: true,
-
       prodPort: 3000, // The default port that the production server should use
       // (gets superseded if process.env.PORT is specified at runtime)
 
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      // Tell browser when a file from the server should expire from cache (in ms)
-
-      // chainWebpackWebserver (/* chain */) {},
-
       middlewares: [
-        ctx.prod ? 'compression' : '',
         'render', // keep this as last one
       ],
+
+      // extendPackageJson (json) {},
+      // extendSSRWebserverConf (esbuildConf) {},
+
+      // manualStoreSerialization: true,
+      // manualStoreSsrContextInjection: true,
+      // manualStoreHydration: true,
+      // manualPostHydrationTrigger: true,
+
+      pwa: false,
+
+      // pwaOfflineHtmlFilename: 'offline.html', // do NOT use index.html as name!
+
+      // pwaExtendGenerateSWOptions (cfg) {},
+      // pwaExtendInjectManifestOptions (cfg) {}
     },
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
     pwa: {
-      workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
-
-      // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
-      // if using workbox in InjectManifest mode
-      // chainWebpackCustomSW (/* chain */) {},
-
-      manifest: {
-        name: 'Quasar Project',
-        short_name: 'Quasar Project',
-        description: '',
-        display: 'standalone',
-        orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
-        icons: [
-          {
-            src: 'icons/icon-128x128.png',
-            sizes: '128x128',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-256x256.png',
-            sizes: '256x256',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
-      },
+      workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+      // swFilename: 'sw.js',
+      // manifestFilename: 'manifest.json',
+      // extendManifestJson (json) {},
+      // useCredentialsForManifestTag: true,
+      // injectPwaMetaTags: false,
+      // extendPWACustomSWConf (esbuildConf) {},
+      // extendGenerateSWOptions (cfg) {},
+      // extendInjectManifestOptions (cfg) {}
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-cordova-apps/configuring-cordova
@@ -243,6 +187,17 @@ module.exports = configure((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron
     electron: {
+      // extendElectronMainConf (esbuildConf) {},
+      // extendElectronPreloadConf (esbuildConf) {},
+
+      // extendPackageJson (json) {},
+
+      // Electron preload scripts (if any) from /src-electron, WITHOUT file extension
+      preloadScripts: ['electron-preload'],
+
+      // specify the debugging port to use for the Electron app when running in development mode
+      inspectPort: 5858,
+
       bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
@@ -261,18 +216,22 @@ module.exports = configure((ctx) => {
 
         appId: 'quasar-project',
       },
+    },
 
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpackMain(/* chain */) {
-        // do something with the Electron main process Webpack cfg
-        // extendWebpackMain also available besides this chainWebpackMain
-      },
+    // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-browser-extensions/configuring-bex
+    bex: {
+      // extendBexScriptsConf (esbuildConf) {},
+      // extendBexManifestJson (json) {},
 
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpackPreload(/* chain */) {
-        // do something with the Electron main process Webpack cfg
-        // extendWebpackPreload also available besides this chainWebpackPreload
-      },
+      /**
+       * The list of extra scripts (js/ts) not in your bex manifest that you want to
+       * compile and use in your browser extension. Maybe dynamic use them?
+       *
+       * Each entry in the list should be a relative filename to /src-bex/
+       *
+       * @example [ 'my-script.ts', 'sub-folder/my-other-script.js' ]
+       */
+      extraScripts: [],
     },
   };
 });

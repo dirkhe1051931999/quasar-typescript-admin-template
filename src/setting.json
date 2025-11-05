@@ -11,11 +11,7 @@
   "errorCode": [],
   "succCode": ["111"],
   "defaultErrorMsg": "Network Error, please contact engineer",
-  "passwordRules": [
-    "10 - 20 characters",
-    "Include upper and lower case letters, include numbers and special characters (#?!) @+. $%^&*-,:;\")",
-    "Can not contain spaces, Chinese and Chinese special characters"
-  ],
+  "localstorageKey": "quasar__frontend__storge__",
   "pagePermissionId": [
     "dashboard",
     "account",
@@ -57,14 +53,5 @@
     "menu-menu1-2-2",
     "menu-menu1-3",
     "menu-menu2"
-  ],
-  "layoutSetting": {
-    "showSettings": true,
-    "showTagsView": true,
-    "fixedHeader": true,
-    "showSidebarLogo": true,
-    "showNotify": true,
-    "showThemeSwitch": true,
-    "showScreenfull": true
-  }
+  ]
 }

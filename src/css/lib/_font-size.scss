@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../quasar.variables.scss';
 /**
  *  font-size
@@ -46,6 +47,6 @@
 // lib-flexible 在375宽度视口下定义rem像素大小
 @for $size from 12 through 80 {
   .fs-rem-#{$size}px {
-    font-size: #{($size * 0.5) / 18.75}rem;
+    font-size: #{math.div($size * 0.5, 18.75)}rem;
   }
 }

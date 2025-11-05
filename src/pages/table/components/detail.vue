@@ -6,7 +6,8 @@
     <j-q-detail-list :items="dialogParams.items" :data="dialogParams.data">
       <template #item-value-status="{ value }">
         [this is slot
-        <q-badge :color="value === 'active' ? 'green' : 'red'"> {{ value === 'active' ? 'Enable' : 'Disable' }} </q-badge>]
+        <q-badge :color="value === 'active' ? 'green' : 'red'"> {{ value === 'active' ? 'Enable' : 'Disable' }}</q-badge>
+        ]
       </template>
       <template #item-value-created_at="{ value }">
         [this is slot
@@ -27,15 +28,17 @@ import JCTabs from 'components/j-c-tabs/index.vue';
 import JCTitleLine from 'components/j-c-title-line/index.vue';
 import { defaultFormat } from 'src/utils/tools';
 import SQTooltip from 'components/j-q-tooltip/index.vue';
+import JQTable from 'components/j-q-table/index.vue';
 
 @Component({
   name: 'TableDetailComponent',
-  components: { SQTooltip, JCTitleLine, JCTabs, JQDetailList },
+  components: { SQTooltip, JCTitleLine, JCTabs, JQDetailList, SQTooltip, JQTable },
 })
 export default class TableDetailComponent extends Vue {
   $refs: any;
 
   mounted() {
+    console.log(this.$refs.JQTableRef);
     this.$refs.JQTableRef.setTotal(5);
   }
 

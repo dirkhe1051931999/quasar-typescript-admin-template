@@ -79,4 +79,16 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.no-border-field {
+  :deep(.q-field__control) {
+    &:after {
+      border: none !important;
+    }
+
+    &:before {
+      border: none !important;
+    }
+  }
+}
+</style>

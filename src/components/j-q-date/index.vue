@@ -1,9 +1,10 @@
 <template>
   <q-field
+    ref="fieldRef"
     class="j-q-date"
     v-model="computedValue"
     :clearable="clearable"
-    :clear-icon="clearIcon"
+    clear-icon="app:clear"
     :dense="dense"
     :disable="disable"
     :label="label"
@@ -11,8 +12,9 @@
     :outlined="outlined"
     :rules="rules"
     :title="computedValueDisplay"
+    @clear="onClear"
   >
-    <div class="float-placeholder" v-show="!computedValueDisplay">
+    <div class="float-placeholder" v-show="!computedValueDisplay && !label">
       {{ $t('messages.pleaseSelect') }}
     </div>
     <template #control>
@@ -34,7 +36,7 @@
 <script lang="ts">
 import type { CSSProperties, PropType } from 'vue';
 import { computed, defineComponent, ref } from 'vue'; // 移除 watch, innerValue
-import { date, QDateProps, QFieldProps, QPopupProxyProps } from 'quasar';
+import { date, QDateProps, QField, QFieldProps, QPopupProxyProps } from 'quasar';
 
 // --- 类型定义优化 ---
 type TModelValue = QDateProps['modelValue'];
@@ -45,7 +47,6 @@ export default defineComponent({
   props: {
     modelValue: { type: [String, Number, Object, Date] as PropType<TModelValue> },
     clearable: { type: Boolean, default: true },
-    clearIcon: { type: String as PropType<QFieldProps['clearIcon']> },
     dense: { type: Boolean as PropType<QFieldProps['dense']>, default: true },
     disable: { type: Boolean as PropType<QFieldProps['disable']> },
     label: { type: String as PropType<QFieldProps['label']> },
@@ -71,6 +72,7 @@ export default defineComponent({
   },
   setup(props, { emit, expose, slots }) {
     const popupVisible = ref(false);
+    const fieldRef = ref<InstanceType<typeof QField> | null>(null);
 
     // --- 优化 1: 简化 v-model 逻辑 (移除 innerValue 和 watch) ---
     const computedValue = computed({
@@ -125,9 +127,14 @@ export default defineComponent({
     const onHidePopup: QPopupProxyProps['onHide'] = (evt) => {
       emit('hide', evt);
     };
+    const onClear = () => {
+      fieldRef.value!.blur();
+    };
 
     expose({ popupVisible });
     return {
+      fieldRef,
+      onClear,
       computedValue,
       computedValueDisplay,
       popupVisible,

@@ -1,10 +1,9 @@
-import setting from 'src/setting.json';
 import store from '../index';
 import { type RouteRecordRaw } from 'vue-router';
-import { constantRoutes, asyncRoutes } from 'src/router/routes';
+import { asyncRoutes, constantRoutes } from 'src/router/routes';
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { UserModule } from './user';
-import { getDynamicRoutes, setDynamicRoutes } from 'src/utils/cookie';
+import { getDynamicRoutes, setDynamicRoutes } from 'src/utils/storage';
 
 const hasPermission = (pagePermissionId: string[], route: RouteRecordRaw) => {
   if (route.meta && route.meta.pagePermissionId) {
@@ -33,6 +32,7 @@ const filterAsyncRoutes = (routes: RouteRecordRaw[], pagePermissionId: string[])
   });
   return res;
 };
+
 export interface IPermissionState {
   routes: RouteRecordRaw[];
   dynamicRoutes: RouteRecordRaw[];
@@ -42,17 +42,20 @@ export interface IPermissionState {
 class Permission extends VuexModule implements IPermissionState {
   public routes: RouteRecordRaw[] = getDynamicRoutes() ? JSON.parse(getDynamicRoutes()) : [];
   public dynamicRoutes: RouteRecordRaw[] = [];
+
   @Mutation
   private SET_ROUTES(routes: RouteRecordRaw[]) {
     this.routes = constantRoutes.concat(routes);
     this.dynamicRoutes = routes;
     setDynamicRoutes(JSON.stringify(routes));
   }
+
   @Mutation
   public REMOVE_ROUTES(routes: RouteRecordRaw[]) {
     this.routes = constantRoutes.concat(routes);
     this.dynamicRoutes = routes;
   }
+
   @Action({ rawError: true })
   public GenerateRoutes() {
     let accessedRoutes = [];

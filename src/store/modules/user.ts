@@ -1,14 +1,11 @@
-import axios from 'src/boot/axios';
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators';
-import { getToken, setToken, removeToken, setUsername, removeUsername, getUsername, setPagePermissionID, getPagePermissionID, removePagePermissionID, removeDynamicRoutes } from 'src/utils/cookie';
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import { getPagePermissionID, getToken, getUserinfo, getUsername, removeToken, removeUserinfo, removeUsername, setPagePermissionID, setToken, setUserinfo, setUsername } from 'src/utils/storage';
 import { resetRouter } from 'src/router';
 import store from 'src/store';
-import { getUserInfo, login } from 'src/api/user';
 import { uid } from 'quasar';
 import { TagsViewModule } from './tags';
 import { sleep } from 'src/utils/tools';
 import setting from 'src/setting.json';
-import { getUserinfo, removeUserinfo, setUserinfo } from 'src/utils/localStorage';
 import { PermissionModule } from './permission';
 
 export interface IUserState {}
@@ -25,22 +22,27 @@ class User extends VuexModule implements IUserState {
   public SET_PAGE_PERMISION_ID(arr: any) {
     this.pagePermissionId = arr;
   }
+
   @Mutation
   private SET_TOKEN(token: string) {
     this.token = token;
   }
+
   @Mutation
   private SET_USERNAME(username: string) {
     this.username = username;
   }
+
   @Mutation
   private SET_INTRODUCTION(introduction: string) {
     this.introduction = introduction;
   }
+
   @Mutation
   private SET_USERINFO(userinfo: any) {
     this.userInfo = userinfo;
   }
+
   // 登录
   @Action({ rawError: true })
   public async Login(data: any) {
@@ -64,6 +66,7 @@ class User extends VuexModule implements IUserState {
     this.SET_PAGE_PERMISION_ID(pagePermissionId);
     return Promise.resolve();
   }
+
   // 获取用户信息
   @Action({ rawError: true })
   public async getUserInfo() {
@@ -71,6 +74,7 @@ class User extends VuexModule implements IUserState {
     this.SET_INTRODUCTION('introduction');
     return Promise.resolve();
   }
+
   // 退出
   @Action({ rawError: true })
   public async LogOut() {
@@ -78,6 +82,7 @@ class User extends VuexModule implements IUserState {
     this.ResetToken();
     return Promise.resolve();
   }
+
   // 重置cookie
   @Action({ rawError: true })
   public ResetToken() {

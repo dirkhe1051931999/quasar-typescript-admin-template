@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form ref="searchFormRef" class="j-q-search-bar" autocomplete="off">
+    <div ref="searchFormRef" class="j-q-search-bar">
       <div class="search--bar-items">
         <slot></slot>
         <div v-if="operationVisible" class="search-bar-operation">
@@ -12,7 +12,7 @@
           </q-btn>
         </div>
       </div>
-    </q-form>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -112,6 +112,9 @@ $search-bar-item-width: 250px;
 $color-grey-light: #f0f0f0;
 
 .j-q-search-bar {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 4px;
   .search--bar-items {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(0, $search-bar-item-width));

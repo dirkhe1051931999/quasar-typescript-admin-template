@@ -3,7 +3,7 @@
     autocomplete="off"
     class="j-q-select"
     v-model="innerValue"
-    :clear-icon="clearIcon"
+    clear-icon="app:clear"
     :clearable="clearable"
     :dense="dense"
     :placeholder="filterable && !label && (!innerValue || (Array.isArray(innerValue) && innerValue.length === 0)) ? $t('messages.pleaseEnter') : ''"
@@ -88,7 +88,6 @@ export default defineComponent({
   props: {
     modelValue: { type: [String, Number, Array, Object] as PropType<TModelValue> },
     clearable: { type: Boolean, default: true },
-    clearIcon: { type: String as PropType<QSelectProps['clearIcon']>, default: 'app:clear' },
     dense: { type: Boolean as PropType<QSelectProps['dense']>, default: true },
     disable: { type: Boolean as PropType<QSelectProps['disable']> },
     dropdownIcon: { type: String as PropType<QSelectProps['dropdownIcon']>, default: 'expand_more' },
@@ -124,7 +123,7 @@ export default defineComponent({
     option: void 0,
     'value-display': void 0,
   },
-  setup(props, { emit, slots }) {
+  setup(props, { emit, slots, expose }) {
     const innerValue = computed<TModelValue>({
       get() {
         if (props.multiple && (props.modelValue === null || props.modelValue === undefined)) {
@@ -136,6 +135,7 @@ export default defineComponent({
         emit('update:modelValue', val);
       },
     });
+    const copyOptions = ref<typeof props.options | undefined>(props.options);
     const inputValue = ref('');
     const filterOptions = ref<typeof props.options | undefined>(undefined);
     const computedEmitValue = computed(() => !!props.optionValue);
@@ -234,7 +234,9 @@ export default defineComponent({
       props.popupContentClass && (val += ` ${props.popupContentClass}`);
       return val;
     });
-
+    expose({
+      copyOptions,
+    });
     return {
       innerValue,
       computedEmitValue,

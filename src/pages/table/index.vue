@@ -1,9 +1,11 @@
 <template>
   <div>
     <j-q-search-form v-model="tableParams.query.params" :query-loading="tableParams.loading" @query="handleClickQuery" @reset="handleClickReset" class="q-mb-md">
-      <j-q-input v-model="tableParams.query.params.name" />
-      <j-q-input v-model="tableParams.query.params.age" />
-      <j-q-select v-model="tableParams.query.params.city" :options="tableParams.query.cityOptions" filterable />
+      <j-q-input v-model="tableParams.query.params.name" label="Name" />
+      <j-q-input v-model="tableParams.query.params.age" label="Age" />
+      <j-q-select v-model="tableParams.query.params.city" :options="tableParams.query.cityOptions" filterable label="City" />
+      <j-q-autocomplete search-id="description" search-key="description" v-model="tableParams.query.params.description" ref="JQAutocompleteRef" label="Description (Autocomplete)" />
+      <j-q-date v-model="tableParams.query.params.date" :clearable="true" range :options="tableParams.query.dateOptions" label="Date" />
     </j-q-search-form>
     <j-q-table
       ref="JQTableRef"
@@ -57,10 +59,18 @@ import JQConfirm from 'components/j-q-confirm/index.vue';
 import SQTooltip from 'components/j-q-tooltip/index.vue';
 import { defaultFormat } from 'src/utils/tools';
 import JQSearchForm from 'components/j-q-search-form/index.vue';
+import JQAutocomplete from 'components/j-q-autocomplete/index.vue';
+import JQInput from 'components/j-q-input/index.vue';
+import JQSelect from 'components/j-q-select/index.vue';
+import JQDate from 'components/j-q-date/index.vue';
 
 @Component({
   name: 'TablePage',
   components: {
+    JQDate,
+    JQSelect,
+    JQInput,
+    JQAutocomplete,
     JQSearchForm,
     SQTooltip,
     JQConfirm,
@@ -95,10 +105,17 @@ export default class extends TableSelectionMixin {
           value: 'shenzhen',
         },
       ],
+      dateOptions: (date: any) => {
+        const today = new Date();
+        const dateValue = new Date(date);
+        return dateValue.getTime() > today.getTime();
+      },
       params: {
         name: '',
         age: '',
         city: '',
+        description: '',
+        date: '',
       },
       loading: false,
     },
@@ -162,6 +179,9 @@ export default class extends TableSelectionMixin {
   public handleClickQuery() {
     console.log('query');
     console.log(this.tableParams.query.params);
+    if (this.tableParams.query.params.description) {
+      this.$refs.JQAutocompleteRef.saveHistory(this.tableParams.query.params.description);
+    }
   }
 
   public handleClickReset() {

@@ -1,14 +1,14 @@
 import router from 'src/router/index';
 import { UserModule } from 'src/store/modules/user';
 import { PermissionModule } from 'src/store/modules/permission';
-import { getToken, getUsername } from 'src/utils/cookie';
+import { getToken, getUserinfo, getUsername } from 'src/utils/storage';
 import setting from 'src/setting.json';
 import { LoadingBar } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
 import i18n from 'src/i18n';
 import store from 'src/store';
-import { getUserinfo } from 'src/utils/localStorage';
-const whiteList = ['/login', '/login2'];
+
+const whiteList = ['/login'];
 const getPageTitle = (to: any) => {
   if (whiteList.indexOf(to.path) !== -1) {
     return `${setting.title}`;

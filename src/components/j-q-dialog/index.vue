@@ -122,10 +122,10 @@ export default defineComponent({
   },
 });
 </script>
-
 <style lang="scss" scoped>
 $dialog-base-width: 768px;
 $dialog-max-width: 1024px;
+
 .j-q-dialog {
   .dialog-main {
     width: $dialog-base-width;

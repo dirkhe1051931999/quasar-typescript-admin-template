@@ -1,131 +1,333 @@
 <template>
-  <div>
-    <div class="login-root">
-      <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh; flex-grow: 1">
-        <div class="loginbackground padding-top--64">
-          <div class="loginbackground-gridContainer">
-            <div class="box-root flex-flex" style="grid-area: top / start / 8 / end">
-              <div class="box-root" style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5">
-              <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2">
-              <div class="box-root box-background--blue800" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4">
-              <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6">
-              <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end">
-              <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end">
-              <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20">
-              <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1"></div>
-            </div>
-            <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17">
-              <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1"></div>
-            </div>
-          </div>
-        </div>
-        <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9">
-          <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-            <h3 class="text-primary bg-gradient-primary text-gradient">
-              {{ PrdTitle }}
-            </h3>
-          </div>
-          <div class="formbg-outer">
-            <div class="formbg">
-              <div class="formbg-inner padding-horizontal--48">
-                <span class="padding-bottom--15">Sign in to your account</span>
-                <form id="stripe-login">
-                  <div class="field padding-bottom--24">
-                    <label for="email">Username</label>
-                    <input type="text" name="email" autocapitalize="off" v-model="username" autocomplete="new-password" />
-                  </div>
-                  <div class="field padding-bottom--24">
-                    <div class="grid--50-50">
-                      <label for="password">Password</label>
-                      <div class="reset-pass">
-                        <a href="#">Forgot your password?</a>
-                      </div>
-                    </div>
-                    <input type="text" name="password" class="input-password" v-model="password" autocapitalize="off" autocomplete="new-password" />
-                  </div>
-                  <div class="field padding-bottom--24" v-show="useVerifyCode">
-                    <label for="verifyCode">Code</label>
-                    <div class="flex justify-between">
-                      <input type="text" name="verifyCode" v-model="verifyCode" autocapitalize="off" style="width: 55%; height: 100%" autocomplete="new-password" />
-                      <div id="verify-code-login" style="width: 40%; height: 44px"></div>
-                    </div>
-                  </div>
-                  <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
-                    <label for="checkbox" @click="useSwipeVerifyCode = !useSwipeVerifyCode">
-                      <input type="checkbox" name="checkbox" v-model="useSwipeVerifyCode" />
-                      Use swipe verification code to verify?
-                    </label>
-                  </div>
-                  <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
-                    <label for="checkbox" @click="useVerifyCode = !useVerifyCode">
-                      <input type="checkbox" name="checkbox" v-model="useVerifyCode" />
-                      Use verification code to verify?
-                    </label>
-                  </div>
-                  <div class="field padding-bottom--24">
-                    <div class="login-submit-button bg-gradient-primary" @click.prevent="handLogin" v-ripple>Login</div>
-                  </div>
-                  <div class="field">
-                    <a class="ssolink" href="#">Use single sign-on (Google) instead</a>
-                  </div>
-                </form>
+  <div class="full-width full-height overflow-hidden absolute left-0 top-0 row">
+    <div class="row items-center justify-center full-width">
+      <!-- 修改密码 -->
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'changePassword'">
+        <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
+          <div class="q-pa-lg">
+            <div class="f-bold bold text-h5 q-pb-md">Change password</div>
+            <div class="q-pb-lg text-body1">Please enter the following information to change your password</div>
+            <q-form ref="changePasswordForm">
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">* Username</label>
+                </div>
+                <q-input
+                  type="text"
+                  v-model="changePasswordForm.username"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="changePasswordRules.username"
+                />
               </div>
-            </div>
-            <div class="footer-link padding-top--24">
-              <span>
-                Don't have an account?
-                <a href="#">Sign up</a>
-              </span>
-              <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-                <span>
-                  <a href="https://dirkhe1051931999.github.io/quasar/" target="__blank" class="bg-gradient-primary text-gradient">vue2 with quasar and use vue-class-decorator</a>
-                </span>
-                <q-icon name="arrow_forward_ios" class="text-h6 text-primary bg-gradient-primary text-gradient"></q-icon>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">* Old password</label>
+                </div>
+                <q-input
+                  type="text"
+                  v-model="changePasswordForm.oldPassword"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  class="input-password"
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="changePasswordRules.oldPassword"
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
+                />
               </div>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="q-mr-sm">* New password</label>
+                </div>
+                <q-input
+                  type="text"
+                  ref="changePassword"
+                  v-model="changePasswordForm.password"
+                  autocapitalize="off"
+                  class="input-password"
+                  autocomplete="new-password"
+                  outlined
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="changePasswordRules.password"
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
+                />
+              </div>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">* Confirm Password</label>
+                </div>
+                <q-input
+                  type="text"
+                  ref="changeRePassword"
+                  v-model="changePasswordForm.rePassword"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  class="input-password"
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="changePasswordRules.rePassword"
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
+                />
+              </div>
+              <q-btn class="full-width q-my-lg" @click.prevent="handlerChangePassword" label="Confirm" color="primary" />
+            </q-form>
+            <div class="text-center">
+              Already have an account?
+              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-show="showUseSwipeVerifyCode" class="useSwipeVerifyCode">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Use swipe verification code to verify</div>
-        </q-card-section>
-        <q-card-section class="q-pt-none">
-          <div id="captcha"></div>
-        </q-card-section>
-      </q-card>
+      <!-- 发邮件忘记密码 -->
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'forgotPassword'">
+        <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
+          <div class="q-pa-lg">
+            <div class="f-bold bold text-h5 q-pb-md">Forgot password</div>
+            <div class="q-pb-lg text-body1">Please enter your username and email address to reset your password.</div>
+            <q-form ref="forgotPasswordForm">
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">* Username</label>
+                </div>
+                <q-input
+                  type="text"
+                  v-model="forgotPasswordForm.username"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="forgotPasswordRules.username"
+                />
+              </div>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">* Email4</label>
+                </div>
+                <q-input
+                  type="text"
+                  v-model="forgotPasswordForm.email"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  placeholder="Please enter"
+                  dense
+                  clear-icon="app:clear"
+                  no-error-icon
+                  :rules="forgotPasswordRules.email"
+                />
+              </div>
+              <q-btn class="full-width q-my-lg" @click.prevent="handlerForgetPassword" label="Confirm" color="primary" />
+            </q-form>
+            <div class="text-center">
+              Already have an account?
+              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 重置密码 -->
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'resetPassword'">
+        <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
+          <div class="q-pa-lg">
+            <div class="f-bold bold text-h5 q-pb-md">Reset Password</div>
+            <div class="q-pb-lg text-body1">Please reset your password.</div>
+            <q-form ref="resetPasswordForm">
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="q-mr-sm">* Password</label>
+                </div>
+                <q-input
+                  type="text"
+                  class="input-password"
+                  v-model="resetPasswordForm.password"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  placeholder="Please enter"
+                  outlined
+                  dense
+                  ref="resetPassword"
+                  clear-icon="app:clear"
+                  no-error-icon
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="resetPasswordForm.password = resetPasswordForm.password.replace(/[\u4e00-\u9fa5]/gi, '')"
+                  :rules="resetPasswordRules.password"
+                />
+              </div>
+              <div class="q-mb-md">
+                <div class="row q-pb-md q-pt-xs f-bold">
+                  <label>* Confirm password</label>
+                </div>
+                <q-input
+                  type="text"
+                  class="input-password"
+                  v-model="resetPasswordForm.rePassword"
+                  placeholder="Please enter"
+                  autocapitalize="off"
+                  autocomplete="new-password"
+                  outlined
+                  dense
+                  ref="resetRePassword"
+                  clear-icon="app:clear"
+                  no-error-icon
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
+                  :rules="resetPasswordRules.rePassword"
+                />
+              </div>
+              <q-btn class="full-width q-my-lg" @click.prevent="handlerResetPassword" label="Confirm" color="primary" />
+            </q-form>
+            <div class="text-center">
+              Already have an account?
+              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 登录 -->
+      <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'signIn'">
+        <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
+          <div class="q-pa-lg">
+            <div class="f-bold bold text-h5 q-pb-md">Sign In</div>
+            <div class="text-body1 lh-24">Please enter your username and password.</div>
+            <p class="text-grey q-pb-lg">(Login by typing in any username, code and password)</p>
+            <q-form>
+              <div class="q-mb-md">
+                <div class="row q-pb-xs text-weight-medium">
+                  <label>Username</label>
+                </div>
+                <q-input
+                  type="text"
+                  autocapitalize="off"
+                  v-model="signInParams.username"
+                  autocomplete="new-password"
+                  @keyup.enter="handlerSignIn"
+                  placeholder="Please enter"
+                  outlined
+                  dense
+                  no-error-icon
+                  clear-icon="app:clear"
+                />
+              </div>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label>Code</label>
+                </div>
+                <div class="row q-col-gutter-md">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <q-select
+                      v-model="signInParams.method"
+                      :options="signInParams.methodSelectOption"
+                      placeholder="Please enter"
+                      :spellcheck="false"
+                      autocomplete="new-password"
+                      outlined
+                      @keyup.enter="handlerSignIn"
+                      no-error-icon
+                      map-options
+                      options-dense
+                      emit-value
+                      dense
+                      dropdown-icon="app:topbar-arrow-bottom"
+                      clear-icon="app:clear"
+                    />
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <q-input
+                      type="text"
+                      v-model="signInParams.code"
+                      autocapitalize="off"
+                      placeholder="Please enter"
+                      autocomplete="new-password"
+                      outlined
+                      @keyup.enter="handlerSignIn"
+                      no-error-icon
+                      dense
+                      clear-icon="app:clear"
+                    />
+                  </div>
+                  <div class="text-right col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <q-btn color="primary" class="full-height full-width" label="Send" @click="handleClickSendCode" v-if="!signInParams.getCodeConfig.toGetVerifyCode" />
+                    <q-btn color="primary" class="full-height full-width" disabled v-else :label="`${signInParams.getCodeConfig.verifyCodeCount} 秒`" />
+                  </div>
+                </div>
+              </div>
+              <div class="q-mb-md">
+                <div class="row q-py-xs text-weight-medium">
+                  <label class="w-p-30">Password</label>
+                  <div class="text-right w-p-70">
+                    <span class="detail-link-type" @click="pageType = 'forgotPassword'">Forgot password?</span>
+                  </div>
+                </div>
+                <q-input
+                  type="text"
+                  class="input-password"
+                  v-model="signInParams.password"
+                  autocapitalize="off"
+                  placeholder="Please enter"
+                  autocomplete="new-password"
+                  outlined
+                  @paste.capture.prevent="() => 0"
+                  @copy.capture.prevent="() => 0"
+                  @update:model-value="signInParams.password = signInParams.password.replace(/[\u4e00-\u9fa5]/gi, '')"
+                  @keyup.enter="handlerSignIn"
+                  no-error-icon
+                  dense
+                  clear-icon="app:clear"
+                />
+              </div>
+              <q-btn class="full-width q-my-lg" @click.prevent="handlerSignIn" label="Sign In" color="primary" />
+              <div class="text-center">
+                <span class="detail-link-type" @click="pageType = 'changePassword'">Change password? </span>
+              </div>
+            </q-form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-facing-decorator';
-import setting from 'src/setting.json';
 import { UserModule } from 'src/store/modules/user';
 import { Dictionary } from 'lodash';
-import { GVerify } from 'src/utils/canvas_verify_code';
-import { sliderCaptcha } from 'src/utils/slidercaptcha';
-import { sleep } from 'src/utils/tools';
+import { getCurrentInstance } from 'vue';
+import { isValidEmail, isValidPassword } from 'src/utils/validate';
+import { getToken } from 'src/utils/storage';
+import { PermissionModule } from 'src/store/modules/permission';
+import setting from 'src/setting.json';
 import globalMessage from 'src/components/j-q-message';
 
-@Component({ name: 'LoginPage' })
-export default class LoginPage extends Vue {
+@Component({ name: 'LoginPage2' })
+export default class LoginPage2 extends Vue {
+  declare $refs: any;
+
   @Watch('$route', { immediate: true })
   private onRouteChange(route: any) {
     // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
@@ -137,16 +339,200 @@ export default class LoginPage extends Vue {
     }
   }
 
+  @Watch('pageType')
+  private onPageTypeChange(route: any) {
+    this.changePasswordForm.username = '';
+    this.changePasswordForm.oldPassword = '';
+    this.changePasswordForm.password = '';
+    this.changePasswordForm.rePassword = '';
+    this.forgotPasswordForm.username = '';
+    this.forgotPasswordForm.email = '';
+    this.resetPasswordForm.password = '';
+    this.resetPasswordForm.rePassword = '';
+    this.$nextTick(() => {
+      this.$refs.changePasswordForm && this.$refs.changePasswordForm.resetValidation();
+      this.$refs.forgotPasswordForm && this.$refs.forgotPasswordForm.resetValidation();
+      this.$refs.resetPasswordForm && this.$refs.resetPasswordForm.resetValidation();
+    });
+  }
+
+  @Watch('resetPasswordForm.password', { deep: true })
+  onResetPasswordChange() {
+    this.$refs['resetRePassword'].validate();
+  }
+
+  @Watch('resetPasswordForm.rePassword', { deep: true })
+  onResetRePasswordChange() {
+    this.$refs['resetPassword'].validate();
+  }
+
+  @Watch('changePasswordForm.password', { deep: true })
+  onChangePasswordChange() {
+    this.$refs['changeRePassword'].validate();
+  }
+
+  @Watch('changePasswordForm.rePassword', { deep: true })
+  onChangeRePasswordChange() {
+    this.$refs['changePassword'].validate();
+  }
+
+  get token() {
+    return this.$route.query.token;
+  }
+
   created() {}
 
-  mounted() {
-    try {
-      this.verifyCodeInstance = new GVerify('verify-code-login');
-    } catch (error) {
-      console.log(error);
+  async mounted() {
+    if (this.token) {
+      this.pageType = 'resetPassword';
+      // token生成时间超过30分钟
+      try {
+        // const { code } = await UserModule.checkToken({
+        //   token: this.token,
+        // });
+        if (['123'].includes('code')) {
+          this.$q
+            .dialog({
+              title: '提示',
+              message: '链接过期，请重新申请链接',
+              persistent: true,
+              cancel: false,
+            })
+            .onOk(() => {
+              if (getToken()) {
+                const routes = PermissionModule.routes;
+                this.$router.push(`${routes[1].path}${routes[1] && routes[1].children && routes[1].children![0].path ? `/${routes[1].children![0].path}` : ''}`);
+              } else {
+                this.pageType = 'signIn';
+                this.$router.push('/login');
+              }
+            });
+        }
+      } catch (error) {
+        this.$q
+          .dialog({
+            title: '提示',
+            message: '链接过期，请重新申请链接',
+            persistent: true,
+            cancel: false,
+          })
+          .onOk(() => {
+            this.pageType = 'signIn';
+            this.$router.push('/login');
+          });
+        console.log(error);
+      }
     }
   }
 
+  private globals = getCurrentInstance()!.appContext.config.globalProperties;
+  public pageType = 'signIn';
+  private otherQuery: Dictionary<string> = {};
+  public changePasswordForm = {
+    username: '',
+    oldPassword: '',
+    password: '',
+    rePassword: '',
+  };
+  public forgotPasswordForm = {
+    email: '',
+    username: '',
+  };
+  public resetPasswordForm = {
+    password: '',
+    rePassword: '',
+  };
+  public signInParams = {
+    username: '',
+    password: '',
+    code: '',
+    method: 'ALI_SMS_VERIFY',
+    methodSelectOption: [
+      { label: 'SMS', value: 'ALI_SMS_VERIFY' },
+      { label: 'EMAIL', value: 'EMAIL' },
+    ],
+    getCodeConfig: {
+      toGetVerifyCode: false,
+      getVerifyCodeLoading: false,
+      verifyCodeCount: 10,
+    },
+  };
+  public changePasswordRules = {
+    username: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+    ],
+    oldPassword: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+    ],
+    password: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+      (val: string) => {
+        return isValidPassword(val) || '无效密码';
+      },
+      (val: string) => {
+        return this.changePasswordForm.rePassword === val || '两次密码不一致';
+      },
+    ],
+    rePassword: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+      (val: string) => {
+        return isValidPassword(val) || '无效密码';
+      },
+      (val: string) => {
+        return this.changePasswordForm.password === val || '两次密码不一致';
+      },
+    ],
+  };
+  public forgotPasswordRules = {
+    username: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+    ],
+    email: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+      (val: string) => {
+        return isValidEmail(val) || '无效邮箱';
+      },
+    ],
+  };
+  public resetPasswordRules = {
+    password: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+      (val: string) => {
+        return isValidPassword(val) || '无效密码';
+      },
+      (val: string) => {
+        return this.resetPasswordForm.rePassword === val || '两次密码不一致';
+      },
+    ],
+    rePassword: [
+      (val: string) => {
+        return (val && String(val).length > 0) || 'Required';
+      },
+      (val: string) => {
+        return isValidPassword(val) || '无效密码';
+      },
+      (val: string) => {
+        return this.resetPasswordForm.password === val || '两次密码不一致';
+      },
+    ],
+  };
+  private redirect?: string;
+
+  /* event */
   private getOtherQuery(query: Dictionary<string>) {
     return Object.keys(query).reduce((acc, cur) => {
       if (cur !== 'redirect') {
@@ -156,192 +542,163 @@ export default class LoginPage extends Vue {
     }, {} as Dictionary<string>);
   }
 
-  private verifyCodeInstance: any;
-  private otherQuery: Dictionary<string> = {};
-  private username = 'admin';
-  private password = '123456';
-  private verifyCode = '';
-  private redirect?: string;
-  private PrdTitle = setting.title;
-  private useVerifyCode = false;
-  private useSwipeVerifyCode = false;
-  private showUseSwipeVerifyCode = false;
-  private lockShowUseSwipeVerifyCode = false;
-
-  private async handLogin() {
-    let verifyCodeResult = true;
-    if (this.useVerifyCode) {
-      verifyCodeResult = this.verifyCodeInstance.validate(this.verifyCode);
+  private async resetPasswordToSignIn() {
+    if (getToken()) {
+      // const result = await this.$globalConfirm.show({
+      //   title: '再次确认',
+      //   color: 'primary',
+      //   content: '您已经登录，是否要注销登录并重新登录？',
+      //   confirmButtonText: 'Confirm',
+      // });
+      // if (result) {
+      //   UserModule.ResetToken();
+      //   this.pageType = 'signIn';
+      //   this.$router.push('/login');
+      // } else {
+      //   const routes = PermissionModule.routes;
+      //   this.$router.push(`${routes[1].path}${routes[1] && routes[1].children && routes[1].children![0].path ? `/${routes[1].children![0].path}` : ''}`);
+      // }
     }
-    if (!verifyCodeResult) {
+    this.pageType = 'signIn';
+    this.$router.push('/login');
+  }
+
+  /* http */
+  private async handlerSignIn() {
+    if (!this.signInParams.username || !this.signInParams.password) {
       globalMessage.show({
         type: 'error',
-        content: 'Wrong verification code',
+        content: '用户名或密码不能为空',
       });
       return;
     }
-    const loginSuccess = async () => {
-      this.$q.loading.show();
-      await UserModule.Login({
-        username: this.username,
-        password: this.password,
+    if (!this.signInParams.code) {
+      globalMessage.show({
+        type: 'error',
+        content: '验证码不能为空',
       });
-      this.$q.loading.hide();
-      this.useSwipeVerifyCode = false;
-      this.useVerifyCode = false;
+      return;
+    }
+    this.$q.loading.show();
+    await UserModule.Login({
+      username: this.signInParams.username,
+      password: this.signInParams.password,
+      code: this.signInParams.code,
+    });
+    this.$q.loading.hide();
+    globalMessage.show({
+      type: 'success',
+      content: '登录成功',
+    });
+    location.reload();
+  }
+
+  private async handleClickSendCode() {
+    if (!this.signInParams.username) {
+      globalMessage.show({
+        type: 'error',
+        content: '请输入用户名',
+      });
+      return;
+    }
+    try {
+      this.signInParams.getCodeConfig.getVerifyCodeLoading = true;
+      // const { email, mobile } = await UserModule.sendCode({
+      //   username: this.signInParams.username,
+      //   sendMethod: this.signInParams.method,
+      // });
+      this.signInParams.getCodeConfig.getVerifyCodeLoading = false;
+      this.signInParams.getCodeConfig.toGetVerifyCode = true;
       globalMessage.show({
         type: 'success',
-        content: this.$t('messages.success'),
+        content: this.signInParams.method === 'EMAIL' ? `验证码已经发送到您的邮箱（${'email'}）` : `短信验证码已发送到您的手机（${'mobile'}）`,
       });
-      await sleep(500);
-      location.reload();
-    };
-    if (this.useSwipeVerifyCode) {
-      if (!this.lockShowUseSwipeVerifyCode) {
-        this.lockShowUseSwipeVerifyCode = true;
-        this.showUseSwipeVerifyCode = true;
-        var captcha = new sliderCaptcha(document.querySelector('#captcha'), {
-          id: 'captcha',
-          onSuccess: () => {
-            var handler = setTimeout(() => {
-              this.showUseSwipeVerifyCode = false;
-              this.lockShowUseSwipeVerifyCode = false;
-              window.clearTimeout(handler);
-              captcha.reset();
-              loginSuccess();
-            }, 500);
-          },
-        });
-      }
-    } else {
-      loginSuccess();
+      var start = +new Date();
+      let count = this.signInParams.getCodeConfig.verifyCodeCount;
+      let _count = this.signInParams.getCodeConfig.verifyCodeCount;
+      var timer = setInterval(() => {
+        var cur = +new Date();
+        count--;
+        this.signInParams.getCodeConfig.verifyCodeCount = count;
+        if (cur - start >= _count * 1000) {
+          clearInterval(timer);
+          this.signInParams.getCodeConfig.toGetVerifyCode = false;
+          this.signInParams.getCodeConfig.verifyCodeCount = _count;
+        }
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      this.signInParams.getCodeConfig.getVerifyCodeLoading = false;
     }
+  }
+
+  private handlerChangePassword() {
+    this.$refs.changePasswordForm.validate().then(async (valid: boolean) => {
+      if (valid) {
+        // await UserModule.modifyPassWithOld({
+        //   username: this.changePasswordForm.username,
+        //   oldPassword: this.changePasswordForm.oldPassword,
+        //   newPassword: this.changePasswordForm.password,
+        // });
+        globalMessage.show({
+          type: 'success',
+          content: '修改成功',
+        });
+        this.changePasswordForm.username = '';
+        this.changePasswordForm.oldPassword = '';
+        this.changePasswordForm.password = '';
+        this.changePasswordForm.rePassword = '';
+        this.$nextTick(() => {
+          this.$refs.changePasswordForm && this.$refs.changePasswordForm.resetValidation();
+        });
+        this.pageType = 'signIn';
+      }
+    });
+  }
+
+  private handlerForgetPassword() {
+    this.$refs.forgotPasswordForm.validate().then(async (valid: boolean) => {
+      if (valid) {
+        // await UserModule.findPassword({
+        //   username: this.forgotPasswordForm.username,
+        //   email: this.forgotPasswordForm.email,
+        // });
+        globalMessage.show({
+          type: 'success',
+          content: '操作成功，请检查您的电子邮件以重置您的密码',
+        });
+        this.forgotPasswordForm.email = '';
+        this.forgotPasswordForm.username = '';
+        this.$nextTick(() => {
+          this.$refs.forgotPasswordForm && this.$refs.forgotPasswordForm.resetValidation();
+        });
+        this.pageType = 'signIn';
+      }
+    });
+  }
+
+  private handlerResetPassword() {
+    this.$refs.resetPasswordForm.validate().then(async (valid: boolean) => {
+      if (valid) {
+        // await UserModule.modifyPassWithoutOld({
+        //   token: this.token,
+        //   newPassword: this.resetPasswordForm.password,
+        // });
+        if (!getToken()) {
+          globalMessage.show({
+            type: 'success',
+            content: '修改成功，请重新登录',
+          });
+        }
+        this.resetPasswordForm.password = '';
+        this.resetPasswordForm.rePassword = '';
+        this.$nextTick(() => {
+          this.$refs.resetPasswordForm && this.$refs.resetPasswordForm.resetValidation();
+        });
+        this.resetPasswordToSignIn();
+      }
+    });
   }
 }
 </script>
-
-<style lang="scss">
-.body--dark {
-  .slider {
-    box-shadow: 0 0 3px rgba($color: #ffffff, $alpha: 0.4);
-  }
-}
-
-.body--light {
-  .slider {
-    box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.4);
-  }
-}
-
-.slidercaptcha-block {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.sliderContainer {
-  position: relative;
-  text-align: center;
-  line-height: 40px;
-  background: var(--my-grey-7);
-  border-radius: 2px;
-}
-
-.sliderbg {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  background-color: var(--my-grey-7);
-  height: 40px;
-}
-
-.sliderContainer_success .slider {
-  background-color: $teal-4;
-}
-
-.sliderContainer_success .sliderMask {
-  background-color: $teal-2;
-}
-
-.sliderContainer_fail .slider {
-  background: $red-11 !important;
-}
-
-.sliderContainer_fail .sliderMask {
-  background: $red-3 !important;
-}
-
-.sliderContainer_fail .slider,
-.sliderContainer_success .slider {
-  color: var(--my-white);
-}
-
-.sliderContainer_active .sliderText,
-.sliderContainer_success .sliderText,
-.sliderContainer_fail .sliderText {
-  display: none;
-}
-
-.sliderMask {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 40px;
-  background: $light-blue-2;
-  border-radius: 2px;
-}
-
-.slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background: var(--my-white);
-  cursor: pointer;
-  transition: background 0.1s linear;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slider:hover {
-  background: $light-blue-5;
-  color: var(--my-white);
-}
-
-.sliderText {
-  position: relative;
-}
-
-.refreshIcon {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  cursor: pointer;
-  color: $grey;
-  font-size: 14px;
-  z-index: 5;
-  transition: color 0.3s linear;
-}
-
-.refreshIcon:hover {
-  color: var(--my-dark-1);
-}
-</style>
-<style lang="scss" scoped>
-@import './index.scss';
-
-.useSwipeVerifyCode {
-  position: absolute;
-  width: 320px;
-  height: 310px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -5,6 +5,7 @@
       <q-btn label="update confirm btn label" @click="dialogInstance.changeConfirmText('messages.pleaseSelect')" color="primary" no-caps />
       <q-btn label="trigger parent component getData" @click="hanleClickGetData" color="primary" no-caps />
       <q-btn label="global message" @click="handleClickMessage" color="primary" no-caps />
+      <q-btn label="change options" @click="handleChangeOptions" color="primary" no-caps />
     </div>
     <q-form ref="formRef" class="row q-col-gutter-x-md q-mt-md">
       <div class="col-6">
@@ -16,14 +17,26 @@
         <j-q-form-label label="Single choice, searchable" required>
           <template v-slot:label-hint>
             [this is slot icon
-            <q-icon name="question_mark" size="16px" class="q-ml-xs"> <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px"> 123123123 </q-tooltip> </q-icon>]
+            <q-icon name="question_mark" size="16px" class="q-ml-xs">
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px"> 123123123</q-tooltip>
+            </q-icon>
+            ]
           </template>
           <j-q-select v-model="dialogParams.params.area" :options="dialogParams.areaOptions" filterable :rules="dialogParams.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
         <j-q-form-label label="Multiple selection, searchable" required>
-          <JQSelect v-model="dialogParams.params.tags" multiple use-chips filterable :filter-fn="tagFilterFn" :options="dialogParams.tagsOptions" :rules="dialogParams.rules.required" />
+          <j-q-select
+            v-model="dialogParams.params.tags"
+            multiple
+            use-chips
+            filterable
+            :filter-fn="tagFilterFn"
+            :options="dialogParams.tagsOptions"
+            :rules="dialogParams.rules.required"
+            ref="TagsRef"
+          />
         </j-q-form-label>
       </div>
       <div class="col-12">
@@ -54,7 +67,15 @@
       </div>
       <div class="col-6">
         <j-q-form-label label="Checkbox" required>
-          <j-q-option-group v-model="dialogParams.params.hobbys" :options="dialogParams.hobbyOptions" inline color="primary" :rules="dialogParams.rules.required" type="checkbox" />
+          <j-q-option-group
+            v-model="dialogParams.params.hobbys"
+            :options="dialogParams.hobbyOptions"
+            inline
+            color="primary"
+            :rules="dialogParams.rules.required"
+            type="checkbox"
+            :disable="disableCheckbox"
+          />
         </j-q-form-label>
       </div>
     </q-form>
@@ -72,15 +93,21 @@ import JQFile from 'components/j-q-file/index.vue';
 import JQDate from 'components/j-q-date/index.vue';
 import JQRadio from 'components/j-q-option-group/index.vue';
 import JQOptionGroup from 'components/j-q-option-group/index.vue';
+import JQFormLabel from 'components/j-q-form-label/index.vue';
+import { cloneDeep } from 'lodash';
 
 @Component({
   name: 'TableAddOrUpdateComponent',
-  components: { JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
+  components: { JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
   emits: ['getData'],
 })
 export default class TableAddOrUpdateComponent extends Vue {
   @Prop() public dialogInstance: any;
   declare $refs: any;
+
+  get disableCheckbox() {
+    return this.dialogParams.params.level === 1;
+  }
 
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   public dialogParams = {
@@ -159,6 +186,17 @@ export default class TableAddOrUpdateComponent extends Vue {
 
   public onNameChange(val: string) {
     console.log(val);
+    const cloneData = cloneDeep(this.$refs.TagsRef.copyOptions);
+    const have = cloneData.some((item: any) => item.label.toLowerCase().includes(val?.toLowerCase()));
+    if (have && val) {
+      this.dialogParams.tagsOptions = cloneData.filter((item: any) => item.label.toLowerCase().includes(val.toLowerCase()));
+    } else {
+      this.dialogParams.tagsOptions = cloneData;
+    }
+  }
+
+  public handleChangeOptions() {
+    this.dialogParams.areaOptions = this.dialogParams.areaOptions.filter((item) => item.value === 2);
   }
 
   public tagFilterFn(inputValue: any, callback: any) {
