@@ -29,7 +29,7 @@
               <slot />
             </q-card-section>
             <q-card-section v-if="showFooter" class="q-pa-none dialog-footer">
-              <q-btn :label="$t(cancelText)" outline no-caps @click="handleClickCancel" />
+              <q-btn :label="$t(cancelText)" unelevated no-caps @click="handleClickCancel" />
               <q-btn :label="$t(confirmText)" color="primary" :ripple="false" unelevated no-caps @click="handleClickConfirm" />
             </q-card-section>
           </div>
@@ -46,8 +46,10 @@
   </q-dialog>
 </template>
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, ref } from 'vue';
+import { computed, defineComponent, getCurrentInstance, ref, type PropType } from 'vue';
 import { DialogProvider } from './index';
+
+type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
 
 export default defineComponent({
   name: 'SQDialog',
@@ -60,7 +62,7 @@ export default defineComponent({
     closeOnEsc: { type: Boolean, default: true },
     closeOnMask: { type: Boolean, default: true },
     dialogId: { type: String },
-    position: { type: String, default: 'standard' },
+    position: { type: String as PropType<DialogPosition>, default: 'standard' },
     showHeader: { type: Boolean, default: true },
     title: { type: String },
     width: { type: String, default: 'auto' },

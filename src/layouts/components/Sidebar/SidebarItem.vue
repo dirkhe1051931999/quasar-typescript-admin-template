@@ -3,7 +3,7 @@
     <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
       <SidebarItemLink v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)" @listenRouteChange="listenRouteChange(theOnlyOneChild)">
         <div :class="['menu-item', { 'is-active': isActive(resolvePath(theOnlyOneChild.path)) }]" :title="$t(`routes.${theOnlyOneChild.meta.title}`)">
-          <q-icon :name="theOnlyOneChild.meta.icon" class="menu-icon" />
+          <q-icon v-if="theOnlyOneChild.meta.icon" :name="theOnlyOneChild.meta.icon as string" class="menu-icon" />
           <span class="menu-text">
             {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
           </span>
@@ -12,9 +12,8 @@
     </template>
 
     <div v-else class="sub-menu-container" ref="subMenuContainer">
-      <div :class="['sub-menu-title', { 'is-active': isSubMenuActive(resolvePath(item.path)) }]" @click="toggleExpand" :title="$t(`routes.${item.meta?.title}`)">
-        <q-icon v-if="item.meta && item.meta.icon" :name="item.meta.icon" class="menu-icon" />
-        <q-icon v-else :name="item.meta?.icon" class="menu-icon" />
+      <div :class="['sub-menu-title', { 'is-active': isSubMenuActive(resolvePath(item.path || '')) }]" @click="toggleExpand" :title="$t(`routes.${item.meta?.title || ''}`)">
+        <q-icon v-if="item.meta && item.meta.icon" :name="item.meta.icon as string" class="menu-icon" />
         <span class="menu-text">
           {{ $t(`routes.${item.meta?.title}`) }}
         </span>
@@ -41,7 +40,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, type PropType, ref, computed, nextTick, onBeforeUnmount } from 'vue';
+import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import path from 'path-browserify';
 import SidebarItemLink from './SidebarItemLink.vue';
 import type { RouteRecordRaw } from 'vue-router';
@@ -67,107 +68,117 @@ export default defineComponent({
       default: '',
     },
   },
-  data() {
-    return {
-      isExpanded: false,
-      showPopup: false,
-      popupStyle: {} as Record<string, string>,
-      popupTimer: null as NodeJS.Timeout | null,
-    };
-  },
-  beforeUnmount() {
-    if (this.popupTimer) {
-      clearTimeout(this.popupTimer);
-    }
-  },
-  computed: {
-    alwaysShowRootMenu(): boolean {
-      return !!(this.item.meta && this.item.meta.alwaysShow);
-    },
-    showingChildNumber(): number {
-      if (this.item.children) {
-        const showingChildren = this.item.children.filter((item: RouteRecordRaw) => {
+  setup(props, { emit }) {
+    const route = useRoute();
+    const { t } = useI18n();
+
+    const isExpanded = ref(false);
+    const showPopup = ref(false);
+    const popupStyle = ref<Record<string, string>>({});
+    const popupTimer = ref<NodeJS.Timeout | null>(null);
+    const subMenuContainer = ref<HTMLElement | null>(null);
+
+    const alwaysShowRootMenu = computed(() => {
+      return !!(props.item.meta && props.item.meta.alwaysShow);
+    });
+
+    const showingChildNumber = computed(() => {
+      if (props.item.children) {
+        const showingChildren = props.item.children.filter((item: RouteRecordRaw) => {
           return !(item.meta && item.meta.hidden);
         });
         return showingChildren.length;
       }
       return 0;
-    },
-    theOnlyOneChild(): RouteRecordRaw | null {
-      if (this.item.meta?.oneChildMenu) {
+    });
+
+    const theOnlyOneChild = computed(() => {
+      if (props.item.meta?.oneChildMenu) {
         return null;
       }
-      if (this.showingChildNumber > 1) {
+      if (showingChildNumber.value > 1) {
         return null;
       }
-      if (this.item.children) {
-        for (const child of this.item.children) {
+      if (props.item.children) {
+        for (const child of props.item.children) {
           if (!child.meta || !child.meta.hidden) {
             return child;
           }
         }
       }
-      return { ...this.item, path: '' } as RouteRecordRaw;
-    },
-    hasVisibleChildren(): boolean {
-      return this.item.children ? this.item.children.some((child: RouteRecordRaw) => !child.meta || !child.meta.hidden) : false;
-    },
-  },
-  methods: {
-    isExternal,
-    resolvePath(routePath: string): string {
+      return { ...props.item, path: '' } as RouteRecordRaw;
+    });
+
+    const hasVisibleChildren = computed(() => {
+      return props.item.children ? props.item.children.some((child: RouteRecordRaw) => !child.meta || !child.meta.hidden) : false;
+    });
+
+    onBeforeUnmount(() => {
+      if (popupTimer.value) {
+        clearTimeout(popupTimer.value);
+      }
+    });
+
+    const resolvePath = (routePath: string): string => {
       if (isExternal(routePath)) {
         return routePath;
       }
-      if (isExternal(this.basePath)) {
-        return this.basePath;
+      if (isExternal(props.basePath)) {
+        return props.basePath;
       }
-      return path.resolve(this.basePath, routePath);
-    },
-    isActive(routePath: string): boolean {
-      return this.$route.path === routePath;
-    },
-    isSubMenuActive(routePath: string): boolean {
-      return this.$route.path.startsWith(routePath);
-    },
-    toggleExpand() {
-      this.isExpanded = !this.isExpanded;
-    },
-    listenRouteChange(route: any) {
+      return path.resolve(props.basePath, routePath);
+    };
+
+    const isActive = (routePath: string): boolean => {
+      return route.path === routePath;
+    };
+
+    const isSubMenuActive = (routePath: string): boolean => {
+      return route.path.startsWith(routePath);
+    };
+
+    const toggleExpand = () => {
+      isExpanded.value = !isExpanded.value;
+    };
+
+    const listenRouteChange = (route: any) => {
       const { meta } = route;
       if (meta.listenRouteChange) {
         console.log(`Listen to route change for ${route.path}`);
       }
-    },
-    handleMouseEnter() {
-      if (this.isCollapse && this.hasVisibleChildren) {
-        if (this.popupTimer) {
-          clearTimeout(this.popupTimer);
-          this.popupTimer = null;
+    };
+
+    const handleMouseEnter = () => {
+      if (props.isCollapse && hasVisibleChildren.value) {
+        if (popupTimer.value) {
+          clearTimeout(popupTimer.value);
+          popupTimer.value = null;
         }
-        this.showPopup = true;
-        this.$nextTick(() => {
-          this.updatePopupPosition();
+        showPopup.value = true;
+        nextTick(() => {
+          updatePopupPosition();
         });
       }
-    },
-    handleMouseLeave() {
-      if (this.isCollapse) {
+    };
+
+    const handleMouseLeave = () => {
+      if (props.isCollapse) {
         // 延迟关闭，允许鼠标移动到弹窗
-        this.popupTimer = setTimeout(() => {
-          this.showPopup = false;
+        popupTimer.value = setTimeout(() => {
+          showPopup.value = false;
         }, 150);
       }
-    },
-    updatePopupPosition() {
-      const container = this.$refs.subMenuContainer as HTMLElement;
+    };
+
+    const updatePopupPosition = () => {
+      const container = subMenuContainer.value;
       if (container) {
         const rect = container.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         let top = rect.top;
 
         // 如果弹窗会超出视口底部，调整位置
-        const estimatedHeight = Math.min(300, (this.item.children?.length || 0) * 46);
+        const estimatedHeight = Math.min(300, (props.item.children?.length || 0) * 46);
         if (top + estimatedHeight > viewportHeight) {
           top = viewportHeight - estimatedHeight - 16;
         }
@@ -177,23 +188,47 @@ export default defineComponent({
           top = 16;
         }
 
-        this.popupStyle = {
+        popupStyle.value = {
           top: `${top}px`,
           left: `${rect.right + 8}px`,
         };
       }
-    },
-    handlePopupEnter() {
-      if (this.popupTimer) {
-        clearTimeout(this.popupTimer);
-        this.popupTimer = null;
+    };
+
+    const handlePopupEnter = () => {
+      if (popupTimer.value) {
+        clearTimeout(popupTimer.value);
+        popupTimer.value = null;
       }
-    },
-    handlePopupLeave() {
-      if (this.isCollapse) {
-        this.showPopup = false;
+    };
+
+    const handlePopupLeave = () => {
+      if (props.isCollapse) {
+        showPopup.value = false;
       }
-    },
+    };
+
+    return {
+      isExternal,
+      isExpanded,
+      showPopup,
+      popupStyle,
+      subMenuContainer,
+      alwaysShowRootMenu,
+      showingChildNumber,
+      theOnlyOneChild,
+      hasVisibleChildren,
+      resolvePath,
+      isActive,
+      isSubMenuActive,
+      toggleExpand,
+      listenRouteChange,
+      handleMouseEnter,
+      handleMouseLeave,
+      updatePopupPosition,
+      handlePopupEnter,
+      handlePopupLeave,
+    };
   },
 });
 </script>
@@ -212,10 +247,9 @@ export default defineComponent({
   position: relative;
   height: 46px;
   padding: 0 12px;
-  margin: 0 6px;
   border-radius: 4px;
   cursor: pointer;
-  color: $grey-9;
+  color: #323232;
   font-size: 14px;
   letter-spacing: 0.01em;
   gap: 12px;
@@ -273,7 +307,7 @@ export default defineComponent({
 .menu-icon {
   font-size: 18px;
   color: inherit;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .menu-text {
@@ -385,7 +419,6 @@ export default defineComponent({
     .menu-item,
     .sub-menu-title {
       justify-content: flex-start;
-      margin: 0 6px;
       padding: 0 12px;
     }
 

@@ -141,6 +141,8 @@ export default defineComponent({
 
 <style lang="scss">
 .j-q-table-container {
+  background-color: #ffffff;
+  border-radius: 4px;
   .table-cell--fix-right,
   .table-cell--fix-left {
     position: sticky;
@@ -174,10 +176,6 @@ export default defineComponent({
     flex-grow: 1;
   }
 }
-
-//.q-table__top {
-//  padding: 16px 0;
-//}
 
 /* table NO DATA */
 .q-table__bottom--nodata {

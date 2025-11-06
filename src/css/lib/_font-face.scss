@@ -1,7 +1,9 @@
+$path: if($publicPath == null, '', '/' + $publicPath);
+
 /* 新字体 */
 @font-face {
   font-family: 'HelveticaNeue';
-  src: url('/font/HelveticaNeue-Bold.woff2') format('woff2');
+  src: url($path + '/font/HelveticaNeue-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -9,7 +11,7 @@
 
 @font-face {
   font-family: 'HelveticaNeue';
-  src: url('/font/HelveticaNeue-Medium.woff2') format('woff2');
+  src: url($path + '/font/HelveticaNeue-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -17,7 +19,7 @@
 
 @font-face {
   font-family: 'HelveticaNeue';
-  src: url('/font/HelveticaNeue-Regular.woff2') format('woff2');
+  src: url($path + '/font/HelveticaNeue-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

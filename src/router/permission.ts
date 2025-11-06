@@ -1,6 +1,7 @@
 import router from 'src/router/index';
 import { UserModule } from 'src/store/modules/user';
 import { PermissionModule } from 'src/store/modules/permission';
+import { TagsViewModule } from 'src/store/modules/tags';
 import { getToken, getUserinfo, getUsername } from 'src/utils/storage';
 import setting from 'src/setting.json';
 import { LoadingBar } from 'quasar';
@@ -24,6 +25,56 @@ const getPageTitle = (to: any) => {
 };
 
 router.beforeEach(async (to, _from, next) => {
+  // 处理根路径重定向
+  if (to.path === '/' || to.path === '') {
+    if (getToken() && getUserinfo() && getUsername()) {
+      // 如果已登录，重定向到第一个可访问的路由
+      if (PermissionModule.dynamicRoutes && PermissionModule.dynamicRoutes.length > 0) {
+        const firstRoute = PermissionModule.dynamicRoutes[0];
+        let firstPath = firstRoute.path;
+        // 如果有子路由且子路由的 path 不为空，拼接子路由路径
+        if (firstRoute.children && firstRoute.children.length > 0 && firstRoute.children[0].path) {
+          firstPath = firstRoute.path + (firstRoute.children[0].path === '' ? '' : `/${firstRoute.children[0].path}`);
+        }
+        next({ path: firstPath, replace: true });
+        return;
+      } else {
+        // 如果动态路由还没有加载，先加载路由再重定向
+        if (!UserModule.introduction) {
+          try {
+            await UserModule.getUserInfo();
+            PermissionModule.GenerateRoutes();
+            for (let route of PermissionModule.dynamicRoutes) {
+              router.addRoute(route);
+            }
+            if (PermissionModule.dynamicRoutes.length > 0) {
+              const firstRoute = PermissionModule.dynamicRoutes[0];
+              let firstPath = firstRoute.path;
+              if (firstRoute.children && firstRoute.children.length > 0 && firstRoute.children[0].path) {
+                firstPath = firstRoute.path + (firstRoute.children[0].path === '' ? '' : `/${firstRoute.children[0].path}`);
+              }
+              next({ path: firstPath, replace: true });
+              return;
+            }
+          } catch (err: any) {
+            UserModule.ResetToken();
+            next(`/login?redirect=${to.path}`);
+            LoadingBar.stop();
+            return;
+          }
+        } else {
+          // 如果已经初始化过，但动态路由还没有，等待一下
+          next({ path: '/dashboard', replace: true });
+          return;
+        }
+      }
+    } else {
+      // 未登录，重定向到登录页
+      next({ path: '/login', replace: true });
+      return;
+    }
+  }
+
   // 判断该用户是否登录
   if (getToken() && getUserinfo() && getUsername()) {
     if (whiteList.indexOf(to.path) !== -1) {
@@ -75,6 +126,11 @@ router.beforeEach(async (to, _from, next) => {
 router.afterEach((to: any): void => {
   LoadingBar.stop();
   document.title = getPageTitle(to);
+
+  // 添加 tags view
+  if (to.name && to.meta && !to.meta.hidden) {
+    TagsViewModule.addView(to);
+  }
 });
 store.watch(
   // 第一个参数是箭头函数，用来选择你要监听的数据

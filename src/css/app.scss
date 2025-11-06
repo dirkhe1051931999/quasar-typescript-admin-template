@@ -5,9 +5,8 @@
 @import './lib/line-height';
 @import './lib/size';
 @import './lib/box';
-@import './lib/utils';
 @import './lib/bg-gradient';
+@import './lib/q-card';
+@import './lib/q-btn';
+@import './lib/q-dialog';
 // app global css in SCSS form
-.q-dialog__inner--fullheight {
-  padding: 0 !important;
-}

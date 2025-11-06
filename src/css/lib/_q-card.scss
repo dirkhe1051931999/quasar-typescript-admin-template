@@ -1,0 +1,58 @@
+// Q-Card 统一样式配置
+// 使用 CSS 变量和 Quasar 的样式系统，而非直接覆盖 CSS
+
+:root {
+  // Q-Card 统一样式变量
+  --q-card-border-radius: 4px;
+  --q-card-padding: 16px;
+  --q-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --q-card-background: #ffffff;
+  --q-card-border: none;
+  --q-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+// 应用统一样式到所有 q-card
+.q-card {
+  border-radius: var(--q-card-border-radius);
+  box-shadow: var(--q-card-shadow);
+  background: var(--q-card-background);
+  border: var(--q-card-border);
+  transition: box-shadow 0.3s ease;
+
+  // 可选：添加 hover 效果
+  &:hover {
+    box-shadow: var(--q-card-hover-shadow);
+  }
+
+  // 如果需要统一内边距（取消注释以启用）
+  // .q-card__section {
+  //   padding: var(--q-card-padding);
+  // }
+
+  // 渐变背景类应该覆盖默认背景
+  &.bg-gradient-primary,
+  &.bg-gradient-secondary,
+  &.bg-gradient-success,
+  &.bg-gradient-info,
+  &.bg-gradient-warning,
+  &.bg-gradient-danger,
+  &.bg-gradient-light,
+  &.bg-gradient-dark,
+  &.bg-gradient-faded-primary,
+  &.bg-gradient-faded-secondary,
+  &.bg-gradient-faded-success,
+  &.bg-gradient-faded-info,
+  &.bg-gradient-faded-warning,
+  &.bg-gradient-faded-danger,
+  &.bg-gradient-faded-light,
+  &.bg-gradient-faded-dark {
+    background: unset !important;
+  }
+}
+
+// 暗色模式支持
+.body--dark {
+  --q-card-background: #1e1e1e;
+  --q-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --q-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}

@@ -6,16 +6,9 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
-declare module 'js-cookie';
-declare module 'path-to-regexp';
 declare module 'vue3-count-to';
 declare module 'marked';
-declare module 'sass.js';
-declare module 'vue3-photo-preview';
 declare module 'prismjs';
 declare module 'less';
-declare module 'uuid';
-declare module 'sha256';
-declare module 'jsencrypt';
-declare module 'vue-shepherd';
 declare module 'json-bigint';
+declare module 'json-editor-vue';

@@ -2,16 +2,16 @@
   <div class="dashboard-container">
     <q-intersection once transition="jump-up">
       <div class="col-12 q-mb-md">
-        <q-card class="q-pa-lg bg-gradient-primary">
+        <q-card class="q-pa-lg text-black">
           <div class="row items-center justify-center">
             <div class="col-10">
               <div class="numbers">
-                <p class="text-white">Wheather today</p>
-                <h5 class="text-white">San Francisco - 29°C</h5>
+                <p class="text-black">Wheather today</p>
+                <h5 class="text-black">San Francisco - 29°C</h5>
               </div>
             </div>
             <div class="col-2 text-left">
-              <img class="w-50" src="~assets/icon-sun-cloud.png" alt="image sun" />
+              <img class="w-120" src="~assets/icon-sun-cloud.png" alt="image sun" />
               <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
             </div>
           </div>

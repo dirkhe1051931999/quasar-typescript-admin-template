@@ -7,7 +7,6 @@ import { defineConfig } from '#q-app/wrappers';
 import setting from 'src/setting.json';
 
 export default defineConfig((ctx) => {
-  const isProd = process.env.NODE_ENV === 'production';
   return {
     eslint: {
       // fix: true,
@@ -15,7 +14,6 @@ export default defineConfig((ctx) => {
       // exclude: [],
       // cache: false,
       // rawEsbuildEslintOptions: {},
-      // rawWebpackEslintPluginOptions: {},
       warnings: true,
       errors: true,
     },
@@ -70,8 +68,6 @@ export default defineConfig((ctx) => {
         node: 'node20',
       },
 
-      extendWebpack(cfg) {},
-
       typescript: {
         strict: false,
         vueShim: true,
@@ -80,6 +76,7 @@ export default defineConfig((ctx) => {
       rtl: false, // https://quasar.dev/options/rtl-support
       preloadChunks: true,
       showProgress: true,
+      scssLoaderOptions: { additionalData: `$publicPath: ${process.env.NODE_ENV === 'production' ? setting.publicPath.replace(/\//g, '') : 'null'};` },
       gzip: true,
       analyze: false,
 
@@ -97,7 +94,7 @@ export default defineConfig((ctx) => {
       server: {
         type: 'http',
       },
-      port: 9002,
+      port: ctx.mode.ssr ? 9100 : ctx.mode.pwa ? 9200 : ctx.mode.bex ? 9300 : 9002,
       open: true,
     },
 

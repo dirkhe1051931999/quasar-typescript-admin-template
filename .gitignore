@@ -5,6 +5,8 @@ node_modules
 # Quasar core related directories
 .quasar
 /dist
+quasar.config.js.temporary.compiled.*.mjs
+eslint.config.js
 
 # Cordova related directories and files
 /src-cordova/node_modules
@@ -15,10 +17,6 @@ node_modules
 # Capacitor related directories and files
 /src-capacitor/www
 /src-capacitor/node_modules
-
-# BEX related directories and files
-/src-bex/www
-/src-bex/js/core
 
 # Log files
 npm-debug.log*
@@ -31,3 +29,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# local .env files
+.env.local*

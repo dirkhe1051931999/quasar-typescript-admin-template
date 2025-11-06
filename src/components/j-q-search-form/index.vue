@@ -25,7 +25,6 @@ type SearchFormData = Record<string, any>;
 export default defineComponent({
   name: 'jQSearchForm',
   props: {
-    // modelValue 是从父组件传入的搜索数据对象
     modelValue: { type: Object as PropType<SearchFormData>, required: true },
     queryLoading: { type: Boolean },
     resetLoading: { type: Boolean },
@@ -124,12 +123,12 @@ $color-grey-light: #f0f0f0;
   .search-bar-operation {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
   }
 
   .operation-reset {
     background-color: $color-grey-light;
-    // 增加一个过渡，提升用户体验
     transition: background-color 0.2s;
   }
 }

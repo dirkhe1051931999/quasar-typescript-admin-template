@@ -15,8 +15,6 @@ import { UserModule } from 'src/store/modules/user';
     title: 'title'               子菜单和面包屑中显示的名称（推荐设置）
     icon: 'icon-name'             侧栏中显示的图标
     hidden: true                 if true, 此路由不会显示在侧边栏中（默认为false）
-    breadcrumb: false            if false, 该项目将隐藏在面包屑中（默认为true）
-    affix: true                  if true, 标签将粘贴在标签视图中
   }
 */
 function redirect(to: any): any {
@@ -63,7 +61,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'dashboard',
           icon: 'home',
-          affix: true,
         },
       },
     ],
@@ -182,36 +179,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'editer',
-        name: 'Editer',
-        meta: {
-          title: 'editer',
-          icon: 'label',
-          pagePermissionId: ['components-editer'],
-        },
-        component: () => import(/* webpackChunkName: "editer" */ 'src/pages/components/editer.vue'),
-      },
-      {
-        path: 'md',
-        name: 'Md',
-        meta: {
-          title: 'md',
-          icon: 'label',
-          pagePermissionId: ['components-md'],
-        },
-        component: () => import(/* webpackChunkName: "md" */ 'src/pages/components/md.vue'),
-      },
-      {
-        path: 'splitter',
-        name: 'Splitter',
-        meta: {
-          title: 'splitter',
-          icon: 'label',
-          pagePermissionId: ['components-splitter'],
-        },
-        component: () => import(/* webpackChunkName: "splitter" */ 'src/pages/components/splitter.vue'),
-      },
-      {
         path: 'jsonEditor',
         name: 'JsonEditor',
         meta: {
@@ -230,126 +197,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
           pagePermissionId: ['components-jsonView'],
         },
         component: () => import(/* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'),
-      },
-      {
-        path: 'tabs',
-        name: 'Tabs',
-        meta: {
-          title: 'tabs',
-          icon: 'label',
-          pagePermissionId: ['components-tabs'],
-        },
-        component: () => import(/* webpackChunkName: "tabs" */ 'src/pages/components/tabs.vue'),
-      },
-      {
-        path: 'sticky',
-        name: 'Sticky',
-        meta: {
-          title: 'sticky',
-          icon: 'label',
-          pagePermissionId: ['components-sticky'],
-        },
-        component: () => import(/* webpackChunkName: "sticky" */ 'src/pages/components/sticky.vue'),
-      },
-      {
-        path: 'dialog',
-        name: 'Dialog',
-        meta: {
-          title: 'dialog',
-          icon: 'label',
-          pagePermissionId: ['components-dialog'],
-        },
-        component: () => import(/* webpackChunkName: "dialog" */ 'src/pages/components/dialog.vue'),
-      },
-      {
-        path: 'carousel',
-        name: 'Carousel',
-        meta: {
-          title: 'carousel',
-          icon: 'label',
-          pagePermissionId: ['components-carousel'],
-        },
-        component: () => import(/* webpackChunkName: "carousel" */ 'src/pages/components/carousel.vue'),
-      },
-      {
-        path: 'colorPicker',
-        name: 'ColorPicker',
-        meta: {
-          title: 'colorPicker',
-          icon: 'label',
-          pagePermissionId: ['components-colorPicker'],
-        },
-        component: () => import(/* webpackChunkName: "colorPicker" */ 'src/pages/components/colorPicker.vue'),
-      },
-      {
-        path: 'skeleton',
-        name: 'Skeleton',
-        meta: {
-          title: 'skeleton',
-          icon: 'label',
-          pagePermissionId: ['components-skeleton'],
-        },
-        component: () => import(/* webpackChunkName: "skeleton" */ 'src/pages/components/skeleton.vue'),
-      },
-      {
-        path: 'spinners',
-        name: 'Spinners',
-        meta: {
-          title: 'spinners',
-          icon: 'label',
-          pagePermissionId: ['components-spinners'],
-        },
-        component: () => import(/* webpackChunkName: "spinners" */ 'src/pages/components/spinners.vue'),
-      },
-      {
-        path: 'notice',
-        name: 'Notice',
-        meta: {
-          title: 'notice',
-          icon: 'label',
-          pagePermissionId: ['components-notice'],
-        },
-        component: () => import(/* webpackChunkName: "notice" */ 'src/pages/components/notice.vue'),
-      },
-      {
-        path: 'transfer',
-        name: 'Transfer',
-        meta: {
-          title: 'transfer',
-          icon: 'label',
-          pagePermissionId: ['components-transfer'],
-        },
-        component: () => import(/* webpackChunkName: "transfer" */ 'src/pages/components/transfer.vue'),
-      },
-      {
-        path: 'parallax',
-        name: 'Parallax',
-        meta: {
-          title: 'parallax',
-          icon: 'label',
-          pagePermissionId: ['components-parallax'],
-        },
-        component: () => import(/* webpackChunkName: "parallax" */ 'src/pages/components/parallax.vue'),
-      },
-      {
-        path: 'colors',
-        name: 'Colors',
-        meta: {
-          title: 'colors',
-          icon: 'label',
-          pagePermissionId: ['components-colors'],
-        },
-        component: () => import(/* webpackChunkName: "colors" */ 'src/pages/components/color.vue'),
-      },
-      {
-        path: 'terminal',
-        name: 'Terminal',
-        meta: {
-          title: 'terminal',
-          icon: 'label',
-          pagePermissionId: ['components-terminal'],
-        },
-        component: () => import(/* webpackChunkName: "terminal" */ 'src/pages/components/terminal.vue'),
       },
     ],
   },
@@ -535,22 +382,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'Link',
         meta: {
           title: 'link',
-          icon: 'link',
-        },
-      },
-    ],
-  },
-  {
-    path: '',
-    component: shallowRef(Layout),
-    name: 'largeDisplay0',
-    children: [
-      {
-        path: process.env.NODE_ENV === 'production' ? `${location.origin}${setting.publicPath}index2.html#/large-display` : `${location.origin}/index2.html#/large-display`,
-        component: () => {},
-        name: 'largeDisplay',
-        meta: {
-          title: 'largeDisplay',
           icon: 'link',
         },
       },

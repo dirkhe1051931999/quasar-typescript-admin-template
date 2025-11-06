@@ -10,11 +10,13 @@ module.exports = {
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
     extraFileExtensions: ['.vue'],
+    ecmaVersion: 2015, // 与 tsconfig.json 的 target: "es6" 保持一致
+    sourceType: 'module',
   },
 
   env: {
     browser: true,
-    es2021: true,
+    es6: true, // 与 tsconfig.json 的 target: "es6" 保持一致（改为 es6 替代 es2021）
     node: true,
     'vue/setup-compiler-macros': true,
   },
@@ -22,7 +24,7 @@ module.exports = {
   // Rules order is important, please avoid shuffling them
   extends: [
     // Base ESLint recommended rules
-    // 'eslint:recommended',
+    'eslint:recommended', // 启用基础推荐规则集
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
     // ESLint typescript rules
@@ -75,7 +77,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn', // 改为 warn，避免过度使用 any
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/restrict-plus-operands': 'off',
@@ -86,9 +88,18 @@ module.exports = {
     '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/await-thenable': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
-    'prefer-const': 'off',
+    'no-unused-vars': 'off', // 关闭基础规则，使用 TypeScript 版本
+    // 检测未使用的变量和参数，允许以下划线开头的参数（常用于接口实现）
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_', // 忽略以下划线开头的参数（如 _event, _props）
+        varsIgnorePattern: '^_', // 忽略以下划线开头的变量
+        args: 'after-used', // 只检查使用位置之后的参数
+        ignoreRestSiblings: true, // 忽略解构中的 rest siblings
+      },
+    ],
+    'prefer-const': 'warn', // 启用，推荐使用 const
     'require-await': 'off',
     '@typescript-eslint/require-await': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
@@ -103,7 +114,7 @@ module.exports = {
     eqeqeq: ['error', 'always'],
     '@typescript-eslint/class-name-casing': 'off',
     // 禁止使用 var
-    'no-var': 'off',
+    'no-var': 'error', // 启用，强制使用 let/const 替代 var
     // 禁止直接调用 Object.prototypes 的内置属性
     'no-prototype-builtins': 'error',
     // 要求回调函数使用箭头函数
@@ -117,13 +128,8 @@ module.exports = {
     'no-useless-return': 'error',
     // 禁止类成员中出现重复的名称
     'no-dupe-class-members': 'error',
-    // 禁止重复模块导入
-    // 'no-duplicate-imports': 'error',
     // 禁止console
     'no-console': 'off',
-    // 禁止debugger
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    // allow async-await 强制 generator 函数中 * 号周围使用一致的空格
     'generator-star-spacing': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-non-null-assert': 'off',
