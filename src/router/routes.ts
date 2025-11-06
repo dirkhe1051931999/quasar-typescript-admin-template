@@ -96,16 +96,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'world',
-        name: 'World',
-        meta: {
-          title: 'world',
-          icon: 'label',
-          pagePermissionId: ['charts-world'],
-        },
-        component: () => import(/* webpackChunkName: "world" */ 'src/pages/charts/world.vue'),
-      },
-      {
         path: 'relationship',
         name: 'Relationship',
         meta: {
@@ -248,25 +238,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
           icon: 'face',
         },
         component: () => import(/* webpackChunkName: "icon" */ 'pages/icon/index.vue'),
-      },
-    ],
-  },
-  {
-    path: '/convert',
-    component: shallowRef(Layout),
-    name: 'Convert0',
-    meta: {
-      pagePermissionId: ['convert'],
-    },
-    children: [
-      {
-        path: '',
-        name: 'Convert',
-        meta: {
-          title: 'convert',
-          icon: 'code',
-        },
-        component: () => import(/* webpackChunkName: "convert" */ 'pages/convert/index.vue'),
       },
     ],
   },

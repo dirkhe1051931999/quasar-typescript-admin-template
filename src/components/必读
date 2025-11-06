@@ -1,5 +1,6 @@
 j: Javascript
 q: Quasar
 c: Custom
+ch: Chart
 j-q-confirm 二次封装quasar的confirm
 j-c-tabs: 自定义样式的tabs

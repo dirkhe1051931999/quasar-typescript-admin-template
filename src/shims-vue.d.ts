@@ -12,3 +12,4 @@ declare module 'prismjs';
 declare module 'less';
 declare module 'json-bigint';
 declare module 'json-editor-vue';
+declare module 'jsvectormap';

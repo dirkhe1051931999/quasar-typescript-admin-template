@@ -12,17 +12,8 @@
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
     />
     <link href="favicon.ico" rel="icon" type="image/ico" />
-    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/HelveticaNeue-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/HelveticaNeue-Medium.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>font/HelveticaNeue-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.css" />
-    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>less.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/echarts.min.js"></script>
     <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>map/china.js"></script>
-    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/threejs.js"></script>
-    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>three/orbit-controls.js"></script>
-    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/jsvectormap.min.js"></script>
-    <script src="<%= process.env.NODE_ENV !== 'production'?'/':'/v3-admin/'%>world/world-merc.js"></script>
   </head>
   <body>
   <!-- quasar:entry-point -->

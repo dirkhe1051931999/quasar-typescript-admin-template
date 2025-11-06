@@ -1388,46 +1388,6 @@
   resolved "https://registry.npmmirror.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@fullcalendar/common@~5.11.3":
-  version "5.11.3"
-  resolved "https://registry.npmjs.org/@fullcalendar/common/-/common-5.11.3.tgz"
-  integrity sha512-welVwyfQOXQQGfDwBMSfYEPbiO1cPfUD+C7jd3ZoweJR+dSO11ddFugxIQ7dGfABAGZ63oq/+LW9FsmAJezVNg==
-  dependencies:
-    tslib "^2.1.0"
-
-"@fullcalendar/core@^5.11.3", "@fullcalendar/core@~5.11.3":
-  version "5.11.3"
-  resolved "https://registry.npmjs.org/@fullcalendar/core/-/core-5.11.3.tgz"
-  integrity sha512-YUFxCvVJytUwFeXCx4J17kFMM7Ixwn9zBjVRw5NM2bMwgR6VAhSnlZc6yNQSOIy7Hj2TF0vDkO/4JNlTvxyAXw==
-  dependencies:
-    "@fullcalendar/common" "~5.11.3"
-    preact "^10.0.5"
-    tslib "^2.1.0"
-
-"@fullcalendar/daygrid@^5.11.3":
-  version "5.11.3"
-  resolved "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-5.11.3.tgz"
-  integrity sha512-PCK0y80DRNCzWuC5lGpIWqCgKDvql1ah7rXql5lu+Gn2EeFj15ZQ8diMFjtNIQucEmFaNOXnR05Pgcry1n6Shg==
-  dependencies:
-    "@fullcalendar/common" "~5.11.3"
-    tslib "^2.1.0"
-
-"@fullcalendar/interaction@^5.11.3":
-  version "5.11.3"
-  resolved "https://registry.npmjs.org/@fullcalendar/interaction/-/interaction-5.11.3.tgz"
-  integrity sha512-L955wkDjza62K96ndstvYs2Fd4V0kayTDpqW8W7huFG3Ox8MutpLqKAa2SCaTvcNIlWS4oexGQRiQAaJG7u47A==
-  dependencies:
-    "@fullcalendar/common" "~5.11.3"
-    tslib "^2.1.0"
-
-"@fullcalendar/vue3@^5.11.3":
-  version "5.11.3"
-  resolved "https://registry.npmjs.org/@fullcalendar/vue3/-/vue3-5.11.3.tgz"
-  integrity sha512-/IjyTKXkdc3V5j1X9tajlMnGbWEbyruiQh9hU9EdKQfAcPze+aXpstdigoi4vYiTUvVsjvLGnaCgMgE+OZsyYw==
-  dependencies:
-    "@fullcalendar/core" "~5.11.3"
-    tslib "^2.1.0"
-
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
   resolved "https://registry.npmmirror.com/@humanwhocodes/config-array/-/config-array-0.13.0.tgz#fb907624df3256d04b9aa2df50d7aa97ec648748"
@@ -5582,6 +5542,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsvectormap@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.npmmirror.com/jsvectormap/-/jsvectormap-1.7.0.tgz#3abeb8958514efd50a03d408b858128cce8933db"
+  integrity sha512-8VmL3Uuen08Es9xb2N6Wdc32TrQDGPXYCIdTB126jAhTJsYd/4r4Mc63VQA3qHxG0p4zeCI8sFO5XRsdjljMJg==
+
 keyv@^4.5.3:
   version "4.5.4"
   resolved "https://registry.npmmirror.com/keyv/-/keyv-4.5.4.tgz#a879a99e29452f942439f2a405e3af8b31d4de93"
@@ -6678,11 +6643,6 @@ postcss@^8.4.21, postcss@^8.4.33, postcss@^8.4.40, postcss@^8.4.47:
     nanoid "^3.3.11"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
-
-preact@^10.0.5:
-  version "10.11.3"
-  resolved "https://registry.npmjs.org/preact/-/preact-10.11.3.tgz"
-  integrity sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -8502,21 +8462,6 @@ xml-name-validator@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-4.0.0.tgz"
   integrity sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==
-
-xterm-addon-attach@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.npmjs.org/xterm-addon-attach/-/xterm-addon-attach-0.8.0.tgz"
-  integrity sha512-k8N5boSYn6rMJTTNCgFpiSTZ26qnYJf3v/nJJYexNO2sdAHDN3m1ivVQWVZ8CHJKKnZQw1rc44YP2NtgalWHfQ==
-
-xterm-addon-fit@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.npmjs.org/xterm-addon-fit/-/xterm-addon-fit-0.7.0.tgz"
-  integrity sha512-tQgHGoHqRTgeROPnvmtEJywLKoC/V9eNs4bLLz7iyJr1aW/QFzRwfd3MGiJ6odJd9xEfxcW36/xRU47JkD5NKQ==
-
-xterm@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/xterm/-/xterm-5.1.0.tgz"
-  integrity sha512-LovENH4WDzpwynj+OTkLyZgJPeDom9Gra4DMlGAgz6pZhIDCQ+YuO7yfwanY+gVbn/mmZIStNOnVRU/ikQuAEQ==
 
 y18n@^5.0.5:
   version "5.0.8"

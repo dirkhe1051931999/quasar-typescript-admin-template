@@ -77,7 +77,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn', // 改为 warn，避免过度使用 any
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/restrict-plus-operands': 'off',
@@ -135,5 +134,6 @@ module.exports = {
     '@typescript-eslint/no-non-null-assert': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'vue/no-use-v-if-with-v-for': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
