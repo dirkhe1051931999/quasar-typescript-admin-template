@@ -1,6 +1,5 @@
 import { boot } from 'quasar/wrappers';
 import { createI18n } from 'vue-i18n';
-
 import messages from 'src/i18n';
 import { AppModule } from 'src/store/modules/app';
 export const i18n = createI18n({
@@ -9,8 +8,6 @@ export const i18n = createI18n({
   warnHtmlMessage: false,
   messages,
 });
-/* eslint-enable @typescript-eslint/no-empty-interface */
-export default boot(({ app }) => {
-  // Set i18n instance on app
+export default boot(({ app }: { app: any }) => {
   app.use(i18n);
 });

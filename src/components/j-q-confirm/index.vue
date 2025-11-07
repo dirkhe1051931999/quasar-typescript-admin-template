@@ -7,8 +7,8 @@
           <span class="text-subtitle2 title">{{ title }}</span>
         </q-card-section>
         <q-card-actions align="right" class="q-pa-none" style="padding: 0; margin-top: 8px">
-          <q-btn flat :label="cancelText" color="black" v-close-popup dense size="12px" />
-          <q-btn :label="confirmText" color="primary" @click="handleConfirm" dense size="12px" />
+          <q-btn flat :label="$t('action.cancel')" color="black" v-close-popup dense size="12px" />
+          <q-btn :label="$t('action.confirm')" color="primary" @click="handleConfirm" dense size="12px" />
         </q-card-actions>
       </q-card>
     </q-popup-proxy>

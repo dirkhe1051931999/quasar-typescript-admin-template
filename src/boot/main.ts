@@ -2,16 +2,14 @@ import * as directives from 'src/directives/index';
 import { boot } from 'quasar/wrappers';
 import { type Directive } from 'vue';
 import 'src/router/permission';
-import 'src/utils/types';
 import { Platform } from 'quasar';
 
-export default boot(({ app }) => {
+export default boot(({ app }: { app: any }) => {
   // We globally register our directive with Vue;
   // Rememeber that all directives in Vue will start with 'v-'
   // but that should not be part of your directive name
   // https://vuejs.org/v2/guide/custom-directive.html
   // 'my-directive' will be used as 'v-my-directive'
-  app.config.globalProperties.$window = window;
   Object.keys(directives).forEach((key) => {
     app.directive(key, (directives as { [key: string]: Directive })[key]);
   });

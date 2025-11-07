@@ -54,7 +54,7 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      publicPath: process.env.NODE_ENV !== 'production' ? null : setting.publicPath,
+      publicPath: process.env.NODE_ENV !== 'production' ? '/' : setting.publicPath,
       distDir: ctx.modeName === 'spa' ? `dist${setting.publicPath}` : `dist/${ctx.modeName}`,
       webpackTranspile: true,
 

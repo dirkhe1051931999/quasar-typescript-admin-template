@@ -7,3 +7,10 @@
 //  this declaration also apply `quasar` own
 //  augmentations (eg. adds `$q` into Vue component context)
 /// <reference types="@quasar/app-webpack" />
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $t: any;
+    $i18n: any;
+  }
+}
+export {};

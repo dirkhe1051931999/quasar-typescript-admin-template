@@ -1,9 +1,9 @@
 import { createApp, nextTick } from 'vue';
 import router from 'src/router/index';
-import storer from 'src/store/index';
+import store from 'src/store/index';
 import { i18n } from 'src/boot/i18n';
 import JQDialog from './index.vue';
-import { Dialog, Notify, Quasar } from 'quasar';
+import { Quasar } from 'quasar';
 
 const dialogMapStore = new Map<string, { app: any; appInstance: any }>();
 
@@ -12,11 +12,9 @@ export const DialogProvider = {
     const dialogId = Math.random().toString(36).slice(2);
     const app = createApp(JQDialog, { ...props, dialogId });
     app.use(router);
-    app.use(storer);
+    app.use(store);
     app.use(i18n);
-    app.use(Quasar, {
-      plugins: { Dialog, Notify },
-    });
+    app.use(Quasar);
     const mountEl = document.createElement('div');
     document.body.appendChild(mountEl);
     const appInstance: any = app.mount(mountEl);

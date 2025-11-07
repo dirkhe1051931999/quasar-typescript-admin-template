@@ -40,7 +40,7 @@
         <s-q-tooltip :content="row.description" contentStyle="max-width: 200px" v-if="row.description" />
       </template>
       <template #body-cell-operation="{ row }">
-        <j-q-confirm title="Delete?" @confirm="handleClickDelete(row)" :confirmText="$t('action.confirm')" :cancelText="$t('action.cancel')">
+        <j-q-confirm title="Delete?" @confirm="handleClickDelete(row)">
           <q-btn flat dense round icon="delete" v-if="row.id !== 1" />
         </j-q-confirm>
         <q-btn flat dense round icon="info" @click="handleClickDetail(row)" />

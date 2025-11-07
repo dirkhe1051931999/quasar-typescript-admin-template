@@ -67,8 +67,7 @@
     "sass": "1.93.3",
     "sass-loader": "^16.0.6",
     "ts-loader": "^9.5.4",
-    "typescript": "^5.9.3",
-    "unplugin-auto-import": "^0.16.0",
+    "typescript": "^4.5.4",
     "unplugin-vue-components": "^0.25.2",
     "vuex-module-decorators": "^2.0.0"
   },
