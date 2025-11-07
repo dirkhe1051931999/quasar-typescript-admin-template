@@ -252,30 +252,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.j-q-select {
-  .q-field__native > span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.j-q-select-popup {
-  max-height: 20rem !important;
-}
-
-.float-placeholder {
-  font-size: 12px;
-  color: #969799;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-}
-
-.select-selected-item {
-  border: 1px solid #ccc;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
+@use './index';
 </style>

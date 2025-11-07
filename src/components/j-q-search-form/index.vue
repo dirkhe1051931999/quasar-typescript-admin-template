@@ -106,30 +106,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-// --- SCSS 变量定义 ---
-$search-bar-item-width: 250px;
-$color-grey-light: #f0f0f0;
-
-.j-q-search-bar {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 4px;
-  .search--bar-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(0, $search-bar-item-width));
-    gap: 12px;
-  }
-
-  .search-bar-operation {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .operation-reset {
-    background-color: $color-grey-light;
-    transition: background-color 0.2s;
-  }
-}
+@use './index';
 </style>

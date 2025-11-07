@@ -6,8 +6,8 @@ export const tooltip: Directive = {
   mounted(el, binding) {
     const { value } = binding;
     el.addEventListener('mouseenter', () => {
-      let cWidth = el.clientWidth;
-      let sWidth = el.scrollWidth;
+      const cWidth = el.clientWidth;
+      const sWidth = el.scrollWidth;
       if (sWidth > cWidth) {
         AppModule.SET_TOOL_TIP_CLASS('');
       } else {

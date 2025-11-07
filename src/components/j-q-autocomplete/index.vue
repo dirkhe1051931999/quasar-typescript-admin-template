@@ -179,6 +179,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+$shadow-color: rgba(19, 21, 35, 0.08);
+$bg-color: #fff;
+$bg-hover-color: #f8f8f8;
 .j-q-autocomplete {
   position: relative;
 
@@ -187,12 +190,12 @@ export default defineComponent({
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: #ffffff;
+    background: $bg-color;
     top: 100%;
     overflow-y: auto;
     padding: 6px;
     max-height: 200px;
-    box-shadow: 0px 4px 8px 0px rgba(19, 21, 35, 0.08);
+    box-shadow: 0px 4px 8px 0px $shadow-color;
     border-radius: 4px;
 
     ul {
@@ -217,7 +220,7 @@ export default defineComponent({
         }
 
         &:hover {
-          background: #f5f6fa;
+          background: $bg-hover-color;
           cursor: pointer;
         }
       }

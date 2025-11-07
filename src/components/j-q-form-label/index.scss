@@ -1,0 +1,58 @@
+.j-q-form-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 16px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+
+  &.required {
+    margin-bottom: 4px;
+  }
+
+  // --- Form Label ---
+  .form-label {
+    display: flex;
+    align-items: center;
+    width: auto;
+    font-size: 12px;
+    color: var(--j-color-dark);
+
+    // 必填星号逻辑
+    &.required::before {
+      content: '*';
+      margin-right: 2px;
+      color: var(--j-color-red);
+    }
+  }
+
+  // --- Form Value ---
+  .form-value {
+    flex-grow: 1;
+    flex-basis: auto;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 40px;
+
+    &__inner {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  // --- 垂直布局修饰符 ---
+  &.form-label--vertical {
+    flex-direction: column;
+    align-items: normal;
+
+    .form-label {
+      margin-bottom: 2px;
+    }
+
+    .form-value {
+      flex-basis: auto;
+    }
+  }
+}

@@ -46,7 +46,7 @@
   </q-dialog>
 </template>
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, ref, type PropType } from 'vue';
+import { computed, defineComponent, getCurrentInstance, type PropType, ref } from 'vue';
 import { DialogProvider } from './index';
 
 type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
@@ -125,118 +125,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-$dialog-base-width: 768px;
-$dialog-max-width: 1024px;
-
-.j-q-dialog {
-  .dialog-main {
-    width: $dialog-base-width;
-    max-width: $dialog-base-width;
-  }
-
-  .dialog-header {
-    display: flex;
-    align-items: center;
-    line-height: 1.5;
-    padding: 0 16px;
-    height: 56px;
-
-    .dialog-title {
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    .dialog-close {
-      min-width: 1.5em;
-      height: 1.5em;
-      min-height: 1.5em;
-      font-size: 16px;
-      margin-left: auto;
-
-      :deep(.q-icon) {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .dialog-body {
-    padding: 16px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 320px;
-    max-height: 60vh;
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(144, 147, 153, 0.3);
-      border-radius: 99999px;
-      border: 5px solid transparent;
-      background-clip: content-box;
-    }
-
-    &::-webkit-scrollbar {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar:vertical {
-      width: 16px;
-    }
-
-    &::-webkit-scrollbar:horizontal {
-      height: 16px;
-    }
-  }
-
-  .dialog-footer {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    justify-content: flex-end;
-    padding: 16px;
-    height: 68px;
-    box-shadow: 0 1px 5px #0003, 0 2px 2px #00000024, 0 3px 1px -2px #0000001f;
-
-    .q-btn {
-      min-width: 80px;
-    }
-  }
-
-  &.right-panel {
-    .dialog-main {
-      @media screen and (max-width: 1440px) {
-        width: $dialog-base-width;
-        max-width: $dialog-base-width;
-      }
-      @media screen and (min-width: 1441px) {
-        width: $dialog-max-width;
-        max-width: $dialog-max-width;
-      }
-    }
-
-    .dialog-body {
-      height: calc(100vh - 56px - 68px);
-      max-height: calc(100vh - 56px - 68px);
-    }
-  }
-
-  .loading-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.3);
-  }
-
-  .async-component-loading-mask {
-    min-height: 320px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-}
+@use './index';
 </style>

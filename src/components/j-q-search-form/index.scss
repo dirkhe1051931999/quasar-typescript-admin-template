@@ -1,0 +1,25 @@
+$search-bar-item-width: 250px;
+
+.j-q-search-bar {
+  background: var(--j-color-white);
+  padding: 16px;
+  border-radius: 4px;
+
+  .search--bar-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(0, $search-bar-item-width));
+    gap: 12px;
+  }
+
+  .search-bar-operation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .operation-reset {
+    background-color: var(--j-color-grey-lighter);
+    transition: background-color 0.2s;
+  }
+}

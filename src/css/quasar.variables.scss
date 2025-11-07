@@ -46,26 +46,4 @@ text-capitalize 首字母大写
 text-truncate  超出部分省略号
 */
 
-$dark: #323232;
-$primary: #5469d4;
-$blue: #5469d4;
-$negative: rgb(234, 6, 6);
-$negative-1: rgb(253, 226, 226);
-$negative-2: rgb(234, 6, 6, 0.08);
-$yellow: rgb(237, 106, 12);
-$yellow-1: rgb(253, 246, 236);
-$yellow-2: rgb(237, 106, 12, 0.08);
-$green: #2da641;
-$green-1: rgb(225, 243, 216);
-$green-2: rgb(103, 194, 58, 0.08);
-$grey: #969799;
-$grey-9: #646566;
-// font-size
-$font-size-em-through: 10 !default;
-$font-size-em-decimal-through: 5 !default;
-$font-size-rem-through: 10 !default;
-$font-size-rem-decimal-through: 5 !default;
-// line-height
-$line-height-through: 20 !default;
-$line-height-decimal-through: 5 !default;
-$line-height-px-through: 100 !default;
+@import "./lib/vars-color";

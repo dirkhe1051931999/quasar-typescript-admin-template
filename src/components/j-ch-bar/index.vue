@@ -45,7 +45,7 @@ export default defineComponent({
         el.style.background = '#ffffff';
         el.style.borderRadius = '8px';
         el.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-        el.style.color = '#111827';
+        el.style.color = '#323232';
         el.style.opacity = '0';
         el.style.pointerEvents = 'none';
         el.style.position = 'absolute';

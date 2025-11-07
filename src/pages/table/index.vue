@@ -7,6 +7,7 @@
       <j-q-autocomplete search-id="description" search-key="description" v-model="tableParams.query.params.description" ref="JQAutocompleteRef" label="Description (Autocomplete)" />
       <j-q-date v-model="tableParams.query.params.date" :clearable="true" range :options="tableParams.query.dateOptions" label="Date" />
     </j-q-search-form>
+    <j-c-svg name="developer" />
     <j-q-table
       ref="JQTableRef"
       :rows="tableParams.data"
@@ -63,10 +64,16 @@ import JQAutocomplete from 'components/j-q-autocomplete/index.vue';
 import JQInput from 'components/j-q-input/index.vue';
 import JQSelect from 'components/j-q-select/index.vue';
 import JQDate from 'components/j-q-date/index.vue';
+import JCSvg from 'components/j-c-svg/index.vue';
+import SvgDeveloper from 'components/j-c-svg/index.vue';
+import JCvgIcon from 'components/j-c-svg/index.vue';
 
 @Component({
   name: 'TablePage',
   components: {
+    JCvgIcon,
+    SvgDeveloper,
+    JCSvg,
     JQDate,
     JQSelect,
     JQInput,
@@ -154,7 +161,7 @@ export default class extends TableSelectionMixin {
         headerClasses: 'table-cell--fix-left w-20',
         classes: 'table-cell--fix-left w-20',
       },
-      { name: 'id', label: 'ID', field: 'id', align: 'left', format: defaultFormat() },
+      { name: 'id', label: 'ID', field: 'id', align: 'left', format: defaultFormat(), classes: 'j-text-color-blue' },
       { name: 'name', label: 'Name', field: 'name', align: 'left' },
       { name: 'age', label: 'Age', field: 'age', align: 'left', format: defaultFormat() },
       {

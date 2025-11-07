@@ -2,7 +2,7 @@
   <div class="inline-block">
     <slot></slot>
     <q-popup-proxy ref="popupRef">
-      <q-card style="min-width: 150px; padding: 12px" flat>
+      <q-card class="j-q-confirm" flat>
         <q-card-section class="row items-center q-pa-none">
           <span class="text-subtitle2 title">{{ title }}</span>
         </q-card-section>
@@ -55,5 +55,10 @@ export default defineComponent({
 .title {
   max-width: 200px;
   font-size: 13px;
+}
+
+.j-q-confirm {
+  min-width: 150px;
+  padding: 12px;
 }
 </style>

@@ -1,5 +1,7 @@
 /* 一个自动生成 svg 的工具函数 */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
 // 要读取的目录路径

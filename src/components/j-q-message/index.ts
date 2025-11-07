@@ -38,7 +38,7 @@ class GlobalMessage {
           ]
         : [],
       badgeStyle: `background-color: #fff;box-shadow:rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;${type === 'success' ? 'color: #2DA641;' : 'color: #D40000;'}`,
-      classes: type === 'success' ? `q-message-${type}-style min-h-36 m-t-55` : `q-message-${type}-style min-h-36 m-t-55`,
+      classes: `q-message-style  q-message-style--${type}`,
     });
     try {
       Notify.create(data);

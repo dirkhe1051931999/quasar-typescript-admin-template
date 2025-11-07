@@ -8,13 +8,13 @@
             id="path-1"></path>
     </defs>
     <g id="quasar-custom-svg" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="console设计规范" transform="translate(-105.000000, -488.000000)">
-            <g id="编组" transform="translate(105.000000, 488.000000)">
+        <g id="console设计规范" transform="translate(-233.000000, -488.000000)">
+            <g id="编组" transform="translate(233.000000, 488.000000)">
                 <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
                 <mask id="mask-2" fill="white">
                     <use xlink:href="#path-1"></use>
                 </mask>
-                <use id="🎨-Icon-Сolor" fill="#3B4170" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <use id="🎨-Icon-Сolor" fill="currentColor" fill-rule="nonzero" xlink:href="#path-1"></use>
             </g>
         </g>
     </g>

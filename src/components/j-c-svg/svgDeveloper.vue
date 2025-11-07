@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+<template>
+<svg :style="cStyle" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>eSIM-List</title>
     <defs>
@@ -8,16 +8,65 @@
             id="path-1"></path>
     </defs>
     <g id="quasar-custom-svg" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="console设计规范" transform="translate(-297.000000, -488.000000)">
-            <g id="code" transform="translate(297.000000, 488.000000)">
+        <g id="console设计规范" transform="translate(-169.000000, -488.000000)">
+            <g id="code" transform="translate(169.000000, 488.000000)">
                 <g id="Color">
                     <rect id="Purple" x="0" y="0" width="24" height="24"></rect>
                 </g>
                 <mask id="mask-2" fill="white">
                     <use xlink:href="#path-1"></use>
                 </mask>
-                <use id="Mask" fill="#5569D4" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <use id="Mask" fill="currentColor" fill-rule="nonzero" xlink:href="#path-1"></use>
             </g>
         </g>
     </g>
 </svg>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed, CSSProperties } from 'vue';
+
+export default defineComponent({
+  // 组件名称基于文件名自动生成
+  name: 'svgDeveloper',
+  
+  props: {
+    // 颜色 props，允许外部传入颜色
+    color: {
+      type: String,
+      default: 'currentColor', // 默认使用 currentColor
+    },
+    // 尺寸 props，允许外部传入尺寸
+    size: {
+      type: [String, Number],
+      default: '24px', // 默认 24px
+    },
+    // 额外的样式，用于覆盖或添加
+    style: {
+      type: [String, Object] as any, // 允许 String 或 CSSProperties
+      default: () => ({}),
+    }
+  },
+
+  setup(props) {
+    // 计算样式，用于绑定到 SVG 根元素的 :style
+    const cStyle = computed(() => {
+      const sizeValue = typeof props.size === 'number' ? `${props.size}px` : props.size;
+      const baseStyle: CSSProperties = {
+        width: sizeValue,
+        height: sizeValue,
+        fill: props.color,
+        stroke: props.color,
+        color: props.color,
+      };
+      
+      // 合并外部传入的 style
+      return { ...baseStyle, ...(props.style as CSSProperties) };
+    });
+
+    return {
+      cStyle,
+    };
+  },
+});
+</script>

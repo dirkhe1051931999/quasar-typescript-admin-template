@@ -44,9 +44,7 @@ export default defineConfig((ctx) => {
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
       'material-icons-outlined',
     ],
@@ -76,7 +74,9 @@ export default defineConfig((ctx) => {
       rtl: false, // https://quasar.dev/options/rtl-support
       preloadChunks: true,
       showProgress: true,
-      scssLoaderOptions: { additionalData: `$publicPath: ${process.env.NODE_ENV === 'production' ? setting.publicPath.replace(/\//g, '') : 'null'};` },
+      scssLoaderOptions: {
+        additionalData: `$publicPath: ${process.env.NODE_ENV === 'production' ? setting.publicPath.replace(/\//g, '') : 'null'};`,
+      },
       gzip: true,
       analyze: false,
 
@@ -85,7 +85,6 @@ export default defineConfig((ctx) => {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/sorrycc/webpack-chain
-      // chainWebpack (/* chain, { isClient, isServer } */) {}
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#devserver
@@ -94,7 +93,7 @@ export default defineConfig((ctx) => {
       server: {
         type: 'http',
       },
-      port: ctx.mode.ssr ? 9100 : ctx.mode.pwa ? 9200 : ctx.mode.bex ? 9300 : 9002,
+      port: ctx.modeName === 'ssr' ? 9100 : ctx.modeName === 'pwa' ? 9200 : ctx.modeName === 'bex' ? 9300 : 9002,
       open: true,
     },
 

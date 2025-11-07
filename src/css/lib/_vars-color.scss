@@ -1,0 +1,43 @@
+/* 主色 */
+$primary: #0b5cff;
+$blue: #0b5cff;
+$dark: #323232;
+$green: #2da641;
+$red: #e93030;
+$negative: #e93030;
+$yellow: #f2c037;
+$grey: #969799;
+$white: #ffffff;
+/* 浅背景色 */
+$blue-light: #f0f4ff; // Primary/Blue 的浅背景
+$dark-lighter: #f7f7f7; // Dark 的极浅背景（用于卡片/侧栏）
+$green-light: #c0e4c6; // Green 的浅背景（Positive）
+$red-light: #fff0f0; // Red 的浅背景（Negative）
+$yellow-light: #fff9e9; // Yellow 的浅背景（Warning）
+
+/* 灰色 */
+$grey-strong: #969799; // 较深的文字/边框灰
+$grey-medium: #aaaaaa; // 中等灰，用于图标或占位文字
+$grey-light: #eeeeee; // 浅边框/分隔线
+$grey-lighter: #f5f5f5; // 极浅背景灰，用于区分模块
+
+$custom-colors: (
+  'primary': $primary,
+  'blue': $blue,
+  'dark': $dark,
+  'green': $green,
+  'red': $red,
+  'negative': $negative,
+  'yellow': $yellow,
+  'grey': $grey,
+  'white': $white,
+  'blue-light': $blue-light,
+  'dark-lighter': $dark-lighter,
+  'green-light': $green-light,
+  'red-light': $red-light,
+  'yellow-light': $yellow-light,
+  'grey-strong': $grey-strong,
+  'grey-medium': $grey-medium,
+  'grey-light': $grey-light,
+  'grey-lighter': $grey-lighter,
+);

@@ -25,20 +25,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+$color-white: #fff;
+$bg-grey: #ebebeb;
 .title-line {
   font-weight: 600;
   position: relative;
 
   span {
     padding-right: 10px;
-    background-color: #fff;
+    background-color: $color-white;
     z-index: 20;
     position: relative;
     font-size: 14px;
   }
 
   &:after {
-    background-color: #ebebeb;
+    background-color: $bg-grey;
     content: '';
     height: 1px;
     margin-top: 10px;

@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "node ./check-version.js &&  npx quasar dev",
     "build": "node ./check-version.js && quasar build",
-    "svg": "node ./generate-custom-svg.js",
+    "svg": "node ./generate-custom-svg.js && node ./generate-svg-component.js",
     "build:pwa": "npx quasar build -m pwa",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -68,7 +68,6 @@
     "sass-loader": "^16.0.6",
     "ts-loader": "^9.5.4",
     "typescript": "^4.5.4",
-    "unplugin-vue-components": "^0.25.2",
     "vuex-module-decorators": "^2.0.0"
   },
   "browserslist": [

@@ -8,7 +8,8 @@
       </template>
       <template #item-value-created_at="{ value }">
         [this is slot
-        <q-icon name="access_time" class="q-mr-xs" />
+        <q-icon name="access_time" class="q-mr-xs j-text-color-red" />
+        <span class="test-text">123123</span>
         {{ value }}
         ]
       </template>
@@ -91,4 +92,8 @@ export default class DetailBaseComponent extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.test-text {
+  background: $green-light;
+}
+</style>

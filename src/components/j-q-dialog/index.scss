@@ -1,0 +1,142 @@
+// ------------------------------------------------------------------
+// 1. 变量定义 (放在顶部)
+// ------------------------------------------------------------------
+
+// 尺寸变量
+$dialog-base-width: 768px;
+$dialog-max-width: 1024px;
+$dialog-header-height: 56px;
+$dialog-footer-height: 68px;
+$dialog-min-height: 320px;
+$dialog-padding: 16px;
+$dialog-scrollbar-width: 16px;
+
+// 颜色变量
+$dialog-scrollbar-thumb-color: rgba(144, 147, 153, 0.3);
+$dialog-loading-mask-bg: rgba(0, 0, 0, 0.3);
+
+// 阴影变量
+$dialog-footer-shadow-1: rgba(0, 0, 0, 0.19); // #0003
+$dialog-footer-shadow-2: rgba(0, 0, 0, 0.14); // #00000024
+$dialog-footer-shadow-3: rgba(0, 0, 0, 0.12); // #0000001f
+
+// 组合阴影变量 (最方便在 CSS 中使用)
+$dialog-footer-box-shadow: 0 1px 5px $dialog-footer-shadow-1, 0 2px 2px $dialog-footer-shadow-2, 0 3px 1px -2px $dialog-footer-shadow-3;
+
+// ------------------------------------------------------------------
+// 2. 样式主体 (.j-q-dialog)
+// ------------------------------------------------------------------
+
+.j-q-dialog {
+  .dialog-main {
+    width: $dialog-base-width;
+    max-width: $dialog-base-width;
+  }
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+    padding: 0 $dialog-padding; // 使用变量
+    height: $dialog-header-height; // 使用变量
+
+    .dialog-title {
+      font-weight: 600;
+      font-size: 16px; // 保持不变，或定义 $dialog-title-font-size
+    }
+
+    .dialog-close {
+      min-width: 1.5em;
+      height: 1.5em;
+      min-height: 1.5em;
+      font-size: 16px; // 保持不变
+      margin-left: auto;
+
+      :deep(.q-icon) {
+        font-size: 16px; // 保持不变
+      }
+    }
+  }
+
+  .dialog-body {
+    padding: $dialog-padding; // 使用变量
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: $dialog-min-height; // 使用变量
+    max-height: 60vh;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $dialog-scrollbar-thumb-color;
+      border-radius: 99999px;
+      border: 5px solid transparent;
+      background-clip: content-box;
+    }
+
+    &::-webkit-scrollbar {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar:vertical {
+      width: $dialog-scrollbar-width; // 使用变量
+    }
+
+    &::-webkit-scrollbar:horizontal {
+      height: $dialog-scrollbar-width; // 使用变量
+    }
+  }
+
+  .dialog-footer {
+    display: flex;
+    align-items: center;
+    gap: $dialog-padding; // 使用 $dialog-padding 作为 gap
+    justify-content: flex-end;
+    padding: $dialog-padding; // 使用变量
+    height: $dialog-footer-height; // 使用变量
+    box-shadow: $dialog-footer-box-shadow;
+
+    .q-btn {
+      min-width: 80px; // 保持不变
+    }
+  }
+
+  // 右侧面板样式
+  &.right-panel {
+    .dialog-main {
+      @media screen and (max-width: 1440px) {
+        width: $dialog-base-width;
+        max-width: $dialog-base-width;
+      }
+      @media screen and (min-width: 1441px) {
+        width: $dialog-max-width; // 使用变量
+        max-width: $dialog-max-width; // 使用变量
+      }
+    }
+
+    .dialog-body {
+      // 使用变量进行 calc() 计算
+      height: calc(100vh - #{$dialog-header-height} - #{$dialog-footer-height});
+      max-height: calc(100vh - #{$dialog-header-height} - #{$dialog-footer-height});
+    }
+  }
+
+  .loading-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100; // 保持不变，或定义 $dialog-loading-mask-z-index
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $dialog-loading-mask-bg;
+  }
+
+  .async-component-loading-mask {
+    min-height: $dialog-min-height; // 使用变量
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+}

@@ -161,7 +161,7 @@ export default defineComponent({
 
 .float-placeholder {
   font-size: 12px;
-  color: #969799;
+  color: $grey;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

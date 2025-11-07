@@ -1,5 +1,5 @@
 <template>
-  <div class="block ellipsis" v-tooltip :style="contentStyle">
+  <div class="block ellipsis" v-j-q-tooltip :style="contentStyle">
     {{ content }}
     <q-tooltip :class="toolTipClass" anchor="top middle" self="bottom middle" max-width="300px">
       {{ content }}
@@ -10,6 +10,7 @@
 <script lang="ts">
 import { AppModule } from 'src/store/modules/app';
 import { computed, defineComponent } from 'vue';
+import { tooltip } from './tooltip';
 
 export default defineComponent({
   name: 'SQTooltip',
@@ -22,6 +23,9 @@ export default defineComponent({
       type: String,
       default: 'width:100%',
     },
+  },
+  directives: {
+    'j-q-tooltip': tooltip,
   },
 
   setup() {
@@ -36,15 +40,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .ellipsis {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.block {
-  display: block;
 }
 
 .hide-tooltip {

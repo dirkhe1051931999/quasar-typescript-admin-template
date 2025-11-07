@@ -1,0 +1,195 @@
+$color-border: #ebebeb; // 主要边框颜色 (Line/Default 模式)
+$color-primary: var(--q-primary); // Quasar 主题色
+$color-light-bg: #f7f7f7; // Flat/Pill 模式的背景色
+$color-hover-bg: #ededed; // Flat/Pill 模式的悬停背景
+$color-text-dark: rgba(50, 50, 51, 0.04); // Default 模式非活动标签的背景色/边框色 (灰色透明)
+$color-text-active: #ffffff; // 激活标签的背景色 (Default/Flat)
+$color-active-bg-tab: rgba(50, 50, 51, 0.04); // 默认模式标签背景/边框 (透明灰色)
+$color-disabled-opacity-high: 0.6; // 禁用整个组件的透明度
+$color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
+
+// =================================================================
+// 共用的样式
+// =================================================================
+.j-c-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 99;
+
+  &--disabled {
+    opacity: $color-disabled-opacity-high;
+    pointer-events: none;
+  }
+}
+
+// =================================================================
+// 模式 3: Line Indicator 样式
+// =================================================================
+
+.j-c-tabs--line {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background: $color-text-active;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border-bottom: 1px solid $color-border;
+  z-index: 1;
+
+  li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
+    user-select: none;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.is-disabled {
+      opacity: $color-disabled-opacity-low;
+      cursor: not-allowed;
+    }
+
+    &.active {
+      position: relative;
+      color: $color-primary;
+      font-weight: 500;
+      background: none;
+      border: none;
+
+      &:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: $color-primary;
+      }
+    }
+  }
+}
+
+// =================================================================
+// 模式 1: Default/Tab 样式
+// =================================================================
+
+.j-c-tabs:not(.j-c-tabs--flat):not(.j-c-tabs--line) {
+  display: flex;
+  height: 32px;
+  box-sizing: border-box;
+  border-bottom: solid 1px $color-border;
+
+  &.empty {
+    border-bottom: none;
+  }
+
+  li {
+    padding: 4px 12px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    background: $color-active-bg-tab;
+    border-top: solid 1px $color-active-bg-tab;
+    border-left: solid 1px $color-active-bg-tab;
+    border-right: solid 1px $color-active-bg-tab;
+    border-bottom: none;
+    cursor: pointer;
+    user-select: none;
+
+    &.action-list {
+      padding-left: 0;
+      background: $color-text-active;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    &:nth-of-type(1) {
+      margin-left: 0;
+    }
+
+    &.active {
+      border-bottom: none;
+      position: relative;
+      color: $color-primary;
+
+      background: $color-text-active;
+      border-top: solid 1px $color-border;
+      border-left: solid 1px $color-border;
+      border-right: solid 1px $color-border;
+
+      &:after {
+        position: absolute;
+        content: '';
+        left: 0;
+        bottom: -2px;
+        height: 2px;
+        width: 100%;
+        background: $color-text-active;
+      }
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      opacity: $color-disabled-opacity-low;
+    }
+  }
+}
+
+// =================================================================
+// 模式 2: Flat/Pill 样式
+// =================================================================
+
+.j-c-tabs--flat {
+  padding: 2px;
+  height: 36px;
+  border-radius: 4px;
+  line-height: 36px;
+  background: $color-light-bg;
+  display: inline-flex;
+
+  li {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    margin-left: 0;
+    background: transparent;
+
+    &:not(.active):not(.is-disabled):hover {
+      background: $color-hover-bg;
+      border-radius: 2px;
+    }
+
+    &.active {
+      border-radius: 2px;
+      background: $color-text-active;
+      color: $color-primary;
+      position: static;
+      border: none;
+
+      &:after {
+        content: none;
+      }
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      opacity: $color-disabled-opacity-low;
+    }
+  }
+}
