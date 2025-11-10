@@ -11,7 +11,7 @@
               </div>
             </div>
             <div class="col-2 text-left">
-              <img class="w-120" src="~assets/icon-sun-cloud.png" alt="image sun" />
+              <img class="w-60" src="~assets/icon-sun-cloud.png" alt="image sun" />
               <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
             </div>
           </div>

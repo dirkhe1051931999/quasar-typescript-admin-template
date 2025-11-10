@@ -253,7 +253,7 @@
                       options-dense
                       emit-value
                       dense
-                      dropdown-icon="app:topbar-arrow-bottom"
+                      dropdown-icon="expand_more"
                       clear-icon="app:clear"
                     />
                   </div>

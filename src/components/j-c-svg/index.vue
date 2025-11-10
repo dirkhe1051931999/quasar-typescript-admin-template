@@ -6,31 +6,16 @@
 import { defineComponent, computed, defineAsyncComponent } from 'vue';
 
 // --- 动态导入所有 SVG 组件 ---
-const svgDeveloperActive = defineAsyncComponent(() => import('./svgDeveloperActive.vue'));
 const svgDeveloper = defineAsyncComponent(() => import('./svgDeveloper.vue'));
-const svgEsimActive = defineAsyncComponent(() => import('./svgEsimActive.vue'));
-const svgEsim = defineAsyncComponent(() => import('./svgEsim.vue'));
-const svgOrganizationActive = defineAsyncComponent(() => import('./svgOrganizationActive.vue'));
-const svgOrganization = defineAsyncComponent(() => import('./svgOrganization.vue'));
-const svgRecordActive = defineAsyncComponent(() => import('./svgRecordActive.vue'));
-const svgRecord = defineAsyncComponent(() => import('./svgRecord.vue'));
 
 // 组件映射表：'name' prop值 -> 对应组件
-const componentMap:any = {
-  'developeractive': svgDeveloperActive,
+const componentMap: any = {
   'developer': svgDeveloper,
-  'esimactive': svgEsimActive,
-  'esim': svgEsim,
-  'organizationactive': svgOrganizationActive,
-  'organization': svgOrganization,
-  'recordactive': svgRecordActive,
-  'record': svgRecord,
 };
 
 export default defineComponent({
-  name: 'JCvgIcon', // 统一的组件名
+  name: 'jCsvg',
 
-  // 禁用属性继承，由我们手动透传给动态组件
   inheritAttrs: false,
 
   props: {

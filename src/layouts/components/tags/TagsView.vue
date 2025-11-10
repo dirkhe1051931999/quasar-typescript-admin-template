@@ -30,12 +30,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch, nextTick, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue';
+import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { RouteLocationNormalized } from 'vue-router';
-import { TagsViewModule } from 'src/store/modules/tags';
 import type { ITagsView } from 'src/store/modules/tags';
+import { TagsViewModule } from 'src/store/modules/tags';
 
 export default defineComponent({
   name: 'TagsView',
@@ -190,122 +189,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import 'src/css/quasar.variables.scss';
-
-.tags-view-container {
-  position: fixed;
-  top: var(--navigation-height, 60px);
-  left: 0;
-  right: 0;
-  height: var(--tags-view-height, 40px);
-  background: #ffffff;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  overflow: hidden;
-  z-index: 1000;
-  margin-left: var(--sidebar-width);
-  transition: margin-left 0.28s ease;
-}
-
-.tags-scroll-wrapper {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(203, 213, 225, 0.6) transparent;
-
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background: rgba(203, 213, 225, 0.6);
-
-    &:hover {
-      background: rgba(148, 163, 184, 0.8);
-    }
-  }
-
-  // 悬浮时显示滚动条
-  &:hover {
-    &::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    scrollbar-width: auto;
-  }
-}
-
-.tags-list {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 100%;
-  min-width: 100%;
-}
-
-.tag-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 12px;
-  background: #f8fafc;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 4px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-
-  .tag-title {
-    font-size: 13px;
-    color: $grey-9;
-    line-height: 1;
-  }
-
-  .tag-close {
-    font-size: 14px;
-    color: $grey;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 1;
-      color: var(--q-primary);
-    }
-  }
-
-  &:hover {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    border-color: rgba(102, 126, 234, 0.3);
-  }
-
-  &.is-active {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    border-color: var(--q-primary);
-    color: var(--q-primary);
-
-    .tag-title {
-      color: var(--q-primary);
-      font-weight: 500;
-    }
-
-    .tag-close {
-      color: var(--q-primary);
-      opacity: 0.8;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-}
+@use 'index';
 </style>

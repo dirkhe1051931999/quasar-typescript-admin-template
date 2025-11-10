@@ -67,7 +67,7 @@ import { defineComponent, computed, CSSProperties } from 'vue';
 export default defineComponent({
   // 组件名称基于文件名自动生成
   name: '${componentName}',
-  
+
   props: {
     // 颜色 props，允许外部传入颜色
     color: {
@@ -83,7 +83,7 @@ export default defineComponent({
     style: {
       type: [String, Object] as any, // 允许 String 或 CSSProperties
       default: () => ({}),
-    }
+    },
   },
 
   setup(props) {
@@ -97,7 +97,7 @@ export default defineComponent({
         stroke: props.color,
         color: props.color,
       };
-      
+
       // 合并外部传入的 style
       return { ...baseStyle, ...(props.style as CSSProperties) };
     });
@@ -155,14 +155,13 @@ import { defineComponent, computed, defineAsyncComponent } from 'vue';
 ${importStatements}
 
 // 组件映射表：'name' prop值 -> 对应组件
-const componentMap:any = {
+const componentMap: any = {
 ${componentMapEntries}
 };
 
 export default defineComponent({
-  name: 'JCvgIcon', // 统一的组件名
+  name: 'jCsvg',
 
-  // 禁用属性继承，由我们手动透传给动态组件
   inheritAttrs: false,
 
   props: {
@@ -208,6 +207,35 @@ export default defineComponent({
 }
 
 /**
+ * 清理 OUTPUT_DIR 下所有的 .vue 文件
+ */
+async function cleanOutputDirectory() {
+  console.log(`\n--- 🧹 开始清理旧的 .vue 组件 ---`);
+  try {
+    const files = await fs.readdir(OUTPUT_DIR);
+    const vueFiles = files.filter((file) => file.endsWith('.vue'));
+
+    if (vueFiles.length === 0) {
+      console.log('✨ 目标目录已是空的，无需清理。');
+      return;
+    }
+
+    for (const file of vueFiles) {
+      const filePath = path.join(OUTPUT_DIR, file);
+      await fs.unlink(filePath);
+    }
+    console.log(`🗑️ 成功移除 ${vueFiles.length} 个旧的 .vue 文件。`);
+  } catch (error) {
+    // 如果目录不存在，这里会抛出错误，但我们可以忽略，因为下一步会创建它
+    if (error.code !== 'ENOENT') {
+      console.error('❌ 清理目录失败:', error.message);
+    } else {
+      console.log('✨ 目标目录不存在，无需清理。');
+    }
+  }
+}
+
+/**
  * 核心处理函数
  */
 async function processSvgs() {
@@ -219,7 +247,10 @@ async function processSvgs() {
     // 1. 确保输出目录存在
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // 2. 读取 SVG 目录下的所有文件
+    // 2. 清理旧文件 (新添加的步骤)
+    await cleanOutputDirectory();
+
+    // 3. 读取 SVG 目录下的所有文件
     const files = await fs.readdir(SVG_DIR);
     const svgFiles = files.filter((file) => file.endsWith('.svg'));
 
@@ -228,9 +259,9 @@ async function processSvgs() {
       return;
     }
 
-    console.log(`找到 ${svgFiles.length} 个 SVG 文件，开始转换...`);
+    console.log(`\n找到 ${svgFiles.length} 个 SVG 文件，开始转换...`);
 
-    // 3. 循环处理每个 SVG 文件
+    // 4. 循环处理每个 SVG 文件
     for (const filename of svgFiles) {
       const svgFilePath = path.join(SVG_DIR, filename);
       const componentName = toVueComponentName(filename);
@@ -261,7 +292,7 @@ async function processSvgs() {
       }
     }
 
-    // 4. 生成 index.vue 动态组件
+    // 5. 生成 index.vue 动态组件
     await generateIndexComponent(componentNames);
 
     console.log(`--- 🎉 所有文件生成完成！ ---`);

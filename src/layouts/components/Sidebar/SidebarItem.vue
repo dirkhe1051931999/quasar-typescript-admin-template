@@ -1,9 +1,9 @@
 <template>
-  <div v-if="!item.meta?.hidden" :class="['sidebar-item-wrapper', { 'is-collapse': isCollapse }]" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+  <div v-if="!isItemHidden" :class="['sidebar-item-wrapper', { 'is-collapse': isCollapse }]" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
     <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
       <SidebarItemLink v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)" @listenRouteChange="listenRouteChange(theOnlyOneChild)">
         <div :class="['menu-item', { 'is-active': isActive(resolvePath(theOnlyOneChild.path)) }]" :title="$t(`routes.${theOnlyOneChild.meta.title}`)">
-          <q-icon v-if="theOnlyOneChild.meta.icon" :name="theOnlyOneChild.meta.icon as string" class="menu-icon" />
+          <j-c-svg v-if="theOnlyOneChild.meta.icon" :name="theOnlyOneChild.meta.icon as string" class="menu-icon" style="width: 20px" />
           <span class="menu-text">
             {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
           </span>
@@ -13,7 +13,7 @@
 
     <div v-else class="sub-menu-container" ref="subMenuContainer">
       <div :class="['sub-menu-title', { 'is-active': isSubMenuActive(resolvePath(item.path || '')) }]" @click="toggleExpand" :title="$t(`routes.${item.meta?.title || ''}`)">
-        <q-icon v-if="item.meta && item.meta.icon" :name="item.meta.icon as string" class="menu-icon" />
+        <j-c-svg v-if="item.meta && item.meta.icon" :name="item.meta.icon as string" class="menu-icon" style="width: 20px" />
         <span class="menu-text">
           {{ $t(`routes.${item.meta?.title}`) }}
         </span>
@@ -40,12 +40,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType, ref, computed, nextTick, onBeforeUnmount } from 'vue';
+import { computed, defineComponent, nextTick, onBeforeUnmount, type PropType, ref } from 'vue';
+import type { RouteRecordRaw } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import path from 'path-browserify';
 import SidebarItemLink from './SidebarItemLink.vue';
-import type { RouteRecordRaw } from 'vue-router';
+import JCSvg from 'components/j-c-svg/index.vue';
 
 const isExternal = (path: string): boolean => /^(https?:|mailto:|tel:)/.test(path);
 
@@ -53,6 +54,7 @@ export default defineComponent({
   name: 'SidebarItem',
   components: {
     SidebarItemLink,
+    JCSvg,
   },
   props: {
     item: {
@@ -75,11 +77,28 @@ export default defineComponent({
     const isExpanded = ref(false);
     const showPopup = ref(false);
     const popupStyle = ref<Record<string, string>>({});
+    // eslint-disable-next-line no-undef
     const popupTimer = ref<NodeJS.Timeout | null>(null);
     const subMenuContainer = ref<HTMLElement | null>(null);
 
     const alwaysShowRootMenu = computed(() => {
       return !!(props.item.meta && props.item.meta.alwaysShow);
+    });
+
+    const isItemHidden = computed(() => {
+      if (props.item.meta?.hidden) {
+        return true;
+      }
+
+      const children = props.item.children;
+
+      if (!children || children.length === 0) {
+        return false;
+      }
+
+      const visibleChildren = children.filter((child: RouteRecordRaw) => !(child.meta && child.meta.hidden));
+
+      return visibleChildren.length === 0;
     });
 
     const showingChildNumber = computed(() => {
@@ -96,17 +115,15 @@ export default defineComponent({
       if (props.item.meta?.oneChildMenu) {
         return null;
       }
-      if (showingChildNumber.value > 1) {
-        return null;
+      const children = props.item.children;
+      if (!children || children.length === 0) {
+        return { ...props.item, path: '' } as RouteRecordRaw;
       }
-      if (props.item.children) {
-        for (const child of props.item.children) {
-          if (!child.meta || !child.meta.hidden) {
-            return child;
-          }
-        }
+      const visibleChildren = children.filter((child: RouteRecordRaw) => !(child.meta && child.meta.hidden));
+      if (visibleChildren.length === 1) {
+        return visibleChildren[0];
       }
-      return { ...props.item, path: '' } as RouteRecordRaw;
+      return null;
     });
 
     const hasVisibleChildren = computed(() => {
@@ -209,6 +226,7 @@ export default defineComponent({
     };
 
     return {
+      isItemHidden,
       isExternal,
       isExpanded,
       showPopup,
@@ -234,265 +252,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import 'src/css/quasar.variables.scss';
-
-.sidebar-item-wrapper {
-  display: block;
-}
-
-.menu-item,
-.sub-menu-title {
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 46px;
-  padding: 0 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #323232;
-  font-size: 14px;
-  letter-spacing: 0.01em;
-  gap: 12px;
-  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
-  overflow: hidden;
-}
-
-.menu-item::before,
-.sub-menu-title::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  width: 4px;
-  height: 0;
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--q-primary) 0%, #764ba2 100%);
-  transform: translateY(-50%);
-  transition: height 0.25s ease;
-}
-
-.menu-item:not(.is-active):hover,
-.sub-menu-title:not(.is-active):hover {
-  background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-  color: #323232;
-}
-
-.menu-item.is-active {
-  background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-  color: var(--q-primary);
-  font-weight: 500;
-
-  &:hover {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    color: var(--q-primary);
-  }
-}
-
-.menu-item.is-active::before,
-.sub-menu-title.is-active::before {
-  display: none;
-}
-
-.sub-menu-title.is-active {
-  background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-  color: var(--q-primary);
-  font-weight: 500;
-
-  &:hover {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    color: var(--q-primary);
-  }
-}
-
-.menu-icon {
-  font-size: 18px;
-  color: inherit;
-  opacity: 1;
-}
-
-.menu-text {
-  white-space: nowrap;
-  transition: opacity 0.2s ease;
-}
-
-.arrow-icon {
-  margin-left: auto;
-  font-size: 18px;
-  opacity: 0.6;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.arrow-icon.is-open {
-  transform: rotate(180deg);
-  opacity: 0.9;
-}
-
-.sub-menu-children {
-  padding-left: 18px;
-  margin-top: 6px;
-  border-left: 1px dashed rgba(203, 213, 225, 0.6);
-}
-
-.menu-slide-enter-active,
-.menu-slide-leave-active {
-  transition: all 0.2s ease;
-}
-
-.menu-slide-enter-from,
-.menu-slide-leave-to {
-  max-height: 0;
-  opacity: 0;
-}
-
-.menu-slide-enter-to,
-.menu-slide-leave-from {
-  max-height: 400px;
-  opacity: 1;
-}
-
-.sidebar-item-wrapper.is-collapse {
-  .menu-item,
-  .sub-menu-title {
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-  }
-
-  .menu-item::before,
-  .sub-menu-title::before,
-  .arrow-icon,
-  .menu-text {
-    display: none;
-  }
-
-  .menu-icon {
-    font-size: 20px;
-  }
-
-  .sub-menu-children {
-    display: none;
-  }
-
-  .menu-item.is-active,
-  .sub-menu-title.is-active {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    color: var(--q-primary);
-  }
-
-  .menu-item.is-active:hover,
-  .sub-menu-title.is-active:hover {
-    background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-    color: var(--q-primary);
-  }
-}
-
-// 弹窗中的菜单项不受折叠样式影响
-.sub-menu-popup {
-  .sidebar-item-wrapper {
-    // 覆盖折叠样式，确保弹窗中的菜单正常显示
-    &.is-collapse {
-      .menu-item,
-      .sub-menu-title {
-        justify-content: flex-start !important;
-        margin: 0 6px !important;
-        padding: 0 12px !important;
-      }
-
-      .menu-text {
-        display: inline !important;
-      }
-
-      .arrow-icon {
-        display: block !important;
-      }
-
-      .menu-icon {
-        font-size: 18px !important;
-      }
-
-      .sub-menu-children {
-        display: block !important;
-      }
-    }
-
-    // 非折叠状态下的正常样式
-    .menu-item,
-    .sub-menu-title {
-      justify-content: flex-start;
-      padding: 0 12px;
-    }
-
-    .menu-text {
-      display: inline;
-    }
-
-    .arrow-icon {
-      display: block;
-    }
-
-    .sub-menu-children {
-      display: block;
-      padding-left: 18px;
-      margin-top: 6px;
-      border-left: 1px dashed rgba(203, 213, 225, 0.6);
-    }
-  }
-}
-
-.sub-menu-popup {
-  position: fixed;
-  z-index: 2000;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  min-width: 200px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 8px 0;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background: rgba(203, 213, 225, 0.6);
-
-    &:hover {
-      background: rgba(148, 163, 184, 0.8);
-    }
-  }
-}
-
-.popup-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 0 4px;
-
-  // 确保弹窗中的菜单项有正确的样式
-  .sidebar-item-wrapper {
-    width: 100%;
-  }
-}
-
-.popup-fade-enter-active,
-.popup-fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.popup-fade-enter-from {
-  opacity: 0;
-  transform: translateX(-8px);
-}
-
-.popup-fade-leave-to {
-  opacity: 0;
-  transform: translateX(-8px);
-}
+@use './styles/sidebarItem';
 </style>

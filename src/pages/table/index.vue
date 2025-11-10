@@ -7,7 +7,6 @@
       <j-q-autocomplete search-id="description" search-key="description" v-model="tableParams.query.params.description" ref="JQAutocompleteRef" label="Description (Autocomplete)" />
       <j-q-date v-model="tableParams.query.params.date" :clearable="true" range :options="tableParams.query.dateOptions" label="Date" />
     </j-q-search-form>
-    <j-c-svg name="developer" />
     <j-q-table
       ref="JQTableRef"
       :rows="tableParams.data"
@@ -19,7 +18,9 @@
     >
       <template #top>
         <div class="row items-center">
-          <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
+          <j-c-permission code="operation-all" default-content="123123" :rm-dom="false">
+            <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
+          </j-c-permission>
         </div>
       </template>
       <template #header-cell-selection>
@@ -67,10 +68,12 @@ import JQDate from 'components/j-q-date/index.vue';
 import JCSvg from 'components/j-c-svg/index.vue';
 import SvgDeveloper from 'components/j-c-svg/index.vue';
 import JCvgIcon from 'components/j-c-svg/index.vue';
+import JCPermission from 'components/j-c-permission/index.vue';
 
 @Component({
   name: 'TablePage',
   components: {
+    JCPermission,
     JCvgIcon,
     SvgDeveloper,
     JCSvg,

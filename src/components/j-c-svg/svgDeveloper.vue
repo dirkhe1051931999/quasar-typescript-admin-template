@@ -29,7 +29,7 @@ import { defineComponent, computed, CSSProperties } from 'vue';
 export default defineComponent({
   // 组件名称基于文件名自动生成
   name: 'svgDeveloper',
-  
+
   props: {
     // 颜色 props，允许外部传入颜色
     color: {
@@ -45,7 +45,7 @@ export default defineComponent({
     style: {
       type: [String, Object] as any, // 允许 String 或 CSSProperties
       default: () => ({}),
-    }
+    },
   },
 
   setup(props) {
@@ -59,7 +59,7 @@ export default defineComponent({
         stroke: props.color,
         color: props.color,
       };
-      
+
       // 合并外部传入的 style
       return { ...baseStyle, ...(props.style as CSSProperties) };
     });
