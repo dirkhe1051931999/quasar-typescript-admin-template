@@ -10,7 +10,7 @@
     <q-form ref="formRef" class="row q-col-gutter-x-md q-mt-md">
       <div class="col-6">
         <j-q-form-label label="Normal input" required>
-          <j-q-input v-model="dialogParams.params.name" @update:model-value="onNameChange" :rules="dialogParams.rules.required" />
+          <j-q-input v-model="dialogParams.params.name" @update:model-value="onNameChange" :rules="dialogInstance.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
@@ -22,7 +22,7 @@
             </q-icon>
             ]
           </template>
-          <j-q-select v-model="dialogParams.params.area" :options="dialogParams.areaOptions" filterable :rules="dialogParams.rules.required" />
+          <j-q-select v-model="dialogParams.params.area" :options="dialogParams.areaOptions" filterable :rules="dialogInstance.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
@@ -34,21 +34,30 @@
             filterable
             :filter-fn="tagFilterFn"
             :options="dialogParams.tagsOptions"
-            :rules="dialogParams.rules.required"
+            :rules="dialogInstance.rules.required"
             ref="TagsRef"
           />
         </j-q-form-label>
       </div>
       <div class="col-12">
         <j-q-form-label label="File Upload" required>
-          <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="beforeFile" :rules="dialogParams.rules.file" maxlength="1">
+          <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="beforeFile" :rules="dialogInstance.rules.file" maxlength="1">
             <template #hint>
               <div class="download-btn">
-                <span class="btn">Download</span>
+                <span class="btn">{{ $t('action.download_template', { type: 'xlsx' }) }}</span>
               </div>
-              <ul class="extra-info">
-                <li class="text-grey">
-                  <span>this is slot</span>
+              <div class="q-mt-lg q-mb-md fs-12 text-weight-medium">
+                <p>Template specification</p>
+              </div>
+              <ul class="template-specification">
+                <li v-for="(item, index) in dialogParams.templateSpecification" :key="index" style="min-width: 180px">
+                  <div class="label fs-12 text-black">
+                    {{ item.label }}
+                    <span>
+                      {{ item.required ? `(${$t('messages.required')})` : '' }}
+                    </span>
+                  </div>
+                  <div class="description">{{ item.description }}</div>
                 </li>
               </ul>
             </template>
@@ -57,12 +66,12 @@
       </div>
       <div class="col-6">
         <j-q-form-label label="Date" required>
-          <j-q-date v-model="dialogParams.params.date" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogParams.rules.required" />
+          <j-q-date v-model="dialogParams.params.date" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogInstance.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
         <j-q-form-label label="Radio" required>
-          <j-q-option-group v-model="dialogParams.params.level" :options="dialogParams.levelOptions" inline color="primary" :rules="dialogParams.rules.required" type="radio" />
+          <j-q-option-group v-model="dialogParams.params.level" :options="dialogParams.levelOptions" inline color="primary" :rules="dialogInstance.rules.required" type="radio" />
         </j-q-form-label>
       </div>
       <div class="col-6">
@@ -72,11 +81,25 @@
             :options="dialogParams.hobbyOptions"
             inline
             color="primary"
-            :rules="dialogParams.rules.required"
+            :rules="dialogInstance.rules.required"
             type="checkbox"
             :disable="disableCheckbox"
           />
         </j-q-form-label>
+      </div>
+      <div class="col-12">
+        <j-c-list-editor
+          v-model="dialogParams.params.radio"
+          label="Radio"
+          :rules="dialogInstance.rules.required.concat(dialogInstance.rules.percentageRules(['right']))"
+          required
+          :readonly="false"
+          max-items="10"
+        >
+          <template #after>
+            <span class="text-grey text-caption">%</span>
+          </template>
+        </j-c-list-editor>
       </div>
     </q-form>
   </div>
@@ -95,10 +118,11 @@ import JQRadio from 'components/j-q-option-group/index.vue';
 import JQOptionGroup from 'components/j-q-option-group/index.vue';
 import JQFormLabel from 'components/j-q-form-label/index.vue';
 import { cloneDeep } from 'lodash';
+import JCListEditor from 'components/j-c-list-editor/index.vue';
 
 @Component({
   name: 'TableAddOrUpdateComponent',
-  components: { JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
+  components: { JCListEditor, JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
   emits: ['getData'],
 })
 export default class TableAddOrUpdateComponent extends Vue {
@@ -147,17 +171,22 @@ export default class TableAddOrUpdateComponent extends Vue {
       date: '',
       level: void 0,
       hobbys: [],
+      radio: [''],
     },
-    rules: {
-      required: [
-        (val?: any) => {
-          const isEmptyArray = Array.isArray(val) && val.length === 0;
-          const isFalsey = val === null || val === undefined || val === '';
-          return (!isEmptyArray && !isFalsey) || 'Required';
-        },
-      ],
-      file: [(val?: any) => !!val?.length || 'Required'],
-    },
+    templateSpecification: [
+      {
+        name: 'a',
+        label: 'a',
+        required: false,
+        description: this.globals.$t('messages.required'),
+      },
+      {
+        name: 'b',
+        label: 'b',
+        required: false,
+        description: this.globals.$t('messages.required'),
+      },
+    ],
   };
 
   /* event */

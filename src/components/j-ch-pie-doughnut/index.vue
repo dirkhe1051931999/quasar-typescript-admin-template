@@ -160,7 +160,7 @@ export default defineComponent({
         data: chartData,
         // 需要使用 'as any' 来避免 TypeScript 对不同 ChartOptions 类型的严格检查
         options: chartOptions as any,
-      });
+      }) as any;
     };
 
     onMounted(() => {

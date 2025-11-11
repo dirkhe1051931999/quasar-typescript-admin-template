@@ -1,33 +1,46 @@
 <template>
-  <q-field class="j-q-file" v-model="computedValue" borderless dense :disable="disable" no-error-icon :rules="rules">
-    <template #prepend>
-      <div
-        class="file-action"
-        :class="{ 'file-action--dragging': isDragging }"
-        @dragenter.prevent="dragenter"
-        @dragover.prevent="dragover"
-        @dragleave.prevent="dragleave"
-        @drop.prevent="dropFile"
-        @click="browseFile"
-      >
-        <q-icon class="action-icon" name="app:upload" size="24px" />
-        <div class="text-black q-mt-sm">{{ t('jQFile.action') }}</div>
-      </div>
-      <ul v-show="computedValue.length" class="file-filers">
-        <li v-for="(filer, index) in computedValue" :key="index" class="filer-item">
-          <div class="filer-content">
-            <div class="filer-name" :title="filer.name">{{ filer.name }}</div>
-            <div v-if="filer.size" class="filer-size">{{ getFileSizeDisplay(filer) }}</div>
-          </div>
-          <q-btn class="filer-remove" dense flat icon="close" round size="sm" @click="deleteFile(filer, index)" />
-        </li>
-      </ul>
-      <div v-if="hasSlotHint" class="file-hint">
-        <slot name="hint"></slot>
-      </div>
-    </template>
-    <input v-show="false" ref="fileInputRef" :accept="accept" :multiple="!computedMaxlength || 1 < computedMaxlength - computedValue.length" type="file" @change="inputFile" />
-  </q-field>
+  <div class="j-q-file">
+    <q-field v-model="computedValue" borderless dense :disable="disable" no-error-icon :rules="rules" hide-bottom-space>
+      <template #prepend>
+        <div
+          class="file-action"
+          :class="{ 'file-action--dragging': isDragging }"
+          @dragenter.prevent="dragenter"
+          @dragover.prevent="dragover"
+          @dragleave.prevent="dragleave"
+          @drop.prevent="dropFile"
+          @click="browseFile"
+          v-show="computedValue.length !== Number(maxlength)"
+        >
+          <q-icon class="action-icon" name="app:upload" size="32px" />
+          <p class="fs-14 q-mt-sm">
+            {{ t('jQFile.click_or_drag_file') }}
+          </p>
+          <p class="text-grey fs-12 q-mt-xs">
+            {{ t('jQFile.file_type_is', { type: accept.split(',').join(' ') }) }},
+            {{
+              t('jQFile.max_file_size', {
+                size: maxFileSize,
+              })
+            }}
+          </p>
+        </div>
+        <ul v-show="computedValue.length" class="file-filers">
+          <li v-for="(filer, index) in computedValue" :key="index" class="filer-item">
+            <div class="filer-content">
+              <div class="filer-name text-black" :title="filer.name">{{ filer.name }}</div>
+              <div v-if="filer.size" class="filer-size">{{ getFileSizeDisplay(filer) }}</div>
+            </div>
+            <q-btn class="filer-remove" dense flat icon="close" round size="sm" @click="deleteFile(filer, index)" />
+          </li>
+        </ul>
+      </template>
+      <input v-show="false" ref="fileInputRef" :accept="accept" :multiple="!computedMaxlength || 1 < computedMaxlength - computedValue.length" type="file" @change="inputFile" />
+    </q-field>
+    <div v-if="hasSlotHint" class="file-hint">
+      <slot name="hint"></slot>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import type { PropType } from 'vue';
@@ -50,6 +63,7 @@ export default defineComponent({
     disable: { type: Boolean as PropType<QFieldProps['disable']> },
     maxlength: { type: [String, Number] },
     rules: { type: Array as () => QFieldProps['rules'] },
+    maxFileSize: { type: String, default: '2 MB' },
   },
   emits: {
     'update:modelValue': (value: TModelValue) => true,
@@ -58,8 +72,20 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const { t } = useI18n({
       messages: {
-        'zh-CN': { jQFile: { action: '点击上传', maxlength: '最多上传{count}个文件' } },
-        'en-US': { jQFile: { action: 'Click to upload', maxlength: 'Maximum {count} files can be uploaded' } },
+        'zh-CN': {
+          jQFile: {
+            click_or_drag_file: '点击或拖拽文件到此处上传',
+            file_type_is: '支持的文件类型: {type}',
+            max_file_size: '最大文件大小: {size}',
+          },
+        },
+        'en-US': {
+          jQFile: {
+            click_or_drag_file: 'Click to upload',
+            file_type_is: 'Supported file types: {type}',
+            max_file_size: 'Maximum file size: {size}',
+          },
+        },
       },
       useScope: 'local',
     });

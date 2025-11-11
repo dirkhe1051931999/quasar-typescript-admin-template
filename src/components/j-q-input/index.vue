@@ -15,6 +15,7 @@
     :bg-color="bgColor"
     @change="change"
     :placeholder="!label ? $t('messages.pleaseEnter') : ''"
+    clear-icon="app:clear"
     clearable
   >
     <template #prepend v-if="slots.prepend">

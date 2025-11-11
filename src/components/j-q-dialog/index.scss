@@ -88,7 +88,7 @@ $dialog-footer-box-shadow: 0 1px 5px $dialog-footer-shadow-1, 0 2px 2px $dialog-
   .dialog-footer {
     display: flex;
     align-items: center;
-    gap: $dialog-padding; // 使用 $dialog-padding 作为 gap
+    gap: 8px;
     justify-content: flex-end;
     padding: $dialog-padding; // 使用变量
     height: $dialog-footer-height; // 使用变量
@@ -125,7 +125,7 @@ $dialog-footer-box-shadow: 0 1px 5px $dialog-footer-shadow-1, 0 2px 2px $dialog-
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1100; // 保持不变，或定义 $dialog-loading-mask-z-index
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,5 +138,6 @@ $dialog-footer-box-shadow: 0 1px 5px $dialog-footer-shadow-1, 0 2px 2px $dialog-
     justify-content: center;
     align-items: center;
     position: relative;
+    z-index: 999;
   }
 }

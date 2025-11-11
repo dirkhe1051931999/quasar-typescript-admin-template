@@ -36,7 +36,9 @@
       <template #loading>
         <q-inner-loading showing :label="$t('action.loading')" color="primary" label-class="text-primary text-weight-medium" spinner-color="black"></q-inner-loading>
       </template>
-      <template #no-data> No data</template>
+      <template #no-data>
+        {{ $t('tip.noData') }}
+      </template>
     </q-table>
     <Pagination v-if="!hidePagination && paginationInfo.rowsNumber" :paginationInfo="paginationInfo" class="q-pa-md" @pagination="onPaginationChange" />
     <slot name="append"></slot>

@@ -7,17 +7,18 @@
       <q-card-section class="q-pt-none content">
         {{ content }}
       </q-card-section>
-      <q-card-section class="row q-gutter-md justify-end">
-        <q-btn outline :label="$t('action.cancel')" @click="onCancelClick" no-caps :ripple="false" style="min-width: 80px" />
-        <q-btn color="primary" :label="$t('action.confirm')" @click="onOKClick" no-caps :ripple="false" unelevated style="min-width: 80px" />
+      <q-card-section class="row q-gutter-sm justify-end">
+        <q-btn outline :label="computedCancelText" @click="onCancelClick" no-caps :ripple="false" style="min-width: 80px" />
+        <q-btn color="primary" :label="computedConfirmText" @click="onOKClick" no-caps :ripple="false" unelevated style="min-width: 80px" />
       </q-card-section>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useDialogPluginComponent } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'dialogConfirmComponent',
@@ -25,9 +26,19 @@ export default defineComponent({
   props: {
     title: { type: String, default: '' },
     content: { type: String, default: '' },
+    confirmText: { type: String, default: '' },
+    cancelText: { type: String, default: '' },
   },
-  setup() {
+  setup(props) {
+    const { t } = useI18n();
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent();
+    const computedConfirmText = computed(() => {
+      return props.confirmText || t('action.confirm');
+    });
+    const computedCancelText = computed(() => {
+      return props.cancelText || t('action.cancel');
+    });
+
     return {
       dialogRef,
       onDialogHide,
@@ -35,12 +46,14 @@ export default defineComponent({
         onDialogOK();
       },
       onCancelClick: onDialogCancel,
+      computedCancelText,
+      computedConfirmText,
     };
   },
 });
 </script>
 <style lang="scss" scoped>
 .title {
-  font-size: 20px;
+  font-size: 16px;
 }
 </style>

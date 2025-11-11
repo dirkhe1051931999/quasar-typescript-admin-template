@@ -32,7 +32,9 @@
         active-text-color="white"
         :ripple="false"
       ></q-pagination>
-      <p style="margin-left: 24px">Go</p>
+      <p style="margin-left: 24px">
+        {{ $t('table.goto') }}
+      </p>
       <q-input
         v-model.trim="internalInfo.currentPage"
         @keyup.enter="handlePageChange"

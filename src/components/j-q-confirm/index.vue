@@ -7,15 +7,16 @@
           <span class="text-subtitle2 title">{{ title }}</span>
         </q-card-section>
         <q-card-actions align="right" class="q-pa-none" style="padding: 0; margin-top: 8px">
-          <q-btn flat :label="$t('action.cancel')" color="black" v-close-popup dense size="12px" />
-          <q-btn :label="$t('action.confirm')" color="primary" @click="handleConfirm" dense size="12px" />
+          <q-btn flat :label="computedCancelText" color="black" v-close-popup dense size="12px" />
+          <q-btn :label="computedConfirmText" color="primary" @click="handleConfirm" dense size="12px" />
         </q-card-actions>
       </q-card>
     </q-popup-proxy>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'JQConfirm',
@@ -26,16 +27,27 @@ export default defineComponent({
     },
     confirmText: {
       type: String,
-      default: 'Confirm',
+      default: '',
     },
     cancelText: {
       type: String,
-      default: 'Cancel',
+      default: '',
     },
   },
   emits: ['confirm'],
-  setup(_props, { emit }) {
+  setup(props, { emit }) {
+    const { t } = useI18n();
     const popupRef: any = ref(null);
+
+    // 计算属性：如果没有传入confirmText，则使用i18n的默认值
+    const computedConfirmText = computed(() => {
+      return props.confirmText || t('action.confirm');
+    });
+
+    // 计算属性：如果没有传入cancelText，则使用i18n的默认值
+    const computedCancelText = computed(() => {
+      return props.cancelText || t('action.cancel');
+    });
 
     const handleConfirm = () => {
       popupRef.value.hide();
@@ -45,6 +57,8 @@ export default defineComponent({
     return {
       popupRef,
       handleConfirm,
+      computedConfirmText,
+      computedCancelText,
     };
   },
 });

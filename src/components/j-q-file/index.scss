@@ -8,21 +8,21 @@ $grey-medium: #d9d9d9; // 文件项边框颜色
 $file-padding: 16px;
 $file-border-radius: 4px;
 $file-list-margin-top: 8px;
-$file-item-padding: 8px;
+$file-item-padding: 16px;
 $file-item-margin-top: 4px;
 $file-hint-margin-top: 2px;
 $file-hint-font-size: 12px;
 
 // 字体与尺寸
-$file-icon-size: 64px;
+$file-icon-size: 32px;
 $file-font-size: 14px;
 $file-item-font-size: 12px;
 $file-item-remove-icon-size: 1em;
 $file-button-min-size: 1.5em;
 
 // 颜色引用
-$file-action-border-color: $grey-light;
-$file-item-border-color: $grey-medium;
+$file-action-border-color: rgba(0, 0, 0, 0.08);
+$file-item-border-color: $file-action-border-color;
 $file-item-size-color: var(--j-color-grey);
 $file-remove-color: var(--j-color-grey);
 $file-hint-color: var(--j-color-grey);
@@ -30,6 +30,8 @@ $file-error-color: var(--j-color-red);
 $file-download-btn-color: var(--j-color-primary);
 
 $file-action-transition: border-color 0.25s;
+$file-action-height: 165px;
+$file-action-ondrag-color: rgba(0, 0, 0, 0.8);
 
 // ------------------------------------------------------------------
 // 2. 样式主体 (.j-q-file)
@@ -56,9 +58,14 @@ $file-action-transition: border-color 0.25s;
     text-align: center;
     transition: $file-action-transition;
     cursor: pointer;
+    height: $file-action-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     &.file-action--dragging {
-      border-style: dashed;
+      border: 1px dashed $file-action-ondrag-color;
     }
   }
 
@@ -130,6 +137,59 @@ $file-action-transition: border-color 0.25s;
 
     &:not(:empty) {
       margin-top: $file-hint-margin-top;
+    }
+  }
+
+  .template-specification {
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: flex-start;
+
+    &::-webkit-scrollbar {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar:vertical {
+      width: 1em;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+      height: 1em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 99999px;
+      border: 0.3125em solid transparent;
+      background-clip: content-box;
+    }
+
+    li {
+      display: inline-block;
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      font-weight: 500;
+      background: #ffffff;
+      border-bottom: 4px rgba(0, 0, 0, 0.03) solid !important;
+      color: #969799;
+
+      span {
+        font-size: 12px;
+        font-weight: normal;
+        margin-left: 4px;
+      }
+    }
+
+    .description {
+      padding: 15px 12px;
+      font-size: 12px;
+      max-width: 200px;
+      white-space: normal;
+      line-height: 20px;
     }
   }
 }

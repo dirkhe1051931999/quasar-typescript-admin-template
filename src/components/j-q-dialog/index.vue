@@ -7,6 +7,7 @@
     :no-esc-dismiss="!closeOnEsc"
     :position="position"
     @hide="destroy"
+    :persistent="persistent"
     :full-height="position === 'right'"
     :transition-show="position === 'right' ? 'slide-left' : 'jump-down'"
     :transition-hide="position === 'right' ? 'slide-right' : 'jump-up'"
@@ -29,7 +30,7 @@
               <slot />
             </q-card-section>
             <q-card-section v-if="showFooter" class="q-pa-none dialog-footer">
-              <q-btn :label="$t(cancelText)" unelevated no-caps @click="handleClickCancel" />
+              <q-btn :label="$t(cancelText)" unelevated no-caps @click="handleClickCancel" outline />
               <q-btn :label="$t(confirmText)" color="primary" :ripple="false" unelevated no-caps @click="handleClickConfirm" />
             </q-card-section>
           </div>
@@ -48,11 +49,13 @@
 <script lang="ts">
 import { computed, defineComponent, getCurrentInstance, type PropType, ref } from 'vue';
 import { DialogProvider } from './index';
+import { formRules } from './form-rules';
+import { useI18n } from 'vue-i18n';
 
 type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
 
 export default defineComponent({
-  name: 'SQDialog',
+  name: 'jQDialog',
   props: {
     allowFocusOutside: { type: Boolean, default: true },
     showFooter: { type: Boolean, default: true },
@@ -76,10 +79,15 @@ export default defineComponent({
     const getDataLoading = ref(false);
     const dynamicCompRef = ref(null);
     const currentDialogInstance = getCurrentInstance();
+    const { t } = useI18n();
+    const rules = formRules(t);
     const computedComponentBind = computed(() => ({
       ...props.componentBind,
-      dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText },
+      dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText, rules },
     }));
+    const persistent = computed(() => {
+      return getDataLoading.value;
+    });
     const changeCancelText = (text: string) => {
       cancelText.value = text;
     };
@@ -107,8 +115,9 @@ export default defineComponent({
     const destroy = () => {
       props.dialogId && DialogProvider.destroy(props.dialogId);
     };
-    expose({ open, close, setLoading, changeCancelText, changeConfirmText });
+    expose({ open, close, setLoading, changeCancelText, changeConfirmText, rules });
     return {
+      persistent,
       dynamicCompRef,
       cancelText,
       confirmText,
@@ -120,6 +129,7 @@ export default defineComponent({
       destroy,
       handleClickCancel,
       handleClickConfirm,
+      rules,
     };
   },
 });

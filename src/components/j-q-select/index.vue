@@ -1,5 +1,6 @@
 <template>
   <q-select
+    ref="qSelectRef"
     autocomplete="off"
     class="j-q-select"
     v-model="innerValue"
@@ -36,7 +37,7 @@
     <template #selected-item="scope" v-if="useChips">
       <span class="select-selected-item q-mr-xs q-mb-xs">
         <slot name="chip-value-display" v-bind="scope">{{ getSelectedItemLabelByIndex(scope.index) }}</slot>
-        <q-icon name="close" class="cursor-pointer q-ml-xs" @click.stop="scope.removeAtIndex(scope.index)" color="grey" />
+        <q-icon name="close" class="cursor-pointer q-ml-xs" @click.stop="scope.removeAtIndex(scope.index)" color="grey" v-if="!getSelectedItemOptionByIndex(scope.index)?.hideRemove" />
       </span>
     </template>
 
@@ -75,7 +76,7 @@
 <script lang="ts">
 import type { QSelectProps } from 'quasar';
 import { QSelect } from 'quasar';
-import { computed, defineComponent, PropType, ref } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 
 type TModelValue = QSelectProps['modelValue'];
 // 明确要求 TFilterFn 返回一个布尔值
@@ -124,6 +125,7 @@ export default defineComponent({
     'value-display': void 0,
   },
   setup(props, { emit, slots, expose }) {
+    const qSelectRef = ref<QSelect | null>(null);
     const innerValue = computed<TModelValue>({
       get() {
         if (props.multiple && (props.modelValue === null || props.modelValue === undefined)) {
@@ -197,6 +199,16 @@ export default defineComponent({
       return option?.[props.optionLabel] ?? itemValue;
     };
 
+    const getSelectedItemOptionByIndex = (index: number): any | undefined => {
+      const val = innerValue.value;
+      if (!Array.isArray(val)) return undefined;
+      const itemValue = val[index];
+      if (computedEmitValue.value) {
+        return props.options.find((item) => item?.[props.optionValue] === itemValue);
+      }
+      return typeof itemValue === 'object' && itemValue !== null ? itemValue : undefined;
+    };
+
     // 优化 3: 默认过滤逻辑直接在 @filter 事件中完成
     const filter: QSelectProps['onFilter'] = (inputVal, doneFn, _abortFn) => {
       const normalizedInput = inputVal.trim().toLowerCase();
@@ -234,14 +246,31 @@ export default defineComponent({
       props.popupContentClass && (val += ` ${props.popupContentClass}`);
       return val;
     });
+    watch(
+      innerValue,
+      (newValue, oldValue) => {
+        if (props.multiple && qSelectRef.value) {
+          const isNewValueSelected = Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length > oldValue.length;
+          if (
+            (Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length !== oldValue.length) ||
+            (Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length !== oldValue.length)
+          ) {
+            qSelectRef.value.hidePopup();
+          }
+        }
+      },
+      { deep: true }
+    );
     expose({
       copyOptions,
     });
     return {
+      qSelectRef,
       innerValue,
       computedEmitValue,
       computedDisplayValue,
       getSelectedItemLabelByIndex,
+      getSelectedItemOptionByIndex,
       filter,
       computedPopupContentClass,
       computedOptions,
