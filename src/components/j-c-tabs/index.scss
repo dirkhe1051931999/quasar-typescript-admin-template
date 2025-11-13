@@ -1,9 +1,9 @@
-$color-border: #ebebeb; // 主要边框颜色 (Line/Default 模式)
+$color-border: var(--j-color-grey-light); // 主要边框颜色 (Line/Default 模式)
 $color-primary: var(--q-primary); // Quasar 主题色
-$color-light-bg: #f7f7f7; // Flat/Pill 模式的背景色
-$color-hover-bg: #ededed; // Flat/Pill 模式的悬停背景
+$color-light-bg: var(--j-color-grey-lighter); // Flat/Pill 模式的背景色
+$color-hover-bg: var(--j-color-grey-light); // Flat/Pill 模式的悬停背景
 $color-text-dark: rgba(50, 50, 51, 0.04); // Default 模式非活动标签的背景色/边框色 (灰色透明)
-$color-text-active: #ffffff; // 激活标签的背景色 (Default/Flat)
+$color-text-active: var(--j-color-white); // 激活标签的背景色 (Default/Flat)
 $color-active-bg-tab: rgba(50, 50, 51, 0.04); // 默认模式标签背景/边框 (透明灰色)
 $color-disabled-opacity-high: 0.6; // 禁用整个组件的透明度
 $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度

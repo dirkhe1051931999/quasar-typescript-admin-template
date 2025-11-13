@@ -6,6 +6,13 @@
       <j-q-select v-model="tableParams.query.params.city" :options="tableParams.query.cityOptions" filterable label="City" />
       <j-q-autocomplete search-id="description" search-key="description" v-model="tableParams.query.params.description" ref="JQAutocompleteRef" label="Description (Autocomplete)" />
       <j-q-date v-model="tableParams.query.params.date" :clearable="true" range :options="tableParams.query.dateOptions" label="Date" />
+      <j-q-date-time v-model="tableParams.query.params.dateTime" label="Datetime" :options="tableParams.query.dateOptions" style="width: 335px" />
+      <j-c-tree-select v-model="tableParams.query.params.treeIds" :options="tableParams.query.treeOptions" :multiple="false" tick-strategy="strict" label="Tree" />
+      <template v-slot:extra-operation>
+        <j-c-permission :rm-dom="true" code="operation-all" default-content="123123">
+          <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
+        </j-c-permission>
+      </template>
     </j-q-search-form>
     <j-q-table
       ref="JQTableRef"
@@ -16,13 +23,6 @@
       @paginationChange="onPaginationChange"
       :sortNames="['age']"
     >
-      <template #top>
-        <div class="row items-center">
-          <j-c-permission code="operation-all" default-content="123123" :rm-dom="false">
-            <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
-          </j-c-permission>
-        </div>
-      </template>
       <template #header-cell-selection>
         <q-checkbox :model-value="canSelectAll" dense :disable="!tableParams.data.length" @update:model-value="handleClickSelectAll" />
       </template>
@@ -64,15 +64,19 @@ import JQSearchForm from 'components/j-q-search-form/index.vue';
 import JQAutocomplete from 'components/j-q-autocomplete/index.vue';
 import JQInput from 'components/j-q-input/index.vue';
 import JQSelect from 'components/j-q-select/index.vue';
-import JQDate from 'components/j-q-date/index.vue';
+import JQDate from 'components/j-q-date/date.vue';
 import JCSvg from 'components/j-c-svg/index.vue';
 import SvgDeveloper from 'components/j-c-svg/index.vue';
 import JCvgIcon from 'components/j-c-svg/index.vue';
 import JCPermission from 'components/j-c-permission/index.vue';
+import JQDateTime from 'components/j-q-date/datetime.vue';
+import JCTreeSelect from 'components/j-c-tree-select/index.vue';
 
 @Component({
   name: 'TablePage',
   components: {
+    JCTreeSelect,
+    JQDateTime,
     JCPermission,
     JCvgIcon,
     SvgDeveloper,
@@ -120,12 +124,38 @@ export default class extends TableSelectionMixin {
         const dateValue = new Date(date);
         return dateValue.getTime() > today.getTime();
       },
+      treeOptions: [
+        {
+          label: 'C1',
+          value: 'C1',
+          children: [
+            {
+              label: 'G1',
+              value: 'G1',
+              children: [
+                { label: 'S1', value: 'S1' },
+                { label: 'N1', value: 'N1' },
+              ],
+            },
+            {
+              label: 'G2',
+              value: 'G2',
+              children: [
+                { label: 'SZ1', value: 'SZ1' },
+                { label: 'GZ1', value: 'GZ1' },
+              ],
+            },
+          ],
+        },
+      ],
       params: {
         name: '',
         age: '',
         city: '',
         description: '',
         date: '',
+        dateTime: '',
+        treeIds: [],
       },
       loading: false,
     },

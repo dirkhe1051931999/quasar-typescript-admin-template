@@ -95,13 +95,13 @@ export default defineComponent({
           r: {
             beginAtZero: true,
             angleLines: {
-              color: '#F0F0F0', // 蜘蛛网线的颜色
+              color: '#f5f6fa', // 蜘蛛网线的颜色
             },
             grid: {
-              color: '#F0F0F0', // 圆圈线的颜色
+              color: '#f5f6fa', // 圆圈线的颜色
             },
             pointLabels: {
-              color: '#b2b9bf', // 轴标签的颜色
+              color: '#969799', // 轴标签的颜色
               font: { size: 11, family: 'Open Sans' },
             },
             ticks: {

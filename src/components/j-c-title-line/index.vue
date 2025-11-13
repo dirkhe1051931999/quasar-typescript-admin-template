@@ -25,8 +25,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$color-white: #fff;
-$bg-grey: #ebebeb;
+$color-white: var(--j-color-white);
+$bg-grey: var(--j-color-grey-light);
 .title-line {
   font-weight: 600;
   position: relative;

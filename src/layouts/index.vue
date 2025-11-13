@@ -60,8 +60,8 @@ export default defineComponent({
   min-height: 100vh;
   max-width: 100vw;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #f5f7fb 0%, #eef1f8 100%);
-  color: #323232;
+  background: var(--j-color-grey-lighter);
+  color: var(--j-color-dark);
 }
 
 .sidebar-container {

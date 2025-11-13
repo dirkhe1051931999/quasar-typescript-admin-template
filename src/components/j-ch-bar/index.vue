@@ -151,12 +151,12 @@ export default defineComponent({
               display: true,
               drawOnChartArea: true,
               drawTicks: false,
-              color: '#F0F0F0', // 使用实色细线
+              color: '#f5f6fa', // 使用实色细线
             },
             ticks: {
               display: true,
               padding: 10,
-              color: '#9ca2b7',
+              color: '#969799',
             },
           },
           x: {
@@ -169,7 +169,7 @@ export default defineComponent({
             },
             ticks: {
               display: true,
-              color: '#9ca2b7',
+              color: '#969799',
               padding: 10,
             },
           },

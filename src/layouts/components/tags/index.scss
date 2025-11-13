@@ -6,8 +6,8 @@ $tag-view-bg: $white;
 $tag-view-border-color: rgba(226, 232, 240, 0.8);
 
 // 滚动条颜色
-$scrollbar-thumb-color: rgba(203, 213, 225, 0.6);
-$scrollbar-thumb-hover-color: rgba(148, 163, 184, 0.8);
+$scrollbar-thumb-color: var(--j-color-grey-lighter);
+$scrollbar-thumb-hover-color: var(--j-color-grey-lighter);
 
 // 标签项基础颜色
 $tag-item-bg: $grey-lighter;
@@ -97,7 +97,7 @@ $tag-close-hover-color: var(--q-primary);
   height: 28px;
   padding: 0 12px;
   background: $tag-item-bg;
-  border: 1px solid $tag-item-border-color;
+
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
@@ -105,45 +105,23 @@ $tag-close-hover-color: var(--q-primary);
   flex-shrink: 0;
 
   .tag-title {
-    font-size: 13px;
-    color: $tag-item-text-color;
+    font-size: 12px;
     line-height: 1;
   }
 
   .tag-close {
     font-size: 14px;
     color: $tag-close-color;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 1;
-      color: $tag-close-hover-color;
-    }
-  }
-
-  &:hover {
-    background: linear-gradient(135deg, $tag-item-hover-bg-start 0%, $tag-item-hover-bg-end 100%);
-    border-color: $tag-item-hover-border-color;
   }
 
   &.is-active {
-    background: linear-gradient(135deg, $tag-item-active-bg-start 0%, $tag-item-active-bg-end 100%);
-    border-color: $tag-item-active-border-color;
+    background: #ffffff;
+    border: 1px solid $tag-item-active-border-color;
     color: $tag-item-active-color;
 
     .tag-title {
       color: $tag-item-active-color;
       font-weight: 500;
-    }
-
-    .tag-close {
-      color: $tag-item-active-color;
-      opacity: 0.8;
-
-      &:hover {
-        opacity: 1;
-      }
     }
   }
 }

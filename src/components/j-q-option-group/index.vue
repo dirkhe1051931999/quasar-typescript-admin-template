@@ -1,13 +1,12 @@
 <template>
   <q-field class="j-q-option-group no-border-field" :label="label" :disable="disable" :rules="rules" :outlined="outlined" :dense="dense" no-error-icon stack-label borderless v-model="innerModel">
     <template #control>
-      <q-option-group class="j-q-option-group" v-model="innerModel" :options="options" :type="type" :disable="disable" :inline="inline" :size="size" :color="color" @change="change" :dense="dense" />
+      <q-option-group v-model="innerModel" :options="computedOptions" :type="type" :disable="disable" :inline="inline" :size="size" :color="color" @change="change" :dense="dense" />
     </template>
   </q-field>
 </template>
 <script lang="ts">
-import type { PropType } from 'vue';
-import { defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 import type { QFieldProps, QOptionGroupProps } from 'quasar';
 
 // --- 类型定义 ---
@@ -46,6 +45,16 @@ export default defineComponent({
     // --- 响应式状态和 v-model 逻辑 ---
     const innerModel = ref<TModelValue>(props.modelValue ?? null);
 
+    const computedOptions = computed(() => {
+      return props.options
+        ? props.options!.map((option) => ({
+            ...option,
+            // checkedIcon: 'app:radio-checked',
+            // uncheckedIcon: 'app:radio-unchecked',
+          }))
+        : [];
+    });
+
     // 1. 监听外部 modelValue 变化，同步到内部状态
     watch(
       () => props.modelValue,
@@ -73,12 +82,20 @@ export default defineComponent({
 
     return {
       innerModel,
+      computedOptions,
       change,
     };
   },
 });
 </script>
-
+<style lang="scss">
+.j-q-option-group {
+  .q-field__control {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .no-border-field {
   :deep(.q-field__control) {

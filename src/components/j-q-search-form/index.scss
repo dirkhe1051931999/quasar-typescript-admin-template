@@ -1,21 +1,64 @@
-$search-bar-item-width: 250px;
+// 声明最小宽度变量。
+// 最小宽度为 250px，允许 Grid 项目在此基础上自动伸缩。
+$search-bar-item-min-width: 250px;
 
 .j-q-search-bar {
   background: var(--j-color-white);
   padding: 16px;
   border-radius: 4px;
 
-  .search--bar-items {
+  .search-bar-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(0, $search-bar-item-width));
-    gap: 12px;
+    // 核心布局：左侧表单区 (1fr) + 右侧独立操作区 (auto)
+    grid-template-columns: 1fr auto;
+    align-items: flex-end; // 保证所有内容底部对齐（通常用于表单项对齐）
+    gap: 16px;
   }
 
-  .search-bar-operation {
+  // ===============================================
+  // 1. 左侧：表单项 + Query/Reset 按钮
+  // ===============================================
+  .search--bar-items-wrapper {
+    // 确保这整个区域占据第一列，并允许内部元素换行
+    display: block;
+  }
+
+  .search--bar-items {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: wrap; // 允许项目换行
+    // grid-template-columns: repeat(auto-fill, minmax($search-bar-item-min-width, 1fr)); // 废弃 Grid 属性
+    gap: 12px; // Flexbox 中的间距
+    align-items: flex-start;
+
+    // 确保所有直接子元素 (表单项和操作按钮组) 遵循 Flexbox 规则
+    > * {
+      // 关键属性：
+      // 1. 设置最小宽度。
+      width: $search-bar-item-min-width;
+      // 3. 确保项目不会被压缩到小于 min-width。
+      flex-shrink: 0;
+    }
+  }
+
+  // 默认操作按钮组 (Query/Reset)
+  .default-operation-buttons {
+    grid-column: span 1; // 默认占据一列
+    display: flex;
+    align-items: flex-start; // 保持顶部对齐
     gap: 12px;
+    padding-top: 0;
+  }
+
+  // ===============================================
+  // 2. 右侧：独立的扩展操作区域
+  // ===============================================
+  .search-bar-extra-operation {
+    // 确保其内容垂直排列，并严格顶部对齐
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    flex-shrink: 0;
   }
 
   .operation-reset {

@@ -25,7 +25,6 @@ $file-action-border-color: rgba(0, 0, 0, 0.08);
 $file-item-border-color: $file-action-border-color;
 $file-item-size-color: var(--j-color-grey);
 $file-remove-color: var(--j-color-grey);
-$file-hint-color: var(--j-color-grey);
 $file-error-color: var(--j-color-red);
 $file-download-btn-color: var(--j-color-primary);
 
@@ -120,7 +119,6 @@ $file-action-ondrag-color: rgba(0, 0, 0, 0.8);
 
   .file-hint {
     margin-left: 0;
-    color: $file-hint-color;
 
     .download-btn {
       .btn {
@@ -173,9 +171,8 @@ $file-action-ondrag-color: rgba(0, 0, 0, 0.8);
       align-items: center;
       padding: 8px 12px;
       font-weight: 500;
-      background: #ffffff;
+      background: var(--j-color-white);
       border-bottom: 4px rgba(0, 0, 0, 0.03) solid !important;
-      color: #969799;
 
       span {
         font-size: 12px;
@@ -190,6 +187,7 @@ $file-action-ondrag-color: rgba(0, 0, 0, 0.8);
       max-width: 200px;
       white-space: normal;
       line-height: 20px;
+      color: var(--j-color-dark);
     }
   }
 }

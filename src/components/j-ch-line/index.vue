@@ -98,7 +98,7 @@ export default defineComponent({
               display: true,
               drawOnChartArea: true,
               drawTicks: false,
-              color: '#F0F0F0',
+              color: '#f5f6fa',
             },
             ticks: {
               display: true,

@@ -62,7 +62,6 @@ $dialog-footer-box-shadow: 0 1px 5px $dialog-footer-shadow-1, 0 2px 2px $dialog-
     padding: $dialog-padding; // 使用变量
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: $dialog-min-height; // 使用变量
     max-height: 60vh;
 
     &::-webkit-scrollbar-thumb {

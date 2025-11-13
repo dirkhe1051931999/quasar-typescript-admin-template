@@ -57,7 +57,7 @@
                       {{ item.required ? `(${$t('messages.required')})` : '' }}
                     </span>
                   </div>
-                  <div class="description">{{ item.description }}</div>
+                  <div class="description text-black">{{ item.description }}</div>
                 </li>
               </ul>
             </template>
@@ -67,6 +67,11 @@
       <div class="col-6">
         <j-q-form-label label="Date" required>
           <j-q-date v-model="dialogParams.params.date" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogInstance.rules.required" />
+        </j-q-form-label>
+      </div>
+      <div class="col-6">
+        <j-q-form-label label="Date Time" required>
+          <j-q-date-time v-model="dialogParams.params.datetime" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogInstance.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
@@ -113,16 +118,17 @@ import globalMessage from 'src/components/j-q-message';
 import JQInput from 'components/j-q-input/index.vue';
 import JQSelect from 'components/j-q-select/index.vue';
 import JQFile from 'components/j-q-file/index.vue';
-import JQDate from 'components/j-q-date/index.vue';
+import JQDate from 'components/j-q-date/date.vue';
 import JQRadio from 'components/j-q-option-group/index.vue';
 import JQOptionGroup from 'components/j-q-option-group/index.vue';
 import JQFormLabel from 'components/j-q-form-label/index.vue';
 import { cloneDeep } from 'lodash';
 import JCListEditor from 'components/j-c-list-editor/index.vue';
+import JQDateTime from 'components/j-q-date/datetime.vue';
 
 @Component({
   name: 'TableAddOrUpdateComponent',
-  components: { JCListEditor, JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
+  components: { JQDateTime, JCListEditor, JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
   emits: ['getData'],
 })
 export default class TableAddOrUpdateComponent extends Vue {
@@ -169,6 +175,7 @@ export default class TableAddOrUpdateComponent extends Vue {
       tags: [],
       file: [],
       date: '',
+      datetime: '',
       level: void 0,
       hobbys: [],
       radio: [''],

@@ -7,8 +7,8 @@ $sidebar-text-color: $dark;
 $sidebar-shadow-color: rgba(15, 23, 42, 0.08);
 $sidebar-border-color: rgba(226, 232, 240, 0.8);
 
-$scrollbar-thumb-color: rgba(203, 213, 225, 0.6);
-$scrollbar-thumb-hover-color: rgba(148, 163, 184, 0.8);
+$dialog-scrollbar-thumb-color: rgba(144, 147, 153, 0.3);
+$dialog-loading-mask-bg: rgba(0, 0, 0, 0.3);
 
 // --- 组件样式 ---
 
@@ -21,7 +21,7 @@ $scrollbar-thumb-hover-color: rgba(148, 163, 184, 0.8);
   left: 0;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, $sidebar-bg-start 0%, $sidebar-bg-mid 50%, $sidebar-bg-end 100%);
+  background: #ffffff;
   color: $sidebar-text-color;
   box-shadow: 2px 0 16px $sidebar-shadow-color;
   border-right: 1px solid $sidebar-border-color;
@@ -53,7 +53,7 @@ $scrollbar-thumb-hover-color: rgba(148, 163, 184, 0.8);
   padding: 0 12px 12px;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: $scrollbar-thumb-color transparent;
+  scrollbar-color: $dialog-scrollbar-thumb-color transparent;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -65,11 +65,7 @@ $scrollbar-thumb-hover-color: rgba(148, 163, 184, 0.8);
 
   &::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background: $scrollbar-thumb-color;
-
-    &:hover {
-      background: $scrollbar-thumb-hover-color;
-    }
+    background: $dialog-scrollbar-thumb-color;
   }
 }
 

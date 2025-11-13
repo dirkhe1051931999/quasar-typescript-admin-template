@@ -7,13 +7,12 @@
   --q-btn-border-radius: 4px;
   --q-btn-padding-x: 16px;
   --q-btn-padding-y: 8px;
-  --q-btn-height: 34px;
+  --q-btn-height: 36px;
   --q-btn-font-size: 14px;
   --q-btn-font-weight: 500;
   --q-btn-shadow: none;
   --q-btn-hover-shadow: none;
   --q-btn-active-shadow: none;
-  --q-btn-transition: all 0.3s ease;
 }
 
 // 应用统一样式到所有 q-btn
@@ -25,7 +24,6 @@
   font-size: var(--q-btn-font-size);
   font-weight: var(--q-btn-font-weight);
   box-shadow: var(--q-btn-shadow);
-  transition: var(--q-btn-transition);
   box-sizing: border-box;
   line-height: 1;
 
@@ -33,12 +31,6 @@
   // Quasar 使用 ::before 来创建阴影效果，需要覆盖
   &::before {
     box-shadow: var(--q-btn-shadow) !important;
-  }
-
-  // hover 效果
-  &:hover {
-    box-shadow: var(--q-btn-hover-shadow);
-    transform: translateY(-1px);
   }
 
   // active 效果
@@ -51,31 +43,20 @@
   &.q-btn--disabled {
     opacity: 0.6;
     cursor: not-allowed;
-
-    &:hover {
-      transform: none;
-      box-shadow: var(--q-btn-shadow);
-    }
   }
 
   // flat 和 unelevated 按钮不显示阴影
   &.q-btn--flat,
   &.q-btn--unelevated {
     box-shadow: none;
-
-    &:hover {
-      box-shadow: none;
-      transform: translateY(-1px);
-    }
   }
 
   // outline 按钮样式
   &.q-btn--outline {
     box-shadow: none;
 
-    &:hover {
-      box-shadow: var(--q-btn-hover-shadow);
-      transform: translateY(-1px);
+    &:before {
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
 

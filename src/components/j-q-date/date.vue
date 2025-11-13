@@ -2,8 +2,12 @@
   <q-field
     ref="fieldRef"
     class="j-q-date"
+    :class="{
+      'j-q-date--table': label,
+      'j-q-date--form': !label,
+    }"
     v-model="computedValue"
-    :clearable="clearable"
+    :clearable="false"
     clear-icon="app:clear"
     :dense="dense"
     :disable="disable"
@@ -12,7 +16,7 @@
     :outlined="outlined"
     :rules="rules"
     :title="computedValueDisplay"
-    @clear="onClear"
+    @clear="handleClear"
   >
     <div class="float-placeholder" v-show="!computedValueDisplay && !label">
       {{ $t('messages.pleaseSelect') }}
@@ -29,7 +33,14 @@
       </div>
     </q-popup-proxy>
     <template #append>
-      <q-icon name="calendar_month" />
+      <q-icon
+        v-if="clearable && !readonly && !disable && computedValue"
+        name="app:clear"
+        class="cursor-pointer q-field__focusable-action"
+        @click.stop.prevent="handleClearClick"
+        size="16px"
+        color="grey"
+      />
     </template>
   </q-field>
 </template>
@@ -49,6 +60,7 @@ export default defineComponent({
     clearable: { type: Boolean, default: true },
     dense: { type: Boolean as PropType<QFieldProps['dense']>, default: true },
     disable: { type: Boolean as PropType<QFieldProps['disable']> },
+    readonly: { type: Boolean, default: false },
     label: { type: String as PropType<QFieldProps['label']> },
     locales: { type: [String] as PropType<Intl.LocalesArgument> },
     mask: { type: String as PropType<QDateProps['mask']>, default: 'YYYY-MM-DD' },
@@ -77,7 +89,13 @@ export default defineComponent({
     // --- 优化 1: 简化 v-model 逻辑 (移除 innerValue 和 watch) ---
     const computedValue = computed({
       get() {
-        return props.modelValue;
+        let val = props.modelValue;
+
+        if (props.range && val === '') {
+          return null;
+        }
+
+        return val;
       },
       set(val) {
         emit('update:modelValue', val);
@@ -127,14 +145,19 @@ export default defineComponent({
     const onHidePopup: QPopupProxyProps['onHide'] = (evt) => {
       emit('hide', evt);
     };
-    const onClear = () => {
+    const handleClear = () => {
+      computedValue.value = null;
       fieldRef.value!.blur();
+    };
+    const handleClearClick = () => {
+      handleClear();
     };
 
     expose({ popupVisible });
     return {
       fieldRef,
-      onClear,
+      handleClear,
+      handleClearClick,
       computedValue,
       computedValueDisplay,
       popupVisible,
@@ -148,23 +171,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.j-q-date {
-  cursor: pointer;
-
-  .date-value-display {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
-
-.float-placeholder {
-  font-size: 12px;
-  color: $grey;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-}
-</style>
+<style lang="scss"></style>

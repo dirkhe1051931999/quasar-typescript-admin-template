@@ -1,6 +1,10 @@
 <template>
-  <div class="j-q-autocomplete" :style="`width: ${historyParams.width[searchId] || 'auto'}`">
+  <div class="j-q-autocomplete" :style="`width: ${historyParams.width[searchId] || '250px'}`">
     <q-input
+      :class="{
+        'j-q-input--table': label,
+        'j-q-input--form': !label,
+      }"
       v-bind="$attrs"
       :label="label"
       :model-value="modelValue"
@@ -33,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
 
 // 假设的存储类型
 interface HistoryItem {
@@ -53,7 +57,7 @@ export default defineComponent({
   name: 'JQAutocomplete',
   emits: ['update:model-value'],
   props: {
-    modelValue: { type: String, required: true },
+    modelValue: { type: [String, null] as PropType<string | null | undefined>, required: true },
     searchKey: { type: String, required: true },
     searchId: { type: String, required: true },
     label: { type: String, default: '' },
@@ -162,7 +166,7 @@ export default defineComponent({
       historyParamsMap[uniqueKey.value] = historyParams.list;
       setUserCommonInputSearchHistoryParams(JSON.stringify(historyParamsMap));
     };
-    expose({ inputRef });
+    expose({ saveHistory });
     return {
       inputRef,
       historyParams,
@@ -180,8 +184,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 $shadow-color: rgba(19, 21, 35, 0.08);
-$bg-color: #fff;
-$bg-hover-color: #f8f8f8;
+$bg-color: var(--j-color-white);
+$bg-hover-color: var(--j-color-grey-lighter);
 .j-q-autocomplete {
   position: relative;
 

@@ -12,7 +12,7 @@
     :transition-show="position === 'right' ? 'slide-left' : 'jump-down'"
     :transition-hide="position === 'right' ? 'slide-right' : 'jump-up'"
   >
-    <q-card class="dialog-main">
+    <q-card class="dialog-main" :style="computedDialogWidth">
       <div class="loading-mask" v-show="getDataLoading">
         <q-inner-loading :showing="getDataLoading" :label="$t('action.loading')" color="primary" label-class="text-primary text-weight-medium" spinner-color="white"></q-inner-loading>
       </div>
@@ -25,7 +25,7 @@
       <Suspense>
         <template #default>
           <div>
-            <q-card-section class="dialog-body">
+            <q-card-section class="dialog-body" :style="{ 'min-height': typeof minHeight === 'string' ? minHeight : `${minHeight}px` }">
               <component v-if="component" :is="component" v-bind="computedComponentBind" v-on="componentOn" ref="dynamicCompRef" />
               <slot />
             </q-card-section>
@@ -68,7 +68,8 @@ export default defineComponent({
     position: { type: String as PropType<DialogPosition>, default: 'standard' },
     showHeader: { type: Boolean, default: true },
     title: { type: String },
-    width: { type: String, default: 'auto' },
+    maxWidth: { type: [String, Number] as PropType<string | number> },
+    minHeight: { type: [String, Number] as PropType<string | number>, default: 320 },
   },
   emits: {},
   mounted() {},
@@ -85,6 +86,14 @@ export default defineComponent({
       ...props.componentBind,
       dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText, rules },
     }));
+    const computedDialogWidth = computed(() => {
+      return props.maxWidth && props.position === 'standard'
+        ? {
+            'max-width': typeof props.maxWidth === 'string' ? props.maxWidth : `${props.maxWidth}px`,
+            width: typeof props.maxWidth === 'string' ? props.maxWidth : `${props.maxWidth}px`,
+          }
+        : {};
+    });
     const persistent = computed(() => {
       return getDataLoading.value;
     });
@@ -124,6 +133,7 @@ export default defineComponent({
       visible,
       getDataLoading,
       computedComponentBind,
+      computedDialogWidth,
       open,
       close,
       destroy,

@@ -1,6 +1,10 @@
 <template>
   <q-select
     ref="qSelectRef"
+    :class="{
+      'j-q-select--table': label,
+      'j-q-select--form': !label,
+    }"
     autocomplete="off"
     class="j-q-select"
     v-model="innerValue"
@@ -35,7 +39,7 @@
     </template>
 
     <template #selected-item="scope" v-if="useChips">
-      <span class="select-selected-item q-mr-xs q-mb-xs">
+      <span class="select-selected-item">
         <slot name="chip-value-display" v-bind="scope">{{ getSelectedItemLabelByIndex(scope.index) }}</slot>
         <q-icon name="close" class="cursor-pointer q-ml-xs" @click.stop="scope.removeAtIndex(scope.index)" color="grey" v-if="!getSelectedItemOptionByIndex(scope.index)?.hideRemove" />
       </span>
@@ -280,6 +284,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-@use './index';
-</style>
+<style lang="scss"></style>

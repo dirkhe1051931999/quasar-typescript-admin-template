@@ -3,7 +3,7 @@
     <slot />
   </template>
   <template v-else>
-    <span>
+    <span v-if="!rmDom">
       {{ defaultContent }}
     </span>
   </template>

@@ -1,6 +1,10 @@
 <template>
   <q-input
     class="j-q-input"
+    :class="{
+      'j-q-input--table': label,
+      'j-q-input--form': !label,
+    }"
     v-model="innerModel"
     :borderless="borderless"
     :dense="dense"

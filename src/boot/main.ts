@@ -24,5 +24,6 @@ export default boot(({ app }: { app: any }) => {
     }
     return void 0;
   };
+  $q.iconSet.tree.icon = 'app:navigation-arrow-right';
   document.querySelector('body')?.classList.add(Platform.is.platform);
 });

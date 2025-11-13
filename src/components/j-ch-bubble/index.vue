@@ -87,20 +87,20 @@ export default defineComponent({
           y: {
             beginAtZero: true,
             border: { display: false },
-            grid: { display: true, drawOnChartArea: true, drawTicks: false, color: '#F0F0F0' },
+            grid: { display: true, drawOnChartArea: true, drawTicks: false, color: '#f5f6fa' },
             ticks: {
               display: true,
               padding: 10,
-              color: '#b2b9bf',
+              color: '#969799',
               font: { size: 11, family: 'Open Sans', style: 'normal', lineHeight: 2 },
             },
           },
           x: {
             border: { display: false },
-            grid: { display: true, drawOnChartArea: true, drawTicks: true, color: '#F0F0F0' },
+            grid: { display: true, drawOnChartArea: true, drawTicks: true, color: '#f5f6fa' },
             ticks: {
               display: true,
-              color: '#b2b9bf',
+              color: '#969799',
               padding: 10,
               font: { size: 11, family: 'Open Sans', style: 'normal', lineHeight: 2 },
               callback: (value: any, index: any) => {

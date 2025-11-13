@@ -13,7 +13,7 @@ import { computed, defineComponent } from 'vue';
 import { tooltip } from './tooltip';
 
 export default defineComponent({
-  name: 'SQTooltip',
+  name: 'jQTooltip',
   props: {
     content: {
       type: String,
