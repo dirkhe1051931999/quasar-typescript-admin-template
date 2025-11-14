@@ -23,8 +23,11 @@ export type UsePaginationReturn = {
   setTotal: (value?: number) => void;
 };
 
+export const DEFAULT_ROWS_PER_PAGE = 15;
+export const ROWS_PER_PAGE_OPTIONS = [10, 15, 20, 30, 50];
+
 export function usePagination(options?: UsePaginationOptions): UsePaginationReturn {
-  const defaultPageSize = options?.rowsPerPage ?? 15;
+  const defaultPageSize = options?.rowsPerPage ?? DEFAULT_ROWS_PER_PAGE;
 
   const paginationInfo = reactive<Paginator>({
     page: options?.page ?? 1,

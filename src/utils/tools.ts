@@ -1,3 +1,5 @@
+import { date } from 'quasar';
+
 export const getCssVariableValue = (cssVariableName: string) => {
   let cssVariableValue = '';
   try {
@@ -99,7 +101,7 @@ export function defaultFormat(customFormatter?: (val: any, row: any) => string |
     }
 
     // 否则返回原始值
-    return val;
+    return val.toString();
   };
 }
 
@@ -131,4 +133,43 @@ export function getUpperSize(
   if (unitIndex === maxUnitIndex) return { size, unit };
   if (size < 1024) return { size: size, unit };
   return getUpperSize({ size: size / 1024, unit: SIZE_UNITS[unitIndex + 1] }, options);
+}
+
+/**
+ * Quasar支持的日期格式标记
+ * * 年份: YYYY (4位), YY (2位)
+ * 月份: MM (2位, 01-12), M (1-12)
+ * 日期: DD (2位, 01-31), D (1-31)
+ * 星期: ddd (周一), dd (Mon), d (M)
+ * 小时 (24小时制): HH (00-23), H (0-23)
+ * 小时 (12小时制): hh (01-12), h (1-12)
+ * 分钟: mm (00-59), m (0-59)
+ * 秒: ss (00-59), s (0-59)
+ * 毫秒: SSS (000-999), SS (00-99), S (0-9)
+ * AM/PM: A (AM/PM), a (am/pm)
+ * 时区: Z (e.g., -05:00)
+ * * 这是一个简化的示例，仅用于说明格式化概念。
+ * 如果您在 Quasar 环境中使用，建议直接使用并导入 Quasar 的 'date' 辅助函数，因为它已经包含了所有复杂逻辑。
+ */
+export type DateFormatString = string;
+
+/**
+ * 可接受的日期输入类型
+ */
+export type DateInput = Date | string | number;
+
+/**
+ * 格式化日期/时间戳的工具函数。
+ * * 示例:
+ * formatDate(Date.now(), 'YYYY-MM-DD HH:mm:ss')
+ * formatDate('2025-11-13T23:00:57.123Z', 'YYYY年MM月DD日')
+ * * @param dateInput 要格式化的日期或时间戳。
+ * @param dateInput
+ * @param formatString 格式化字符串 (例如 'YYYY-MM-DD HH:mm:ss.SSS')。
+ * @returns 格式化后的日期字符串。
+ */
+export function formatDate(dateInput: DateInput, formatString: DateFormatString = 'YYYY-MM-DD HH:mm:ss'): string {
+  // 核心实现：直接调用 Quasar 的 date 辅助函数
+  // 这样做可以确保与您提供的示例代码完全一致，并且复用 Quasar 强大的逻辑。
+  return date.formatDate(dateInput, formatString);
 }

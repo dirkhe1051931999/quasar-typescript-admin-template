@@ -27,21 +27,21 @@
 import { defineComponent, computed, CSSProperties } from 'vue';
 
 export default defineComponent({
-  // 组件名称基于文件名自动生成
+  // 组件名
   name: 'svgDeveloper',
 
   props: {
-    // 颜色 props，允许外部传入颜色
+    // 颜色 props
     color: {
       type: String,
-      default: 'currentColor', // 默认使用 currentColor
+      default: 'currentColor', // 默认用 'currentColor'，跟着父元素走
     },
-    // 尺寸 props，允许外部传入尺寸
+    // 尺寸 props
     size: {
       type: [String, Number],
       default: '24px', // 默认 24px
     },
-    // 额外的样式，用于覆盖或添加
+    // 额外的样式，方便覆盖
     style: {
       type: [String, Object] as any, // 允许 String 或 CSSProperties
       default: () => ({}),
@@ -49,8 +49,9 @@ export default defineComponent({
   },
 
   setup(props) {
-    // 计算样式，用于绑定到 SVG 根元素的 :style
+    // 计算最终的 style
     const cStyle = computed(() => {
+      // 如果 size 是数字，自动加上 'px'
       const sizeValue = typeof props.size === 'number' ? `${props.size}px` : props.size;
       const baseStyle: CSSProperties = {
         width: sizeValue,
@@ -60,7 +61,7 @@ export default defineComponent({
         color: props.color,
       };
 
-      // 合并外部传入的 style
+      // 合并外部传进来的 style，它的优先级更高
       return { ...baseStyle, ...(props.style as CSSProperties) };
     });
 

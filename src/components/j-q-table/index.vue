@@ -45,7 +45,7 @@
   </div>
 </template>
 <script lang="ts">
-import { usePagination } from './pagination';
+import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, usePagination } from './pagination';
 import { computed, defineComponent, ref } from 'vue';
 import Pagination from './pagination.vue';
 
@@ -118,7 +118,17 @@ export default defineComponent({
       tableEl?.scrollIntoView({ behavior: 'smooth' });
     };
     /* expose  给 ref 用的*/
-    expose({ paginationInfo, getPaginationParam, getNum, setNum, setTotal, setSize, scrollTop });
+    expose({
+      paginationInfo,
+      getPaginationParam,
+      getNum,
+      setNum,
+      setTotal,
+      setSize,
+      scrollTop,
+      ROWS_PER_PAGE_OPTIONS,
+      DEFAULT_ROWS_PER_PAGE,
+    });
     /* return 给template 用的 */
     return {
       computedSelected,

@@ -19,7 +19,7 @@ export default defineComponent({
   inheritAttrs: false,
 
   props: {
-    // 动态组件的名称，如 'developer', 'esimlist'
+    // 动态组件的名称，比如 'developer', 'esimlist'
     name: {
       type: String,
       required: true,
@@ -32,12 +32,13 @@ export default defineComponent({
   },
 
   setup(props, { attrs }) {
-    // 根据 props.name 动态查找对应的组件
+    // 根据 props.name 动态找组件
     const activeComponent = computed(() => {
       const componentKey = props.name.toLowerCase();
       const component = componentMap[componentKey];
 
       if (!component) {
+        // 找不到组件就报个错
         console.error(`[JCSvgIcon Error]: Component "${props.name}" not found in map.`);
       }
       return component;
@@ -45,7 +46,6 @@ export default defineComponent({
 
     return {
       activeComponent,
-      // $attrs 会自动包含未声明的props，如 color/size/style，并透传给 <component>
     };
   },
 });

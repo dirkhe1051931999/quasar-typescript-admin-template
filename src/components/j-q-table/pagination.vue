@@ -2,7 +2,7 @@
   <div>
     <div class="row items-center justify-end">
       <div style="margin-top: 4px">
-        <span>Total: {{ internalInfo.rowsNumber }}</span>
+        <span>{{ t('pagination.total') }}: {{ internalInfo.rowsNumber }}</span>
       </div>
       <q-select
         class="my-pagination"
@@ -16,7 +16,7 @@
         options-dense
       />
       <div style="margin-top: 4px; margin-right: 24px">
-        <span>{{ $t('table.pieces_page') }}</span>
+        <span>{{ t('pagination.pieces_page') }}</span>
       </div>
       <q-pagination
         v-model="internalInfo.page"
@@ -33,7 +33,7 @@
         :ripple="false"
       ></q-pagination>
       <p style="margin-left: 24px">
-        {{ $t('table.goto') }}
+        {{ t('pagination.goto') }}
       </p>
       <q-input
         v-model.trim="internalInfo.currentPage"
@@ -53,6 +53,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, watch } from 'vue';
+import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from 'components/beta/j-q-table/pagination';
+import { useI18n } from 'vue-i18n';
 
 interface PaginationInfo {
   page: number;
@@ -72,13 +74,20 @@ export default defineComponent({
       type: Object as () => PaginationInfo,
       default: () => ({
         page: 1,
-        rowsPerPage: 15,
+        rowsPerPage: DEFAULT_ROWS_PER_PAGE,
         rowsNumber: 0,
       }),
     },
   },
   emits: ['pagination'],
   setup(props, { emit }) {
+    const { t } = useI18n({
+      messages: {
+        'en-US': { pagination: { pieces_page: 'Pieces/page', goto: 'Goto', total: 'Total' } },
+        'zh-CN': { pagination: { pieces_page: '每页条数', goto: '跳转', total: '总条数' } },
+      },
+      useScope: 'local',
+    });
     /* --- 内部状态定义 --- */
     const internalInfo = reactive<InternalPaginationState>({
       page: props.paginationInfo.page,
@@ -88,7 +97,7 @@ export default defineComponent({
       currentPage: '',
     });
 
-    const rowNumbersArr = [10, 15, 20, 30, 50];
+    const rowNumbersArr = ROWS_PER_PAGE_OPTIONS;
 
     /* --- Computed 计算属性 (纯函数) --- */
 
@@ -172,6 +181,7 @@ export default defineComponent({
 
     /* --- Return --- */
     return {
+      t,
       internalInfo,
       rowNumbersArr,
       currentPagePlaceholder,
