@@ -1,13 +1,17 @@
 <template>
-  <div class="j-q-form-label" :class="{ 'form-label--vertical': vertical, required: required }">
+  <div class="j-q-form-label" :class="[directionClass, { required: required }]">
     <div v-if="showLabel" class="form-label" :class="[labelClass, { required: required }]">
       {{ label }}
       <slot name="label-hint"></slot>
     </div>
-
-    <div class="form-value" :class="valueClass">
-      <div class="form-value__inner">
-        <slot></slot>
+    <div class="form-content">
+      <div class="form-value" :class="valueClass">
+        <div class="form-value__inner">
+          <slot></slot>
+        </div>
+      </div>
+      <div class="form-item-detail-wrapper">
+        <slot name="form-item-detail"></slot>
       </div>
     </div>
   </div>
@@ -16,7 +20,6 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 
-// 假设 Vue class 绑定可以是 string, object, 或 array
 type VueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[];
 
 export default defineComponent({
@@ -25,18 +28,34 @@ export default defineComponent({
     label: { type: String },
     labelClass: { type: [String, Object, Array] as PropType<VueClass> },
     valueClass: { type: [String, Object, Array] as PropType<VueClass> },
-    vertical: { type: Boolean, default: true },
+    vertical: { type: Boolean, default: false },
+    horizontal: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
   },
   slots: {
     default: void 0,
     'label-hint': void 0,
+    'form-item-detail': void 0,
   },
   setup(props, { slots }) {
     const showLabel = computed(() => {
-      return !!props.label || !!slots.label;
+      const hasContent = !!props.label || !!slots.label;
+      if (props.horizontal) {
+        return true;
+      }
+      return hasContent;
+    });
+    const directionClass = computed(() => {
+      if (props.vertical) {
+        return 'form-label--vertical';
+      }
+      if (props.horizontal) {
+        return 'form-label--horizontal';
+      }
+      return 'form-label--vertical';
     });
     return {
+      directionClass,
       showLabel,
       slots,
     };

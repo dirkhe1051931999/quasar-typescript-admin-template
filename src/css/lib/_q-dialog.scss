@@ -27,8 +27,8 @@
 .j-q-dialog.right-panel {
   .dialog-main {
     // 右侧面板时，左上和左下圆角为 0（使用 CSS 变量统一管理）
-    border-top-left-radius: var(--q-dialog-right-panel-left-radius);
-    border-bottom-left-radius: var(--q-dialog-right-panel-left-radius);
+    border-top-left-radius: var(--q-dialog-right-panel-left-radius) !important;
+    border-bottom-left-radius: var(--q-dialog-right-panel-left-radius) !important;
   }
 }
 

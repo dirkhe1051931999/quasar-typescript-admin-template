@@ -92,8 +92,12 @@ export default defineComponent({
     const computedTableHeaderClass = computed(() => {
       return props.tableHeaderClass;
     });
-    const computedSlotHeaderCellColumns = computed(() => props.columns?.filter((column: any) => Reflect.has(slots, `header-cell-${column.name}`)));
-    const computedSlotBodyCellColumns = computed(() => props.columns?.filter(({ name }: any) => Reflect.has(slots, `body-cell-${name}`)));
+    const computedSlotHeaderCellColumns = computed(() => {
+      return props.columns?.filter((column: any) => Reflect.has(slots, `header-cell-${column.name}`));
+    });
+    const computedSlotBodyCellColumns = computed(() => {
+      return props.columns?.filter(({ name }: any) => Reflect.has(slots, `body-cell-${name}`));
+    });
     const { paginationInfo, getPaginationParam, getNum, setNum, setTotal, setSize } = usePagination();
     const clacPagination = computed(() => ({
       rowsPerPage: 0,

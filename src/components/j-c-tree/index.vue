@@ -2,14 +2,12 @@
   <q-tree
     ref="main"
     v-model:ticked="computedValue"
-    default-expand-all
+    :default-expand-all="defaultExpandAll"
     :label-key="optionLabel"
     :node-key="optionValue"
     :nodes="options"
     :tick-strategy="tickStrategy"
     :no-nodes-label="$t('tip.noData')"
-    control-color="#e93030"
-    text-color="black"
   >
     <template #default-header="scope">
       <div class="q-tree-label-wrapper">
@@ -43,6 +41,7 @@ export default defineComponent({
     tickStrategy: { type: String as PropType<TickStrategy>, default: 'strict' },
     readonly: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
+    defaultExpandAll: { type: Boolean, default: true },
   },
   emits: ['update:modelValue'],
   setup(props, { emit, expose }) {

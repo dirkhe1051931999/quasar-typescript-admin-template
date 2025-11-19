@@ -21,6 +21,7 @@ export default {
     splitter: 'Splitter',
     jsonEditor: 'Json Editor',
     jsonView: 'Json View',
+    componentGuide: 'Component Guide',
     tabs: 'Tabs',
     sticky: 'Sticky',
     carousel: 'Carousel',

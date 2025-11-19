@@ -2,15 +2,22 @@
   <div class="row" :class="gutter">
     <template v-for="item in items" :key="item.name">
       <div :class="[`col-${item.span || 6}`]" class="detail-item-container">
-        <div class="q-mb-xs text-grey text-caption">
+        <div class="q-mb-xs text-grey text-caption row items-center">
           {{ item.label }}
+          <template v-if="item.tip">
+            <q-icon name="app:question" size="14px" class="q-ml-xs tip-icon">
+              <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px">
+                {{ item.tip }}
+              </q-tooltip>
+            </q-icon>
+          </template>
         </div>
         <div class="detail-value text-body2" :class="[`text-${item.align || 'left'}`]">
           <template v-if="slots[`item-value-${item.name}`]">
-            <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" />
+            <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
           </template>
           <template v-else>
-            {{ getDefaultValue(item) }}
+            <j-q-tooltip :content="getDefaultValue(item)"></j-q-tooltip>
           </template>
         </div>
       </div>
@@ -20,16 +27,20 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { formatDate } from 'src/utils/tools';
 
-// --- 类型定义 ---
 export interface DetailItem {
   name: string;
   label: string;
   span?: number;
   align?: 'left' | 'right' | 'center';
+  date?: boolean | string;
+  options?: Record<string, any>[];
+  findByKey?: string;
+  displayKey?: string;
+  tip?: string;
 }
 
-// v-model 是数据对象，但这里我们使用 data prop
 type TDetailData = Record<string, any>;
 
 export default defineComponent({
@@ -49,25 +60,38 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    // 1. 计算需要使用 Slot 定制的列表项
     const computedSlotItems = computed(() => {
       return props.items.filter((item) => {
-        // 检查 slots 对象中是否存在名为 item-value-字段名 的插槽
         return Reflect.has(slots, `item-value-${item.name}`);
       });
     });
+    const getOptionLabel = (item: DetailItem, value: any): any => {
+      const { options, findByKey, displayKey = 'label' } = item;
+      if (!options || !findByKey) {
+        return value;
+      }
+      const foundItem = options.find((option) => option[findByKey] === value);
+      return foundItem ? foundItem[displayKey] : value;
+    };
 
-    // 2. 获取默认文本值 (安全访问)
     const getDefaultValue = (item: DetailItem) => {
-      // 安全地从 data 对象中获取值
-      const value = props.data[item.name];
+      let value = props.data[item.name];
 
-      // 如果值是 null 或 undefined，则显示 '-' 或空字符串
       if (value === null || value === undefined || value === '') {
         return '--';
       }
+      if (item.options && item.findByKey) {
+        value = getOptionLabel(item, value);
+      }
+      if (item.date) {
+        if (item.date === true && typeof item.date === 'boolean') {
+          return formatDate(value);
+        } else if (typeof item.date === 'string') {
+          return formatDate(value, item.date);
+        }
+      }
 
-      return value;
+      return String(value);
     };
 
     return {

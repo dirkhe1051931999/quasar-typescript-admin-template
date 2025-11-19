@@ -1,7 +1,18 @@
 <template>
   <q-field class="j-q-option-group no-border-field" :label="label" :disable="disable" :rules="rules" :outlined="outlined" :dense="dense" no-error-icon stack-label borderless v-model="innerModel">
     <template #control>
-      <q-option-group v-model="innerModel" :options="computedOptions" :type="type" :disable="disable" :inline="inline" :size="size" :color="color" @change="change" :dense="dense" />
+      <q-option-group
+        v-model="innerModel"
+        :class="computedInlineSpanClass"
+        :options="computedOptions"
+        :type="type"
+        :disable="disable"
+        :inline="inline"
+        :size="size"
+        :color="color"
+        @change="change"
+        :dense="dense"
+      />
     </template>
   </q-field>
 </template>
@@ -34,6 +45,7 @@ export default defineComponent({
     outlined: { type: Boolean as PropType<QFieldProps['outlined']>, default: true },
     dense: { type: Boolean as PropType<QFieldProps['dense']>, default: true },
     type: { type: String as PropType<QOptionGroupProps['type']>, default: 'radio' },
+    inlineSpanCount: { type: Number, default: 3, required: false },
   },
   emits: {
     // change 事件在 q-option-group 中会在值变化后触发一次
@@ -53,6 +65,10 @@ export default defineComponent({
             // uncheckedIcon: 'app:radio-unchecked',
           }))
         : [];
+    });
+
+    const computedInlineSpanClass = computed(() => {
+      return !props.inline ? `inline-span-${props.inlineSpanCount}` : '';
     });
 
     // 1. 监听外部 modelValue 变化，同步到内部状态
@@ -81,6 +97,7 @@ export default defineComponent({
     };
 
     return {
+      computedInlineSpanClass,
       innerModel,
       computedOptions,
       change,
@@ -93,6 +110,13 @@ export default defineComponent({
   .q-field__control {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  .inline-span-3 {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 }
 </style>

@@ -1,11 +1,9 @@
 <template>
   <q-input
     class="j-q-input"
-    :class="{
-      'j-q-input--table': label,
-      'j-q-input--form': !label,
-    }"
-    v-model="innerModel"
+    :class="computedClass"
+    :model-value="computedInputValue"
+    @update:model-value="innerModel = $event"
     :borderless="borderless"
     :dense="dense"
     :disable="disable"
@@ -21,12 +19,13 @@
     :placeholder="!label ? $t('messages.pleaseEnter') : ''"
     clear-icon="app:clear"
     clearable
+    ref="qInputRef"
   >
     <template #prepend v-if="slots.prepend">
       <slot name="prepend"></slot>
     </template>
     <template #append v-if="slots.append">
-      <slot name="append"></slot>
+      <slot name="append" :toggle-visibility="toggleVisibility" :custom-type="customType" :raw-value="modelValue" :display-value="computedDisplayValue" :is-content-visible="isContentVisible"></slot>
     </template>
     <template #after v-if="slots.after">
       <slot name="after"></slot>
@@ -34,13 +33,13 @@
   </q-input>
 </template>
 <script lang="ts">
-import type { PropType } from 'vue';
-import { defineComponent, ref, watch } from 'vue';
-import type { QInputProps } from 'quasar';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
+import type { QInput, QInputProps } from 'quasar';
 
 type TModelValue = QInputProps['modelValue'];
 type TInputLimitFn = (value: TModelValue) => boolean;
 type TMaxlength = string | number | null;
+type TCustomType = 'text' | 'password' | 'secret';
 
 export default defineComponent({
   name: 'JQInput',
@@ -55,11 +54,12 @@ export default defineComponent({
       default: () => true,
     },
     label: { type: String as PropType<QInputProps['label']> },
-    maxlength: { type: [String, Number] as PropType<TMaxlength>, default: 32 },
+    maxlength: { type: [String, Number] as PropType<TMaxlength>, default: 64 },
     outlined: { type: Boolean as PropType<QInputProps['outlined']>, default: true },
     readonly: { type: Boolean },
     rules: { type: Array as () => QInputProps['rules'] },
     type: { type: String as PropType<QInputProps['type']> },
+    customType: { type: String as PropType<TCustomType>, default: 'text', required: false },
   },
   emits: {
     change: (value: TModelValue) => true,
@@ -69,9 +69,32 @@ export default defineComponent({
     after: void 0,
     append: void 0,
     prepend: void 0,
+    default: void 0,
   },
-  setup(props, { emit, slots }) {
+  setup(props, { emit, slots, expose }) {
     const innerModel = ref<TModelValue>(props.modelValue ?? '');
+    const qInputRef = ref<QInput | null>(null);
+    const isContentVisible = ref(props.customType !== 'secret');
+    const computedDisplayValue = computed(() => {
+      const value = String(props.modelValue ?? '');
+      if (props.customType === 'secret' && !isContentVisible.value) {
+        if (value.length <= 6) {
+          return '***';
+        }
+        const start = value.substring(0, 3);
+        const end = value.substring(value.length - 3);
+        return `${start}***${end}`;
+      }
+      return value;
+    });
+    const computedInputValue = computed(() => {
+      return props.customType === 'secret' ? computedDisplayValue.value : innerModel.value;
+    });
+    const computedClass = computed(() => {
+      return {
+        'input-password': props.customType === 'password' && !isContentVisible.value,
+      };
+    });
     watch(
       () => props.modelValue,
       (val) => {
@@ -95,13 +118,28 @@ export default defineComponent({
     const change = (val: TModelValue) => {
       emit('change', val);
     };
+    const toggleVisibility = () => {
+      isContentVisible.value = !isContentVisible.value;
+    };
+    expose({
+      validate: () => qInputRef.value?.validate() ?? false,
+      resetValidation: () => qInputRef.value?.resetValidation(),
+      toggleVisibility,
+    });
     return {
       innerModel,
+      computedInputValue,
+      computedDisplayValue,
+      computedClass,
       change,
       slots,
+      qInputRef,
+      isContentVisible,
+      toggleVisibility,
     };
   },
 });
 </script>
 
 <style lang="scss"></style>
+<script setup lang="ts"></script>

@@ -51,6 +51,7 @@ import { computed, defineComponent, getCurrentInstance, type PropType, ref } fro
 import { DialogProvider } from './index';
 import { formRules } from './form-rules';
 import { useI18n } from 'vue-i18n';
+import { rulesI18n } from './rules-i18n';
 
 type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
 
@@ -80,7 +81,9 @@ export default defineComponent({
     const getDataLoading = ref(false);
     const dynamicCompRef = ref(null);
     const currentDialogInstance = getCurrentInstance();
-    const { t } = useI18n();
+    const { t } = useI18n({
+      messages: rulesI18n,
+    });
     const rules = formRules(t);
     const computedComponentBind = computed(() => ({
       ...props.componentBind,

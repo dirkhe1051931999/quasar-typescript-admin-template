@@ -14,9 +14,9 @@
               </q-btn>
             </div>
           </div>
-        </div>
-        <div class="search-bar-extra-operation">
-          <slot name="extra-operation"></slot>
+          <div class="search-bar-extra-operation">
+            <slot name="extra-operation"></slot>
+          </div>
         </div>
       </div>
     </div>

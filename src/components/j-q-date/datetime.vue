@@ -270,6 +270,7 @@ export default defineComponent({
 
     const popupVisible = ref(false);
     const fieldRef = ref<InstanceType<typeof QField> | null>(null);
+    const isClearing = ref(false);
 
     // --- 范围选择状态 (range=true) ---
     const currentRange = ref<DateTimeRangeValue>({ from: null, to: null });
@@ -416,7 +417,7 @@ export default defineComponent({
     // --- 单选模式的 Watchers ---
     watch(currentSingleDate, (newDate, oldDate) => {
       if (props.range) return; // 仅在单选模式下执行
-
+      if (isClearing.value) return;
       // 日期变化，重置时间为 00:00:00
       if (newDate !== oldDate) {
         Object.assign(singleTimeParts, { h: 0, m: 0, s: 0 });
@@ -435,6 +436,8 @@ export default defineComponent({
     };
 
     const handleClear = () => {
+      isClearing.value = true; // **设置为 true**
+
       if (props.range) {
         currentRange.value = { from: null, to: null };
         Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
@@ -443,12 +446,19 @@ export default defineComponent({
       } else {
         currentSingle.value = null;
         Object.assign(singleTimeParts, { h: 0, m: 0, s: 0 });
-        currentSingleDate.value = date.formatDate(new Date(), DATE_MASK_QDATE);
+        // **保持 currentSingleDate 不变或使用空字符串，而不是今天**
+        // 使用空字符串 '' 可能在 QDate 中会显示今天的日期，但不会触发 watch 里的日期变化
+        currentSingleDate.value = '';
       }
       computedValue.value = null;
 
       fieldRef.value!.blur();
       popupVisible.value = false;
+
+      // 确保在下一个 tick 之后重置，防止 watch 仍然触发
+      setTimeout(() => {
+        isClearing.value = false; // **设置为 false**
+      }, 0);
     };
     const handleClearClick = () => {
       handleClear();
@@ -553,4 +563,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use 'index';
+</style>

@@ -1,17 +1,13 @@
 <template>
   <q-select
     ref="qSelectRef"
-    :class="{
-      'j-q-select--table': label,
-      'j-q-select--form': !label,
-    }"
     autocomplete="off"
     class="j-q-select"
     v-model="innerValue"
     clear-icon="app:clear"
     :clearable="clearable"
     :dense="dense"
-    :placeholder="filterable && !label && (!innerValue || (Array.isArray(innerValue) && innerValue.length === 0)) ? $t('messages.pleaseEnter') : ''"
+    :placeholder="filterable && !label && (!innerValue || (Array.isArray(innerValue) && innerValue.length === 0)) ? $t('messages.pleaseSelect') : ''"
     :disable="disable"
     :display-value="computedDisplayValue"
     :dropdown-icon="dropdownIcon"
@@ -267,6 +263,8 @@ export default defineComponent({
     );
     expose({
       copyOptions,
+      validate: () => qSelectRef.value?.validate() ?? false,
+      resetValidation: () => qSelectRef.value?.resetValidation(),
     });
     return {
       qSelectRef,
@@ -284,4 +282,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use './index';
+</style>

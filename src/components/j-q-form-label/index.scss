@@ -1,12 +1,14 @@
 .j-q-form-label {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  // 基础布局使用 baseline 实现 label 文本与输入框文本的视觉居中对齐
+  align-items: baseline;
   gap: 4px 16px;
   line-height: 1.5;
   margin-bottom: 16px;
 
   &.required {
+    // 必填项的 margin-bottom 通常需要小一点
     margin-bottom: 4px;
   }
 
@@ -26,14 +28,24 @@
     }
   }
 
-  // --- Form Value ---
-  .form-value {
+  // --- 新增：内容区域容器 (包裹主输入框和详情 slot) ---
+  .form-content {
     flex-grow: 1;
     flex-basis: auto;
+    // 使用 column 布局垂直堆叠内部元素
     display: flex;
-    align-items: center;
+    flex-direction: column;
     min-width: 0;
     max-width: 100%;
+  }
+
+  // --- Form Value (主输入框) ---
+  .form-value {
+    // 确保主输入框占据 form-content 的全部宽度
+    flex: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
     min-height: 40px;
 
     &__inner {
@@ -41,6 +53,13 @@
       min-width: 0;
     }
   }
+
+  // --- 详情 Slot 包裹容器的样式 ---
+  .form-item-detail-wrapper {
+    // 默认样式，水平模式下会被 horizontal 修饰符影响
+    width: 100%;
+  }
+
 
   // --- 垂直布局修饰符 ---
   &.form-label--vertical {
@@ -51,8 +70,43 @@
       margin-bottom: 2px;
     }
 
-    .form-value {
+    .form-content {
       flex-basis: auto;
+    }
+  }
+
+  // --- 水平布局修饰符 ---
+  &.form-label--horizontal {
+    flex-direction: row;
+    align-items: baseline;
+
+    .form-label {
+      // 1. 固定宽度 (占位功能依赖此宽度)
+      min-width: 80px;
+      // 2. 左对齐
+      text-align: left;
+
+      // 3. 多行文本省略（最多两行）
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+
+      // 覆盖垂直布局可能设置的 margin
+      margin-bottom: 0;
+    }
+
+    .form-content {
+      // 在 row 容器中，form-content 占据剩余所有空间
+      flex-grow: 1;
+      flex-basis: auto;
+    }
+
+    // 详情 Slot 样式：与主输入框左对齐，并添加顶部间距
+    .form-item-detail-wrapper {
+      margin-top: 4px;
+      width: 100%; // 确保占满 form-content 的宽度
     }
   }
 }

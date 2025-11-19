@@ -168,6 +168,16 @@ export const asyncRoutes: RouteRecordRaw[] = [
         },
         component: () => import(/* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'),
       },
+      {
+        path: 'guide',
+        name: 'ComponentGuide',
+        meta: {
+          title: 'componentGuide',
+          icon: 'developer',
+          pagePermissionId: ['view-all'],
+        },
+        component: () => import(/* webpackChunkName: "componentGuide" */ 'src/pages/components/componentGuide.vue'),
+      },
     ],
   },
   {

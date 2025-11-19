@@ -21,6 +21,7 @@ export default {
     splitter: '分割条',
     jsonEditor: 'JSON编辑器',
     jsonView: 'JSON预览',
+    componentGuide: '组件示例',
     tabs: '选项卡',
     sticky: 'Sticky',
     carousel: '跑马灯',

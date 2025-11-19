@@ -1,0 +1,135 @@
+<template>
+  <div class="row items-center no-wrap jc-editable-proxy">
+    <div class="q-pr-sm">
+      <slot name="display">
+        <span>{{ modelValue }}</span>
+      </slot>
+    </div>
+    <j-c-permission :code="code" :rm-dom="true">
+      <q-icon name="app:edit" class="cursor-pointer" :size="iconSize">
+        <q-popup-proxy ref="popupRef" transition-show="jump-down" transition-hide="jump-up" :breakpoint="400" @show="handleProxyShow">
+          <q-card :style="{ width: popupWidth }">
+            <q-card-section class="q-pt-md q-px-md q-pb-none">
+              <slot name="editor" :temp-value="tempValue" :update-temp-value="updateTempValue" :set-editor-ref="setEditorRef" />
+            </q-card-section>
+            <q-card-actions align="right" class="q-pb-md q-px-md" :class="{ 'q-pt-none': reuiqred, 'q-pt-md': !reuiqred }">
+              <q-btn dense :label="$t('action.confirm')" color="primary" @click="handleSave" :loading="saveLoading" />
+            </q-card-actions>
+          </q-card>
+        </q-popup-proxy>
+      </q-icon>
+    </j-c-permission>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType, ref, watch } from 'vue';
+import { QPopupProxy } from 'quasar';
+
+type ModelValueType = any;
+
+interface QInputRef {
+  validate: () => boolean;
+  resetValidation: () => void;
+}
+
+export default defineComponent({
+  name: 'JCEditableProxy',
+  inheritAttrs: false,
+  props: {
+    modelValue: {
+      type: null as unknown as PropType<ModelValueType>,
+      default: null,
+    },
+    iconSize: {
+      type: String,
+      default: '18px',
+    },
+    popupWidth: {
+      type: String,
+      default: '300px',
+    },
+    code: {
+      type: String,
+      default: '',
+    },
+    reuiqred: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  emits: ['update:modelValue', 'saved', 'confirm'],
+  setup(props, { emit }) {
+    const popupRef = ref<QPopupProxy | null>(null);
+    const tempValue = ref<ModelValueType>(props.modelValue);
+    const editorRef = ref<QInputRef | null>(null);
+    const saveLoading = ref(false);
+
+    const updateTempValue = (val: ModelValueType) => {
+      tempValue.value = val;
+    };
+
+    watch(
+      () => props.modelValue,
+      (newVal) => {
+        tempValue.value = newVal;
+      },
+      { immediate: true }
+    );
+
+    const handleProxyShow = () => {
+      tempValue.value = props.modelValue;
+    };
+
+    const handleSave = async () => {
+      let validationPassed = true;
+
+      if (editorRef.value && typeof editorRef.value.validate === 'function') {
+        validationPassed = editorRef.value.validate();
+      }
+
+      if (!validationPassed) {
+        return;
+      }
+      if (tempValue.value !== props.modelValue) {
+        saveLoading.value = true;
+        emit('confirm', tempValue.value, () => {
+          saveLoading.value = false;
+          handleSuccessfulSave();
+        });
+        return;
+      }
+
+      popupRef.value?.hide();
+    };
+
+    const setEditorRef = (refInstance: QInputRef | null) => {
+      editorRef.value = refInstance;
+    };
+
+    const handleSuccessfulSave = () => {
+      emit('update:modelValue', tempValue.value);
+      emit('saved', tempValue.value);
+
+      popupRef.value?.hide();
+    };
+
+    return {
+      saveLoading,
+      popupRef,
+      tempValue,
+      updateTempValue,
+      handleProxyShow,
+      handleSave,
+      editorRef,
+      setEditorRef,
+    };
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.jc-editable-proxy {
+  display: inline-flex;
+}
+</style>

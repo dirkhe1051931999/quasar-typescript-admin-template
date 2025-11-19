@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, watch } from 'vue';
-import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from 'components/beta/j-q-table/pagination';
+import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from './pagination';
 import { useI18n } from 'vue-i18n';
 
 interface PaginationInfo {
