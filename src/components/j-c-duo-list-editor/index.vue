@@ -30,6 +30,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
+import { QBtn } from 'quasar';
 
 type TModelItem = any;
 type TModelValue = TModelItem[];
@@ -37,6 +38,9 @@ type TActionMode = 'inline' | 'compact';
 
 export default defineComponent({
   name: 'JCDuoListEditor',
+  components: {
+    QBtn,
+  },
   props: {
     modelValue: {
       type: Array as PropType<TModelValue>,
