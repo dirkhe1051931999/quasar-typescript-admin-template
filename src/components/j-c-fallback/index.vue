@@ -48,6 +48,11 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+
+    falseIsValid: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     /**
@@ -59,6 +64,10 @@ export default defineComponent({
 
       // 1. 特殊处理：如果 zeroIsValid 为 true (默认)，则 0 或 '0' 认为是有效值
       if (props.zeroIsValid && (val === 0 || val === '0')) {
+        return true;
+      }
+
+      if (props.falseIsValid && val === false) {
         return true;
       }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="j-q-autocomplete" :style="`width: ${historyParams.width[searchId] || '250px'}`">
+  <div class="j-q-autocomplete" :style="`width: ${historyParams.width[searchId] || 'auto'}`">
     <q-input
       :class="{
         'j-q-input--table': label,
@@ -87,7 +87,7 @@ export default defineComponent({
     // --- 监听 modelValue 变化以过滤列表 ---
     watch(
       () => props.modelValue,
-      (newVal) => {
+      (newVal: any) => {
         // 当 modelValue 改变时，过滤列表
         historyParams.filterList = historyParams.list.filter((item: HistoryItem) => item.value.includes(newVal));
       }

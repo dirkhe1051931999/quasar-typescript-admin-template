@@ -1,3 +1,55 @@
+export function parseRuleString(ruleString: string): { name: keyof ReturnType<typeof formRules> | ''; args: any[] } {
+  if (!ruleString) {
+    return { name: '', args: [] };
+  }
+  const match = ruleString.match(/^([a-zA-Z]+)\(([^)]*)\)$/);
+  if (match) {
+    const name = match[1] as keyof ReturnType<typeof formRules>;
+    let args: any[] = [];
+    if (match[2]) {
+      args = match[2].split(',').map((arg) => {
+        const trimmedArg = arg.trim();
+        const num = Number(trimmedArg);
+        return isNaN(num) ? trimmedArg : num;
+      });
+    }
+    return { name, args };
+  }
+  return { name: ruleString as keyof ReturnType<typeof formRules>, args: [] };
+}
+
+export function executeValidation(ruleName: keyof ReturnType<typeof formRules>, value: string, ruleArgs: any[] = [], t: any): true | string {
+  const allRules = formRules(t);
+  const ruleDef = allRules[ruleName];
+  if (!ruleDef) {
+    console.warn(`Rule '${ruleName}' not found in formRules.`);
+    return true;
+  }
+
+  let validationFunctions: ((val: any) => true | string)[] = [];
+
+  if (Array.isArray(ruleDef)) {
+    validationFunctions = ruleDef;
+  } else if (typeof ruleDef === 'function') {
+    const result = (ruleDef as any)(...ruleArgs);
+
+    if (Array.isArray(result)) {
+      validationFunctions = result;
+    } else {
+      console.error(`[JQSelectNewValue] Rule '${ruleName}' function did not return an array of validation functions.`);
+      return true;
+    }
+  }
+
+  for (const validateFn of validationFunctions) {
+    const result = validateFn(value);
+    if (result !== true) {
+      return result;
+    }
+  }
+  return true;
+}
+
 export function formRules(t: any) {
   return {
     required: [
@@ -142,5 +194,13 @@ export function formRules(t: any) {
         },
       ];
     },
+    positiveInteger: [
+      (val?: any) => {
+        val = Number(val);
+        const isInt = Number.isInteger(val);
+        const isPositive = val > 0;
+        return (isInt && isPositive) || t('formRules.positiveInt');
+      },
+    ],
   };
 }

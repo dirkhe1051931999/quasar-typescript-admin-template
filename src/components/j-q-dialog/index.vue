@@ -52,6 +52,7 @@ import { DialogProvider } from './index';
 import { formRules } from './form-rules';
 import { useI18n } from 'vue-i18n';
 import { rulesI18n } from './rules-i18n';
+import { beforeFileEnter } from './file';
 
 type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
 
@@ -85,9 +86,10 @@ export default defineComponent({
       messages: rulesI18n,
     });
     const rules = formRules(t);
+    const beforeFile = beforeFileEnter;
     const computedComponentBind = computed(() => ({
       ...props.componentBind,
-      dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText, rules },
+      dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText, rules, beforeFile },
     }));
     const computedDialogWidth = computed(() => {
       return props.maxWidth && props.position === 'standard'

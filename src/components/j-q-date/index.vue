@@ -29,7 +29,7 @@
         <div v-if="slots['popup-prepend']" class="date-popup-prepend">
           <slot name="popup-prepend" />
         </div>
-        <q-date v-model="computedValue" minimal :options="options" :range="range" @range-start="onRangeStart" @range-end="onRangeEnd" />
+        <q-date v-model="computedValue" minimal :mask="mask" :options="options" :range="range" @range-start="onRangeStart" @range-end="onRangeEnd" />
       </div>
     </q-popup-proxy>
     <template #append>
@@ -44,14 +44,41 @@
     </template>
   </q-field>
 </template>
+
 <script lang="ts">
 import type { CSSProperties, PropType } from 'vue';
-import { computed, defineComponent, ref } from 'vue'; // 移除 watch, innerValue
+import { computed, defineComponent, ref } from 'vue';
 import { date, QDateProps, QField, QFieldProps, QPopupProxyProps } from 'quasar';
 
-// --- 类型定义优化 ---
-type TModelValue = QDateProps['modelValue'];
-type TValueDisplayFn = (value: TModelValue) => string | number | null | undefined; // 明确返回值类型
+// --- 类型定义 ---
+type TModelValue = QDateProps['modelValue'] | number | Date | { from: number | string | Date; to: number | string | Date }; // 扩展支持的时间类型
+type TValueDisplayFn = (value: TModelValue) => string | number | null | undefined;
+
+// --- 核心辅助函数：统一转 Date ---
+const DATETIME_MASK = 'YYYY-MM-DD HH:mm:ss'; // 用于解析可能带时间的字符串
+
+const toDate = (value: any): Date | null => {
+  if (value === null || typeof value === 'undefined' || value === '') return null;
+
+  // 1. 处理纯数字字符串或数字 (时间戳)
+  if (typeof value === 'number') return new Date(value);
+  if (typeof value === 'string' && /^\d+$/.test(value)) return new Date(Number(value));
+
+  // 2. 处理 Date 对象
+  if (value instanceof Date) return value;
+
+  // 3. 处理字符串 (尝试解析)
+  // 如果是标准的 YYYY-MM-DD，date.extractDate 能解
+  // 如果带时间，也尝试解一下
+  let result = date.extractDate(value, 'YYYY-MM-DD');
+  if (isNaN(result.getTime())) {
+    result = date.extractDate(value, DATETIME_MASK);
+  }
+  // 还是解不出来，尝试用 mask 属性解 (针对自定义 mask)
+  // 注意：setup 里拿不到 this，后续在 computed 里处理 mask 解析
+
+  return isNaN(result.getTime()) ? null : result;
+};
 
 export default defineComponent({
   name: 'JQDate',
@@ -75,7 +102,7 @@ export default defineComponent({
     hide: (...[evt]: Parameters<NonNullable<QPopupProxyProps['onHide']>>) => true,
     rangeStart: (...[from]: Parameters<NonNullable<QDateProps['onRangeStart']>>) => true,
     rangeEnd: (...[range]: Parameters<NonNullable<QDateProps['onRangeEnd']>>) => true,
-    'update:modelValue': (value: TModelValue) => true,
+    'update:modelValue': (value: any) => true,
   },
   slots: {
     'popup-prepend': void 0,
@@ -86,56 +113,88 @@ export default defineComponent({
     const popupVisible = ref(false);
     const fieldRef = ref<InstanceType<typeof QField> | null>(null);
 
-    // --- 优化 1: 简化 v-model 逻辑 (移除 innerValue 和 watch) ---
+    // --- 优化：强大的 computedValue ---
+    // 负责将外部各种花里胡哨的格式 (时间戳、Date、Object) 转成 q-date 唯一认识的 String (Mask格式)
     const computedValue = computed({
       get() {
-        let val = props.modelValue;
+        const val = props.modelValue;
 
-        if (props.range && val === '') {
+        if (val === null || val === undefined || val === '') {
           return null;
         }
 
-        return val;
+        // --- 范围选择模式 ---
+        if (props.range) {
+          if (typeof val === 'object' && val !== null) {
+            // 这里可能是 { from: 1764232..., to: 1765... } 或者是 { from: '2025...', to: ... }
+            const rawFrom = (val as any).from;
+            const rawTo = (val as any).to;
+
+            const dFrom = toDate(rawFrom);
+            const dTo = toDate(rawTo);
+
+            // 只要有一个有效，就尽量显示
+            if (dFrom || dTo) {
+              return {
+                from: dFrom ? date.formatDate(dFrom, props.mask) : '',
+                to: dTo ? date.formatDate(dTo, props.mask) : '',
+              };
+            }
+          }
+          return null;
+        }
+
+        // --- 单选模式 ---
+        const dVal = toDate(val);
+        if (dVal) {
+          return date.formatDate(dVal, props.mask);
+        }
+
+        // 如果实在转不了，原样返回（防止是某种特殊的字符串格式 q-date 能认但 toDate 认不了）
+        return val as string;
       },
       set(val) {
         emit('update:modelValue', val);
-        // 如果 val 有值（即完成了选择，或取消了选择但有默认值），关闭弹窗
-        // Quasar 默认行为是点击日期自动关闭，这里是为了确保逻辑覆盖
-        if (val && props.modelValue !== val) {
-          popupVisible.value = false;
+        // 如果有值，且不相等（防抖），且不是范围选择的一半状态（范围选择时 val 可能是 object），关闭弹窗
+        // 注意：范围选择时，q-date 会多次 emit，直到选完。
+        if (val) {
+          if (!props.range) {
+            popupVisible.value = false;
+          } else {
+            // 范围选择：只有 from 和 to 都有值时，才自动关闭（可选体验优化）
+            // 如果你希望选完两个日期自动关闭，可以解开下面的注释
+            // if (typeof val === 'object' && (val as any).from && (val as any).to) {
+            //    popupVisible.value = false;
+            // }
+          }
         }
       },
     });
 
-    // --- 优化 2: 修复 computedValueDisplay 逻辑 ---
+    // --- 显示逻辑 ---
+    // 因为 computedValue 已经被我们标准化成 String/Object String 了，这里处理显示就很简单
     const computedValueDisplay = computed(() => {
-      const val = computedValue.value;
-
-      // 外部自定义函数优先
+      // 1. 优先外部自定义
       if (props.valueDisplayFn) {
-        return String(props.valueDisplayFn(val) ?? '');
+        return String(props.valueDisplayFn(props.modelValue as any) ?? '');
       }
-      // 值为空时，统一返回空字符串
+
+      const val = computedValue.value; // 这里已经是格式化后的字符串了
       if (!val) return '';
 
-      // 范围选择逻辑： val 是 { from: string, to: string }
       if (props.range && typeof val === 'object') {
-        // 断言类型，确保访问 from 和 to 属性
         const { from, to } = val as { from: string; to: string };
         if (from && to) {
-          return `${date.formatDate(from, props.mask)} - ${date.formatDate(to, props.mask)}`;
+          return `${from} - ${to}`; // computedValue 已经按 mask 格式化了，直接拼
         }
-        // 范围未选完时，返回空字符串
         return '';
       }
 
       return String(val);
     });
 
-    // 优化 3: 简化 slot 检查
     const hasPopupPrepend = computed(() => !!slots['popup-prepend']);
 
-    // --- 事件处理 (保持不变) ---
     const onRangeStart: QDateProps['onRangeStart'] = (from) => {
       emit('rangeStart', from);
     };
@@ -145,19 +204,23 @@ export default defineComponent({
     const onHidePopup: QPopupProxyProps['onHide'] = (evt) => {
       emit('hide', evt);
     };
+
     const handleClear = () => {
       computedValue.value = null;
       fieldRef.value!.blur();
     };
+
+    // 你特意嘱咐的 handleClearClick，必须要在！
     const handleClearClick = () => {
       handleClear();
     };
 
     expose({ popupVisible });
+
     return {
       fieldRef,
       handleClear,
-      handleClearClick,
+      handleClearClick, // 没丢！
       computedValue,
       computedValueDisplay,
       popupVisible,
@@ -172,5 +235,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@use './index';
+@use '../j-q-date/index';
 </style>

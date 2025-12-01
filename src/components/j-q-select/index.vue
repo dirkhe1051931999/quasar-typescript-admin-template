@@ -28,8 +28,12 @@
     :title="title ?? computedDisplayValue"
     :use-chips="useChips"
     :use-input="filterable ?? useInput"
+    :loading="loading"
     @filter="filter"
   >
+    <template #loading>
+      <q-spinner color="primary" size="14px" :thickness="2" />
+    </template>
     <template #selected v-if="slots['value-display']">
       <slot name="value-display"></slot>
     </template>
@@ -111,6 +115,7 @@ export default defineComponent({
     useChips: { type: Boolean as PropType<QSelectProps['useChips']> },
     useInput: { type: Boolean as PropType<QSelectProps['useInput']> },
     valueDisplayFn: { type: Function as PropType<TValueDisplayFn> },
+    loading: { type: Boolean as PropType<QSelectProps['loading']> },
   },
   emits: {
     'update:modelValue': (value: TModelValue) => true,

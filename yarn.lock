@@ -6845,6 +6845,11 @@ rollup-plugin-visualizer@^5.12.0:
     source-map "^0.7.4"
     yargs "^17.5.1"
 
+rtcpt@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmmirror.com/rtcpt/-/rtcpt-0.0.1.tgz#abb02d08d6cdacaeb958a826f77911d69833afc4"
+  integrity sha512-DXB1G6GXawaQ5yUSA3A46p+tk6y7eNv6WISPG1pIFwNjrWKme9tbXkKd/70Ox/y7kPTK1/Ujncv2DzqMKbFW9g==
+
 rtlcss@4.3.0:
   version "4.3.0"
   resolved "https://registry.npmmirror.com/rtlcss/-/rtlcss-4.3.0.tgz#f8efd4d5b64f640ec4af8fa25b65bacd9e07cc97"

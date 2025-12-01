@@ -11,6 +11,9 @@ export const rulesI18n = {
       invalidPort: 'Invalid port number',
       rangeInt: 'Value must be an integer between {min} and {max}',
       rangeNumber: 'Value must be between {min} and {max}',
+      invalidInput: 'Invalid input',
+      alreadyExists: 'Already exists',
+      positiveInt: 'Value must be a positive integer',
     },
   },
   'zh-CN': {
@@ -25,6 +28,9 @@ export const rulesI18n = {
       invalidPort: '端口号格式不正确',
       rangeInt: '值必须是 {min} 到 {max} 之间的整数',
       rangeNumber: '值必须在 {min} 到 {max} 之间',
+      invalidInput: '无效输入',
+      alreadyExists: '已存在',
+      positiveInt: '值必须是正整数',
     },
   },
 };

@@ -39,6 +39,7 @@ export interface DetailItem {
   findByKey?: string;
   displayKey?: string;
   tip?: string;
+  format: (value: any) => any;
 }
 
 type TDetailData = Record<string, any>;
@@ -70,18 +71,20 @@ export default defineComponent({
       if (!options || !findByKey) {
         return value;
       }
-      const foundItem = options.find((option) => option[findByKey] === value);
+      const foundItem = options.find((option) => String(option[findByKey]) === String(value));
       return foundItem ? foundItem[displayKey] : value;
     };
 
     const getDefaultValue = (item: DetailItem) => {
       let value = props.data[item.name];
-
       if (value === null || value === undefined || value === '') {
         return '--';
       }
       if (item.options && item.findByKey) {
         value = getOptionLabel(item, value);
+      }
+      if (item.format && typeof item.format === 'function') {
+        value = item.format(value);
       }
       if (item.date) {
         if (item.date === true && typeof item.date === 'boolean') {

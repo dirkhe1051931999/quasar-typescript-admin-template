@@ -1,7 +1,15 @@
 <template>
   <div class="j-q-form-label" :class="[directionClass, { required: required }]">
     <div v-if="showLabel" class="form-label" :class="[labelClass, { required: required }]">
-      {{ label }}
+      <div class="row items-center">
+        {{ label }}
+        <q-icon name="app:question" size="14px" class="q-ml-xs" v-if="tip">
+          <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+            {{ tip }}
+          </q-tooltip>
+        </q-icon>
+      </div>
+
       <slot name="label-hint"></slot>
     </div>
     <div class="form-content">
@@ -31,6 +39,7 @@ export default defineComponent({
     vertical: { type: Boolean, default: false },
     horizontal: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
+    tip: { type: String, default: '' },
   },
   slots: {
     default: void 0,

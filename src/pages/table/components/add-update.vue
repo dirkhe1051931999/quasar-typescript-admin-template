@@ -118,13 +118,13 @@ import globalMessage from 'src/components/j-q-message';
 import JQInput from 'components/j-q-input/index.vue';
 import JQSelect from 'components/j-q-select/index.vue';
 import JQFile from 'components/j-q-file/index.vue';
-import JQDate from 'components/j-q-date/date.vue';
+import JQDate from 'components/j-q-date/index.vue';
 import JQRadio from 'components/j-q-option-group/index.vue';
 import JQOptionGroup from 'components/j-q-option-group/index.vue';
 import JQFormLabel from 'components/j-q-form-label/index.vue';
 import { cloneDeep } from 'lodash';
 import JCListEditor from 'components/j-c-list-editor/index.vue';
-import JQDateTime from 'components/j-q-date/datetime.vue';
+import JQDateTime from 'components/j-q-datetime/index.vue';
 
 @Component({
   name: 'TableAddOrUpdateComponent',

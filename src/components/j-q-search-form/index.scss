@@ -17,7 +17,8 @@ $search-bar-item-min-width: 250px;
   // 1. 左侧：表单项 + Query/Reset 按钮
   // ===============================================
   .search--bar-items-wrapper {
-    display: block;
+    display: flex;
+    align-items: flex-start;
   }
 
   .search--bar-items {
@@ -25,9 +26,10 @@ $search-bar-item-min-width: 250px;
     flex-wrap: wrap;
     gap: 12px;
     align-items: flex-start;
+    float: left;
 
     > * {
-      width: $search-bar-item-min-width;
+      min-width: $search-bar-item-min-width;
       flex-shrink: 0;
     }
   }
@@ -50,7 +52,7 @@ $search-bar-item-min-width: 250px;
     gap: 12px;
     flex-shrink: 0;
     float: right;
-    margin-top: 8px;
+    margin-left: auto;
   }
 
   .operation-reset {

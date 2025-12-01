@@ -2,7 +2,7 @@
   <q-tree
     ref="main"
     v-model:ticked="computedValue"
-    :default-expand-all="defaultExpandAll"
+    default-expand-all
     :label-key="optionLabel"
     :node-key="optionValue"
     :nodes="options"
@@ -41,7 +41,6 @@ export default defineComponent({
     tickStrategy: { type: String as PropType<TickStrategy>, default: 'strict' },
     readonly: { type: Boolean, default: false },
     disable: { type: Boolean, default: false },
-    defaultExpandAll: { type: Boolean, default: true },
   },
   emits: ['update:modelValue'],
   setup(props, { emit, expose }) {

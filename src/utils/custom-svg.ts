@@ -4,5 +4,10 @@ export const myIcons: { [key: string]: string } = {
   'app:clear': 'svg/clear.svg',
   'app:navigation-arrow-left': 'svg/navigation-arrow-left.svg',
   'app:navigation-arrow-right': 'svg/navigation-arrow-right.svg',
+  'app:radio-checked': 'svg/radio-checked.svg',
+  'app:radio-unchecked': 'svg/radio-unchecked.svg',
+  'app:table-check': 'svg/table-check.svg',
+  'app:table-not-check': 'svg/table-not-check.svg',
+  'app:table-not-full-check': 'svg/table-not-full-check.svg',
   'app:upload': 'svg/upload.svg'
 };

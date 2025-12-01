@@ -11,7 +11,7 @@
         </div>
         <div style="margin-top: 4px">
           <q-btn icon="remove_circle_outline" flat round dense color="grey" @click="removeItem(index)" v-if="innerValue.length > 1" />
-          <q-btn icon="add_circle_outline" flat round dense color="grey" @click="addItem(index + 1)" v-if="innerValue.length - 1 === index && innerValue.length < maxItems" />
+          <q-btn icon="add_circle_outline" flat round dense color="grey" @click="addItem(index + 1)" v-if="innerValue.length - 1 === index && innerValue.length < maxItems" :type="inputType" />
         </div>
       </div>
     </j-q-form-label>
@@ -41,6 +41,7 @@ export default defineComponent({
     placeholder: { type: String, default: '' },
     defaultNewValue: { type: String, default: '' },
     maxItems: { type: [String, Number] as PropType<number>, default: 5 },
+    inputType: { type: String, default: 'text' },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {

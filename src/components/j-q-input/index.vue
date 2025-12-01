@@ -142,4 +142,3 @@ export default defineComponent({
 </script>
 
 <style lang="scss"></style>
-<script setup lang="ts"></script>

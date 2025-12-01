@@ -1,5 +1,11 @@
 <template>
   <div>
+    <jCsvg name="developer" class="q-ml-md" />
+    <JCDuoListEditor v-model="listData" :default-new-item="{ name: 'New Item' }" action-mode="compact">
+      <template #item-content="{ item, updateItem }">
+        <q-input :model-value="item.name" @update:model-value="(val) => updateItem(index, { name: val })" dense />
+      </template>
+    </JCDuoListEditor>
     <j-q-search-form v-model="tableParams.query.params" :query-loading="tableParams.loading" @query="handleClickQuery" @reset="handleClickReset" class="q-mb-md">
       <j-q-input v-model="tableParams.query.params.name" label="Name" />
       <j-q-input v-model="tableParams.query.params.age" label="Age" />
@@ -64,19 +70,20 @@ import JQSearchForm from 'components/j-q-search-form/index.vue';
 import JQAutocomplete from 'components/j-q-autocomplete/index.vue';
 import JQInput from 'components/j-q-input/index.vue';
 import JQSelect from 'components/j-q-select/index.vue';
-import JQDate from 'components/j-q-date/date.vue';
+import JQDate from 'components/j-q-date/index.vue';
 import JCSvg from 'components/j-c-svg/index.vue';
 import SvgDeveloper from 'components/j-c-svg/index.vue';
 import JCvgIcon from 'components/j-c-svg/index.vue';
 import JCPermission from 'components/j-c-permission/index.vue';
-import JQDateTime from 'components/j-q-date/datetime.vue';
 import JCTreeSelect from 'components/j-c-tree-select/index.vue';
+import JQDateTime from 'components/j-q-datetime/index.vue';
+import { JCDuoListEditor, jCsvg } from 'rtcpt';
 
 @Component({
   name: 'TablePage',
   components: {
-    JCTreeSelect,
     JQDateTime,
+    JCTreeSelect,
     JCPermission,
     JCvgIcon,
     SvgDeveloper,
@@ -89,6 +96,8 @@ import JCTreeSelect from 'components/j-c-tree-select/index.vue';
     SQTooltip,
     JQConfirm,
     JQTable,
+    jCsvg,
+    JCDuoListEditor,
   },
 })
 export default class extends TableSelectionMixin {
@@ -99,6 +108,7 @@ export default class extends TableSelectionMixin {
   }
 
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
+  public listData = [{ name: 'Item 1' }];
   public tableParams = {
     query: {
       cityOptions: [

@@ -1,5 +1,17 @@
 <template>
-  <q-field class="j-q-option-group no-border-field" :label="label" :disable="disable" :rules="rules" :outlined="outlined" :dense="dense" no-error-icon stack-label borderless v-model="innerModel">
+  <q-field
+    class="j-q-option-group no-border-field"
+    :label="label"
+    :disable="disable"
+    :rules="rules"
+    :outlined="outlined"
+    :dense="dense"
+    no-error-icon
+    stack-label
+    borderless
+    v-model="innerModel"
+    :class="[{ 'inline-block': inline, 'q-mb-xs': !rules?.length }, filedClass]"
+  >
     <template #control>
       <q-option-group
         v-model="innerModel"
@@ -12,7 +24,16 @@
         :color="color"
         @change="change"
         :dense="dense"
-      />
+      >
+        <template #label="option">
+          {{ option.label }}
+          <q-icon name="app:question" size="14px" class="q-ml-xs" v-if="option.tip">
+            <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]">
+              {{ option.tip }}
+            </q-tooltip>
+          </q-icon>
+        </template>
+      </q-option-group>
     </template>
   </q-field>
 </template>
@@ -46,6 +67,7 @@ export default defineComponent({
     dense: { type: Boolean as PropType<QFieldProps['dense']>, default: true },
     type: { type: String as PropType<QOptionGroupProps['type']>, default: 'radio' },
     inlineSpanCount: { type: Number, default: 3, required: false },
+    filedClass: { type: String, default: '', required: false },
   },
   emits: {
     // change 事件在 q-option-group 中会在值变化后触发一次
@@ -59,14 +81,25 @@ export default defineComponent({
 
     const computedOptions = computed(() => {
       return props.options
-        ? props.options!.map((option) => ({
-            ...option,
-            // checkedIcon: 'app:radio-checked',
-            // uncheckedIcon: 'app:radio-unchecked',
-          }))
+        ? props.options!.map((option) => {
+            const icon: any = {
+              radio: {
+                checkedIcon: 'app:radio-checked',
+                uncheckedIcon: 'app:radio-unchecked',
+              },
+              checkbox: {
+                checkedIcon: 'app:table-check',
+                uncheckedIcon: 'app:table-not-check',
+                indeterminateIcon: 'app:table-not-full-check',
+              },
+            };
+            return {
+              ...option,
+              ...(icon[props.type!] || {}),
+            };
+          })
         : [];
     });
-
     const computedInlineSpanClass = computed(() => {
       return !props.inline ? `inline-span-${props.inlineSpanCount}` : '';
     });
