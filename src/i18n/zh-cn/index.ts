@@ -1,0 +1,37 @@
+export default {
+  action: {
+    confirm: '确认',
+    cancel: '取消',
+    query: '搜索',
+    reset: '重置',
+  },
+  messages: {
+    pleaseEnter: '请输入',
+    pleasePressEnterEnter: '请按回车键确认',
+    pleaseSelect: '请选择',
+    noData: '无数据',
+    date: { start: '起始时间', end: '结束时间', confirm: '确认', hour: '时', minute: '分', second: '秒' },
+    loading: '加载中...',
+    formRules: {
+      required: '必填',
+      arrMaxLength: '最多选择 {max} 项',
+      percentageInvalid: '请输入有效的百分比（0-100）',
+      over0: '值必须大于 0%',
+      less100: '值必须小于 100%',
+      addressInvalid: '格式不正确，例如：{example}',
+      emailInvalid: '邮箱格式不正确',
+      invalidPort: '端口号格式不正确',
+      rangeInt: '值必须是 {min} 到 {max} 之间的整数',
+      rangeNumber: '值必须在 {min} 到 {max} 之间',
+      invalidInput: '无效输入',
+      alreadyExists: '已存在',
+      positiveInt: '值必须是正整数',
+    },
+    jQFile: {
+      click_or_drag_file: '点击或拖拽文件到此处上传',
+      file_type_is: '支持的文件类型: {type}',
+      max_file_size: '最大文件大小: {size}',
+    },
+    pagination: { pieces_page: '每页条数', goto: '跳转', total: '总条数' },
+  },
+};

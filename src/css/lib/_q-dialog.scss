@@ -1,0 +1,39 @@
+// Q-Dialog 统一样式配置
+// 使用 CSS 变量和 Quasar 的样式系统，而非直接覆盖 CSS
+
+// 定义全局 CSS 变量，便于统一管理和主题切换
+:root {
+  // Q-Dialog 统一样式变量
+  --q-dialog-inner-padding: 16px;
+  --q-dialog-inner-fullheight-padding: 0; // fullheight 时不需要 padding
+  --q-dialog-border-radius: 4px;
+  --q-dialog-right-panel-left-radius: 0; // 右侧面板时左侧圆角（左上和左下）
+  --q-dialog-backdrop: rgba(0, 0, 0, 0.5);
+  --q-dialog-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+// 标准 dialog 样式
+.q-dialog__inner {
+  padding: var(--q-dialog-inner-padding);
+}
+
+// fullheight dialog 时移除 padding（用于右侧面板等场景）
+// 使用 CSS 变量而非硬编码，便于统一管理和维护
+.q-dialog__inner--fullheight {
+  padding: var(--q-dialog-inner-fullheight-padding);
+}
+
+// 右侧面板 dialog 样式
+.j-q-dialog.right-panel {
+  .dialog-main {
+    // 右侧面板时，左上和左下圆角为 0（使用 CSS 变量统一管理）
+    border-top-left-radius: var(--q-dialog-right-panel-left-radius) !important;
+    border-bottom-left-radius: var(--q-dialog-right-panel-left-radius) !important;
+  }
+}
+
+// 暗色模式支持
+.body--dark {
+  --q-dialog-backdrop: rgba(0, 0, 0, 0.7);
+  --q-dialog-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}

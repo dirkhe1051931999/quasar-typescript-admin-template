@@ -29,12 +29,14 @@ export default defineConfig({
         rollupOptions: {
             // 确保外部化处理那些不想打包进库的依赖
             // Quasar 和 Vue 是最常见的外部依赖
-            external: ['vue', 'quasar'],
+            external: ['vue', 'quasar', 'chart.js', 'chart.js/auto'],
             output: {
                 // 在 UMD/IIFE 构建模式下，为外部化的依赖提供全局变量
                 globals: {
                     vue: 'Vue',
                     quasar: 'Quasar',
+                    'chart.js': 'Chart',
+                    'chart.js/auto': 'Chart',
                 },
             },
         },

@@ -1,0 +1,92 @@
+// ------------------------------------------------------------------
+// 修正后的核心混入：QField 控件基础重置
+// ------------------------------------------------------------------
+
+@mixin field-control-reset($height, $base-padding-top) { // 增加一个参数用于控制基础 padding
+  &.q-field--dense {
+    // 1. 统一 QField 控件和边距的高度
+    .q-field__control,
+    .q-field__marginal {
+      height: $height !important;
+      min-height: $height !important;
+    }
+
+    // 2. 强制重置 QField 内容容器的垂直 padding
+    .q-field__native {
+      // 关键修正：设置基础的 padding-top，这在无标签时可以居中，有标签时可以推开内容
+      padding-top: $base-padding-top !important;
+      padding-bottom: 0 !important;
+      min-height: $height !important;
+
+      // 3. 强制重置 QInput 输入内容的容器，避免其内部干扰
+      .q-field__control-input {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+    }
+
+    // 4. 重置 QField 默认的 line-height
+    // 无标签时，control 的 line-height 决定了文本的垂直居中
+    .q-field__control {
+      line-height: $height;
+
+      &:before {
+        border: 1px solid rgba(0, 0, 0, 0.08)
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// 修正 j-q-input--table 模式 (高度 36px)
+// 使用 $base-padding-top: 14px
+// ------------------------------------------------------------------
+.j-q-input--table {
+  // 传入 14px 作为基础 padding-top
+  @include field-control-reset(36px, 14px);
+
+  &.q-field--dense {
+    // 标签浮动 (labeled) 状态修正
+    &.q-field--labeled {
+      // 保持 label 浮动到顶部
+      // 此时 native 容器的 padding-top 已经是 14px。
+      // 总高度 36px，顶部 14px 被 label 占据，内容在剩下的 22px 区域。
+
+      .q-field__control {
+        // 关键修正：内容区域高度是 36px - 14px = 22px
+        // 为了让内容在底部 22px 区域居中，需要设置 line-height
+        // 实际应用中，22px 可能略低，我们使用一个更保守的值确保文本不被截断。
+        // 假设文本行高为 16px，使用 22px 的 line-height 可以确保其在 22px 空间内垂直居中。
+        line-height: 22px;
+      }
+
+      // 移除原有的 control-input padding-top，因为它现在由 native 承担了
+      .q-field__control-input {
+        padding-top: 0 !important;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// 修正 j-q-input--form 模式 (高度 40px)
+// 使用 $base-padding-top: 16px (保持垂直比例居中)
+// ------------------------------------------------------------------
+.j-q-input--form {
+  // 传入 16px 作为基础 padding-top (40px 高度下的居中/预留值)
+  @include field-control-reset(40px, 0);
+
+  &.q-field--dense {
+    // 标签浮动 (labeled) 状态修正
+    &.q-field--labeled {
+      .q-field__control {
+        // 关键修正：内容区域高度是 40px - 16px = 24px
+        line-height: 24px;
+      }
+
+      .q-field__control-input {
+        padding-top: 0 !important;
+      }
+    }
+  }
+}

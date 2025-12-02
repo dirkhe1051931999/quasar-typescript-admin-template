@@ -1,0 +1,145 @@
+// 文件名: src/css/my-atomic/_decoration.scss
+
+// 导入修饰变量
+@use 'vars-decoration';
+
+// ----------------------------------------------------
+// 1. 边框半径 (Border Radius) - r-*
+// ----------------------------------------------------
+@each $key, $value in vars-decoration.$radius-sizes {
+  // r-all (全部)
+  .r-#{$key} {
+    border-radius: $value;
+  }
+
+  // r-t (上)
+  .r-t-#{$key} {
+    border-top-left-radius: $value;
+    border-top-right-radius: $value;
+  }
+
+  // r-b (下)
+  .r-b-#{$key} {
+    border-bottom-left-radius: $value;
+    border-bottom-right-radius: $value;
+  }
+
+  // r-l (左)
+  .r-l-#{$key} {
+    border-top-left-radius: $value;
+    border-bottom-left-radius: $value;
+  }
+
+  // r-r (右)
+  .r-r-#{$key} {
+    border-top-right-radius: $value;
+    border-bottom-right-radius: $value;
+  }
+}
+
+// 示例 (Example):
+// // <div class="r-8"> 普通圆角 8px </div>
+// // <q-avatar class="r-50p"> 用于生成圆形头像 </q-avatar>
+// // <div class="r-t-10"> 顶部圆角 10px </div>
+
+// ----------------------------------------------------
+// 2. z-index - z-*
+// ----------------------------------------------------
+@each $key, $value in vars-decoration.$z-indexes {
+  .z-#{$key} {
+    z-index: $value;
+  }
+}
+
+// 示例 (Example):
+// // <q-dialog class="z-max"> 确保弹窗在最上层 </q-dialog>
+// // <q-fab class="z-100"> 浮动按钮，高于常规内容 </q-fab>
+// // <div class="z-1"> 基础层级，用于提升堆叠上下文 </div>
+
+// ----------------------------------------------------
+// 3. 不透明度 (Opacity) - op-*
+// ----------------------------------------------------
+@each $key, $value in vars-decoration.$opacities {
+  .op-#{$key} {
+    opacity: $value;
+  }
+}
+
+// 示例 (Example):
+// // <div class="op-0"> 完全隐藏元素，但仍占据空间 </div>
+// // <q-spinner class="op-50"> 半透明的加载动画 </q-spinner>
+// // <q-icon class="op-80"> 略微变淡的图标 </div>
+
+// ----------------------------------------------------
+// 4. 边框 (Border) - b-*
+// ----------------------------------------------------
+
+// 4.1 边框宽度 (bw-*)
+@each $key, $value in vars-decoration.$border-widths {
+  .bw-#{$key} {
+    border-width: $value;
+  }
+  .bw-t-#{$key} {
+    border-top-width: $value;
+  }
+  .bw-b-#{$key} {
+    border-bottom-width: $value;
+  }
+  // ... 可以继续扩展 bw-l 和 bw-r
+}
+
+// 示例 (Example for bw-*):
+// // <div class="bw-4 bs-solid border-red"> 边框宽度 4px </div>
+// // <div class="bw-t-2 bs-dotted border-grey"> 顶部边框宽度 2px </div>
+// // <q-input class="bw-0"> 移除所有边框宽度 (前提是它有默认边框) </div>
+
+// 4.2 边框样式 (bs-*) - Quasar 默认可能没有，作为补充
+// 需要 Quasar 的颜色变量（例如 $primary, $grey-4）来完成完整边框类
+// 这里只提供样式，配合 Quasar 的颜色类（如 border-primary）使用
+.bs-solid {
+  border-style: solid;
+}
+
+.bs-dotted {
+  border-style: dotted;
+}
+
+.bs-dashed {
+  border-style: dashed;
+}
+
+// 示例 (Example for bs-*):
+// // <div class="b-1 bs-solid border-primary"> 1px 实线边框 </div>
+// // <div class="b-b-1 bs-dotted border-grey"> 底部 1px 点状边框 </div>
+// // <div class="b-1 bs-dashed border-red"> 1px 虚线边框 </div>
+
+// 4.3 边框方向 (b-*) - 结合 1px solid 默认值 (b-1)
+// 假设常用的边框为 1px solid
+.b-1 {
+  border: 1px solid;
+}
+
+.b-none {
+  border: none;
+}
+
+.b-t-1 {
+  border-top: 1px solid;
+}
+
+.b-b-1 {
+  border-bottom: 1px solid;
+}
+
+.b-l-1 {
+  border-left: 1px solid;
+}
+
+.b-r-1 {
+  border-right: 1px solid;
+}
+
+// 示例 (Example for b-*):
+// // <div class="b-1 border-red"> 四周 1px 实线边框 (需要配合 Quasar 颜色类) </div>
+// // <div class="b-none"> 移除所有边框 </div>
+// // <q-card class="b-b-1 border-grey-4"> 卡片底部 1px 边框分隔线 </div>

@@ -1,0 +1,37 @@
+export default {
+  action: {
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    query: 'Query',
+    reset: 'Reset',
+  },
+  messages: {
+    pleaseEnter: 'Please enter',
+    pleasePressEnterEnter: 'Please press Enter to enter',
+    pleaseSelect: 'Please select',
+    noData: 'No data',
+    date: { start: 'Start Date', end: 'End Date', confirm: 'Confirm', hour: 'Hour', minute: 'Minute', second: 'Second' },
+    loading: 'Loading...',
+    formRules: {
+      required: 'Required',
+      arrMaxLength: 'Select up to {max} items',
+      percentageInvalid: 'Enter a valid percentage (0-100)',
+      over0: 'Value must be greater than 0%',
+      less100: 'Value must be less than 100%',
+      addressInvalid: 'Invalid format, e.g. {example}',
+      emailInvalid: 'Invalid email address',
+      invalidPort: 'Invalid port number',
+      rangeInt: 'Value must be an integer between {min} and {max}',
+      rangeNumber: 'Value must be between {min} and {max}',
+      invalidInput: 'Invalid input',
+      alreadyExists: 'Already exists',
+      positiveInt: 'Value must be a positive integer',
+    },
+    jQFile: {
+      click_or_drag_file: 'Click to upload',
+      file_type_is: 'Supported file types: {type}',
+      max_file_size: 'Maximum file size: {size}',
+    },
+    pagination: { pieces_page: 'Pieces/page', goto: 'Goto', total: 'Total' },
+  },
+};

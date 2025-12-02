@@ -1,0 +1,43 @@
+@use './vars-color';
+
+:root {
+  @each $key, $value in vars-color.$custom-colors {
+    // 统一使用 --j-color- 前缀
+    --j-color-#{$key}: #{$value};
+  }
+}
+
+@each $key, $value in vars-color.$custom-colors {
+  // ------------------------------------
+  // Border Color 辅助类 (j-border-color-*)
+  // ------------------------------------
+
+  .j-border-color-#{$key} {
+    border-color: $value !important;
+  }
+
+  // ------------------------------------
+  // Border Color 辅助类 (j-border-color-[direction]-*)
+  // ------------------------------------
+  @each $direction in (left, right, top, bottom) {
+    .j-border-color-#{$direction}-#{$key} {
+      border-#{$direction}-color: $value !important;
+    }
+  }
+
+  // ------------------------------------
+  // Background Color 辅助类 (j-bg-color-*)
+  // ------------------------------------
+
+  .j-bg-color-#{$key} {
+    background-color: $value !important;
+  }
+
+  // ------------------------------------
+  // Text Color 辅助类 (j-text-color-*)
+  // ------------------------------------
+
+  .j-text-color-#{$key} {
+    color: $value !important;
+  }
+}

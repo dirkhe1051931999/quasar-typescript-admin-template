@@ -1,0 +1,21 @@
+@use './vars-color';
+
+.q-message-style {
+  border-radius: 4px;
+  min-height: 36px;
+  margin-top: 30px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 0;
+
+  &--error {
+    color: vars-color.$red !important;
+  }
+
+  &--success {
+    color: vars-color.$green !important;
+  }
+
+  &--warn {
+    color: vars-color.$yellow !important;
+  }
+}

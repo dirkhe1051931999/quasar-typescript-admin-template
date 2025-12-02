@@ -1,0 +1,164 @@
+// ------------------------------------------------------------------
+// 1. SCSS 变量定义 (集中在文件顶部)
+// ------------------------------------------------------------------
+
+// 颜色变量
+$color-border: var(--j-color-grey-light);
+$color-white: var(--j-color-white);
+$color-primary-text: var(--j-color-primary);
+$color-input-background: $color-white; // 输入框背景
+$color-pagination-bg: $color-white; // 分页容器背景
+$color-input-placeholder-text: var(--j-color-grey-medium); // 假设占位符颜色 (例如来自 $grey-medium)
+$color-pagination-before-border: rgba(0, 0, 0, 0); // 分页容器伪元素的透明边框
+
+// 尺寸变量
+$pagination-btn-size: 32px;
+$pagination-btn-padding: 0 4px;
+$pagination-btn-margin: 2px;
+$pagination-input-width: 70px;
+$pagination-margin-top: 3px;
+$pagination-input-padding-bottom: 6px;
+$pagination-icon-size: 16px;
+$pagination-select-dropdown-icon-size: 18px;
+$pagination-input-font-size: 14px;
+$pagination-input-max-width: 68px; // 使用 max-width 配合 width
+
+// ------------------------------------------------------------------
+// 2. 样式主体
+// ------------------------------------------------------------------
+
+// =================================================================
+// 1. QPagination 容器和按钮样式 (.q-pagination)
+// =================================================================
+.q-pagination {
+  margin-top: $pagination-margin-top;
+
+  // 覆盖 Quasar 默认背景
+  .q-pagination__middle {
+    background: $color-pagination-bg !important;
+  }
+
+  // 统一所有 QBtn 样式 (页码、前后箭头)
+  .q-btn {
+    min-height: $pagination-btn-size;
+    height: $pagination-btn-size;
+    width: $pagination-btn-size !important;
+    padding: $pagination-btn-padding;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: $pagination-btn-margin !important;
+    margin-right: $pagination-btn-margin !important;
+    border: solid 1px $color-border; // 统一边框样式
+
+    // 伪元素 (水波纹/背景)
+    &::before {
+      box-shadow: none;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    // 包含图片的按钮 (自定义按钮或 Icon 按钮)
+    &:has(img) {
+      min-width: $pagination-btn-size !important;
+      min-height: $pagination-btn-size !important;
+      height: $pagination-btn-size !important;
+      margin-right: 4px !important; // 保持不变或定义 $pagination-img-btn-margin
+      margin-left: 4px !important;
+
+      &::before {
+        border-radius: 4px;
+      }
+    }
+
+    // 文本/数字的行高和高度
+    span {
+      height: $pagination-btn-size !important;
+      line-height: $pagination-btn-size !important;
+    }
+
+    &.text-primary {
+      font-weight: 600;
+      color: $color-primary-text !important; // 使用变量保证颜色准确性
+    }
+
+    .q-btn__content {
+      display: block !important;
+
+      .q-icon {
+        margin-top: -2px !important; // 保持不变，或定义 $pagination-icon-margin-top
+        font-size: $pagination-icon-size !important;
+      }
+    }
+  }
+
+  &::before {
+    // 使用透明边框变量
+    border: 1px solid $color-pagination-before-border;
+  }
+}
+
+// =================================================================
+// 2 & 4. 当前页输入框样式 (.pagination-current-page-input)
+// =================================================================
+.pagination-current-page-input {
+  max-width: $pagination-input-max-width !important;
+  width: $pagination-input-width;
+  margin-top: $pagination-margin-top;
+
+  .q-field__inner {
+    .q-field__control {
+      height: $pagination-btn-size !important; // 统一高度
+
+      // 统一边框和圆角
+      &:before {
+        border-radius: 4px !important;
+        border: 1px solid $color-border;
+        background: $color-input-background; // 使用背景色变量
+      }
+    }
+
+    .q-field__native {
+      padding-bottom: $pagination-input-padding-bottom !important;
+
+      &::placeholder {
+        font-size: $pagination-input-font-size !important;
+        color: $color-input-placeholder-text; // 使用占位符颜色变量
+      }
+    }
+  }
+}
+
+// =================================================================
+// 3. QSelect 样式 (通常用于每页条数选择) (.my-pagination)
+// =================================================================
+.my-pagination {
+  width: $pagination-input-width; // 统一宽度
+
+  // 统一高度到 32px
+  &.q-field--dense .q-field__control {
+    height: $pagination-btn-size !important;
+    min-height: $pagination-btn-size !important;
+
+    // 确保 QSelect 的边框和背景也被统一
+    &:before {
+      border-radius: 4px !important;
+      border: 1px solid $color-border;
+      background: $color-input-background;
+    }
+
+    .q-field__native {
+      height: $pagination-btn-size !important;
+      min-height: $pagination-btn-size !important;
+    }
+
+    .q-field__marginal {
+      height: $pagination-btn-size !important;
+      min-height: $pagination-btn-size !important;
+
+      .q-icon.q-select__dropdown-icon {
+        font-size: $pagination-select-dropdown-icon-size !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+// 文件名: src/css/my-atomic/_box.scss
+
+@use 'vars-box';
+// 假设 vars-box.scss 中有以下变量：
+// $box-sizes: (10: 10px, 50: 50px, '50p': 50%, '100p': 100%);
+// $max-sizes: ('100p': 100%, '800': 800px);
+// $min-sizes: ('0': 0, '100': 100px);
+
+// --- 1. 宽度 (w-*) 和 高度 (h-*) ---
+@each $key, $value in vars-box.$box-sizes {
+  // 宽度原子类：w-10, w-50p, ...
+  .w-#{$key} {
+    width: $value;
+  }
+
+  // 高度原子类：h-10, h-50p, ...
+  .h-#{$key} {
+    height: $value;
+  }
+}
+
+// 示例 (Example for w-* and h-*):
+// // <div class="w-100 h-50"> 宽度 100px，高度 50px </div>
+// // <div class="w-50p h-100p"> 宽度 50%，高度 100% </div>
+// // <q-img class="w-200 h-150"> 图片尺寸为 200px x 150px </div>
+
+// --- 2. 最大宽度 (max-w-*) ---
+@each $key, $value in vars-box.$max-sizes {
+  // 最大宽度原子类：max-w-100p, max-w-800, ...
+  .max-w-#{$key} {
+    max-width: $value;
+  }
+}
+
+// 示例 (Example for max-w-*):
+// // <div class="max-w-800"> 容器最大宽度 800px </div>
+// // <div class="max-w-100p"> 限制最大宽度为父元素的 100% </div>
+// // <q-card class="max-w-500"> 卡片最大宽度 500px </div>
+
+// --- 3. 最小高度 (min-h-*) ---
+@each $key, $value in vars-box.$min-sizes {
+  // 最小高度原子类：min-h-0, min-h-100, ...
+  .min-h-#{$key} {
+    min-height: $value;
+  }
+}
+
+// 示例 (Example for min-h-*):
+// // <section class="min-h-100"> 最小高度 100px，内容溢出可扩展 </div>
+// // <q-page class="min-h-100p"> 最小高度为视口高度 </div>
+// // <div class="min-h-0"> 确保最小高度为 0 </div>
+
+// --- 4. 其它常用 Box 相关的原子类补充 ---
+.box-border {
+  box-sizing: border-box;
+}
+
+.box-content {
+  box-sizing: content-box;
+}
+
+// 示例 (Example for box-sizing):
+// // <q-input class="box-border"> 输入框使用 border-box 模型计算宽度 </q-input>
+// // <div class="box-content"> 经典 content-box 模型 </div>
+// // <div class="w-100 p-10 box-border"> 宽度 100px，padding 不会撑大总尺寸 </div>
+
+// ----------------------------------------------------
+// 5. Flex/Grid Gap 间距 (gap-*)
+// ----------------------------------------------------
+@each $key, $value in vars-box.$gap-sizes {
+  // 通用 Gap (gap: 16px)
+  .gap-#{$key} {
+    gap: $value;
+  }
+
+  // Column Gap (column-gap: 16px)
+  .gap-x-#{$key} {
+    column-gap: $value;
+  }
+
+  // Row Gap (row-gap: 16px)
+  .gap-y-#{$key} {
+    row-gap: $value;
+  }
+}
+
+// 示例 (Example):
+// // <div class="row gap-md"> flex row, 子元素之间有 16px 间距 </div>
+// // <div class="column gap-y-12"> flex column, 上下间距 12px </div>
+// // <div class="grid gap-x-lg"> grid 布局, 列间距 24px </div>

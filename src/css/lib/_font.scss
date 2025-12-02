@@ -1,0 +1,6 @@
+@use 'vars-box';
+@each $key, $value in vars-box.$font-sizes {
+  .fs-#{$key} {
+    font-size: $value;
+  }
+}

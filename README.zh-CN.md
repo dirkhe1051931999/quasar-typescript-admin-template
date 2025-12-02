@@ -1,105 +1,105 @@
 # rtcpt
 
-A Vue 3 component library built with Vite and TypeScript. Got 34+ components that work with Quasar and Chart.js out of the box.
+一个基于 Vite 和 TypeScript 的 Vue 3 组件库。包含 34+ 个开箱即用的组件，原生支持 Quasar 和 Chart.js。
 
-[中文文档](./README.zh-CN.md)
+[English Documentation](./README.md)
 
-## What's Inside
+## 都有啥
 
-- **34+ Components** - Forms, tables, charts, dialogs, you name it
-- **i18n Built-in** - Chinese and English translations ready to go
-- **Chart Components** - Chart.js integration for data viz
-- **TypeScript Support** - Fully typed, your IDE will thank you
-- **Utility Functions** - Date formatting, file downloads, data formatting stuff
-- **Tree-shakable** - Only bundle what you actually use
+- **34+ 个组件** - 表单、表格、图表、对话框，该有的都有
+- **内置国际化** - 中英文翻译都帮你准备好了
+- **图表组件** - 集成了 Chart.js，数据可视化直接用
+- **TypeScript 支持** - 全量类型定义，IDE 自动补全贼爽
+- **工具函数** - 日期格式化、文件下载、数据格式化等常用功能
+- **按需加载** - Tree-shaking 支持，只打包你用到的代码
 
-## Installation
+## 安装
 
 ```bash
 npm install rtcpt
-# or
+# 或者
 yarn add rtcpt
 ```
 
-## Peer Dependencies
+## 对等依赖
 
-You'll need these installed in your project:
+这些依赖需要在你的项目里装好:
 
 - **vue** (^3.0.0)
 - **quasar** (^2.0.0)
-- **chart.js** (^4.0.0) - Only if you're using the chart components (j-ch series)
+- **chart.js** (^4.0.0) - 只有用图表组件 (j-ch 系列) 的时候才需要
 
 ```bash
 npm install vue quasar chart.js
-# or
+# 或者
 yarn add vue quasar chart.js
 ```
 
-Make sure you've got Quasar set up properly in your project.
+确保你的项目已经配置好 Quasar。
 
-**Note:** Styles are automatically injected when you import any component from this library. No need to manually import CSS files.
+**注意：** 样式会在你导入任何组件时自动注入，不需要手动导入 CSS 文件。
 
-## Components Overview
+## 组件概览
 
-### j-c Series (11 components) - Custom Components
-- `jCsvg` - SVG icon wrapper
-- `JCDuoListEditor` - Double list editor
-- `JCEditableProxy` - Editable proxy with popup editor
-- `JCFallback` - Fallback display component
-- `JCFormatLookup` - Format lookup component
-- `JCListEditor` - List editor
-- `JCPermission` - Permission control wrapper
-- `JCTabs` - Tab component
-- `JCTitleLine` - Title line component
-- `JCTree` - Tree component
-- `JCTreeSelect` - Tree select dropdown
+### j-c 系列 (11 个组件) - 自定义组件
+- `jCsvg` - SVG 图标封装
+- `JCDuoListEditor` - 双列表编辑器
+- `JCEditableProxy` - 可编辑代理，带弹窗编辑器
+- `JCFallback` - 兜底显示组件
+- `JCFormatLookup` - 格式查找组件
+- `JCListEditor` - 列表编辑器
+- `JCPermission` - 权限控制容器
+- `JCTabs` - 标签页组件
+- `JCTitleLine` - 标题线组件
+- `JCTree` - 树形组件
+- `JCTreeSelect` - 树形下拉选择
 
-### j-ch Series (6 components) - Chart.js Charts
-- `JChBar` - Bar chart
-- `JChBarLine` - Combined bar and line chart
-- `JChBubble` - Bubble chart
-- `JChLine` - Line chart
-- `JChPieDoughnut` - Pie/Doughnut chart
-- `JChRadar` - Radar chart
+### j-ch 系列 (6 个组件) - Chart.js 图表
+- `JChBar` - 柱状图
+- `JChBarLine` - 柱状图和折线图混合
+- `JChBubble` - 气泡图
+- `JChLine` - 折线图
+- `JChPieDoughnut` - 饼图/环形图
+- `JChRadar` - 雷达图
 
-### j-q Series (17 components) - Quasar Enhanced Components
-- `JQAutocomplete` - Autocomplete input
-- `JQConfirm` - Confirm dialog component
-- `JQDate` - Date picker
-- `JQDatetime` - DateTime picker with time selection
-- `JQDetailList` - Detail list display
-- `JQDialog` - Enhanced dialog component
-- `JQFile` - File upload component
-- `JQFormLabel` - Form label wrapper
-- `JQInput` - Enhanced input with validation
-- `JQNewValue` - Multi-value input (press enter to add)
-- `JQOptionGroup` - Option group selector
-- `JQPopover` - Popover component
-- `JQSearchForm` - Search form wrapper
-- `JQSelect` - Enhanced select component
-- `JQTable` - Enhanced table with pagination
-- `JQTooltip` - Tooltip component
+### j-q 系列 (17 个组件) - Quasar 增强组件
+- `JQAutocomplete` - 自动完成输入框
+- `JQConfirm` - 确认对话框
+- `JQDate` - 日期选择器
+- `JQDatetime` - 日期时间选择器
+- `JQDetailList` - 详情列表展示
+- `JQDialog` - 增强对话框
+- `JQFile` - 文件上传组件
+- `JQFormLabel` - 表单标签容器
+- `JQInput` - 增强输入框，带校验
+- `JQNewValue` - 多值输入框（回车添加）
+- `JQOptionGroup` - 选项组选择器
+- `JQPopover` - 弹出层
+- `JQSearchForm` - 搜索表单容器
+- `JQSelect` - 增强下拉选择
+- `JQTable` - 增强表格，带分页
+- `JQTooltip` - 提示框
 
-## Quick Start
+## 快速上手
 
-### Basic Usage
+### 基础用法
 
 ```vue
 <template>
   <div>
-    <!-- Input Component -->
-    <JQInput v-model="username" label="Username" />
+    <!-- 输入框组件 -->
+    <JQInput v-model="username" label="用户名" />
     
-    <!-- Table Component -->
+    <!-- 表格组件 -->
     <JQTable 
       :columns="columns"
       :rows="rows"
       @paginationChange="handlePaginationChange"
     />
     
-    <!-- Chart Component -->
+    <!-- 图表组件 -->
     <JChBar 
-      :labels="['Jan', 'Feb', 'Mar']"
+      :labels="['一月', '二月', '三月']"
       :datasets="chartData"
     />
   </div>
@@ -111,33 +111,33 @@ import { JQInput, JQTable, JChBar } from 'rtcpt';
 
 const username = ref('');
 const columns = [
-  { name: 'name', label: 'Name', field: 'name' },
-  { name: 'age', label: 'Age', field: 'age' }
+  { name: 'name', label: '姓名', field: 'name' },
+  { name: 'age', label: '年龄', field: 'age' }
 ];
 const rows = ref([]);
 const chartData = ref([
-  { label: 'Sales', data: [10, 20, 30] }
+  { label: '销售额', data: [10, 20, 30] }
 ]);
 </script>
 ```
 
-## Internationalization
+## 国际化
 
-The library comes with its own i18n system that won't mess with your project's i18n setup.
+组件库自带国际化系统，不会跟你项目的 i18n 冲突。
 
-### Set Language
+### 设置语言
 
 ```typescript
 import { setLocale } from 'rtcpt';
 
-// Set to Chinese
+// 设置为中文
 setLocale('zh-CN');
 
-// Set to English
+// 设置为英文
 setLocale('en-US');
 ```
 
-### In Your App Setup
+### 在应用初始化时设置
 
 ```typescript
 // main.ts
@@ -147,14 +147,14 @@ import App from './App.vue';
 
 const app = createApp(App);
 
-// Set language based on user preference
+// 根据用户偏好设置语言
 const userLocale = localStorage.getItem('locale') || 'zh-CN';
 setLocale(userLocale as 'zh-CN' | 'en-US');
 
 app.mount('#app');
 ```
 
-### Dynamic Language Switching
+### 动态切换语言
 
 ```vue
 <template>
@@ -181,100 +181,100 @@ const handleLangChange = (val) => {
 </script>
 ```
 
-### Use i18n in Your Components
+### 在组件中使用国际化
 
 ```typescript
 import { useI18n, t } from 'rtcpt';
 
-// In component setup
+// 在组件 setup 中使用
 const { t } = useI18n();
-console.log(t('action.confirm')); // "确认" or "Confirm"
+console.log(t('action.confirm')); // "确认" 或 "Confirm"
 
-// Direct usage
+// 直接使用
 import { t } from 'rtcpt';
-const message = t('messages.pleaseSelect'); // "请选择" or "Please select"
+const message = t('messages.pleaseSelect'); // "请选择" 或 "Please select"
 ```
 
-## Utility Functions
+## 工具函数
 
-All utility functions are available under the `jqTool` namespace:
+所有工具函数都可以通过 `jqTool` 命名空间访问：
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Use jqTool.* to access all utilities
+// 使用 jqTool.* 访问所有工具函数
 jqTool.formatDate(Date.now(), 'YYYY-MM-DD');
 jqTool.JQDownloadFile(blob, 'file.pdf');
 jqTool.transformTreeUseLabelAndValue(treeData);
 ```
 
-### File Download
+### 文件下载
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Download a file
+// 下载文件
 const blob = new Blob([data], { type: 'application/json' });
 jqTool.JQDownloadFile(blob, 'data.json');
 
-// Generate filename with timestamp
-const filename = jqTool.generateDownloadFileName('report', 'xlsx');
-// Output: "report_20251202143025.xlsx"
+// 生成带时间戳的文件名
+const filename = jqTool.generateDownloadFileName('报表', 'xlsx');
+// 输出: "报表_20251202143025.xlsx"
 ```
 
-### Date Formatting
+### 日期格式化
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Format a date
+// 格式化日期
 const formatted = jqTool.formatDate(Date.now(), 'YYYY-MM-DD HH:mm:ss');
-// Output: "2025-12-02 14:30:25"
+// 输出: "2025-12-02 14:30:25"
 
-// Create a formatter for table columns
+// 创建用于表格列的格式化器
 const dateFormatter = jqTool.defaultDateFormat('YYYY-MM-DD');
 const displayValue = dateFormatter(timestamp, row);
 ```
 
-### Data Size Formatting
+### 数据大小格式化
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Format size
+// 格式化大小
 const size = jqTool.formatSize({ size: 1024000, unit: 'B' });
-// Output: "1,000 KB"
+// 输出: "1,000 KB"
 
-// Auto convert to appropriate unit
+// 自动转换到合适的单位
 const { size: newSize, unit } = jqTool.getUpperSize({ size: 2048, unit: 'MB' });
-// Output: { size: 2, unit: 'GB' }
+// 输出: { size: 2, unit: 'GB' }
 
-// Create a formatter for table columns
+// 创建用于表格列的格式化器
 const sizeFormatter = jqTool.defaultDataFormat('--', { digits: 2 });
 ```
 
-### Data Formatting
+### 数据格式化
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Handle falsy values
+// 处理空值
 jqTool.defaultFill(null);        // "--"
 jqTool.defaultFill(0);          // 0
 jqTool.defaultFill('value');    // "value"
 
-// Create custom formatter
-const formatter = jqTool.defaultFormat((val) => `$${val}`, 'N/A');
-formatter(100, row);     // "$100"
-formatter(null, row);    // "N/A"
+// 创建自定义格式化器
+const formatter = jqTool.defaultFormat((val) => `¥${val}`, '暂无');
+formatter(100, row);     // "¥100"
+formatter(null, row);    // "暂无"
 ```
 
-### Tree Data Transformation
+### 树形数据转换
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// Transform tree data to use label/value
+// 转换树形数据使用 label/value
 const transformedTree = jqTool.transformTreeUseLabelAndValue(treeData, {
   optionLabel: 'name',
   optionValue: 'id',
@@ -282,25 +282,25 @@ const transformedTree = jqTool.transformTreeUseLabelAndValue(treeData, {
 });
 ```
 
-## Services
+## 服务
 
-### Dialog Provider
+### 对话框服务
 
-Create dialogs programmatically:
+编程方式创建对话框:
 
 ```typescript
 import { DialogProvider } from 'rtcpt';
 
-// Basic usage
+// 基础用法
 const dialog = DialogProvider.register({
-  title: 'Edit User',
+  title: '编辑用户',
   component: UserEditForm,
   componentBind: {
     userId: 123
   }
 });
 
-// Optional: Configure with router, store, i18n (if needed)
+// 可选: 配置 router、store、i18n（如果需要的话）
 DialogProvider.configure({
   router,
   store,
@@ -308,49 +308,49 @@ DialogProvider.configure({
 });
 ```
 
-### Message Service
+### 消息提示服务
 
-Show notifications:
+显示通知:
 
 ```typescript
 import { JQMessage } from 'rtcpt';
 
-// Success message
+// 成功消息
 JQMessage.show({
   type: 'success',
-  content: 'Operation successful!'
+  content: '操作成功！'
 });
 
-// Error message
+// 错误消息
 JQMessage.show({
   type: 'error',
-  content: 'Something went wrong',
-  isNotify: true  // Shows close button
+  content: '出错了',
+  isNotify: true  // 显示关闭按钮
 });
 ```
 
-### Confirm Dialog
+### 确认对话框
 
-Show confirmation dialogs:
+显示确认对话框:
 
 ```typescript
 import { JQConfirmDialog } from 'rtcpt';
 
 const confirmed = await JQConfirmDialog.show({
-  title: 'Delete Confirmation',
-  content: 'Are you sure you want to delete this item?'
+  title: '删除确认',
+  content: '确定要删除这条数据吗？'
 });
 
 if (confirmed) {
-  // User clicked confirm
+  // 用户点击了确认
 } else {
-  // User clicked cancel
+  // 用户点击了取消
 }
 ```
 
-## More Examples
+## 更多示例
 
-### Editable Field with Permission
+### 带权限的可编辑字段
 
 ```vue
 <template>
@@ -361,7 +361,7 @@ if (confirmed) {
         @update:model-value="updateTempValue"
         :ref="setEditorRef"
         type="email"
-        :rules="[(val) => !!val || 'Email is required']"
+        :rules="[(val) => !!val || '邮箱不能为空']"
       />
     </template>
   </JCEditableProxy>
@@ -375,7 +375,7 @@ const userEmail = ref('user@example.com');
 </script>
 ```
 
-### Tree Select
+### 树形选择
 
 ```vue
 <template>
@@ -396,17 +396,17 @@ const selectedValues = ref([]);
 const treeOptions = ref([
   {
     id: 1,
-    label: 'Parent 1',
+    label: '父节点 1',
     children: [
-      { id: 11, label: 'Child 1-1' },
-      { id: 12, label: 'Child 1-2' }
+      { id: 11, label: '子节点 1-1' },
+      { id: 12, label: '子节点 1-2' }
     ]
   }
 ]);
 </script>
 ```
 
-### Chart Example
+### 图表示例
 
 ```vue
 <template>
@@ -421,10 +421,10 @@ const treeOptions = ref([
 import { ref } from 'vue';
 import { JChBar } from 'rtcpt';
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+const months = ['一月', '二月', '三月', '四月', '五月', '六月'];
 const salesData = ref([
   {
-    label: '2024',
+    label: '2024年',
     data: [12, 19, 3, 5, 2, 3],
     backgroundColor: 'rgba(54, 162, 235, 0.5)'
   }
@@ -432,53 +432,53 @@ const salesData = ref([
 </script>
 ```
 
-## API Reference
+## API 参考
 
-### i18n Functions
+### 国际化函数
 
 ```typescript
-// Set locale
+// 设置语言
 setLocale(locale: 'zh-CN' | 'en-US'): void
 
-// Get current locale
+// 获取当前语言
 getLocale(): 'zh-CN' | 'en-US'
 
-// Translate with variables
+// 带变量的翻译
 t(key: string, variables?: Record<string, any>): string
 
-// Example with variables
+// 带变量的示例
 t('messages.formRules.rangeInt', { min: 1, max: 100 })
-// Output: "值必须是 1 到 100 之间的整数" or "Value must be an integer between 1 and 100"
+// 输出: "值必须是 1 到 100 之间的整数" 或 "Value must be an integer between 1 and 100"
 
-// Use in component
+// 在组件中使用
 const { t, locale, setLocale, getLocale } = useI18n();
 ```
 
-### Utility Functions
+### 工具函数
 
-All utility functions are available under the `jqTool` namespace:
+所有工具函数都可以通过 `jqTool` 命名空间访问：
 
 ```typescript
 import { jqTool } from 'rtcpt';
 
-// File operations
+// 文件操作
 jqTool.JQDownloadFile(blob: Blob, filename: string): void
 jqTool.generateDownloadFileName(baseName: string, ext: string): string
 
-// Date formatting
+// 日期格式化
 jqTool.formatDate(date: Date | string | number, format?: string): string
 jqTool.defaultDateFormat(format?: string, fallback?: string): Function
 
-// Data size formatting
+// 数据大小格式化
 jqTool.formatSize(options: { size: number; unit?: 'B'|'KB'|'MB'|'GB'|'TB' }): string
 jqTool.getUpperSize(sizeUnit: { size: number; unit?: string }, options?: any): { size: number; unit: string }
 jqTool.defaultDataFormat(fallback?: string, options?: { digits?: number; unit?: string }): Function
 
-// General formatting
+// 通用格式化
 jqTool.defaultFill(val: any): any
 jqTool.defaultFormat(formatter?: Function, fallback?: string): Function
 
-// Tree data transformation
+// 树形数据转换
 jqTool.transformTreeUseLabelAndValue(array: any[], config?: {
   optionLabel?: string;
   optionValue?: string;
@@ -486,9 +486,9 @@ jqTool.transformTreeUseLabelAndValue(array: any[], config?: {
 }): any[]
 ```
 
-## TypeScript Support
+## TypeScript 支持
 
-Everything's fully typed. Import types as you need them:
+所有组件和工具都有完整的类型定义，按需导入就行:
 
 ```typescript
 import type { 
@@ -499,14 +499,14 @@ import type {
 } from 'rtcpt';
 ```
 
-## Complete Component List
+## 完整组件列表
 
-### Import Components
+### 导入组件
 
 ```typescript
-// Named imports (recommended)
+// 按需导入（推荐）
 import {
-  // j-c series
+  // j-c 系列
   jCsvg,
   JCDuoListEditor,
   JCEditableProxy,
@@ -519,7 +519,7 @@ import {
   JCTree,
   JCTreeSelect,
   
-  // j-ch series (requires chart.js)
+  // j-ch 系列（需要 chart.js）
   JChBar,
   JChBarLine,
   JChBubble,
@@ -527,7 +527,7 @@ import {
   JChPieDoughnut,
   JChRadar,
   
-  // j-q series
+  // j-q 系列
   JQAutocomplete,
   JQConfirm,
   JQDate,
@@ -546,32 +546,32 @@ import {
   JQTooltip,
 } from 'rtcpt';
 
-// Or import all at once
+// 或者全部导入
 import * as RTCPT from 'rtcpt';
 ```
 
-## Development
+## 开发
 
 ```bash
-# Install dependencies
+# 安装依赖
 npm install
 
-# Build library
+# 构建库
 npm run build
 
-# Publish (runs build automatically)
+# 发布（会自动构建）
 npm run prepublishOnly
 ```
 
-## License
+## 开源协议
 
 MIT
 
 ---
 
-## More Examples
+## 更多示例
 
-### Table with Formatting
+### 带格式化的表格
 
 ```vue
 <template>
@@ -592,34 +592,34 @@ MIT
 import { JQTable, jqTool } from 'rtcpt';
 
 const columns = [
-  { name: 'name', label: 'Name', field: 'name', align: 'left' },
+  { name: 'name', label: '姓名', field: 'name', align: 'left' },
   { 
     name: 'created', 
-    label: 'Created', 
+    label: '创建时间', 
     field: 'created',
     format: (val) => jqTool.formatDate(val, 'YYYY-MM-DD HH:mm')
   },
   { 
     name: 'size', 
-    label: 'Size', 
+    label: '大小', 
     field: 'size',
     format: (val) => jqTool.formatSize({ size: val, unit: 'B' })
   },
-  { name: 'status', label: 'Status', field: 'status' }
+  { name: 'status', label: '状态', field: 'status' }
 ];
 
 const users = ref([]);
 </script>
 ```
 
-### Form with Validation
+### 带校验的表单
 
 ```vue
 <template>
   <div class="q-gutter-md">
     <JQInput
       v-model="form.email"
-      label="Email"
+      label="邮箱"
       type="email"
       :rules="[
         (val) => !!val || t('messages.formRules.required'),
@@ -629,14 +629,14 @@ const users = ref([]);
     
     <JQDatetime
       v-model="form.birthday"
-      label="Birthday"
+      label="生日"
       range
     />
     
     <JQSelect
       v-model="form.role"
       :options="roleOptions"
-      label="Role"
+      label="角色"
     />
   </div>
 </template>
@@ -655,17 +655,17 @@ const roleOptions = ['admin', 'user', 'guest'];
 </script>
 ```
 
-### Permission-based Display
+### 基于权限的显示
 
 ```vue
 <template>
   <div>
-    <!-- Only shows if user has permission -->
+    <!-- 只有有权限才显示 -->
     <JCPermission code="user.delete">
-      <q-btn color="negative" label="Delete" @click="handleDelete" />
+      <q-btn color="negative" label="删除" @click="handleDelete" />
     </JCPermission>
     
-    <!-- Shows fallback if no data -->
+    <!-- 没数据时显示兜底内容 -->
     <JCFallback :value="userData">
       <template #default>{{ userData.name }}</template>
     </JCFallback>
@@ -680,10 +680,11 @@ const userData = ref(null);
 </script>
 ```
 
-## Contributing
+## 贡献
 
-Contributions welcome! This library is extracted from real-world production projects.
+欢迎贡献代码！这个库是从实际项目中提取出来的。
 
-## Support
+## 支持
 
-Got questions or found a bug? Open an issue on GitHub.
+有问题或发现 bug？去 GitHub 开个 issue 就行。
+

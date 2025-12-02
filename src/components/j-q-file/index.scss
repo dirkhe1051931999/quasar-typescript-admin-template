@@ -1,0 +1,201 @@
+// 灰色系列 (假设这是您的自定义变量)
+$grey-light: #c2c2c2; // 文件动作边框颜色
+$grey-medium: #d9d9d9; // 文件项边框颜色
+
+// ----------------------------------------------------
+// 文件上传组件专用变量
+// ----------------------------------------------------
+$file-padding: 16px;
+$file-border-radius: 4px;
+$file-list-margin-top: 8px;
+$file-item-padding: 16px;
+$file-item-margin-top: 4px;
+$file-hint-margin-top: 2px;
+$file-hint-font-size: 12px;
+
+// 字体与尺寸
+$file-icon-size: 32px;
+$file-font-size: 14px;
+$file-item-font-size: 12px;
+$file-item-remove-icon-size: 1em;
+$file-button-min-size: 1.5em;
+
+// 颜色引用
+$file-action-border-color: rgba(0, 0, 0, 0.08);
+$file-item-border-color: $file-action-border-color;
+$file-item-size-color: var(--j-color-grey);
+$file-remove-color: var(--j-color-grey);
+$file-hint-color: var(--j-color-grey);
+$file-error-color: var(--j-color-red);
+$file-download-btn-color: var(--j-color-primary);
+
+$file-action-transition: border-color 0.25s;
+$file-action-height: 165px;
+$file-action-ondrag-color: rgba(0, 0, 0, 0.8);
+
+// ------------------------------------------------------------------
+// 2. 样式主体 (.j-q-file)
+// ------------------------------------------------------------------
+
+.j-q-file {
+  .q-field__control {
+    flex-direction: column;
+    line-height: 1.5;
+  }
+
+  .q-field__prepend {
+    flex-direction: column;
+    align-items: normal;
+    height: auto;
+    padding-right: 0;
+    font-size: $file-font-size;
+  }
+
+  .file-action {
+    padding: $file-padding;
+    border: 1px solid $file-action-border-color;
+    border-radius: $file-border-radius;
+    text-align: center;
+    transition: $file-action-transition;
+    cursor: pointer;
+    height: $file-action-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.file-action--dragging {
+      border: 1px dashed $file-action-ondrag-color;
+    }
+  }
+
+  .action-icon {
+    font-size: $file-icon-size;
+  }
+
+  .file-action + .file-filers:not(:empty) {
+    margin-top: $file-list-margin-top;
+  }
+
+  .file-filers {
+    padding-inline-start: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    list-style-type: none;
+  }
+
+  .filer-item {
+    display: flex;
+    align-items: center;
+    padding: $file-item-padding;
+    border: 1px solid $file-item-border-color;
+    border-radius: $file-border-radius;
+    font-size: $file-item-font-size;
+
+    .filer-content {
+      flex: 1;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .filer-size {
+      color: $file-item-size-color;
+    }
+
+    .filer-remove {
+      min-width: $file-button-min-size;
+      height: auto;
+      min-height: $file-button-min-size;
+      color: $file-remove-color;
+
+      i {
+        font-size: $file-item-remove-icon-size;
+      }
+    }
+  }
+
+  .filer-item + .filer-item {
+    margin-top: $file-item-margin-top;
+  }
+
+  .file-hint {
+    margin-left: 0;
+    color: $file-hint-color;
+
+    .download-btn {
+      .btn {
+        color: $file-download-btn-color;
+        cursor: pointer;
+      }
+    }
+
+    .extra-info {
+      display: flex;
+      flex-direction: column;
+      font-size: $file-hint-font-size;
+    }
+
+    &:not(:empty) {
+      margin-top: $file-hint-margin-top;
+    }
+  }
+
+  .template-specification {
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: flex-start;
+
+    &::-webkit-scrollbar {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar:vertical {
+      width: 1em;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+      height: 1em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 99999px;
+      border: 0.3125em solid transparent;
+      background-clip: content-box;
+    }
+
+    li {
+      display: inline-block;
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      font-weight: 500;
+      background: #ffffff;
+      border-bottom: 4px rgba(0, 0, 0, 0.03) solid !important;
+      color: #969799;
+
+      span {
+        font-size: 12px;
+        font-weight: normal;
+        margin-left: 4px;
+      }
+    }
+
+    .description {
+      padding: 15px 12px;
+      font-size: 12px;
+      max-width: 200px;
+      white-space: normal;
+      line-height: 20px;
+    }
+  }
+}
+
+.j-q-file.q-field--error {
+  .file-action {
+    border-color: $file-error-color;
+  }
+}

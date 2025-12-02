@@ -1,5 +1,104 @@
-import jCsvg from './components/j-c-svg/index.vue';
-import JCDuoListEditor from './components/j-c-duo-list-editor/index.vue';
+// ============ Styles ============
+import './css/index.scss';
 
-export { jCsvg, JCDuoListEditor };
-export default { jCsvg, JCDuoListEditor };
+// ============ Components ============
+// j-c series
+import JCsvg from './components/j-c-svg/index.vue';
+import JCDuoListEditor from './components/j-c-duo-list-editor/index.vue';
+import JCEditableProxy from './components/j-c-editable-proxy/index.vue';
+import JCFallback from './components/j-c-fallback/index.vue';
+import JCFormatLookup from './components/j-c-format-lookup/index.vue';
+import JCListEditor from './components/j-c-list-editor/index.vue';
+import JCPermission from './components/j-c-permission/index.vue';
+import JCTabs from './components/j-c-tabs/index.vue';
+import JCTitleLine from './components/j-c-title-line/index.vue';
+import JCTree from './components/j-c-tree/index.vue';
+import JCTreeSelect from './components/j-c-tree-select/index.vue';
+
+// j-ch series (Charts)
+import JChBar from './components/j-ch-bar/index.vue';
+import JChBarLine from './components/j-ch-bar-line/index.vue';
+import JChBubble from './components/j-ch-bubble/index.vue';
+import JChLine from './components/j-ch-line/index.vue';
+import JChPieDoughnut from './components/j-ch-pie-doughnut/index.vue';
+import JChRadar from './components/j-ch-radar/index.vue';
+
+// j-q series (Quasar)
+import JQAutocomplete from './components/j-q-autocomplete/index.vue';
+import JQConfirm from './components/j-q-confirm/index.vue';
+import JQDate from './components/j-q-date/index.vue';
+import JQDatetime from './components/j-q-datetime/index.vue';
+import JQDetailList from './components/j-q-detail-list/index.vue';
+import JQDialog from './components/j-q-dialog/index.vue';
+import JQFile from './components/j-q-file/index.vue';
+import JQFormLabel from './components/j-q-form-label/index.vue';
+import JQInput from './components/j-q-input/index.vue';
+import JQNewValue from './components/j-q-new-value/index.vue';
+import JQOptionGroup from './components/j-q-option-group/index.vue';
+import JQPopover from './components/j-q-popover/index.vue';
+import JQSearchForm from './components/j-q-search-form/index.vue';
+import JQSelect from './components/j-q-select/index.vue';
+import JQTable from './components/j-q-table/index.vue';
+import JQTooltip from './components/j-q-tooltip/index.vue';
+
+// ============ Utilities & Services ============
+export { DialogProvider } from './components/j-q-dialog/index';
+export { default as JQMessage } from './components/j-q-message/index';
+export { default as JQConfirmDialog } from './components/j-q-confirm-dialog/index';
+
+// Import all utility functions
+import { transformTreeUseLabelAndValue } from './components/j-c-tree/index';
+import { JQDownloadFile, generateDownloadFileName } from './components/j-q-file/download';
+import * as toolUtils from './utils/tool';
+
+// Export as jqTool namespace
+export const jqTool = {
+  transformTreeUseLabelAndValue,
+  JQDownloadFile,
+  generateDownloadFileName,
+  ...toolUtils,
+};
+
+// ============ i18n ============
+export { useI18n, setLocale, getLocale, t } from './composables/useI18n';
+export type { Locale } from './i18n';
+
+// ============ Components Export ============
+export {
+  // j-c series
+  JCsvg,
+  JCDuoListEditor,
+  JCEditableProxy,
+  JCFallback,
+  JCFormatLookup,
+  JCListEditor,
+  JCPermission,
+  JCTabs,
+  JCTitleLine,
+  JCTree,
+  JCTreeSelect,
+  // j-ch series
+  JChBar,
+  JChBarLine,
+  JChBubble,
+  JChLine,
+  JChPieDoughnut,
+  JChRadar,
+  // j-q series
+  JQAutocomplete,
+  JQConfirm,
+  JQDate,
+  JQDatetime,
+  JQDetailList,
+  JQDialog,
+  JQFile,
+  JQFormLabel,
+  JQInput,
+  JQNewValue,
+  JQOptionGroup,
+  JQPopover,
+  JQSearchForm,
+  JQSelect,
+  JQTable,
+  JQTooltip,
+};

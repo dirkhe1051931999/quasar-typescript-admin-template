@@ -9,7 +9,10 @@
   "scripts": {
     "p": "npm publish",
     "build": "vite build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "patch": "npm version patch && npm run p",
+    "minor": "npm version minor && npm run p",
+    "major": "npm version major && npm run p"
   },
   "files": [
     "dist",
@@ -18,24 +21,26 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/rtcpt.es.js",
-      "require": "./dist/rtcpt.umd.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/rtcpt.umd.js"
     }
   },
   "peerDependencies": {
+    "chart.js": "^4.0.0",
     "quasar": "^2.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "chart.js": "^4.4.7",
     "debug": "^4.4.3",
     "prettier": "^2.5.1",
     "quasar": "^2.18.6",
     "resolve": "^1.22.11",
     "sass": "^1.94.2",
     "typescript": "^5.9.3",
-    "vite": "^5.4.0",
+    "vite": "^6.0.7",
     "vite-plugin-dts": "^4.5.4",
     "vue": "^3.5.25"
   },
