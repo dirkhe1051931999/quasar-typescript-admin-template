@@ -35,9 +35,45 @@ npm install vue quasar chart.js
 yarn add vue quasar chart.js
 ```
 
-Make sure you've got Quasar set up properly in your project.
+## Quasar Setup
 
-**Note:** Styles are automatically injected when you import any component from this library. No need to manually import CSS files.
+**Important:** This library uses Quasar components internally. All Quasar components used in this library are **already registered within each component**, so you **don't need** to globally register Quasar in your project.
+
+### For Quasar Projects
+
+If you're already using Quasar, you're all set! Just install rtcpt and start using it.
+
+### For Non-Quasar Vue Projects
+
+You **still need to install and import Quasar styles**, but you don't need to register the Quasar plugin:
+
+```typescript
+// main.ts
+import { createApp } from 'vue';
+import App from './App.vue';
+
+// Import Quasar styles (required for components to look correct)
+import 'quasar/dist/quasar.css';
+
+// Optional: Import this library's custom styles
+import 'rtcpt/style.css';
+
+const app = createApp(App);
+app.mount('#app');
+```
+
+**Why?** Each component in this library explicitly imports and registers the Quasar components it needs (like `QBtn`, `QInput`, etc.), so they'll work even without global Quasar registration.
+
+## Styles
+
+**Styles are now optional!** You can import them separately:
+
+```typescript
+// Import component library styles (optional)
+import 'rtcpt/style.css';
+```
+
+If you don't import the styles, the components will still work but won't have the custom styling that comes with this library. The base Quasar components will still have their normal Quasar styling.
 
 ## Components Overview
 

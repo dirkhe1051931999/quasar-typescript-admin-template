@@ -15,9 +15,15 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
+import { QPopupProxy, QCard, QCardSection } from 'quasar';
 
 export default defineComponent({
   name: 'JQPopover',
+  components: {
+    QPopupProxy,
+    QCard,
+    QCardSection,
+  },
   props: {
     title: {
       type: String,

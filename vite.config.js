@@ -19,13 +19,22 @@ export default defineConfig({
     },
     build: {
         lib: {
-            // 指定打包入口文件，即我们前面创建的 index.js
-            entry: resolve(__dirname, 'src/index.ts'),
+            // 指定打包入口文件
+            entry: {
+                index: resolve(__dirname, 'src/index.ts'),
+                style: resolve(__dirname, 'src/style.js'),
+            },
             // 包名，对应 package.json 中的 name
             name: 'rtcpt',
             // 打包后的文件名
-            fileName: (format) => `rtcpt.${format}.js`,
+            fileName: (format, entryName) => {
+                if (entryName === 'style') {
+                    return 'style.js';
+                }
+                return `rtcpt.${format}.js`;
+            },
         },
+        cssCodeSplit: true, // 改为 true，允许分割 CSS
         rollupOptions: {
             // 确保外部化处理那些不想打包进库的依赖
             // Quasar 和 Vue 是最常见的外部依赖

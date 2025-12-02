@@ -39,6 +39,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, watch } from 'vue';
+import { QField, QOptionGroup, QIcon, QTooltip } from 'quasar';
 import type { QFieldProps, QOptionGroupProps } from 'quasar';
 
 // --- 类型定义 ---
@@ -48,6 +49,12 @@ type TQOptions = QOptionGroupProps['options'];
 
 export default defineComponent({
   name: 'JQOptionGroup',
+  components: {
+    QField,
+    QOptionGroup,
+    QIcon,
+    QTooltip,
+  },
   props: {
     modelValue: {
       type: [String, Number, Boolean, Array] as PropType<TModelValue>,

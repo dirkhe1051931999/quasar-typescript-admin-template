@@ -1,9 +1,5 @@
-// ============ Styles ============
-import './css/index.scss';
-
 // ============ Components ============
 // j-c series
-import JCsvg from './components/j-c-svg/index.vue';
 import JCDuoListEditor from './components/j-c-duo-list-editor/index.vue';
 import JCEditableProxy from './components/j-c-editable-proxy/index.vue';
 import JCFallback from './components/j-c-fallback/index.vue';
@@ -66,7 +62,6 @@ export type { Locale } from './i18n';
 // ============ Components Export ============
 export {
   // j-c series
-  JCsvg,
   JCDuoListEditor,
   JCEditableProxy,
   JCFallback,

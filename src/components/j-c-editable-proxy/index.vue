@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue';
-import { QPopupProxy } from 'quasar';
+import { QPopupProxy, QIcon, QCard, QCardSection, QCardActions, QBtn } from 'quasar';
 import JCPermission from '../j-c-permission/index.vue';
 import { useI18n } from '../../composables/useI18n';
 
@@ -37,7 +37,15 @@ export interface QInputRef {
 
 export default defineComponent({
   name: 'JCEditableProxy',
-  components: { JCPermission },
+  components: {
+    JCPermission,
+    QPopupProxy,
+    QIcon,
+    QCard,
+    QCardSection,
+    QCardActions,
+    QBtn,
+  },
   inheritAttrs: false,
   props: {
     modelValue: {
@@ -64,7 +72,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'saved', 'confirm'],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const popupRef = ref<QPopupProxy | null>(null);
+    const popupRef = ref<InstanceType<typeof QPopupProxy> | null>(null);
     const tempValue = ref<ModelValueType>(props.modelValue);
     const editorRef = ref<QInputRef | null>(null);
     const saveLoading = ref(false);

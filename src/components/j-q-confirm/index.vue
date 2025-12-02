@@ -16,10 +16,21 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
+import { QPopupProxy, QCard, QCardSection, QCardActions, QBtn, ClosePopup } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 export default defineComponent({
   name: 'JQConfirm',
+  components: {
+    QPopupProxy,
+    QCard,
+    QCardSection,
+    QCardActions,
+    QBtn,
+  },
+  directives: {
+    ClosePopup,
+  },
   props: {
     title: {
       type: String,

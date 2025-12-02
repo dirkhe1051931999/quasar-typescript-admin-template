@@ -79,7 +79,7 @@
 </template>
 <script lang="ts">
 import type { QSelectProps } from 'quasar';
-import { QSelect } from 'quasar';
+import { QSelect, QSpinner, QItem, QItemSection, QIcon } from 'quasar';
 import { computed, defineComponent, PropType, ref, SlotsType, watch } from 'vue';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -90,7 +90,13 @@ type TValueDisplayFn = (value: TModelValue) => string; // 明确返回字符串
 
 export default defineComponent({
   name: 'JQSelect',
-  components: { QSelect },
+  components: {
+    QSelect,
+    QSpinner,
+    QItem,
+    QItemSection,
+    QIcon,
+  },
   props: {
     modelValue: { type: [String, Number, Array, Object] as PropType<TModelValue> },
     clearable: { type: Boolean, default: true },

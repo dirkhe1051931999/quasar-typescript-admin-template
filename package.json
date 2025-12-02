@@ -24,7 +24,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/rtcpt.es.js",
       "require": "./dist/rtcpt.umd.js"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "peerDependencies": {
     "chart.js": "^4.0.0",

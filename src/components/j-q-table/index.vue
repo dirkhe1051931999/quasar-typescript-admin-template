@@ -47,6 +47,7 @@
 <script lang="ts">
 import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, usePagination } from './pagination';
 import { computed, defineComponent, PropType, ref } from 'vue';
+import { QTable, QTh, QTd, QInnerLoading } from 'quasar';
 import Pagination from './pagination.vue';
 import { useI18n } from 'src/composables/useI18n.ts';
 import type { QTableColumn } from 'quasar';
@@ -62,7 +63,13 @@ export interface TableColumn extends Partial<QTableColumn> {
 
 export default defineComponent({
   name: 'JQTableComponent',
-  components: { Pagination },
+  components: {
+    Pagination,
+    QTable,
+    QTh,
+    QTd,
+    QInnerLoading,
+  },
   props: {
     autoHeight: { type: Boolean, default: false },
     autoScrollOnChangePage: { type: Boolean, default: true },

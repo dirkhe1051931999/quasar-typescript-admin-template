@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, watch } from 'vue';
+import { QSelect, QPagination, QInput } from 'quasar';
 import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from './pagination';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -69,6 +70,11 @@ interface InternalPaginationState extends PaginationInfo {
 
 export default defineComponent({
   name: 'MyPaginationComponent',
+  components: {
+    QSelect,
+    QPagination,
+    QInput,
+  },
   props: {
     paginationInfo: {
       type: Object as () => PaginationInfo,

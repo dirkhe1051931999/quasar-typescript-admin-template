@@ -34,7 +34,8 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, SlotsType, watch } from 'vue';
-import type { QInput, QInputProps } from 'quasar';
+import { QInput } from 'quasar';
+import type { QInputProps } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 type TModelValue = QInputProps['modelValue'];
@@ -44,6 +45,9 @@ type TCustomType = 'text' | 'password' | 'secret';
 
 export default defineComponent({
   name: 'JQInput',
+  components: {
+    QInput,
+  },
   props: {
     modelValue: { type: [String, Number] as PropType<TModelValue> },
     bgColor: { type: String as PropType<QInputProps['bgColor']> },
@@ -75,7 +79,7 @@ export default defineComponent({
   setup(props, { emit, slots, expose }) {
     const { t } = useI18n();
     const innerModel = ref<TModelValue>(props.modelValue ?? '');
-    const qInputRef = ref<QInput | null>(null);
+    const qInputRef = ref<InstanceType<typeof QInput> | null>(null);
     const isContentVisible = ref(props.customType !== 'secret');
     const computedDisplayValue = computed(() => {
       const value = String(props.modelValue ?? '');

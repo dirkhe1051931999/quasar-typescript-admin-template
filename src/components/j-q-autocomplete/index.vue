@@ -38,6 +38,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
+import { QInput } from 'quasar';
 
 // 假设的存储类型
 export interface HistoryItem {
@@ -55,6 +56,9 @@ const setUserCommonInputSearchHistoryParams = (data: string) => {
 
 export default defineComponent({
   name: 'JQAutocomplete',
+  components: {
+    QInput,
+  },
   emits: ['update:model-value'],
   props: {
     modelValue: { type: [String, null] as PropType<string | null | undefined>, required: true },

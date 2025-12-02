@@ -25,12 +25,16 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent, ref, watch } from 'vue';
+import { QBtn } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 type SearchFormData = Record<string, any>;
 
 export default defineComponent({
   name: 'jQSearchForm',
+  components: {
+    QBtn,
+  },
   props: {
     modelValue: { type: Object as PropType<SearchFormData>, required: true },
     queryLoading: { type: Boolean },

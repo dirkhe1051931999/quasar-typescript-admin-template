@@ -48,6 +48,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, getCurrentInstance, type PropType, ref } from 'vue';
+import { QDialog, QCard, QCardSection, QInnerLoading, QBtn, ClosePopup } from 'quasar';
 import { DialogProvider } from './index';
 import { formRules } from './form-rules';
 import { beforeFileEnter } from './file';
@@ -57,6 +58,16 @@ type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
 
 export default defineComponent({
   name: 'jQDialog',
+  components: {
+    QDialog,
+    QCard,
+    QCardSection,
+    QInnerLoading,
+    QBtn,
+  },
+  directives: {
+    ClosePopup,
+  },
   props: {
     allowFocusOutside: { type: Boolean, default: true },
     showFooter: { type: Boolean, default: true },

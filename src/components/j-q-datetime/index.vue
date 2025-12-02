@@ -180,7 +180,7 @@
 
 <script lang="ts">
 import { computed, CSSProperties, defineComponent, PropType, reactive, ref, watch, nextTick } from 'vue';
-import { date, QDateProps, QField, QFieldProps, QPopupProxyProps } from 'quasar';
+import { date, QDateProps, QField, QFieldProps, QPopupProxyProps, QPopupProxy, QDate, QInput, QBtn, QIcon } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 // --- 类型定义 ---
@@ -237,6 +237,14 @@ const combineDateTime = (dateStr: string | null, time: TimeParts): string | null
 
 export default defineComponent({
   name: 'JQDateTime',
+  components: {
+    QField,
+    QPopupProxy,
+    QDate,
+    QInput,
+    QBtn,
+    QIcon,
+  },
   props: {
     modelValue: { type: [String, Number, Object, Date] as PropType<TModelValue>, default: () => null },
     clearable: { type: Boolean, default: true },

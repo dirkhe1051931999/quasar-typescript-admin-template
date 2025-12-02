@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
+import { QBtn } from 'quasar';
 import JQInput from '../j-q-input/index.vue';
 import JQFormLabel from '../j-q-form-label/index.vue';
 import { useI18n } from 'src/composables/useI18n.ts';
@@ -28,7 +29,11 @@ type TModelValue = string[];
 
 export default defineComponent({
   name: 'jCListEditor',
-  components: { JQFormLabel, JQInput },
+  components: {
+    JQFormLabel,
+    JQInput,
+    QBtn,
+  },
   props: {
     modelValue: {
       type: Array as PropType<TModelValue>,

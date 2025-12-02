@@ -45,6 +45,7 @@
 <script lang="ts">
 import type { PropType, SlotsType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
+import { QField, QIcon, QBtn } from 'quasar';
 import type { QFieldProps } from 'quasar';
 import { getUpperSize } from 'src/utils/tool';
 import globalMessage from 'src/components/j-q-message';
@@ -56,6 +57,11 @@ type TChangeFn = (files: File[]) => TChangeFnReturn | Promise<TChangeFnReturn>;
 
 export default defineComponent({
   name: 'JQFile',
+  components: {
+    QField,
+    QIcon,
+    QBtn,
+  },
   props: {
     modelValue: { type: Array as PropType<TModelValue> },
     accept: { type: String as PropType<HTMLInputElement['accept']> },

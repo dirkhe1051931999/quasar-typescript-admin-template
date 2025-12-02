@@ -43,7 +43,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, watch } from 'vue';
-import type { QInputProps, QSelect, QSelectProps } from 'quasar';
+import { QSelect, QIcon } from 'quasar';
+import type { QInputProps, QSelectProps } from 'quasar';
 import { executeValidation, formRules, parseRuleString } from '../j-q-dialog/form-rules';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -52,6 +53,10 @@ type TOptions = QSelectProps['options'];
 
 export default defineComponent({
   name: 'JQNewValue',
+  components: {
+    QSelect,
+    QIcon,
+  },
   props: {
     modelValue: { type: Array as PropType<TModelValue>, default: () => [] },
     options: { type: Array as PropType<TOptions>, default: () => [] },
@@ -69,7 +74,7 @@ export default defineComponent({
   },
   setup(props, { emit, expose, slots }) {
     const innerModel = ref<TModelValue>(props.modelValue ?? []);
-    const qSelectRef = ref<QSelect | null>(null);
+    const qSelectRef = ref<InstanceType<typeof QSelect> | null>(null);
     const { t } = useI18n();
     const newValueErrorMessage = ref('');
 

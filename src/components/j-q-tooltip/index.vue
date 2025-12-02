@@ -9,10 +9,14 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
+import { QTooltip } from 'quasar';
 import { tooltip, tooltipClass } from './tooltip';
 
 export default defineComponent({
   name: 'jQTooltip',
+  components: {
+    QTooltip,
+  },
   props: {
     content: {
       type: String,

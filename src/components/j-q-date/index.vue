@@ -48,7 +48,7 @@
 <script lang="ts">
 import type { CSSProperties, PropType, SlotsType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
-import { date, QDateProps, QField, QFieldProps, QPopupProxyProps } from 'quasar';
+import { date, QDateProps, QField, QFieldProps, QPopupProxyProps, QPopupProxy, QDate, QIcon } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 // --- 类型定义 ---
@@ -90,6 +90,12 @@ const toDate = (value: any): Date | null => {
 
 export default defineComponent({
   name: 'JQDate',
+  components: {
+    QField,
+    QPopupProxy,
+    QDate,
+    QIcon,
+  },
   props: {
     modelValue: { type: [String, Number, Object, Date] as PropType<TModelValue> },
     clearable: { type: Boolean, default: true },

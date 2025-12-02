@@ -27,6 +27,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { QIcon, QTooltip } from 'quasar';
 import JQTooltip from 'components/j-q-tooltip/index.vue';
 import { formatDate } from 'src/utils/tool.ts';
 
@@ -47,7 +48,11 @@ type TDetailData = Record<string, any>;
 
 export default defineComponent({
   name: 'JQDetailList',
-  components: { JQTooltip },
+  components: {
+    JQTooltip,
+    QIcon,
+    QTooltip,
+  },
   props: {
     items: {
       type: Array as PropType<DetailItem[]>,

@@ -27,11 +27,16 @@
 <script lang="ts">
 import type { PropType, SlotsType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { QIcon, QTooltip } from 'quasar';
 
 type VueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[];
 
 export default defineComponent({
   name: 'JQFormLabel',
+  components: {
+    QIcon,
+    QTooltip,
+  },
   props: {
     label: { type: String },
     labelClass: { type: [String, Object, Array] as PropType<VueClass> },

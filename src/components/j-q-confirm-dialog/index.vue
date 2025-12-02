@@ -17,11 +17,17 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { useDialogPluginComponent } from 'quasar';
+import { useDialogPluginComponent, QDialog, QCard, QCardSection, QBtn } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 export default defineComponent({
   name: 'dialogConfirmComponent',
+  components: {
+    QDialog,
+    QCard,
+    QCardSection,
+    QBtn,
+  },
   emits: [...useDialogPluginComponent.emits],
   props: {
     title: { type: String, default: '' },
