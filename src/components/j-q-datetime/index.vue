@@ -39,7 +39,7 @@
           />
           <div class="column items-stretch justify-center date-time-control">
             <template v-if="range">
-              <div class="row column q-mb-md q-mt-auto">
+              <div class="row column q-mb-sm q-mt-auto">
                 <div class="fs-12 text-grey h-30 row items-center q-mt-sm">{{ t('messages.date.start') }}</div>
                 <div class="row q-gutter-x-xs items-center">
                   <q-input
@@ -116,7 +116,7 @@
             </template>
 
             <template v-else>
-              <div class="row column q-mb-md q-mt-auto">
+              <div class="row column q-mb-sm q-mt-auto">
                 <div class="fs-12 text-grey h-30 row items-center q-mt-sm">{{ t('messages.date.hour') }}/{{ t('messages.date.minute') }}/{{ t('messages.date.second') }}</div>
                 <div class="row q-gutter-x-xs items-center">
                   <q-input
@@ -153,7 +153,7 @@
                   />
                 </div>
               </div>
-              <div class="row column q-mb-md">
+              <div class="row column">
                 <div class="fs-12 text-grey h-30 row items-center">&nbsp;</div>
                 <div class="row q-gutter-x-xs items-center"></div>
               </div>
@@ -179,7 +179,7 @@
 </template>
 
 <script lang="ts">
-import { computed, CSSProperties, defineComponent, PropType, reactive, ref, watch, nextTick } from 'vue';
+import { computed, CSSProperties, defineComponent, PropType, type SlotsType, reactive, ref, watch, nextTick } from 'vue';
 import { date, QDateProps, QField, QFieldProps, QPopupProxyProps, QPopupProxy, QDate, QInput, QBtn, QIcon } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -259,6 +259,11 @@ export default defineComponent({
     range: { type: Boolean, default: false },
   },
   emits: ['hide', 'update:modelValue'],
+  slots: Object as SlotsType<{
+    'popup-prepend': void;
+    append: void;
+    control: void;
+  }>,
 
   setup(props, { emit, expose, slots }) {
     const { t } = useI18n();
@@ -266,7 +271,7 @@ export default defineComponent({
     const fieldRef = ref<InstanceType<typeof QField> | null>(null);
     const isClearing = ref(false);
 
-    // 🔥 标志位：区分代码更新还是用户点击
+    // 标志位：区分代码更新还是用户点击
     const isProgrammaticUpdate = ref(false);
 
     // Range State
@@ -332,13 +337,13 @@ export default defineComponent({
       currentRangeDate,
       (newVal, oldVal) => {
         if (!props.range) return;
-        if (isProgrammaticUpdate.value) return; // 🔥 拦截自动重置
+        if (isProgrammaticUpdate.value) return; // 拦截自动重置
 
-        if (typeof newVal === 'object') {
+        if (typeof newVal === 'object' && newVal !== null) {
           const newFrom = newVal.from;
           const newTo = newVal.to;
 
-          if (oldVal && typeof oldVal === 'object') {
+          if (oldVal && typeof oldVal === 'object' && oldVal !== null) {
             if (newFrom !== oldVal.from) Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
             if (newTo !== oldVal.to) Object.assign(toTimeParts, { h: 0, m: 0, s: 0 });
           } else if (typeof oldVal === 'string') {
@@ -349,7 +354,7 @@ export default defineComponent({
             currentRange.value.from = combineDateTime(newFrom, fromTimeParts);
             currentRange.value.to = combineDateTime(newTo, toTimeParts);
           }
-        } else if (typeof newVal === 'string' && typeof oldVal === 'object') {
+        } else if (typeof newVal === 'string' && oldVal && typeof oldVal === 'object') {
           Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
           currentRange.value.from = combineDateTime(newVal, fromTimeParts);
         }
@@ -361,7 +366,7 @@ export default defineComponent({
     watch(currentSingleDate, (newDate, oldDate) => {
       if (props.range) return;
       if (isClearing.value) return;
-      if (isProgrammaticUpdate.value) return; // 🔥 拦截自动重置
+      if (isProgrammaticUpdate.value) return; // 拦截自动重置
 
       if (newDate !== oldDate) {
         Object.assign(singleTimeParts, { h: 0, m: 0, s: 0 });
@@ -375,9 +380,9 @@ export default defineComponent({
       } else {
         const parts = key === 'from' ? fromTimeParts : toTimeParts;
         let datePart = '';
-        if (typeof currentRangeDate.value === 'object') {
+        if (typeof currentRangeDate.value === 'object' && currentRangeDate.value !== null) {
           datePart = key === 'from' ? currentRangeDate.value.from : currentRangeDate.value.to;
-        } else if (key === 'from') {
+        } else if (key === 'from' && typeof currentRangeDate.value === 'string') {
           datePart = currentRangeDate.value as string;
         }
         if (datePart) currentRange.value[key] = combineDateTime(datePart, parts);
@@ -452,7 +457,7 @@ export default defineComponent({
       setTimeout(() => (isClearing.value = false), 0);
     };
 
-    // 🔥 补上了！
+    // 补上了
     const handleClearClick = () => {
       handleClear();
     };
@@ -467,7 +472,10 @@ export default defineComponent({
     const computedValueDisplay = computed(() => {
       if (props.valueDisplayFn) return String(props.valueDisplayFn(props.modelValue) ?? '');
       if (props.range) {
-        const { from, to } = (props.modelValue as any) || {};
+        const rangeValue = props.modelValue as any;
+        if (!rangeValue) return '';
+        const { from, to } = rangeValue;
+        if (!from || !to) return '';
         const dFrom = toDate(from);
         const dTo = toDate(to);
         if (dFrom && dTo) return `${date.formatDate(dFrom, DATETIME_MASK)} - ${date.formatDate(dTo, DATETIME_MASK)}`;

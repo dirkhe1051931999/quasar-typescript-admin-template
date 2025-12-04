@@ -43,6 +43,7 @@ class GlobalMessage {
     try {
       Notify.create(data);
     } catch (error) {
+      console.log(error);
       alert(data.message);
     }
   }

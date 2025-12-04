@@ -19,10 +19,10 @@ interface TransformConfig {
 }
 
 /**
- * 将通用数组转换为 label/value/children 格式的数组。
+ * 把通用数组转成 label/value/children 格式的数组。
  *
- * @param array - 待转换的原始数组。
- * @param config - 包含自定义键名的配置对象。
+ * @param array 待转换的原始数组。
+ * @param config 包含自定义键名的配置对象。
  * @returns 转换后的 TargetOption 数组。
  */
 export function transformTreeUseLabelAndValue(array: RawItem[], config: TransformConfig = {}): TargetOption[] {
@@ -48,7 +48,7 @@ export function transformTreeUseLabelAndValue(array: RawItem[], config: Transfor
     // 检查并递归处理子数组
     const rawChildren = item[optionChildren];
     if (Array.isArray(rawChildren) && rawChildren.length > 0) {
-      // 递归调用时，需要将 config 对象完整传递下去
+      // 递归调用时，需要把 config 对象完整传递下去
       targetItem.children = transformTreeUseLabelAndValue(rawChildren, config);
     }
 

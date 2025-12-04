@@ -1,0 +1,20 @@
+{
+  "primary": "#0B5CFF",
+  "blue": "#0B5CFF",
+  "dark": "#323232",
+  "green": "#2da641",
+  "red": "#E93030",
+  "negative": "#E93030",
+  "yellow": "#f2c037",
+  "grey": "#969799",
+  "white": "#ffffff",
+  "blue-light": "#f0f4ff",
+  "dark-lighter": "#f7f7f7",
+  "green-light": "#c0e4c6",
+  "red-light": "#fff0f0",
+  "yellow-light": "#fff9e9",
+  "grey-strong": "#969799",
+  "grey-medium": "#aaaaaa",
+  "grey-light": "#eeeeee",
+  "grey-lighter": "#f5f6fa"
+}

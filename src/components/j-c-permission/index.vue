@@ -10,16 +10,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue';
+import { computed, defineComponent, inject, type PropType, ref, type Ref, type SlotsType } from 'vue';
 
-// 定义权限码的类型，通常是一个字符串
+// 定义权限码的类型，通常是个字符串
 type PermissionCode = string;
+
+// 导出注入的 key，方便外部使用
+export const PAGE_PERMISSION_KEY = Symbol('pagePermissionId');
 
 export default defineComponent({
   name: 'JCPermission',
   props: {
     /**
-     * 权限码。如果传递 falsy 值（如 null, undefined, 或空字符串），则默认认为有权限（用于测试或特殊逻辑）
+     * 权限码。如果传递 falsy 值（如 null, undefined, 或空字符串），则默认认为有权限（用来测试或特殊逻辑）
      */
     code: {
       type: [String, null] as PropType<PermissionCode | null>,
@@ -40,14 +43,28 @@ export default defineComponent({
       default: false,
     },
     /**
-     * 权限码列表
+     * 权限码列表（优先用 props 传入的，如果没有则用全局注入的）
      */
     pagePermissionId: {
       type: Array as PropType<PermissionCode[]>,
-      default: [],
+      default: undefined,
     },
   },
+  slots: Object as SlotsType<{
+    default: void;
+  }>,
   setup(props) {
+    // 尝试注入全局权限码列表
+    const globalPermissionIds = inject<Ref<PermissionCode[]>>(PAGE_PERMISSION_KEY, ref([]));
+
+    // 优先用 props 传入的权限码列表，如果没有则用全局注入的
+    const effectivePermissionIds = computed(() => {
+      if (props.pagePermissionId && props.pagePermissionId.length > 0) {
+        return props.pagePermissionId;
+      }
+      return globalPermissionIds.value || [];
+    });
+
     /**
      * 判断用户是否拥有指定权限
      */
@@ -58,9 +75,8 @@ export default defineComponent({
       if (!code) {
         return true;
       }
-
       // 2. 调用实际的权限判断方法
-      return props.pagePermissionId.includes(code);
+      return effectivePermissionIds.value.includes(code);
     });
 
     /**

@@ -22,7 +22,7 @@
 }
 
 .q-date {
-  width: 340px;
+  width: 320px;
 
   .q-date__content {
     .q-btn {
@@ -45,6 +45,16 @@
     min-width: 300px;
     box-shadow: none !important;
     border: none;
+
+    // 减小日历下方的间距
+    .q-date__content {
+      padding-bottom: 8px !important; // 减小底部间距
+    }
+
+    // 调整日历底部的导航按钮区域
+    .q-date__navigation {
+      padding: 8px !important;
+    }
   }
 
   .date-time-control {
@@ -52,7 +62,6 @@
     padding: 16px;
   }
 }
-
 
 // ------------------------------------------------------------------
 // 混合样式：处理 j-q-date 和 j-q-datetime 的公共逻辑

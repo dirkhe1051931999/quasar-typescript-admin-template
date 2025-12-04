@@ -67,6 +67,7 @@ export default defineComponent({
     rules: { type: Array as () => QInputProps['rules'] },
     addRulesName: { type: String as PropType<string>, default: '' },
     useChips: { type: Boolean as PropType<QSelectProps['useChips']>, default: false },
+    allowDuplicates: { type: Boolean as PropType<boolean>, default: false },
   },
   emits: {
     change: (value: TModelValue) => true,
@@ -89,6 +90,11 @@ export default defineComponent({
       const trimmedValue = inputValue.trim();
       newValueErrorMessage.value = '';
       if (trimmedValue.length > 0) {
+        if (!props.allowDuplicates && innerModel.value && (innerModel.value as string[]).includes(trimmedValue)) {
+          newValueErrorMessage.value = t('messages.formRules.duplicateItemNotAllowed', { value: trimmedValue });
+          qSelectRef.value?.focus();
+          return;
+        }
         let validationError: true | string = true;
         const { name: ruleName, args: ruleArgs } = parseRuleString(props.addRulesName);
         if (props.addRulesName) {

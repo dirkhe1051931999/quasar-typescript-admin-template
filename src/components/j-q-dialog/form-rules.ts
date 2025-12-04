@@ -56,14 +56,14 @@ export function formRules(t: any) {
       (val?: any) => {
         const isEmptyArray = Array.isArray(val) && val.length === 0;
         const isFalsey = val === null || val === undefined || val === '';
-        return (!isEmptyArray && !isFalsey) || t('formRules.required');
+        return (!isEmptyArray && !isFalsey) || t('messages.formRules.required');
       },
     ],
     arrMaxLength(max: number) {
       return [
         (val?: any) => {
           if (Array.isArray(val) && val.length > max) {
-            return t('formRules.arrMaxLength', { max });
+            return t('messages.formRules.arrMaxLength', { max });
           }
         },
       ];
@@ -76,20 +76,20 @@ export function formRules(t: any) {
         (val?: any) => {
           const strVal = String(val).trim();
           if (!formatRegex.test(strVal)) {
-            return t('formRules.percentageInvalid');
+            return t('messages.formRules.percentageInvalid');
           }
           const numVal = parseFloat(strVal);
           if (!includesZero && numVal === 0) {
-            return t('formRules.over0');
+            return t('messages.formRules.over0');
           }
           if (!includesHundred && numVal === 100) {
-            return t('formRules.less100');
+            return t('messages.formRules.less100');
           }
           return true;
         },
       ];
     },
-    file: [(val?: any) => !!val?.length || t('formRules.required')],
+    file: [(val?: any) => !!val?.length || t('messages.formRules.required')],
     addressRules(types: ('url' | 'domain' | 'ip' | 'ip-port' | 'path')[] = ['url', 'domain', 'ip', 'ip-port'], required: boolean = true) {
       // 正则表达式定义
       const regex = {
@@ -144,7 +144,7 @@ export function formRules(t: any) {
         });
 
         if (!isMatch) {
-          return t('formRules.addressInvalid', {
+          return t('messages.formRules.addressInvalid', {
             example,
           });
         }
@@ -157,7 +157,7 @@ export function formRules(t: any) {
         rules.unshift((val?: any) => {
           const isEmptyArray = Array.isArray(val) && val.length === 0;
           const isFalsey = val === null || val === undefined || val === '';
-          return (!isEmptyArray && !isFalsey) || t('formRules.required');
+          return (!isEmptyArray && !isFalsey) || t('messages.formRules.required');
         });
       }
 
@@ -166,13 +166,13 @@ export function formRules(t: any) {
     email: [
       (val?: any) => {
         const reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/gi;
-        return reg.test(val) ? true : t('formRules.emailInvalid');
+        return reg.test(val) ? true : t('messages.formRules.emailInvalid');
       },
     ],
     port: [
       (val?: any) => {
         const reg = /^([1-9]\d{0,3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
-        return reg.test(String(val)) || t('formRules.invalidPort');
+        return reg.test(String(val)) || t('messages.formRules.invalidPort');
       },
     ],
     rangeInt(min: number, max: number) {
@@ -181,7 +181,7 @@ export function formRules(t: any) {
           val = Number(val);
           const isInt = Number.isInteger(val);
           const isInRange = val >= min && val <= max;
-          return (isInt && isInRange) || t('formRules.rangeInt', { min, max });
+          return (isInt && isInRange) || t('messages.formRules.rangeInt', { min, max });
         },
       ];
     },
@@ -190,7 +190,7 @@ export function formRules(t: any) {
         (val?: any) => {
           val = Number(val);
           const isInRange = val >= min && val <= max;
-          return isInRange || t('formRules.rangeNumber', { min, max });
+          return isInRange || t('messages.formRules.rangeNumber', { min, max });
         },
       ];
     },
@@ -199,7 +199,7 @@ export function formRules(t: any) {
         val = Number(val);
         const isInt = Number.isInteger(val);
         const isPositive = val > 0;
-        return (isInt && isPositive) || t('formRules.positiveInt');
+        return (isInt && isPositive) || t('messages.formRules.positiveInt');
       },
     ],
   };

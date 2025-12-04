@@ -36,11 +36,16 @@ import JQSearchForm from './components/j-q-search-form/index.vue';
 import JQSelect from './components/j-q-select/index.vue';
 import JQTable from './components/j-q-table/index.vue';
 import JQTooltip from './components/j-q-tooltip/index.vue';
+import JQMessage from './components/j-q-message/index.ts';
+import JQConfirmDialog from 'components/j-q-confirm-dialog/index.ts';
 
 // ============ Utilities & Services ============
 export { DialogProvider } from './components/j-q-dialog/index';
-export { default as JQMessage } from './components/j-q-message/index';
-export { default as JQConfirmDialog } from './components/j-q-confirm-dialog/index';
+export { rtcptInit } from './utils/init';
+export type { RtcptInitOptions, ColorConfig } from './utils/init';
+
+// Export permission injection key
+export { PAGE_PERMISSION_KEY } from './components/j-c-permission/index.vue';
 
 // Import all utility functions
 import { transformTreeUseLabelAndValue } from './components/j-c-tree/index';
@@ -61,6 +66,8 @@ export type { Locale } from './i18n';
 
 // ============ Components Export ============
 export {
+  JQMessage,
+  JQConfirmDialog,
   // j-c series
   JCDuoListEditor,
   JCEditableProxy,

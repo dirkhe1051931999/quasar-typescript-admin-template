@@ -1,6 +1,10 @@
 <template>
   <q-select
     ref="qSelectRef"
+    :class="{
+      'j-q-select--table': label,
+      'j-q-select--form': !label,
+    }"
     autocomplete="off"
     class="j-q-select"
     v-model="innerValue"
@@ -30,6 +34,7 @@
     :use-input="filterable ?? useInput"
     :loading="loading"
     @filter="filter"
+    :hide-dropdown-icon="readonly"
   >
     <template #loading>
       <q-spinner color="primary" size="14px" :thickness="2" />
@@ -84,7 +89,7 @@ import { computed, defineComponent, PropType, ref, SlotsType, watch } from 'vue'
 import { useI18n } from 'src/composables/useI18n.ts';
 
 type TModelValue = QSelectProps['modelValue'];
-// 明确要求 TFilterFn 返回一个布尔值
+// 明确要求 TFilterFn 返回布尔值
 type TFilterFn = (inputValue: string, callback: (filterOptions?: any[]) => void) => void;
 type TValueDisplayFn = (value: TModelValue) => string; // 明确返回字符串
 
@@ -170,7 +175,7 @@ export default defineComponent({
       let val = innerValue.value;
 
       if (props.valueDisplayFn) {
-        // 使用类型断言确保返回字符串
+        // 用类型断言确保返回字符串
         return props.valueDisplayFn(val) as string;
       }
 

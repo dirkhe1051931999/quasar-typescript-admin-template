@@ -399,18 +399,10 @@ em {
 input,
 textarea {
   &::placeholder {
-    font-family: 'HelveticaNeue';
-    font-size: 14px;
+    font-family: 'HelveticaNeue' !important;
+    font-size: 14px !important;
+    color: var(--j-color-grey) !important;
   }
-}
-
-// q-input的label和messages都不要用password字体
-.q-field__label {
-  font-family: 'HelveticaNeue';
-}
-
-.q-field__messages {
-  font-family: 'HelveticaNeue';
 }
 
 .jvm-zoom-btn {

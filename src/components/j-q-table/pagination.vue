@@ -14,6 +14,8 @@
         dense
         outlined
         options-dense
+        autocomplete="false"
+        popup-content-class="j-q-select-popup select-popup-content height1"
       />
       <div style="margin-top: 4px; margin-right: 24px">
         <span>{{ t('messages.pagination.pieces_page') }}</span>
@@ -36,6 +38,7 @@
         {{ t('messages.pagination.goto') }}
       </p>
       <q-input
+        :autofocus="false"
         v-model.trim="internalInfo.currentPage"
         @keyup.enter="handlePageChange"
         autocapitalize="off"
@@ -53,7 +56,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, watch } from 'vue';
-import { QSelect, QPagination, QInput } from 'quasar';
+import { QInput, QPagination, QSelect } from 'quasar';
 import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from './pagination';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -93,7 +96,7 @@ export default defineComponent({
       page: props.paginationInfo.page,
       rowsPerPage: props.paginationInfo.rowsPerPage,
       rowsNumber: props.paginationInfo.rowsNumber,
-      totalPage: 0, // 初始化为 0，等待计算
+      totalPage: 0, // 初始化为 0，等计算
       currentPage: '',
     });
 
@@ -101,26 +104,26 @@ export default defineComponent({
 
     /* --- Computed 计算属性 (纯函数) --- */
 
-    // 1. 计算总页数 (纯净)
+    // 1. 计算总页数
     const maxPage = computed(() => {
       const { rowsNumber, rowsPerPage } = internalInfo;
       const total = Math.ceil(rowsNumber / rowsPerPage);
       return total < 1 ? 1 : total;
     });
 
-    // 2. 计算跳转输入框的占位符 (纯净)
+    // 2. 计算跳转输入框的占位符
     const currentPagePlaceholder = computed(() => {
-      // 这里的 totalPage 是由 watch 维护的，保证计算属性的纯净性
+      // 这里的 totalPage 是由 watch 维护的
       return `${internalInfo.page} / ${internalInfo.totalPage}`;
     });
 
-    // 3. 计算跳转输入框的掩码 (纯净)
+    // 3. 计算跳转输入框的掩码
     const currentPageMask = computed(() => {
       const total = maxPage.value.toString();
       return Array(total.length).fill('#').join('');
     });
 
-    /* --- Watch 侦听器 (处理副作用) --- */
+    /* --- Watch 侦听器 --- */
 
     // 监听外部 Prop 变化，同步数据
     watch(

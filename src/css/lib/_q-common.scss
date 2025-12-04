@@ -7,9 +7,35 @@
   .q-icon.q-field__focusable-action,
   .q-select__dropdown-icon {
     font-size: 16px !important;
+    color: var(--j-color-grey) !important;
   }
 }
 
 .q-field__native {
   font-size: 12px;
+}
+
+// 去掉 q-field__bottom 的左右 padding（适用于 input、select、field 等所有使用 q-field 的组件）
+.q-field__bottom {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 4px !important;
+}
+
+// 确保 Quasar 的 input 也生效
+.q-field__native::placeholder,
+.q-field__input::placeholder {
+  font-family: 'HelveticaNeue' !important;
+  font-size: 14px !important;
+  color: var(--j-color-grey) !important;
+}
+
+// q-input的label和messages都不要用password字体
+.q-field__label {
+  font-family: 'HelveticaNeue';
+  color: var(--j-color-grey);
+}
+
+.q-field__messages {
+  font-family: 'HelveticaNeue';
 }

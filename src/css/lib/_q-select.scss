@@ -13,6 +13,16 @@
     transform: translateY(-50%);
     left: 0;
   }
+
+  // 让下拉框文字垂直居中
+  .q-field__native {
+    display: flex;
+    align-items: center;
+
+    > span {
+      line-height: 1;
+    }
+  }
 }
 
 .j-q-select-popup {
@@ -50,7 +60,7 @@
 }
 
 // ------------------------------------------------------------------
-// 核心混入：QField 控件基础重置 (与您最终的代码保持一致)
+// 核心混入：QField 控件基础重置 (与最终代码保持一致)
 // ------------------------------------------------------------------
 
 @mixin field-control-reset($height, $base-padding-top, $native-min-height, $control-container-padding-top) {

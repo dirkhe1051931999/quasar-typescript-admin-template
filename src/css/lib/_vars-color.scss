@@ -1,26 +1,29 @@
-/* 主色 */
-$primary: #0b5cff;
-$blue: #0b5cff;
+// ============================================
+// 此文件由 generate-colors.js 自动生成
+// 请勿手动修改，修改 src/config/colors.json 后运行 npm run build:colors
+// ============================================
+
+/* 颜色变量 */
+$primary: #0B5CFF;
+$blue: #0B5CFF;
 $dark: #323232;
 $green: #2da641;
-$red: #e93030;
-$negative: #e93030;
+$red: #E93030;
+$negative: #E93030;
 $yellow: #f2c037;
 $grey: #969799;
 $white: #ffffff;
-/* 浅背景色 */
-$blue-light: #f0f4ff; // Primary/Blue 的浅背景
-$dark-lighter: #f7f7f7; // Dark 的极浅背景（用于卡片/侧栏）
-$green-light: #c0e4c6; // Green 的浅背景（Positive）
-$red-light: #fff0f0; // Red 的浅背景（Negative）
-$yellow-light: #fff9e9; // Yellow 的浅背景（Warning）
+$blue-light: #f0f4ff;
+$dark-lighter: #f7f7f7;
+$green-light: #c0e4c6;
+$red-light: #fff0f0;
+$yellow-light: #fff9e9;
+$grey-strong: #969799;
+$grey-medium: #aaaaaa;
+$grey-light: #eeeeee;
+$grey-lighter: #f5f6fa;
 
-/* 灰色 */
-$grey-strong: #969799; // 较深的文字/边框灰
-$grey-medium: #aaaaaa; // 中等灰，用于图标或占位文字
-$grey-light: #eeeeee; // 浅边框/分隔线
-$grey-lighter: #f5f6fa; // 极浅背景灰，用于区分模块
-
+/* 颜色映射 */
 $custom-colors: (
   'primary': $primary,
   'blue': $blue,

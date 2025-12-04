@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue';
+import { computed, defineComponent, type PropType, type SlotsType } from 'vue';
 
 /**
  * 通用的选项类型定义
@@ -39,7 +39,7 @@ export default defineComponent({
       default: null,
     },
     /**
-     * 选项列表，组件将在这个列表中进行查找。
+     * 选项列表，组件会在这个列表中进行查找。
      */
     options: {
       type: Array as PropType<OptionItem[]>,
@@ -69,6 +69,9 @@ export default defineComponent({
       default: false,
     },
   },
+  slots: Object as SlotsType<{
+    default: { label: string };
+  }>,
   setup(props) {
     /**
      * 查找匹配的 OptionItem

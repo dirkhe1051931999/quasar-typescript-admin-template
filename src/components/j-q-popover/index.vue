@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, defineComponent, type SlotsType, onBeforeUnmount, onMounted, ref } from 'vue';
 import { QPopupProxy, QCard, QCardSection } from 'quasar';
 
 export default defineComponent({
@@ -39,6 +39,10 @@ export default defineComponent({
       validator: (val: string) => ['click', 'hover'].includes(val),
     },
   },
+  slots: Object as SlotsType<{
+    default: void;
+    content: void;
+  }>,
   setup(props) {
     const popupRef: any = ref(null);
     const rootRef: any = ref(null);

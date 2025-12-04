@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType, type SlotsType, ref, watch } from 'vue';
 import { QPopupProxy, QIcon, QCard, QCardSection, QCardActions, QBtn } from 'quasar';
 import JCPermission from '../j-c-permission/index.vue';
 import { useI18n } from '../../composables/useI18n';
@@ -70,6 +70,10 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue', 'saved', 'confirm'],
+  slots: Object as SlotsType<{
+    display: void;
+    editor: { tempValue: ModelValueType; updateTempValue: (val: ModelValueType) => void; setEditorRef: (ref: QInputRef | null) => void };
+  }>,
   setup(props, { emit }) {
     const { t } = useI18n();
     const popupRef = ref<InstanceType<typeof QPopupProxy> | null>(null);
@@ -90,8 +94,14 @@ export default defineComponent({
     );
 
     const handleProxyShow = () => {
-      tempValue.value = props.modelValue;
+      tempValue.value = props.modelValue ?? '';
     };
+
+    interface DoneOptions {
+      success?: boolean;
+      close?: boolean;
+      resetValue?: boolean;
+    }
 
     const handleSave = async () => {
       let validationPassed = true;
@@ -105,10 +115,22 @@ export default defineComponent({
       }
       if (tempValue.value !== props.modelValue) {
         saveLoading.value = true;
-        emit('confirm', tempValue.value, () => {
+        const done = (options: DoneOptions = {}) => {
+          const { success = true, close = success, resetValue = !success } = options;
           saveLoading.value = false;
-          handleSuccessfulSave();
-        });
+          if (success) {
+            handleSuccessfulSave();
+            return;
+          }
+          if (resetValue) {
+            tempValue.value = props.modelValue ?? '';
+            editorRef.value?.resetValidation?.();
+          }
+          if (close) {
+            popupRef.value?.hide();
+          }
+        };
+        emit('confirm', tempValue.value, done);
         return;
       }
 

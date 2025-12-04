@@ -17,7 +17,7 @@
             <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
           </template>
           <template v-else>
-            <j-q-tooltip :content="getDefaultValue(item)"></j-q-tooltip>
+            <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
           </template>
         </div>
       </div>
@@ -25,7 +25,7 @@
   </div>
 </template>
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, SlotsType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import { QIcon, QTooltip } from 'quasar';
 import JQTooltip from 'components/j-q-tooltip/index.vue';
@@ -67,6 +67,7 @@ export default defineComponent({
       default: 'q-col-gutter-md',
     },
   },
+  slots: Object as SlotsType<Record<`item-value-${string}`, { value: any; item: DetailItem; data: TDetailData; fieldName: string }>>,
   setup(props, { slots }) {
     const computedSlotItems = computed(() => {
       return props.items.filter((item) => {
@@ -104,7 +105,18 @@ export default defineComponent({
       return String(value);
     };
 
+    const getOptionClass = (item: DetailItem): any => {
+      let value = props.data[item.name];
+      const { options, findByKey } = item;
+      if (!options || !findByKey) {
+        return '';
+      }
+      const foundItem = options.find((option) => String(option[findByKey]) === String(value));
+      return foundItem ? foundItem.class : '';
+    };
+
     return {
+      getOptionClass,
       computedSlotItems,
       getDefaultValue,
       slots,

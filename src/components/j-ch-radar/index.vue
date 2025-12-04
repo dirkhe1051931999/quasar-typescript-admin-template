@@ -41,7 +41,7 @@ export default defineComponent({
       const ctx = radarChartCanvas.value?.getContext('2d');
       if (!ctx) return;
 
-      // ⚠️ 移除渐变色逻辑
+      // 移除渐变色逻辑
 
       const chartData: ChartData<'radar'> = {
         labels: props.labels as string[],

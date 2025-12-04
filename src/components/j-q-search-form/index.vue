@@ -23,7 +23,7 @@
   </div>
 </template>
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, SlotsType } from 'vue';
 import { defineComponent, ref, watch } from 'vue';
 import { QBtn } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
@@ -47,6 +47,10 @@ export default defineComponent({
     query: () => true,
     reset: () => true,
   },
+  slots: Object as SlotsType<{
+    default: void;
+    'extra-operation': void;
+  }>,
   setup(props, { emit, expose }) {
     const { t } = useI18n();
 

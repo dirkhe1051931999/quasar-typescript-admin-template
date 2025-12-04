@@ -15,7 +15,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, type SlotsType, ref, computed } from 'vue';
 import { QPopupProxy, QCard, QCardSection, QCardActions, QBtn, ClosePopup } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -46,16 +46,19 @@ export default defineComponent({
     },
   },
   emits: ['confirm'],
+  slots: Object as SlotsType<{
+    default: void;
+  }>,
   setup(props, { emit }) {
     const { t } = useI18n();
     const popupRef: any = ref(null);
 
-    // 计算属性：如果没有传入confirmText，则使用i18n的默认值
+    // 计算属性：如果没有传入 confirmText，则使用 i18n 的默认值
     const computedConfirmText = computed(() => {
       return props.confirmText || t('action.confirm');
     });
 
-    // 计算属性：如果没有传入cancelText，则使用i18n的默认值
+    // 计算属性：如果没有传入 cancelText，则使用 i18n 的默认值
     const computedCancelText = computed(() => {
       return props.cancelText || t('action.cancel');
     });

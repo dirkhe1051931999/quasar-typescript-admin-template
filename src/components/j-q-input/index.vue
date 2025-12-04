@@ -20,6 +20,7 @@
     clear-icon="app:clear"
     clearable
     ref="qInputRef"
+    :autofocus="false"
   >
     <template #prepend v-if="$slots.prepend">
       <slot name="prepend"></slot>
@@ -80,10 +81,13 @@ export default defineComponent({
     const { t } = useI18n();
     const innerModel = ref<TModelValue>(props.modelValue ?? '');
     const qInputRef = ref<InstanceType<typeof QInput> | null>(null);
-    const isContentVisible = ref(props.customType !== 'secret');
+    const isContentVisible = ref(props.customType !== 'secret' && props.customType !== 'password');
     const computedDisplayValue = computed(() => {
       const value = String(props.modelValue ?? '');
       if (props.customType === 'secret' && !isContentVisible.value) {
+        if (value.length === 0) {
+          return '';
+        }
         if (value.length <= 6) {
           return '***';
         }
@@ -99,6 +103,8 @@ export default defineComponent({
     const computedClass = computed(() => {
       return {
         'input-password': props.customType === 'password' && !isContentVisible.value,
+        'j-q-input--table': props.label,
+        'j-q-input--form': !props.label,
       };
     });
     watch(

@@ -1,6 +1,6 @@
 import { createApp, nextTick } from 'vue';
 import JQDialog from './index.vue';
-import { Quasar } from 'quasar';
+import { Quasar, Notify, Dialog, LoadingBar, Loading } from 'quasar';
 
 const dialogMapStore = new Map<string, { app: any; appInstance: any }>();
 
@@ -9,6 +9,7 @@ interface DialogProviderOptions {
   store?: any;
   i18n?: any;
   plugins?: any[];
+  iconMapFn?: (iconName: string) => any;
 }
 
 let globalOptions: DialogProviderOptions = {};
@@ -33,7 +34,21 @@ export const DialogProvider = {
     if (globalOptions.plugins) {
       globalOptions.plugins.forEach((plugin) => app.use(plugin));
     }
-    app.use(Quasar);
+    app.use(Quasar, {
+      plugins: {
+        Notify,
+        Dialog,
+        LoadingBar,
+        Loading,
+      },
+      animations: 'all' as any,
+    } as any);
+    
+    // 配置自定义图标映射
+    if (globalOptions.iconMapFn) {
+      app.config.globalProperties.$q.iconMapFn = globalOptions.iconMapFn;
+    }
+    
     const mountEl = document.createElement('div');
     document.body.appendChild(mountEl);
     const appInstance: any = app.mount(mountEl);

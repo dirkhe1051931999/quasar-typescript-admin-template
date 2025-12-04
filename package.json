@@ -8,7 +8,11 @@
   "type": "module",
   "scripts": {
     "p": "npm publish",
-    "build": "vite build",
+    "build:colors": "node generate-colors.js",
+    "build:svg": "node generate-custom-svg.js",
+    "build": "npm run build:colors && npm run build:svg && vite build",
+    "dev": "npm run build:colors && npm run build:svg && vite build --watch",
+    "yalc:push": "yalc push --watch",
     "prepublishOnly": "npm run build",
     "patch": "npm version patch && npm run p",
     "minor": "npm version minor && npm run p",
@@ -25,7 +29,10 @@
       "import": "./dist/rtcpt.es.js",
       "require": "./dist/rtcpt.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./index.css": "./dist/index.css",
+    "./dist/style.css": "./dist/style.css",
+    "./dist/index.css": "./dist/index.css"
   },
   "peerDependencies": {
     "chart.js": "^4.0.0",
@@ -52,5 +59,8 @@
     "typescript"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "rtcpt": "link:.yalc/rtcpt"
+  }
 }

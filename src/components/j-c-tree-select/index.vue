@@ -55,8 +55,8 @@
 </template>
 
 <script lang="ts">
-import { type QFieldProps, type QTreeProps } from 'quasar';
-import { computed, defineComponent, type PropType, ref, watch } from 'vue';
+import { type QFieldProps, type QTreeProps, QField, QIcon, QPopupProxy } from 'quasar';
+import { computed, defineComponent, type PropType, type SlotsType, ref, watch } from 'vue';
 import JCTree from '../j-c-tree/index.vue';
 import { useI18n } from 'src/composables/useI18n.ts';
 import JQInput from 'components/j-q-input/index.vue';
@@ -68,7 +68,13 @@ type ValueDisplayFn = (value: ModelValue, options: Option[]) => string;
 
 export default defineComponent({
   name: 'JCTreeSelect',
-  components: { JQInput, JCTree },
+  components: {
+    JQInput,
+    JCTree,
+    QField,
+    QIcon,
+    QPopupProxy,
+  },
   props: {
     modelValue: { type: Array as PropType<ModelValue> },
     clearIcon: { type: String, default: 'app:clear' },
@@ -90,6 +96,9 @@ export default defineComponent({
   emits: {
     'update:modelValue': (value: ModelValue) => true,
   },
+  slots: Object as SlotsType<{
+    'value-display': void;
+  }>,
   setup(props, { emit, expose }) {
     const treeRef = ref<InstanceType<typeof JCTree> | null>(null);
     const { t } = useI18n();

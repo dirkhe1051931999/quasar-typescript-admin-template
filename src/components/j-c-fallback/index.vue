@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue';
+import { computed, defineComponent, type PropType, type SlotsType } from 'vue';
 
-// 定义值类型的联合类型，用于更灵活地接受输入
+// 定义值类型的联合类型，用来更灵活地接受输入
 type FallbackValue = any;
 
 export default defineComponent({
@@ -41,8 +41,8 @@ export default defineComponent({
       default: false,
     },
     /**
-     * 可选：是否将 0 或 '0' 视为有效值 (true)，或视为需要回退的值 (false)。
-     * 默认情况下，与您的 defaultFormat 逻辑保持一致：0 和 '0' 被视为有效值。
+     * 可选：是否把 0 或 '0' 视为有效值 (true)，或视为需要回退的值 (false)。
+     * 默认情况下，与 defaultFormat 逻辑保持一致：0 和 '0' 被视为有效值。
      */
     zeroIsValid: {
       type: Boolean,
@@ -54,10 +54,13 @@ export default defineComponent({
       default: true,
     },
   },
+  slots: Object as SlotsType<{
+    default: void;
+  }>,
   setup(props) {
     /**
      * 判断传入的值是否是有效值（非空）。
-     * 逻辑参考了您提供的 defaultFormat 函数。
+     * 逻辑参考了 defaultFormat 函数。
      */
     const hasValue = computed(() => {
       const val = props.value;

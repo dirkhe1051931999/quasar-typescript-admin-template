@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType, SlotsType } from 'vue';
 import { QBtn } from 'quasar';
 import JQInput from '../j-q-input/index.vue';
 import JQFormLabel from '../j-q-form-label/index.vue';
@@ -49,6 +49,9 @@ export default defineComponent({
     inputType: { type: String, default: 'text' },
   },
   emits: ['update:modelValue'],
+  slots: Object as SlotsType<{
+    after: void;
+  }>,
   setup(props, { emit }) {
     const { t } = useI18n();
     const innerValue = computed<TModelValue>({

@@ -1,9 +1,9 @@
 import { date } from 'quasar';
 
 /**
- * 默认填充函数，用于处理 falsy 值。
- * @param val 待处理的值。
- * @returns 默认填充的字符串。
+ * 默认填充函数，处理 falsy 值
+ * @param val 要处理的值
+ * @returns 默认填充的字符串
  */
 export function defaultFill(val: any) {
   if (val === false) return false;
@@ -14,7 +14,7 @@ export function defaultFill(val: any) {
 
 /**
  * 格式化数据
- * 把数字转换为指定单位
+ * 把数字转成指定单位
  */
 type TSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 
@@ -44,13 +44,13 @@ export function getUpperSize(
 
 /**
  *
- * 1. 首先检查值是否为数字0或字符串'0'，如果是则应用格式化或返回原值（保留0）。
- * 2. 其次检查其他所有被视为空白的 falsy 值 (null, undefined, '', false, NaN)。
- * 3. 否则，应用可选的自定义格式化函数。
+ * 1. 先检查值是不是数字0或字符串'0'，是的话就应用格式化或返回原值，保留0
+ * 2. 再检查其他所有当空白处理的 falsy 值 (null, undefined, '', false, NaN)
+ * 3. 否则应用可选的自定义格式化函数
  *
- * @param customFormatter 可选的自定义格式化函数。
- * @param fallbackValue 默认的替代值，默认为 '--'。
- * @returns QTable columns 接受的格式化函数。
+ * @param customFormatter 可选的自定义格式化函数
+ * @param fallbackValue 默认的替代值，默认是 '--'
+ * @returns QTable columns 接受的格式化函数
  */
 export function defaultFormat(customFormatter?: (val: any, row: any) => string | number, fallbackValue: string = '--') {
   return (val: any, row: any) => {
@@ -66,7 +66,7 @@ export function defaultFormat(customFormatter?: (val: any, row: any) => string |
       return customFormatter(val, row);
     }
 
-    // 否则返回原始值
+    // 否则返回原值
     return val.toString();
   };
 }
@@ -84,8 +84,8 @@ export function defaultFormat(customFormatter?: (val: any, row: any) => string |
  * 毫秒: SSS (000-999), SS (00-99), S (0-9)
  * AM/PM: A (AM/PM), a (am/pm)
  * 时区: Z (e.g., -05:00)
- * * 这是一个简化的示例，仅用于说明格式化概念。
- * 如果您在 Quasar 环境中使用，建议直接使用并导入 Quasar 的 'date' 辅助函数，因为它已经包含了所有复杂逻辑。
+ * * 这是简化版示例，仅用于说明格式化概念
+ * 在 Quasar 环境中使用时，建议直接用 Quasar 的 'date' 辅助函数，因为它已经包含了所有复杂逻辑
  */
 export type DateFormatString = string;
 
@@ -96,12 +96,12 @@ export type DateInput = Date | string | number;
 
 /**
  *
- * 将输入值转换为 Date 对象或 13 位时间戳（如果它是有效的时间戳）。
- * 10 位时间戳（秒）会被自动扩展为 13 位（毫秒）。
- * 对于 YYYY-MM-DD 或 YYYY-MM-DD HH:mm:ss 等字符串，直接返回，依赖 Quasar 解析。
+ * 把输入值转成 Date 对象或 13 位时间戳（如果是有效的时间戳）
+ * 10 位时间戳（秒）会自动扩展为 13 位（毫秒）
+ * 对于 YYYY-MM-DD 或 YYYY-MM-DD HH:mm:ss 等字符串，直接返回，交给 Quasar 解析
  *
- * @param val 待处理的值。
- * @returns {number | string | Date | null} 13位时间戳、Date对象、原始日期字符串或null。
+ * @param val 要处理的值
+ * @returns {number | string | Date | null} 13位时间戳、Date对象、原始日期字符串或null
  */
 function normalizeDateInput(val: DateInput | null | undefined): DateInput | null {
   if (val === null || val === undefined) {
@@ -114,7 +114,7 @@ function normalizeDateInput(val: DateInput | null | undefined): DateInput | null
 
   const numVal = Number(val);
 
-  // 检查是否为有效数字，并且不是 NaN
+  // 检查是不是有效数字，而且不是 NaN
   if (Number.isFinite(numVal)) {
     const length = String(Math.floor(numVal)).length;
 
@@ -147,21 +147,21 @@ function normalizeDateInput(val: DateInput | null | undefined): DateInput | null
 
 export function formatDate(dateInput: DateInput, formatString: DateFormatString = 'YYYY-MM-DD HH:mm:ss'): string {
   // 核心实现：直接调用 Quasar 的 date 辅助函数
-  // 这样做可以确保与您提供的示例代码完全一致，并且复用 Quasar 强大的逻辑。
+  // 这样可以确保与示例代码完全一致，并且复用 Quasar 强大的逻辑。
   const normalizedVal = normalizeDateInput(dateInput);
   return normalizedVal ? defaultFill(date.formatDate(normalizedVal!, formatString)) : defaultFill(dateInput);
 }
 
 /**
  *
- * 结合 defaultFormat 的空值处理逻辑和 formatDate 的日期格式化功能。
- * 1. 首先检查值是否为数字0或字符串'0'。如果是，返回原值（保留0）。
- * 2. 其次检查其他所有被视为空白的 falsy 值 (null, undefined, '', false, NaN)。
- * 3. 否则，应用 formatDate 进行格式化。
+ * 结合 defaultFormat 的空值处理逻辑和 formatDate 的日期格式化功能
+ * 1. 先检查值是不是数字0或字符串'0'，是的话就返回原值，保留0
+ * 2. 再检查其他所有当空白处理的 falsy 值 (null, undefined, '', false, NaN)
+ * 3. 否则应用 formatDate 进行格式化
  *
- * @param formatString 格式化字符串 (例如 'YYYY-MM-DD HH:mm:ss')。
- * @param fallbackValue 默认的替代值，默认为 '--'。
- * @returns QTable columns 接受的格式化函数。
+ * @param formatString 格式化字符串 (例如 'YYYY-MM-DD HH:mm:ss')
+ * @param fallbackValue 默认的替代值，默认是 '--'
+ * @returns QTable columns 接受的格式化函数
  */
 export function defaultDateFormat(formatString: DateFormatString = 'YYYY-MM-DD HH:mm:ss', fallbackValue: string = '--') {
   return (val: DateInput | null | undefined, row: any): string => {
@@ -192,8 +192,8 @@ export function defaultDateFormat(formatString: DateFormatString = 'YYYY-MM-DD H
 
 /**
  * 流量数据格式化函数：
- * 1. 使用 defaultFormat 处理 falsy 值 (显示 '--'，0 除外)。
- * 2. 使用 formatSize 进行流量单位转换 (默认从 B 开始转换)。
+ * 1. 用 defaultFormat 处理 falsy 值，显示 '--'，0 除外
+ * 2. 用 formatSize 进行流量单位转换，默认从 B 开始转换
  */
 export function defaultDataFormat(
   fallbackValue: string = '--',

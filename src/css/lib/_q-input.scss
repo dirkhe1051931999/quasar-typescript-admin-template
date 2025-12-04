@@ -2,7 +2,8 @@
 // 修正后的核心混入：QField 控件基础重置
 // ------------------------------------------------------------------
 
-@mixin field-control-reset($height, $base-padding-top) { // 增加一个参数用于控制基础 padding
+@mixin field-control-reset($height, $base-padding-top) {
+  // 增加一个参数用于控制基础 padding
   &.q-field--dense {
     // 1. 统一 QField 控件和边距的高度
     .q-field__control,
@@ -31,7 +32,7 @@
       line-height: $height;
 
       &:before {
-        border: 1px solid rgba(0, 0, 0, 0.08)
+        border: 1px solid rgba(0, 0, 0, 0.08);
       }
     }
   }
@@ -55,7 +56,7 @@
       .q-field__control {
         // 关键修正：内容区域高度是 36px - 14px = 22px
         // 为了让内容在底部 22px 区域居中，需要设置 line-height
-        // 实际应用中，22px 可能略低，我们使用一个更保守的值确保文本不被截断。
+        // 实际应用中，22px 可能略低，使用一个更保守的值确保文本不被截断。
         // 假设文本行高为 16px，使用 22px 的 line-height 可以确保其在 22px 空间内垂直居中。
         line-height: 22px;
       }

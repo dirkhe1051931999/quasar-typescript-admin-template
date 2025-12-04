@@ -1,0 +1,54 @@
+{
+  "name": "rtcpt",
+  "version": "0.0.3",
+  "description": "A Vue 3 component library built with Vite and TypeScript, featuring components integrated with Quasar.",
+  "main": "dist/rtcpt.umd.js",
+  "module": "dist/rtcpt.es.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "p": "npm publish",
+    "build:colors": "node generate-colors.js",
+    "build:svg": "node generate-custom-svg.js",
+    "build": "npm run build:colors && npm run build:svg && vite build",
+    "dev": "npm run build:colors && npm run build:svg && vite build --watch",
+    "yalc:push": "yalc push --watch",
+    "prepublishOnly": "npm run build",
+    "patch": "npm version patch && npm run p",
+    "minor": "npm version minor && npm run p",
+    "major": "npm version major && npm run p"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/rtcpt.es.js",
+      "require": "./dist/rtcpt.umd.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./index.css": "./dist/index.css",
+    "./dist/style.css": "./dist/style.css",
+    "./dist/index.css": "./dist/index.css"
+  },
+  "peerDependencies": {
+    "chart.js": "^4.0.0",
+    "quasar": "^2.0.0",
+    "vue": "^3.0.0"
+  },
+  "keywords": [
+    "vue",
+    "quasar",
+    "component-library",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "rtcpt": "link:.yalc/rtcpt"
+  },
+  "yalcSig": "bd60a02b109de2528ec3f86c8000471e"
+}

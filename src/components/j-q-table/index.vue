@@ -13,6 +13,7 @@
       :rows="rows"
       :table-header-class="computedTableHeaderClass"
       hide-pagination
+      :binary-state-sort="false"
     >
       <template v-if="hasSlot('top')" #top>
         <slot name="top" />
@@ -46,7 +47,7 @@
 </template>
 <script lang="ts">
 import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, usePagination } from './pagination';
-import { computed, defineComponent, PropType, ref } from 'vue';
+import { computed, defineComponent, PropType, type SlotsType, ref } from 'vue';
 import { QTable, QTh, QTd, QInnerLoading } from 'quasar';
 import Pagination from './pagination.vue';
 import { useI18n } from 'src/composables/useI18n.ts';
@@ -88,6 +89,15 @@ export default defineComponent({
       default: null,
     },
   },
+  slots: Object as SlotsType<
+    {
+      top?: void;
+      header?: any;
+      body?: any;
+      append?: void;
+    } & Record<`header-cell-${string}`, any> &
+      Record<`body-cell-${string}`, any>
+  >,
   setup(props, { emit, expose, slots }) {
     /* params */
     const { t } = useI18n();
@@ -136,7 +146,7 @@ export default defineComponent({
       const tableEl = (JQTableRef.value as any)?.$el as HTMLElement;
       tableEl?.scrollIntoView({ behavior: 'smooth' });
     };
-    /* expose  给 ref 用的*/
+    /* expose 给 ref 用的 */
     expose({
       paginationInfo,
       getPaginationParam,
@@ -148,7 +158,7 @@ export default defineComponent({
       ROWS_PER_PAGE_OPTIONS,
       DEFAULT_ROWS_PER_PAGE,
     });
-    /* return 给template 用的 */
+    /* return 给 template 用的 */
     return {
       t,
       computedSelected,

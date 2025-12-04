@@ -47,7 +47,7 @@
   </q-dialog>
 </template>
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, type PropType, ref } from 'vue';
+import { computed, defineComponent, getCurrentInstance, type PropType, type SlotsType, ref } from 'vue';
 import { QDialog, QCard, QCardSection, QInnerLoading, QBtn, ClosePopup } from 'quasar';
 import { DialogProvider } from './index';
 import { formRules } from './form-rules';
@@ -84,6 +84,10 @@ export default defineComponent({
     minHeight: { type: [String, Number] as PropType<string | number>, default: 320 },
   },
   emits: {},
+  slots: Object as SlotsType<{
+    title: void;
+    default: void;
+  }>,
   mounted() {},
   setup(props, { emit, expose }) {
     const visible = ref(false);

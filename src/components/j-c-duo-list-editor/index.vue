@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType, type SlotsType } from 'vue';
 import { QBtn } from 'quasar';
 
 type TModelItem = any;
@@ -64,6 +64,20 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
+  slots: Object as SlotsType<{
+    'item-content': {
+      item: TModelItem;
+      index: number;
+      updateItem: (index: number, newItem: TModelItem) => void;
+      isLast: boolean;
+      addItem: (index: number) => void;
+      removeItem: (index: number) => void;
+      canAdd: boolean;
+      canRemove: boolean;
+      mode: TActionMode;
+    };
+    'list-footer-actions': { addItem: (index: number) => void; canAdd: boolean; nextIndex: number };
+  }>,
   setup(props, { emit }) {
     const innerValue = computed<TModelValue>({
       get: () => props.modelValue,

@@ -71,6 +71,10 @@
   &.q-btn--round {
     border-radius: 50%;
   }
+
+  .q-btn-dropdown__arrow {
+    font-size: 16px !important;
+  }
 }
 
 // 不同尺寸的按钮

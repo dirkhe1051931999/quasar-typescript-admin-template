@@ -18,6 +18,10 @@ export default defineConfig({
         }
     },
     build: {
+        watch: {
+            // 配置 watch 选项，确保监听所有依赖
+            include: ['src/**'],
+        },
         lib: {
             // 指定打包入口文件
             entry: {

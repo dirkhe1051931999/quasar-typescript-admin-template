@@ -32,7 +32,10 @@ type TickStrategy = QTreeProps['tickStrategy'];
 
 export default defineComponent({
   name: 'jCTree',
-  components: { JQTooltip },
+  components: {
+    JQTooltip,
+    QTree,
+  },
   props: {
     modelValue: { type: Array as PropType<ModelValue> },
     multiple: { type: Boolean, default: false },
@@ -45,7 +48,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit, expose }) {
-    const mainRef = ref<QTree | null>(null);
+    const mainRef = ref<InstanceType<typeof QTree> | null>(null);
     const { t } = useI18n();
 
     const innerValue = ref<ModelValue>(props.modelValue ?? []);

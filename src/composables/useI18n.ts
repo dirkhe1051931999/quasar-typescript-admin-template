@@ -1,5 +1,12 @@
 import { ref, Ref } from 'vue';
 import { messages, Locale } from '../i18n';
+import { Quasar } from 'quasar';
+
+// 动态导入 Quasar 语言包
+const quasarLangModules = {
+  'zh-CN': () => import('quasar/lang/zh-CN'),
+  'en-US': () => import('quasar/lang/en-US'),
+};
 
 const currentLocale: Ref<Locale> = ref<Locale>('zh-CN');
 
@@ -20,8 +27,8 @@ function getValueByPath(obj: any, path: string): string {
 
 /**
  * 替换字符串中的变量占位符
- * @param template - 包含 {key} 占位符的模板字符串
- * @param variables - 变量对象
+ * @param template 包含 {key} 占位符的模板字符串
+ * @param variables 变量对象
  */
 function interpolate(template: string, variables?: Record<string, any>): string {
   if (!variables) return template;
@@ -40,6 +47,18 @@ export function t(key: string, variables?: Record<string, any>): string {
 
 export function setLocale(locale: Locale): void {
   currentLocale.value = locale;
+
+  // 同步更新 Quasar locale
+  const loadQuasarLang = quasarLangModules[locale];
+  if (loadQuasarLang) {
+    loadQuasarLang()
+      .then((langModule) => {
+        Quasar.lang.set(langModule.default);
+      })
+      .catch((error) => {
+        console.error(`Failed to load Quasar locale for ${locale}:`, error);
+      });
+  }
 }
 
 export function getLocale(): Locale {

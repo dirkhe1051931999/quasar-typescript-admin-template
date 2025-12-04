@@ -63,7 +63,7 @@ type TModelValue =
 type TValueDisplayFn = (value: TModelValue) => string | number | null | undefined;
 
 // --- 核心辅助函数：统一转 Date ---
-const DATETIME_MASK = 'YYYY-MM-DD HH:mm:ss'; // 用于解析可能带时间的字符串
+const DATETIME_MASK = 'YYYY-MM-DD HH:mm:ss'; // 用来解析可能带时间的字符串
 
 const toDate = (value: any): Date | null => {
   if (value === null || typeof value === 'undefined' || value === '') return null;
@@ -129,7 +129,7 @@ export default defineComponent({
     const { t } = useI18n();
 
     // --- 优化：强大的 computedValue ---
-    // 负责将外部各种花里胡哨的格式 (时间戳、Date、Object) 转成 q-date 唯一认识的 String (Mask格式)
+    // 负责把外部各种花里胡哨的格式 (时间戳、Date、Object) 转成 q-date 唯一认识的 String (Mask格式)
     const computedValue = computed({
       get() {
         const val = props.modelValue;
@@ -177,7 +177,7 @@ export default defineComponent({
             popupVisible.value = false;
           } else {
             // 范围选择：只有 from 和 to 都有值时，才自动关闭（可选体验优化）
-            // 如果你希望选完两个日期自动关闭，可以解开下面的注释
+            // 如果希望选完两个日期自动关闭，可以解开下面的注释
             // if (typeof val === 'object' && (val as any).from && (val as any).to) {
             //    popupVisible.value = false;
             // }
@@ -187,7 +187,7 @@ export default defineComponent({
     });
 
     // --- 显示逻辑 ---
-    // 因为 computedValue 已经被我们标准化成 String/Object String 了，这里处理显示就很简单
+    // 因为 computedValue 已经被标准化成 String/Object String 了，这里处理显示就很简单
     const computedValueDisplay = computed(() => {
       // 1. 优先外部自定义
       if (props.valueDisplayFn) {
@@ -199,6 +199,7 @@ export default defineComponent({
 
       if (props.range && typeof val === 'object') {
         const { from, to } = val as { from: string; to: string };
+        if (!from || !to) return '';
         if (from && to) {
           return `${from} - ${to}`; // computedValue 已经按 mask 格式化了，直接拼
         }
@@ -225,7 +226,7 @@ export default defineComponent({
       fieldRef.value!.blur();
     };
 
-    // 你特意嘱咐的 handleClearClick，必须要在！
+    // handleClearClick，必须要在
     const handleClearClick = () => {
       handleClear();
     };

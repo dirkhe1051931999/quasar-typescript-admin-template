@@ -1,4 +1,5 @@
 @use './lib/vars-color';
+@use './lib/color';
 @use './lib/font';
 @use './lib/reset';
 @use './lib/q-card';
@@ -13,4 +14,3 @@
 @use './lib/q-common';
 @use './lib/box';
 @use './lib/decoration';
-@use './lib/color';

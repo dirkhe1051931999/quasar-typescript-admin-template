@@ -71,7 +71,7 @@ export default defineComponent({
     const uniqueKey = computed(() => `search_history__${UserModule.username}__${props.searchKey}`);
     const inputRef = ref<any>(null);
 
-    // 使用 reactive 声明所有可变状态
+    // 用 reactive 声明所有可变状态
     const historyParams = reactive({
       maxLength: 5,
       width: {
