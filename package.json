@@ -10,6 +10,7 @@
     "p": "npm publish",
     "build:colors": "node generate-colors.js",
     "build:svg": "node generate-custom-svg.js",
+    "build": "vite build",
     "dev": "npm run build:colors && npm run build:svg && vite build",
     "prepublishOnly": "npm run build",
     "patch": "npm version patch && npm run p",
