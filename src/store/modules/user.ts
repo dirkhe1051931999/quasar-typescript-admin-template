@@ -50,7 +50,7 @@ class User extends VuexModule implements IUserState {
     // await login({ username, password });
     await sleep(1000);
     const token = uid();
-    const pagePermissionId = setting.pagePermissionId;
+    const pagePermissionId = [] as any[];
     const userinfo = {
       token,
       username,

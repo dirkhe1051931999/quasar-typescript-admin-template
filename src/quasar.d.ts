@@ -9,7 +9,7 @@
 /// <reference types="@quasar/app-webpack" />
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
-    $t: any;
+    $t: (key: string, params?: Record<string, any>) => string;
     $i18n: any;
   }
 }

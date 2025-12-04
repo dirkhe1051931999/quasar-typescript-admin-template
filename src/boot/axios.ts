@@ -6,7 +6,7 @@ import router from 'src/router';
 import { Loading } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
 import JSONbig from 'json-bigint';
-import globalMessage from 'src/components/j-q-message';
+import { JQMessage } from 'rtcpt';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -90,7 +90,7 @@ axios.interceptors.request.use(
   },
   (error) => {
     console.log(error);
-    globalMessage.show({ type: 'error', content: error });
+    JQMessage.show({ type: 'error', content: error });
     Promise.reject(error);
   }
 );
@@ -104,7 +104,7 @@ axios.interceptors.response.use(
         /* token无效 */
         UserModule.ResetToken();
         router.push(`/login?redirect=${router.currentRoute.value.path}`);
-        globalMessage.show({
+        JQMessage.show({
           type: 'error',
           content: msg || setting.defaultErrorMsg,
         });
@@ -112,7 +112,7 @@ axios.interceptors.response.use(
         return Promise.reject(status);
       } else {
         /* 错误提示 */
-        globalMessage.show({
+        JQMessage.show({
           type: 'error',
           content: msg || setting.defaultErrorMsg,
         });
@@ -146,7 +146,7 @@ axios.interceptors.response.use(
       let responseBak = response;
       /* 如果是blob */
       return new Promise((resolve) => {
-        var reader: any = new FileReader();
+        const reader: any = new FileReader();
         reader.readAsBinaryString(response.data);
         reader.addEventListener('loadend', () => {
           if (reader.result.indexOf('status') !== -1 && reader.result.indexOf('message') !== -1 && reader.result.indexOf('pdf') === -1) {
@@ -170,7 +170,7 @@ axios.interceptors.response.use(
   (error: any) => {
     if (error.config && error.config.url.includes('/login')) {
       console.info(error);
-      globalMessage.show({ type: 'error', content: setting.defaultErrorMsg });
+      JQMessage.show({ type: 'error', content: setting.defaultErrorMsg });
     }
     Loading.hide();
     return Promise.reject('error');
@@ -179,7 +179,7 @@ axios.interceptors.response.use(
 
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
-export default boot(({ app }) => {
+export default boot(({ app }: any) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;

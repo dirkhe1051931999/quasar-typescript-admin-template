@@ -1,20 +1,20 @@
 @import 'src/css/quasar.variables.scss';
 
 // 导航栏颜色变量定义 ---
-$nav-bg: $white;
+$nav-bg: var(--j-color-white);
 $nav-shadow-color: rgba(15, 23, 42, 0.08);
 $nav-border-color: rgba(226, 232, 240, 0.8);
 
-$nav-title-color: $dark;
-$nav-subtitle-color: $grey; // 使用 Quasar 提供的 $grey
+$nav-title-color: var(--j-color-dark);
+$nav-subtitle-color: var(--j-color-grey); // 使用 Quasar 提供的 $grey
 
-$nav-collapse-btn-bg: #ffffff;
+$nav-collapse-btn-bg: var(--j-color-white);
 $nav-collapse-btn-shadow: rgba(15, 23, 42, 0.06);
-$nav-collapse-btn-hover-text: #fff;
+$nav-collapse-btn-hover-text: var(--j-color-white);
 $nav-collapse-btn-hover-shadow: rgba(102, 126, 234, 0.3);
 $nav-collapse-btn-hover-gradient-end: #764ba2; // 用于 hover 渐变
 
-$nav-logout-btn-color: $grey;
+$nav-logout-btn-color: var(--j-color-grey);
 $nav-logout-btn-hover-bg: rgba(102, 126, 234, 0.1);
 
 // --- 组件样式 ---

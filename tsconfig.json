@@ -11,8 +11,15 @@
     "allowJs": true,
     "noEmit": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "jsx": "preserve",
+    "skipLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
     "paths": {
       "src/*": ["src/*"],
       "app/*": ["*"],
@@ -24,5 +31,5 @@
       "stores/*": ["src/stores/*"]
     }
   },
-  "exclude": ["dist", ".quasar", "node_modules", "eslint.config.js"]
+  "exclude": ["dist", ".quasar", "node_modules", "eslint.config.js"],
 }

@@ -4,7 +4,7 @@
   "policy": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/",
   "publicPath": "/v3-admin/",
   "pro": "",
-  "version": "V2.7.2",
+  "version": "V2.8.0",
   "devServerPort": 9002,
   "ip": "",
   "adminName": [
@@ -15,9 +15,5 @@
     "111"
   ],
   "defaultErrorMsg": "Network Error, please contact engineer",
-  "localstorageKey": "quasar__frontend__storge__",
-  "pagePermissionId": [
-    "view-all",
-    "operation-all"
-  ]
+  "localstorageKey": "quasar__frontend__storge__"
 }

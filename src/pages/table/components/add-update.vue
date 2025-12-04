@@ -41,7 +41,7 @@
       </div>
       <div class="col-12">
         <j-q-form-label label="File Upload" required>
-          <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="beforeFile" :rules="dialogInstance.rules.file" maxlength="1">
+          <j-q-file v-model="dialogParams.params.file" accept=".xls,.xlsx" :beforeHandle="($event) => dialogInstance.beforeFile($event)" :rules="dialogInstance.rules.file" maxlength="1">
             <template #hint>
               <div class="download-btn">
                 <span class="btn">{{ $t('action.download_template', { type: 'xlsx' }) }}</span>
@@ -71,7 +71,7 @@
       </div>
       <div class="col-6">
         <j-q-form-label label="Date Time" required>
-          <j-q-date-time v-model="dialogParams.params.datetime" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogInstance.rules.required" />
+          <j-q-datetime v-model="dialogParams.params.datetime" :clearable="true" range :options="dialogParams.dateOptions" :rules="dialogInstance.rules.required" />
         </j-q-form-label>
       </div>
       <div class="col-6">
@@ -113,22 +113,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { getCurrentInstance } from 'vue';
-import globalConfirm from 'src/components/j-q-confirm-dialog';
-import globalMessage from 'src/components/j-q-message';
-import JQInput from 'components/j-q-input/index.vue';
-import JQSelect from 'components/j-q-select/index.vue';
-import JQFile from 'components/j-q-file/index.vue';
-import JQDate from 'components/j-q-date/index.vue';
-import JQRadio from 'components/j-q-option-group/index.vue';
-import JQOptionGroup from 'components/j-q-option-group/index.vue';
-import JQFormLabel from 'components/j-q-form-label/index.vue';
+import { JQMessage, JQConfirmDialog, JQDatetime, JCListEditor, JQFormLabel, JQOptionGroup, JQDate, JQFile, JQSelect, JQInput } from 'rtcpt';
 import { cloneDeep } from 'lodash';
-import JCListEditor from 'components/j-c-list-editor/index.vue';
-import JQDateTime from 'components/j-q-datetime/index.vue';
 
 @Component({
   name: 'TableAddOrUpdateComponent',
-  components: { JQDateTime, JCListEditor, JQFormLabel, JQOptionGroup, JQRadio, JQDate, JQFile, JQSelect, JQInput },
+  components: { JQDatetime, JCListEditor, JQFormLabel, JQOptionGroup, JQDate, JQFile, JQSelect, JQInput },
   emits: ['getData'],
 })
 export default class TableAddOrUpdateComponent extends Vue {
@@ -138,6 +128,8 @@ export default class TableAddOrUpdateComponent extends Vue {
   get disableCheckbox() {
     return this.dialogParams.params.level === 1;
   }
+
+  mounted() {}
 
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
   public dialogParams = {
@@ -199,7 +191,7 @@ export default class TableAddOrUpdateComponent extends Vue {
   /* event */
   public handleClickCancel() {
     console.log('cancel');
-    globalMessage.show({
+    JQMessage.show({
       type: 'error',
       content: 'just a preset position for listening cancel event :)',
     });
@@ -207,14 +199,14 @@ export default class TableAddOrUpdateComponent extends Vue {
 
   public hanleClickGetData() {
     this.$emit('getData');
-    globalMessage.show({
+    JQMessage.show({
       type: 'success',
       content: 'trigger parent component getData event',
     });
   }
 
   public handleClickMessage() {
-    globalMessage.show({
+    JQMessage.show({
       type: 'success',
       content: 'success',
     });
@@ -244,32 +236,12 @@ export default class TableAddOrUpdateComponent extends Vue {
     }
   }
 
-  public beforeFile(files: File[]) {
-    const file = files[0];
-    if (2 < file.size / Math.pow(1024, 2)) {
-      globalMessage.show({
-        content: 'Max file size is 2MB',
-        type: 'error',
-      });
-      return;
-    }
-    const format = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-    if (['.xls', '.xlsx'].indexOf(format) === -1) {
-      globalMessage.show({
-        content: 'Unsupported file format',
-        type: 'error',
-      });
-      return;
-    }
-    return files;
-  }
-
   /* http */
   public async handleClickConfirm() {
     console.log('confirm');
     const valid = await this.$refs.formRef.validate();
     if (valid) {
-      const result = await globalConfirm.show({
+      const result = await JQConfirmDialog.show({
         title: 'confrim title',
         content: 'dude, this is a confirm',
       });

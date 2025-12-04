@@ -1,23 +1,31 @@
 <template>
   <div>
-    <jCsvg name="developer" class="q-ml-md" />
-    <JCDuoListEditor v-model="listData" :default-new-item="{ name: 'New Item' }" action-mode="compact">
-      <template #item-content="{ item, updateItem }">
-        <q-input :model-value="item.name" @update:model-value="(val) => updateItem(index, { name: val })" dense />
-      </template>
-    </JCDuoListEditor>
     <j-q-search-form v-model="tableParams.query.params" :query-loading="tableParams.loading" @query="handleClickQuery" @reset="handleClickReset" class="q-mb-md">
       <j-q-input v-model="tableParams.query.params.name" label="Name" />
       <j-q-input v-model="tableParams.query.params.age" label="Age" />
       <j-q-select v-model="tableParams.query.params.city" :options="tableParams.query.cityOptions" filterable label="City" />
       <j-q-autocomplete search-id="description" search-key="description" v-model="tableParams.query.params.description" ref="JQAutocompleteRef" label="Description (Autocomplete)" />
       <j-q-date v-model="tableParams.query.params.date" :clearable="true" range :options="tableParams.query.dateOptions" label="Date" />
-      <j-q-date-time v-model="tableParams.query.params.dateTime" label="Datetime" :options="tableParams.query.dateOptions" style="width: 335px" />
+      <j-q-datetime v-model="tableParams.query.params.dateTime" label="Datetime" :options="tableParams.query.dateOptions" />
       <j-c-tree-select v-model="tableParams.query.params.treeIds" :options="tableParams.query.treeOptions" :multiple="false" tick-strategy="strict" label="Tree" />
-      <template v-slot:extra-operation>
-        <j-c-permission :rm-dom="true" code="operation-all" default-content="123123">
+      <template #extra-operation>
+        <j-c-permission :rm-dom="true" code="operation-all">
           <q-btn color="primary" label="Add" @click="handleClickAdd" :loading="tableParams.loading" />
         </j-c-permission>
+        <q-btn-dropdown label="今天是个好日子" :ripple="false" color="primary" no-caps dense style="height: 36px">
+          <q-list dense styling-list>
+            <q-item clickable>
+              <q-item-section>
+                <q-item-label> test </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable>
+              <q-item-section>
+                <q-item-label> test123 </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </template>
     </j-q-search-form>
     <j-q-table
@@ -45,7 +53,7 @@
         [custom text in name]
       </template>
       <template #body-cell-description="{ row }">
-        <s-q-tooltip :content="row.description" contentStyle="max-width: 200px" v-if="row.description" />
+        <j-q-tooltip :content="row.description" contentStyle="max-width: 200px" v-if="row.description" />
       </template>
       <template #body-cell-operation="{ row }">
         <j-q-confirm title="Delete?" @confirm="handleClickDelete(row)">
@@ -59,44 +67,25 @@
 
 <script lang="ts">
 import { Component } from 'vue-facing-decorator';
-import JQTable from 'components/j-q-table/index.vue';
 import TableSelectionMixin from './mixins/selected';
-import { DialogProvider } from 'src/components/j-q-dialog';
 import { defineAsyncComponent, getCurrentInstance } from 'vue';
-import JQConfirm from 'components/j-q-confirm/index.vue';
-import SQTooltip from 'components/j-q-tooltip/index.vue';
-import { defaultFormat } from 'src/utils/tools';
-import JQSearchForm from 'components/j-q-search-form/index.vue';
-import JQAutocomplete from 'components/j-q-autocomplete/index.vue';
-import JQInput from 'components/j-q-input/index.vue';
-import JQSelect from 'components/j-q-select/index.vue';
-import JQDate from 'components/j-q-date/index.vue';
-import JCSvg from 'components/j-c-svg/index.vue';
-import SvgDeveloper from 'components/j-c-svg/index.vue';
-import JCvgIcon from 'components/j-c-svg/index.vue';
-import JCPermission from 'components/j-c-permission/index.vue';
-import JCTreeSelect from 'components/j-c-tree-select/index.vue';
-import JQDateTime from 'components/j-q-datetime/index.vue';
-import { JCDuoListEditor, jCsvg } from 'rtcpt';
+import { DialogProvider, JCDuoListEditor, JCPermission, JCTreeSelect, JQAutocomplete, JQConfirm, JQDate, JQDatetime, JQInput, JQSearchForm, JQSelect, JQTable, JQTooltip } from 'rtcpt';
+import { jqTool } from 'rtcpt';
 
 @Component({
   name: 'TablePage',
   components: {
-    JQDateTime,
+    JQDatetime,
     JCTreeSelect,
     JCPermission,
-    JCvgIcon,
-    SvgDeveloper,
-    JCSvg,
     JQDate,
     JQSelect,
     JQInput,
     JQAutocomplete,
     JQSearchForm,
-    SQTooltip,
+    JQTooltip,
     JQConfirm,
     JQTable,
-    jCsvg,
     JCDuoListEditor,
   },
 })
@@ -104,11 +93,11 @@ export default class extends TableSelectionMixin {
   $refs: any;
 
   mounted() {
+    console.log(this.globals);
     this.$refs.JQTableRef.setTotal(20);
   }
 
   private globals = getCurrentInstance()!.appContext.config.globalProperties;
-  public listData = [{ name: 'Item 1' }];
   public tableParams = {
     query: {
       cityOptions: [
@@ -117,7 +106,7 @@ export default class extends TableSelectionMixin {
           value: 'shanghai',
         },
         {
-          label: 'Beijing',
+          label: 'BeijingBeijingBeijingBeijingBeijingBeijingBeijingBeijingBeijing',
           value: 'beijing',
         },
         {
@@ -163,8 +152,8 @@ export default class extends TableSelectionMixin {
         age: '',
         city: '',
         description: '',
-        date: '',
-        dateTime: '',
+        date: void 0,
+        dateTime: void 0,
         treeIds: [],
       },
       loading: false,
@@ -204,9 +193,9 @@ export default class extends TableSelectionMixin {
         headerClasses: 'table-cell--fix-left w-20',
         classes: 'table-cell--fix-left w-20',
       },
-      { name: 'id', label: 'ID', field: 'id', align: 'left', format: defaultFormat(), classes: 'j-text-color-blue' },
+      { name: 'id', label: 'ID', field: 'id', align: 'left', format: jqTool.defaultFormat(), classes: 'j-text-color-blue' },
       { name: 'name', label: 'Name', field: 'name', align: 'left' },
-      { name: 'age', label: 'Age', field: 'age', align: 'left', format: defaultFormat() },
+      { name: 'age', label: 'Age', field: 'age', align: 'left', format: jqTool.defaultFormat() },
       {
         name: 'description',
         field: 'description',

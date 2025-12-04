@@ -11,10 +11,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import JCTabs from 'components/j-c-tabs/index.vue';
 import DetailBaseComponent from './detail-base.vue';
 import DetailWorldMapComponent from './detail-world.vue';
 import DetailChartComponent from './detail-chart.vue';
+import { JCTabs } from 'rtcpt';
 
 @Component({
   name: 'TableDetailComponent',

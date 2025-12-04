@@ -3,7 +3,7 @@ import Layout from 'src/layouts/index.vue';
 import { shallowRef } from 'vue';
 import setting from 'src/setting.json';
 import { PermissionModule } from 'src/store/modules/permission';
-import globalMessage from 'src/components/j-q-message';
+import { JQMessage } from 'rtcpt';
 import { UserModule } from 'src/store/modules/user';
 
 /*
@@ -21,7 +21,7 @@ function redirect(to: any): any {
   const routes = PermissionModule.routes;
   const item: any = routes.find((item: any) => item.meta && item.path && item.component && item.name !== 'Login');
   if (!item || (item && item.children && !item.children.length)) {
-    globalMessage.show({
+    JQMessage.show({
       type: 'error',
       content: `当前账号：${UserModule.username} 权限异常`,
     });
@@ -167,16 +167,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
           pagePermissionId: ['view-all'],
         },
         component: () => import(/* webpackChunkName: "jsonEditor" */ 'src/pages/components/jsonView.vue'),
-      },
-      {
-        path: 'guide',
-        name: 'ComponentGuide',
-        meta: {
-          title: 'componentGuide',
-          icon: 'developer',
-          pagePermissionId: ['view-all'],
-        },
-        component: () => import(/* webpackChunkName: "componentGuide" */ 'src/pages/components/componentGuide.vue'),
       },
     ],
   },

@@ -2,7 +2,7 @@
 
 // 标签视图颜色变量定义 ---
 // 容器颜色
-$tag-view-bg: $white;
+$tag-view-bg: var(--j-color-white);
 $tag-view-border-color: rgba(226, 232, 240, 0.8);
 
 // 滚动条颜色
@@ -10,23 +10,23 @@ $scrollbar-thumb-color: var(--j-color-grey-lighter);
 $scrollbar-thumb-hover-color: var(--j-color-grey-lighter);
 
 // 标签项基础颜色
-$tag-item-bg: $grey-lighter;
+$tag-item-bg: var(--j-color-grey-lighter);
 $tag-item-border-color: rgba(226, 232, 240, 0.8);
-$tag-item-text-color: $grey-medium;
+$tag-item-text-color: var(--j-color-grey-medium);
 
 // 标签项 Hover 颜色
-$tag-item-hover-bg-start: $grey-lighter;
-$tag-item-hover-bg-end: $grey-light;
+$tag-item-hover-bg-start: var(--j-color-grey-lighter);
+$tag-item-hover-bg-end: var(--j-color-grey-light);
 $tag-item-hover-border-color: rgba(102, 126, 234, 0.3);
 
 // 标签项 Active 颜色 (背景与 Hover 相同)
-$tag-item-active-bg-start: $grey-lighter;
-$tag-item-active-bg-end: $grey-light;
+$tag-item-active-bg-start: var(--j-color-grey-lighter);
+$tag-item-active-bg-end: var(--j-color-grey-light);
 $tag-item-active-border-color: var(--q-primary);
 $tag-item-active-color: var(--q-primary);
 
 // 标签关闭按钮颜色
-$tag-close-color: $grey;
+$tag-close-color: var(--j-color-grey);
 $tag-close-hover-color: var(--q-primary);
 
 // --- 组件样式 ---

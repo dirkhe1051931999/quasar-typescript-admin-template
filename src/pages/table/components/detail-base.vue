@@ -21,15 +21,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import JCTitleLine from 'components/j-c-title-line/index.vue';
 import { defaultFormat } from 'src/utils/tools';
-import SQTooltip from 'components/j-q-tooltip/index.vue';
-import JQTable from 'components/j-q-table/index.vue';
-import JQDetailList from 'components/j-q-detail-list/index.vue';
+import { JQTable, JQTooltip, JQDetailList, JCTitleLine } from 'rtcpt';
 
 @Component({
   name: 'DetailBaseComponent',
-  components: { JQDetailList, SQTooltip, JCTitleLine, JQTable },
+  components: { JQDetailList, JQTooltip, JCTitleLine, JQTable },
 })
 export default class DetailBaseComponent extends Vue {
   $refs: any;
@@ -94,6 +91,6 @@ export default class DetailBaseComponent extends Vue {
 
 <style scoped lang="scss">
 .test-text {
-  background: $green-light;
+  background: var(--j-color-green-light);
 }
 </style>

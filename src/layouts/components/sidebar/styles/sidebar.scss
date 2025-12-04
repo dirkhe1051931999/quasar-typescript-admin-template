@@ -1,9 +1,9 @@
 @import 'src/css/quasar.variables.scss';
 
-$sidebar-bg-start: $white;
-$sidebar-bg-mid: $grey-lighter;
-$sidebar-bg-end: $white;
-$sidebar-text-color: $dark;
+$sidebar-bg-start: var(--j-color-white);
+$sidebar-bg-mid: var(--j-color-grey-lighter);
+$sidebar-bg-end: var(--j-color-white);
+$sidebar-text-color: var(--j-color-dark);
 $sidebar-shadow-color: rgba(15, 23, 42, 0.08);
 $sidebar-border-color: rgba(226, 232, 240, 0.8);
 

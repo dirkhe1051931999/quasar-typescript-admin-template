@@ -13,7 +13,18 @@
         </button>
       </div>
       <div class="navigation-right">
-        <q-select v-model="currentLanguage" :options="languageOptions" dense outlined emit-value map-options options-dense class="language-select" @update:model-value="handleLanguageChange">
+        <q-select
+          v-model="currentLanguage"
+          :options="languageOptions"
+          dense
+          outlined
+          emit-value
+          map-options
+          options-dense
+          class="language-select"
+          @update:model-value="handleLanguageChange"
+          popup-content-class="j-q-select-popup select-popup-content height1"
+        >
           <template v-slot:prepend>
             <q-icon name="language" />
           </template>
@@ -33,6 +44,7 @@ import { useI18n } from 'vue-i18n';
 import { AppModule } from 'src/store/modules/app';
 import { UserModule } from 'src/store/modules/user';
 import setting from 'src/setting.json';
+import { Locale, setLocale } from 'rtcpt';
 
 export default defineComponent({
   name: 'NavigationBar',
@@ -60,6 +72,7 @@ export default defineComponent({
       AppModule.SET_LANGUAGE(language);
       locale.value = language;
       setting.language = language;
+      setLocale(language as Locale);
     };
 
     const toggleCollapse = () => {

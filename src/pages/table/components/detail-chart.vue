@@ -19,18 +19,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import JChLine from 'components/j-ch-line/index.vue';
-import JChPie from 'components/j-ch-pie-doughnut/index.vue';
-import JChPieDoughnut from 'components/j-ch-pie-doughnut/index.vue';
-import JCTitleLine from 'components/j-c-title-line/index.vue';
-import JChBarLine from 'components/j-ch-bar-line/index.vue';
-import JChBubble from 'components/j-ch-bubble/index.vue';
-import JChRadar from 'components/j-ch-radar/index.vue';
-import JChBar from 'components/j-ch-bar/index.vue';
+import { JChBar, JChRadar, JChBubble, JChPieDoughnut, JChBarLine, JCTitleLine, JChLine } from 'rtcpt';
 
 @Component({
   name: 'DetailChartComponent',
-  components: { JChBar, JChRadar, JChBubble, JChPieDoughnut, JChBarLine, JCTitleLine, JChLine, JChPie },
+  components: { JChBar, JChRadar, JChBubble, JChPieDoughnut, JChBarLine, JCTitleLine, JChLine },
 })
 export default class DetailChartComponent extends Vue {
   public chartParams = {

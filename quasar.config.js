@@ -34,7 +34,7 @@ export default defineConfig((ctx) => {
     boot: ['i18n', 'axios', 'main'],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-file#css
-    css: ['app.scss'],
+    css: [],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [

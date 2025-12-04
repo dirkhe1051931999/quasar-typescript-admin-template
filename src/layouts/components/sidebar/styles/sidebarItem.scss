@@ -2,9 +2,9 @@
 
 // 菜单和弹窗颜色变量定义 ---
 // 菜单基础颜色
-$menu-text-color: $dark;
-$menu-active-bg-start: $grey-lighter;
-$menu-active-bg-end: $grey-light;
+$menu-text-color: var(--j-color-dark);
+$menu-active-bg-start: var(--j-color-grey-lighter);
+$menu-active-bg-end: var(--j-color-grey-light);
 $menu-active-color: var(--q-primary);
 
 // 菜单指示条颜色
