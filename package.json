@@ -11,7 +11,7 @@
     "build:colors": "node generate-colors.js",
     "build:svg": "node generate-custom-svg.js",
     "build": "vite build",
-    "dev": "npm run build:colors && npm run build:svg && vite build",
+    "dev": "npm run build:colors && npm run build:svg && vite build --watch",
     "patch": "npm version patch && npm run p",
     "minor": "npm version minor && npm run p",
     "major": "npm version major && npm run p"
@@ -57,5 +57,13 @@
     "typescript"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dirkhe1051931999/quasar-typescript-admin-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/issues"
+  },
+  "homepage": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/tree/v3-cpt#readme"
 }
