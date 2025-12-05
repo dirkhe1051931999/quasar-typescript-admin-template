@@ -1,6 +1,0 @@
-@import 'vars-box';
-@each $key, $value in $font-sizes {
-  .fs-#{$key} {
-    font-size: $value;
-  }
-}

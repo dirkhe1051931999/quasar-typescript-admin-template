@@ -1,5 +1,5 @@
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { getPagePermissionID, getToken, getUserinfo, getUsername, removeToken, removeUserinfo, removeUsername, setPagePermissionID, setToken, setUserinfo, setUsername } from 'src/utils/storage';
+import { getPagePermissionID, getToken, getUserinfo, getUsername, removeDynamicRoutes, removePagePermissionID, removeToken, removeUserinfo, removeUsername, setPagePermissionID, setToken, setUserinfo, setUsername } from 'src/utils/storage';
 import { resetRouter } from 'src/router';
 import store from 'src/store';
 import { uid } from 'quasar';
@@ -7,6 +7,7 @@ import { TagsViewModule } from './tags';
 import { sleep } from 'src/utils/tools';
 import setting from 'src/setting.json';
 import { PermissionModule } from './permission';
+import { pagePermissionIds } from 'src/boot/pagePermission';
 
 export interface IUserState {}
 
@@ -21,6 +22,7 @@ class User extends VuexModule implements IUserState {
   @Mutation
   public SET_PAGE_PERMISION_ID(arr: any) {
     this.pagePermissionId = arr;
+    pagePermissionIds.value = arr;
   }
 
   @Mutation
@@ -50,7 +52,7 @@ class User extends VuexModule implements IUserState {
     // await login({ username, password });
     await sleep(1000);
     const token = uid();
-    const pagePermissionId = [] as any[];
+    const pagePermissionId = ['operation-all', 'user-edit', 'user-delete', 'view-all'] as any[];
     const userinfo = {
       token,
       username,
@@ -88,8 +90,10 @@ class User extends VuexModule implements IUserState {
   public ResetToken() {
     removeUsername();
     removeToken();
-    resetRouter();
     removeUserinfo();
+    removePagePermissionID();
+    removeDynamicRoutes(); 
+    resetRouter();
     TagsViewModule.delAllViews();
     this.SET_USERNAME('');
     this.SET_USERINFO({});

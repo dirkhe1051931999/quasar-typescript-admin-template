@@ -6546,10 +6546,16 @@ rollup-plugin-visualizer@^5.12.0:
     source-map "^0.7.4"
     yargs "^17.5.1"
 
-rtcpt@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.npmmirror.com/rtcpt/-/rtcpt-0.4.1.tgz#7b332f2a5311710a396fe698a052c1ca7264fdbc"
-  integrity sha512-B2DYFMD3UoCltX7mfYsHtHGIbL195cQ8T5+b+tZ1TBvpBpambX23CkIQ4x3P6D4or1WDc+HU4arlA+bYcNZGug==
+rtcpt@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.npmmirror.com/rtcpt/-/rtcpt-0.4.6.tgz#acfdb4ab05f4748d47c234cc950444714531dd78"
+  integrity sha512-F2+UBHHNYoew+NNlHErRyPMdOPEO/gvAFN34hgltPlBtjFCBeMkYfxBgfetM4mWLt3803AS+3DBSjqgkldaZOQ==
+  dependencies:
+    rtcpt "link:../../Users/Administrator/AppData/Local/Yarn/Cache/v6/npm-rtcpt-0.4.6-acfdb4ab05f4748d47c234cc950444714531dd78-integrity/node_modules/rtcpt/.yalc/rtcpt"
+
+"rtcpt@link:.yalc/rtcpt":
+  version "0.0.0"
+  uid ""
 
 rtlcss@4.3.0:
   version "4.3.0"

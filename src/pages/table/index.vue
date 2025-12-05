@@ -16,12 +16,12 @@
           <q-list dense styling-list>
             <q-item clickable>
               <q-item-section>
-                <q-item-label> test </q-item-label>
+                <q-item-label> test</q-item-label>
               </q-item-section>
             </q-item>
             <q-item clickable>
               <q-item-section>
-                <q-item-label> test123 </q-item-label>
+                <q-item-label> test123</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -69,8 +69,7 @@
 import { Component } from 'vue-facing-decorator';
 import TableSelectionMixin from './mixins/selected';
 import { defineAsyncComponent, getCurrentInstance } from 'vue';
-import { DialogProvider, JCDuoListEditor, JCPermission, JCTreeSelect, JQAutocomplete, JQConfirm, JQDate, JQDatetime, JQInput, JQSearchForm, JQSelect, JQTable, JQTooltip } from 'rtcpt';
-import { jqTool } from 'rtcpt';
+import { DialogProvider, JCDuoListEditor, JCPermission, JCTreeSelect, JQAutocomplete, JQConfirm, JQDate, JQDatetime, JQInput, JQSearchForm, JQSelect, JQTable, jqTool, JQTooltip } from 'rtcpt';
 
 @Component({
   name: 'TablePage',
@@ -93,7 +92,6 @@ export default class extends TableSelectionMixin {
   $refs: any;
 
   mounted() {
-    console.log(this.globals);
     this.$refs.JQTableRef.setTotal(20);
   }
 
@@ -193,7 +191,19 @@ export default class extends TableSelectionMixin {
         headerClasses: 'table-cell--fix-left w-20',
         classes: 'table-cell--fix-left w-20',
       },
-      { name: 'id', label: 'ID', field: 'id', align: 'left', format: jqTool.defaultFormat(), classes: 'j-text-color-blue' },
+      {
+        name: 'id',
+        label: 'ID',
+        field: 'id',
+        align: 'left',
+        format: jqTool.defaultFormat(),
+        onClick: (row: any) => {
+          console.log(row);
+        },
+        clickable(value: any, row: any) {
+          return true;
+        },
+      },
       { name: 'name', label: 'Name', field: 'name', align: 'left' },
       { name: 'age', label: 'Age', field: 'age', align: 'left', format: jqTool.defaultFormat() },
       {

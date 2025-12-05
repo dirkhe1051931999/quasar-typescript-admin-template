@@ -21,8 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { defaultFormat } from 'src/utils/tools';
-import { JQTable, JQTooltip, JQDetailList, JCTitleLine } from 'rtcpt';
+import { JCTitleLine, JQDetailList, JQTable, jqTool, JQTooltip } from 'rtcpt';
 
 @Component({
   name: 'DetailBaseComponent',
@@ -69,9 +68,9 @@ export default class DetailBaseComponent extends Vue {
         { id: 5, name: 'Eve', age: 32 },
       ],
       columns: [
-        { name: 'id', label: 'ID', field: 'id', align: 'left', format: defaultFormat() },
+        { name: 'id', label: 'ID', field: 'id', align: 'left', format: jqTool.defaultFormat() },
         { name: 'name', label: 'Name', field: 'name', align: 'left' },
-        { name: 'age', label: 'Age', field: 'age', align: 'left', format: defaultFormat() },
+        { name: 'age', label: 'Age', field: 'age', align: 'left', format: jqTool.defaultFormat() },
         {
           name: 'description',
           field: 'description',

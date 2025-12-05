@@ -3,7 +3,7 @@
     <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
       <SidebarItemLink v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)" @listenRouteChange="listenRouteChange(theOnlyOneChild)">
         <div :class="['menu-item', { 'is-active': isActive(resolvePath(theOnlyOneChild.path)) }]" :title="$t(`routes.${theOnlyOneChild.meta.title}`)">
-          <!--          <JCsvg v-if="theOnlyOneChild.meta.icon" :name="theOnlyOneChild.meta.icon as string" class="menu-icon" style="width: 20px" />-->
+          <JCsvg v-if="theOnlyOneChild.meta.icon" :name="theOnlyOneChild.meta.icon as string" class="menu-icon" style="width: 20px" />
           <span class="menu-text">
             {{ $t(`routes.${theOnlyOneChild.meta.title}`) }}
           </span>
@@ -13,7 +13,7 @@
 
     <div v-else class="sub-menu-container" ref="subMenuContainer">
       <div :class="['sub-menu-title', { 'is-active': isSubMenuActive(resolvePath(item.path || '')) }]" @click="toggleExpand" :title="$t(`routes.${item.meta?.title || ''}`)">
-        <!--        <JCsvg v-if="item.meta && item.meta.icon" :name="item.meta.icon as string" class="menu-icon" style="width: 20px" />-->
+        <JCsvg v-if="item.meta && item.meta.icon" :name="item.meta.icon as string" class="menu-icon" style="width: 20px" />
         <span class="menu-text">
           {{ $t(`routes.${item.meta?.title}`) }}
         </span>
@@ -46,12 +46,14 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import path from 'path-browserify';
 import SidebarItemLink from './SidebarItemLink.vue';
+import JCsvg from 'components/j-c-svg/index.vue';
 
 const isExternal = (path: string): boolean => /^(https?:|mailto:|tel:)/.test(path);
 
 export default defineComponent({
   name: 'SidebarItem',
   components: {
+    JCsvg,
     SidebarItemLink,
   },
   props: {
