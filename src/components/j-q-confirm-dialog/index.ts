@@ -1,4 +1,4 @@
-import { Dialog } from 'quasar';
+import type { QVueGlobals } from 'quasar';
 import ConfirmDialogComponent from './index.vue';
 
 type ShowParams = {
@@ -9,15 +9,31 @@ type ShowParams = {
 // 接口定义保持不变
 export interface IGlobalConfirm {
   show: (params: ShowParams) => Promise<boolean>;
+  setQuasarInstance: (instance: QVueGlobals) => void;
 }
 
+// 存储 Quasar 实例的引用
+let quasarInstance: QVueGlobals | null = null;
+
 class GlobalConfirm implements IGlobalConfirm {
+  /**
+   * 设置 Quasar 实例（在 rtcptInit 中调用）
+   */
+  public setQuasarInstance(instance: QVueGlobals): void {
+    quasarInstance = instance;
+  }
+
   /**
    * 弹出自定义确认对话框，返回一个 Promise，resolve(true) 表示确定，resolve(false) 表示取消/关闭。
    */
   public async show({ title, content }: ShowParams): Promise<boolean> {
+    if (!quasarInstance?.dialog) {
+      console.error('[JQConfirmDialog] Quasar Dialog plugin not available. Make sure rtcptInit has been called.');
+      return Promise.resolve(false);
+    }
+
     return new Promise((resolve) => {
-      Dialog.create({
+      quasarInstance!.dialog({
         component: ConfirmDialogComponent,
         cancel: true,
         componentProps: {

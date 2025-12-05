@@ -4,19 +4,23 @@
     <q-popup-proxy ref="popupRef">
       <q-card class="j-q-confirm" flat>
         <q-card-section class="row items-center q-pa-none">
-          <span class="text-subtitle2 title">{{ title }}</span>
+          <span class="title">{{ title }}</span>
         </q-card-section>
-        <q-card-actions align="right" class="q-pa-none" style="padding: 0; margin-top: 8px">
-          <q-btn flat :label="computedCancelText" color="black" v-close-popup dense size="12px" />
-          <q-btn :label="computedConfirmText" color="primary" @click="handleConfirm" dense size="12px" />
-        </q-card-actions>
+        <div class="j-q-confirm-actions">
+          <div class="j-q-confirm-btn j-q-confirm-btn--cancel" @click="handleCancel">
+            {{ computedCancelText }}
+          </div>
+          <div class="j-q-confirm-btn j-q-confirm-btn--confirm" @click="handleConfirm">
+            {{ computedConfirmText }}
+          </div>
+        </div>
       </q-card>
     </q-popup-proxy>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, type SlotsType, ref, computed } from 'vue';
-import { QPopupProxy, QCard, QCardSection, QCardActions, QBtn, ClosePopup } from 'quasar';
+import { QPopupProxy, QCard, QCardSection } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 export default defineComponent({
@@ -25,11 +29,6 @@ export default defineComponent({
     QPopupProxy,
     QCard,
     QCardSection,
-    QCardActions,
-    QBtn,
-  },
-  directives: {
-    ClosePopup,
   },
   props: {
     title: {
@@ -63,6 +62,10 @@ export default defineComponent({
       return props.cancelText || t('action.cancel');
     });
 
+    const handleCancel = () => {
+      popupRef.value.hide();
+    };
+
     const handleConfirm = () => {
       popupRef.value.hide();
       emit('confirm');
@@ -70,6 +73,7 @@ export default defineComponent({
 
     return {
       popupRef,
+      handleCancel,
       handleConfirm,
       computedConfirmText,
       computedCancelText,
@@ -79,14 +83,60 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-/* Optional styling if needed */
 .title {
   max-width: 200px;
   font-size: 13px;
 }
 
 .j-q-confirm {
-  min-width: 150px;
-  padding: 12px;
+  min-width: 200px;
+  padding: 16px;
+}
+
+.j-q-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.j-q-confirm-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  text-align: center;
+  min-width: 56px;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &--cancel {
+    background-color: var(--j-color-white);
+    color: var(--j-color-dark);
+
+    &:hover {
+      background-color: var(--j-color-grey-lighter);
+    }
+
+    &:active {
+      background-color: var(--j-color-grey-light);
+    }
+  }
+
+  &--confirm {
+    background-color: var(--j-color-primary);
+    color: var(--j-color-white);
+    border-color: var(--j-color-primary);
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
 }
 </style>

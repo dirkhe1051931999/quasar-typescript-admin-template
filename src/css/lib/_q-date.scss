@@ -25,14 +25,19 @@
   width: 320px;
 
   .q-date__content {
-    .q-btn {
-      height: 30px;
-      min-width: 30px;
-      line-height: 30px;
-      padding: 0 4px;
+    .q-date__calendar-item, .q-date__arrow {
+      .q-btn {
+        max-height: 30px !important;
+        min-height: 30px !important;
+        height: 30px !important;
+        width: 30px !important;
+        min-width: 30px !important;
+        max-width: 30px !important;
+        padding: 0 4px;
 
-      &.q-btn--rectangle {
-        border-radius: 3px !important;
+        &.q-btn--rectangle {
+          border-radius: 3px !important;
+        }
       }
     }
   }
@@ -43,12 +48,12 @@
 
   .q-date {
     min-width: 300px;
+
     box-shadow: none !important;
     border: none;
 
-    // 减小日历下方的间距
     .q-date__content {
-      padding-bottom: 8px !important; // 减小底部间距
+      padding-bottom: 0px !important;
     }
 
     // 调整日历底部的导航按钮区域

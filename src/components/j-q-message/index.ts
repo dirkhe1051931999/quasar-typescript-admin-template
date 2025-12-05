@@ -1,4 +1,4 @@
-import { Notify, QNotifyCreateOptions } from 'quasar';
+import type { QNotifyCreateOptions, QVueGlobals } from 'quasar';
 import { getLocale } from 'src/composables/useI18n.ts';
 
 type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top' | 'bottom' | 'left' | 'right' | 'center' | undefined;
@@ -11,6 +11,7 @@ type showParams = {
 
 export interface IGlobalMessage {
   show: (params: showParams) => void;
+  setQuasarInstance: (instance: QVueGlobals) => void;
 }
 
 const DEFAULT_PARAMS: QNotifyCreateOptions = {
@@ -20,8 +21,18 @@ const DEFAULT_PARAMS: QNotifyCreateOptions = {
   iconSize: '20px',
 };
 
-class GlobalMessage {
+// 存储 Quasar 实例的引用
+let quasarInstance: QVueGlobals | null = null;
+
+class GlobalMessage implements IGlobalMessage {
   constructor() {}
+
+  /**
+   * 设置 Quasar 实例（在 rtcptInit 中调用）
+   */
+  public setQuasarInstance(instance: QVueGlobals): void {
+    quasarInstance = instance;
+  }
 
   public show({ type, content, position, isNotify }: showParams) {
     const data = Object.assign(DEFAULT_PARAMS, {
@@ -41,7 +52,12 @@ class GlobalMessage {
       classes: `q-message-style  q-message-style--${type}`,
     });
     try {
-      Notify.create(data);
+      if (quasarInstance?.notify) {
+        quasarInstance.notify(data);
+      } else {
+        console.error('[JQMessage] Quasar Notify plugin not available. Make sure rtcptInit has been called.');
+        alert(data.message);
+      }
     } catch (error) {
       console.log(error);
       alert(data.message);

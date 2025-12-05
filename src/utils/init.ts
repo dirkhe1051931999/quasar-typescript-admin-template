@@ -3,7 +3,11 @@ import { DialogProvider } from '../components/j-q-dialog/index';
 import { PAGE_PERMISSION_KEY } from '../components/j-c-permission/index.vue';
 import { myIcons } from './custom-svg';
 import { setCssVar } from 'quasar';
+import type { QVueGlobals } from 'quasar';
 import defaultColors from '../config/colors.json';
+import { setQuasarInstance, setLocale, type Locale } from '../composables/useI18n';
+import JQMessage from '../components/j-q-message/index';
+import JQConfirmDialog from '../components/j-q-confirm-dialog/index';
 
 export type ColorConfig = Partial<typeof defaultColors>;
 
@@ -13,6 +17,7 @@ export interface RtcptInitOptions {
   store?: any;
   i18n?: any;
   pagePermissionIds?: Ref<string[]> | string[];
+  defaultLanguage?: Locale; // 默认语言
   colors?: ColorConfig; // 自定义颜色配置
 }
 
@@ -33,6 +38,7 @@ export interface RtcptInitOptions {
  *   store,
  *   i18n,
  *   pagePermissionIds,
+ *   defaultLanguage: 'en-US',  // 设置默认语言
  *   colors: {
  *     primary: '#FF5722',  // 自定义主色
  *     grey: '#888888',     // 自定义灰色
@@ -41,7 +47,30 @@ export interface RtcptInitOptions {
  * ```
  */
 export function rtcptInit(options: RtcptInitOptions): void {
-  const { app, router, store, i18n, pagePermissionIds, colors } = options;
+  const { app, router, store, i18n, pagePermissionIds, defaultLanguage, colors } = options;
+
+  // 保存 Quasar 实例供 useI18n 使用
+  const $q = app.config.globalProperties.$q;
+  if ($q) {
+    setQuasarInstance($q);
+
+    // 设置 JQMessage 的 Quasar 实例
+    JQMessage.setQuasarInstance($q);
+
+    // 设置 JQConfirmDialog 的 Quasar 实例
+    JQConfirmDialog.setQuasarInstance($q);
+
+    // 验证必需的 Quasar 插件是否已注册
+    validateQuasarPlugins($q);
+  } else {
+    console.warn('[rtcpt] Quasar instance not found. Make sure you have installed Quasar.');
+  }
+
+  // 设置默认语言
+  if (defaultLanguage) {
+    setLocale(defaultLanguage);
+    console.log(`[rtcpt] Default language set to: ${defaultLanguage}`);
+  }
 
   // 配置 Quasar 自定义图标映射函数
   const iconMapFn = (iconName: string) => {
@@ -66,12 +95,13 @@ export function rtcptInit(options: RtcptInitOptions): void {
   // 提供权限 IDs
   if (pagePermissionIds) {
     const permissionIdsRef = isRef(pagePermissionIds) ? pagePermissionIds : ref(pagePermissionIds);
+    console.log('[rtcpt] Permission IDs provided:', permissionIdsRef.value);
     app.provide(PAGE_PERMISSION_KEY, permissionIdsRef);
   }
 
-  // 应用自定义颜色到 CSS 变量
-  if (colors) {
-    applyCustomColors(colors);
+  // 应用自定义颜色到 CSS 变量（传入 $q 实例）
+  if (colors && $q) {
+    applyCustomColors(colors, $q);
   }
 
   console.log('[rtcpt] Initialization started...');
@@ -83,8 +113,10 @@ export function rtcptInit(options: RtcptInitOptions): void {
 
 /**
  * 应用自定义颜色到 CSS 变量
+ * @param customColors 自定义颜色配置
+ * @param $q Quasar 实例（用于确保在正确的应用上下文中）
  */
-function applyCustomColors(customColors: ColorConfig): void {
+function applyCustomColors(customColors: ColorConfig, $q: QVueGlobals): void {
   const finalColors = { ...defaultColors, ...customColors };
 
   // 设置 CSS 变量到 :root
@@ -94,7 +126,8 @@ function applyCustomColors(customColors: ColorConfig): void {
     root.style.setProperty(`--j-color-${key}`, value);
   });
 
-  // 用 Quasar API 设置 Quasar 的颜色变量
+  // 使用 Quasar 的 setCssVar API 设置 Quasar 的颜色变量
+  // 注意：setCssVar 是全局 API，但我们通过传入 $q 来确保在正确的上下文中调用
   if (finalColors.primary) {
     setCssVar('primary', finalColors.primary);
   }
@@ -113,4 +146,23 @@ function applyCustomColors(customColors: ColorConfig): void {
   }
 
   console.log('[rtcpt] Custom colors applied:', customColors);
+}
+
+/**
+ * 验证必需的 Quasar 插件是否已注册
+ * @param $q Quasar 实例
+ */
+function validateQuasarPlugins($q: QVueGlobals): void {
+  const requiredPlugins = ['notify', 'dialog'];
+  const missingPlugins: string[] = [];
+
+  requiredPlugins.forEach((plugin) => {
+    if (!$q[plugin as keyof QVueGlobals]) {
+      missingPlugins.push(plugin);
+    }
+  });
+
+  if (missingPlugins.length > 0) {
+    console.warn(`[rtcpt] Missing required Quasar plugins: ${missingPlugins.join(', ')}. ` + `Please register them in your main app with app.use(Quasar, { plugins: { Notify, Dialog } })`);
+  }
 }

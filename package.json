@@ -58,5 +58,8 @@
     "typescript"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "rtcpt": "link:.yalc/rtcpt"
+  }
 }

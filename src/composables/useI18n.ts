@@ -1,6 +1,9 @@
 import { ref, Ref } from 'vue';
 import { messages, Locale } from '../i18n';
-import { Quasar } from 'quasar';
+import type { QVueGlobals } from 'quasar';
+
+// 重新导出 Locale 类型供外部使用
+export type { Locale };
 
 // 动态导入 Quasar 语言包
 const quasarLangModules = {
@@ -9,6 +12,17 @@ const quasarLangModules = {
 };
 
 const currentLocale: Ref<Locale> = ref<Locale>('zh-CN');
+
+// 存储 Quasar 实例的引用
+let quasarInstance: QVueGlobals | null = null;
+
+/**
+ * 设置 Quasar 实例（在 rtcptInit 中调用）
+ * @param $q Quasar 实例
+ */
+export function setQuasarInstance($q: QVueGlobals): void {
+  quasarInstance = $q;
+}
 
 function getValueByPath(obj: any, path: string): string {
   const keys = path.split('.');
@@ -50,10 +64,10 @@ export function setLocale(locale: Locale): void {
 
   // 同步更新 Quasar locale
   const loadQuasarLang = quasarLangModules[locale];
-  if (loadQuasarLang) {
+  if (loadQuasarLang && quasarInstance) {
     loadQuasarLang()
       .then((langModule) => {
-        Quasar.lang.set(langModule.default);
+        quasarInstance!.lang.set(langModule.default);
       })
       .catch((error) => {
         console.error(`Failed to load Quasar locale for ${locale}:`, error);
