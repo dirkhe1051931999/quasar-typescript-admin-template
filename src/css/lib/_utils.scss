@@ -1,0 +1,210 @@
+// ==================== 通用工具类 ====================
+
+// 隐藏元素
+.hide {
+  display: none !important;
+}
+
+// 文本省略号（单行）
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-line-clamp: 2;
+}
+
+// 清除浮动
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+// ==================== 链接样式 ====================
+
+// 主要链接样式（主题色）
+.link-type,
+.link-type:focus {
+  color: var(--j-color-primary);
+  cursor: pointer;
+}
+
+// 删除链接样式（危险色）
+.delete-type,
+.delete-type:focus {
+  color: var(--j-color-negative);
+  cursor: pointer;
+}
+
+// ==================== 表格内按钮 ====================
+
+// 表格内普通操作按钮
+.in-table-link-button {
+  display: inline-block;
+  text-align: center;
+  line-height: 26px;
+  padding: 0 8px;
+  height: 26px;
+  color: var(--j-color-dark);
+  background: var(--j-color-white);
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: var(--j-color-primary);
+    color: var(--j-color-white);
+  }
+}
+
+// 表格内删除按钮
+.in-table-delete-button {
+  display: inline-block;
+  text-align: center;
+  line-height: 26px;
+  padding: 0 8px;
+  height: 26px;
+  color: var(--j-color-dark);
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: var(--j-color-negative);
+    color: var(--j-color-white);
+  }
+}
+
+// ==================== 密码输入框 ====================
+
+// 密码输入框样式（用方块遮罩）
+.input-password {
+  font-family: password !important;
+
+  input {
+    -webkit-text-security: square;
+  }
+}
+
+// ==================== 标签组件 ====================
+
+// 通用标签样式，支持多种颜色主题
+.my-label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 2px;
+
+  // 蓝色标签
+  &.blue {
+    background: rgba(85, 112, 241, 0.12);
+    color: var(--j-color-blue);
+  }
+
+  // 绿色标签
+  &.green {
+    background: rgb(103, 194, 58, 0.08);
+    color: var(--j-color-green);
+  }
+
+  // 黄色标签
+  &.yellow {
+    background: rgb(237, 106, 12, 0.08);
+    color: var(--j-color-yellow);
+  }
+
+  // 红色标签
+  &.red {
+    background: rgb(234, 6, 6, 0.08);
+    color: var(--j-color-negative);
+  }
+
+  // 灰色标签
+  &.grey {
+    background: var(--j-color-grey-lighter);
+    color: var(--j-color-grey);
+  }
+
+  // 黑色标签
+  &.black {
+    background: var(--j-color-grey-medium);
+    color: var(--j-color-dark);
+  }
+}
+
+// ==================== 状态指示器 ====================
+
+// 带圆点的状态指示器，支持多种状态颜色
+.my-status {
+  position: relative;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--j-color-dark);
+
+  // 状态圆点
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--j-color-dark);
+  }
+
+  // 灰色状态
+  &.grey {
+    &::before {
+      background-color: var(--j-color-grey);
+    }
+  }
+
+  // 绿色状态（成功/正常）
+  &.green {
+    &::before {
+      background: var(--j-color-green);
+    }
+  }
+
+  // 深绿色状态
+  &.green-2 {
+    &::before {
+      background: #519c66;
+    }
+  }
+
+  // 红色状态（失败/异常）
+  &.red {
+    &::before {
+      background: var(--j-color-negative);
+    }
+  }
+
+  // 黄色状态（警告/待处理）
+  &.yellow {
+    &::before {
+      background: var(--j-color-yellow);
+    }
+  }
+
+  // 蓝色状态（信息）
+  &.blue {
+    &::before {
+      background: var(--j-color-blue);
+    }
+  }
+
+  // 深红色状态（严重异常）
+  &.deep-red {
+    &::before {
+      background: #ff0000;
+    }
+  }
+}

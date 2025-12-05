@@ -75,8 +75,8 @@ pnpm add rtcpt
 在你的主入口文件（如 `main.ts`）中引入样式：
 
 ```typescript
-import 'rtcpt/style.css'
-import 'rtcpt/index.css'
+import 'rtcpt/rtcpt.css'
+import 'rtcpt/rtcpt-styles.css'
 ```
 
 ### 2. 初始化组件库

@@ -27,10 +27,10 @@
       "import": "./dist/rtcpt.es.js",
       "require": "./dist/rtcpt.umd.js"
     },
-    "./style.css": "./dist/style.css",
-    "./index.css": "./dist/index.css",
-    "./dist/style.css": "./dist/style.css",
-    "./dist/index.css": "./dist/index.css"
+    "./rtcpt.css": "./dist/rtcpt.css",
+    "./rtcpt-styles.css": "./dist/rtcpt-styles.css",
+    "./dist/rtcpt.css": "./dist/rtcpt.css",
+    "./dist/rtcpt-styles.css": "./dist/rtcpt-styles.css"
   },
   "peerDependencies": {
     "chart.js": "^4.0.0",
@@ -57,13 +57,5 @@
     "typescript"
   ],
   "author": "",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dirkhe1051931999/quasar-typescript-admin-template.git"
-  },
-  "bugs": {
-    "url": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/issues"
-  },
-  "homepage": "https://github.com/dirkhe1051931999/quasar-typescript-admin-template/tree/v3-cpt#readme"
+  "license": "MIT"
 }

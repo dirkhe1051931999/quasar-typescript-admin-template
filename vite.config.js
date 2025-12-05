@@ -26,14 +26,14 @@ export default defineConfig({
             // 指定打包入口文件
             entry: {
                 index: resolve(__dirname, 'src/index.ts'),
-                style: resolve(__dirname, 'src/style.js'),
+                'rtcpt-styles': resolve(__dirname, 'src/rtcpt-styles.js'),
             },
             // 包名，对应 package.json 中的 name
             name: 'rtcpt',
             // 打包后的文件名
             fileName: (format, entryName) => {
-                if (entryName === 'style') {
-                    return 'style.js';
+                if (entryName === 'rtcpt-styles') {
+                    return 'rtcpt-styles.js';
                 }
                 return `rtcpt.${format}.js`;
             },

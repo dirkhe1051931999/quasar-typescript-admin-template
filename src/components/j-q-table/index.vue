@@ -34,6 +34,18 @@
           <slot :name="`body-cell-${col.name}`" v-bind="props" />
         </q-td>
       </template>
+      <template v-for="col in computedClickableColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
+        <q-td :props="props">
+          <template v-if="isClickable(col, props.value, props.row)">
+            <span class="link-type" @click="handleColumnClick(col, props.row)">
+              {{ formatColumnValue(col, props.value) }}
+            </span>
+          </template>
+          <template v-else>
+            {{ formatColumnValue(col, props.value) }}
+          </template>
+        </q-td>
+      </template>
       <template #loading>
         <q-inner-loading showing :label="t('messages.loading')" color="primary" label-class="text-primary text-weight-medium" spinner-color="black"></q-inner-loading>
       </template>
@@ -118,10 +130,15 @@ export default defineComponent({
       return props.tableHeaderClass;
     });
     const computedSlotHeaderCellColumns = computed(() => {
-      return (props.columns as TableColumn[])?.filter((column) => Reflect.has(slots, `header-cell-${column.name}`));
+      return (props.columns?.filter((column: any) => Reflect.has(slots, `header-cell-${column.name}`)) || []) as any[];
     });
     const computedSlotBodyCellColumns = computed(() => {
-      return (props.columns as TableColumn[])?.filter(({ name }) => Reflect.has(slots, `body-cell-${name}`));
+      return (props.columns?.filter(({ name, onClick }: any) => {
+        return Reflect.has(slots, `body-cell-${name}`) && !onClick;
+      }) || []) as any[];
+    });
+    const computedClickableColumns = computed(() => {
+      return (props.columns?.filter(({ onClick }: any) => onClick) || []) as any[];
     });
     const { paginationInfo, getPaginationParam, getNum, setNum, setTotal, setSize } = usePagination();
     const clacPagination = computed(() => ({
@@ -146,8 +163,32 @@ export default defineComponent({
       const tableEl = (JQTableRef.value as any)?.$el as HTMLElement;
       tableEl?.scrollIntoView({ behavior: 'smooth' });
     };
+
+    const formatColumnValue = (col: any, value: any) => {
+      if (col.format && typeof col.format === 'function') {
+        return col.format(value);
+      }
+      return value;
+    };
+
+    const handleColumnClick = (col: any, row: any) => {
+      if (col.onClick && typeof col.onClick === 'function') {
+        col.onClick(row);
+      }
+    };
+
+    const isClickable = (col: any, value: any, row: any) => {
+      // 如果 column 有自定义 clickable 函数，使用它
+      if (col.clickable && typeof col.clickable === 'function') {
+        return col.clickable(value, row);
+      }
+      // 默认：只有 null 和 undefined 不可点击
+      return value !== null && value !== undefined;
+    };
+
     /* expose 给 ref 用的 */
     expose({
+      JQTableRef,
       paginationInfo,
       getPaginationParam,
       getNum,
@@ -166,6 +207,7 @@ export default defineComponent({
       computedTableHeaderClass,
       computedSlotHeaderCellColumns,
       computedSlotBodyCellColumns,
+      computedClickableColumns,
       paginationInfo,
       getPaginationParam,
       getNum,
@@ -176,6 +218,9 @@ export default defineComponent({
       changeNum,
       changeSize,
       onPaginationChange,
+      formatColumnValue,
+      handleColumnClick,
+      isClickable,
     };
   },
 });

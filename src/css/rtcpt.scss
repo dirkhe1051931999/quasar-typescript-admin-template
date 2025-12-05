@@ -1,0 +1,36 @@
+// ==================== 1. 变量和配置 ====================
+// 必须最先导入，供后续样式使用
+@use './lib/vars-color';
+@use './lib/color';
+
+// ==================== 2. 基础重置和字体 ====================
+// 重置浏览器默认样式，建立统一基线
+@use './lib/reset';
+@use './lib/font';
+
+// ==================== 3. Quasar 组件样式覆盖 ====================
+// 按组件功能分组，从基础到复杂
+
+// 3.1 基础通用组件
+@use './lib/q-common';
+
+// 3.2 布局容器组件
+@use './lib/q-card';
+@use './lib/q-dialog';
+
+// 3.3 表单输入组件
+@use './lib/q-input';
+@use './lib/q-select';
+@use './lib/q-date';
+@use './lib/q-tree-select';
+
+// 3.4 交互组件
+@use './lib/q-btn';
+@use './lib/q-menu';
+@use './lib/q-message';
+
+// ==================== 4. 自定义工具和装饰类 ====================
+// 最后导入，确保最高优先级
+@use './lib/box';
+@use './lib/decoration';
+@use './lib/utils';
