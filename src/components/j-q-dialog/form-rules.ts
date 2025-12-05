@@ -7,11 +7,55 @@ export function parseRuleString(ruleString: string): { name: keyof ReturnType<ty
     const name = match[1] as keyof ReturnType<typeof formRules>;
     let args: any[] = [];
     if (match[2]) {
-      args = match[2].split(',').map((arg) => {
-        const trimmedArg = arg.trim();
-        const num = Number(trimmedArg);
-        return isNaN(num) ? trimmedArg : num;
-      });
+      const paramsStr = match[2].trim();
+
+      // 检测是否包含数组字面量：以 [ 开头
+      if (paramsStr.startsWith('[')) {
+        // 查找匹配的 ]
+        const arrayEndIndex = paramsStr.indexOf(']');
+        if (arrayEndIndex !== -1) {
+          // 提取数组内容（去掉 [ 和 ]）
+          const arrayContent = paramsStr.substring(1, arrayEndIndex);
+
+          // 解析数组元素：按逗号分割，去掉引号和空格
+          const arrayItems = arrayContent
+            .split(',')
+            .map((item) => item.trim().replace(/^['"](.*)['"]$/, '$1'))
+            .filter((item) => item.length > 0);
+
+          args.push(arrayItems);
+
+          // 检查数组后是否还有其他参数
+          const remainingParams = paramsStr.substring(arrayEndIndex + 1).trim();
+          if (remainingParams.startsWith(',')) {
+            // 解析剩余参数
+            const restArgs = remainingParams
+              .substring(1)
+              .split(',')
+              .map((arg) => {
+                const trimmedArg = arg.trim();
+                // 处理布尔值
+                if (trimmedArg === 'true') return true;
+                if (trimmedArg === 'false') return false;
+                // 处理数字
+                const num = Number(trimmedArg);
+                return isNaN(num) ? trimmedArg : num;
+              });
+            args.push(...restArgs);
+          }
+        }
+      } else {
+        // 不包含数组，使用原有的逗号分割逻辑
+        args = paramsStr.split(',').map((arg) => {
+          const trimmedArg = arg.trim();
+          // 处理布尔值
+          if (trimmedArg === 'true') return true;
+          if (trimmedArg === 'false') return false;
+          // 处理数字
+          const num = Number(trimmedArg);
+          return isNaN(num) ? trimmedArg : num;
+        });
+      }
     }
     return { name, args };
   }

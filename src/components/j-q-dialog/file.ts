@@ -17,7 +17,8 @@ export function beforeFileEnter(files: File[], config: IEnterFileType = { size: 
     });
     return;
   }
-  const format = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+  let format = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+  format = format.replace('.', '');
   if (type.indexOf(format) === -1) {
     globalMessage.show({
       content: t('messages.jQFile.unsupportFileFormat'),
