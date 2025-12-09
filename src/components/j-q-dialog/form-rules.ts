@@ -238,13 +238,15 @@ export function formRules(t: any) {
         },
       ];
     },
-    positiveInteger: [
-      (val?: any) => {
-        val = Number(val);
-        const isInt = Number.isInteger(val);
-        const isPositive = val > 0;
-        return (isInt && isPositive) || t('messages.formRules.positiveInt');
-      },
-    ],
+    positiveInteger(includeZero: boolean = false) {
+      return [
+        (val?: any) => {
+          val = Number(val);
+          const isInt = Number.isInteger(val);
+          const isPositive = includeZero ? val >= 0 : val > 0;
+          return (isInt && isPositive) || t(includeZero ? 'formRules.nonNegativeInt' : 'formRules.positiveInt');
+        },
+      ];
+    },
   };
 }

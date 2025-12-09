@@ -24,7 +24,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $color-white: var(--j-color-white);
 $bg-grey: var(--j-color-grey-light);
 .title-line {

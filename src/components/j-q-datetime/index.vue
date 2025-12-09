@@ -38,6 +38,15 @@
             :range="range"
           />
           <div class="column items-stretch justify-center date-time-control">
+            <transition name="tooltip-fade">
+              <div v-if="showScrollTooltip" class="datetime-scroll-tooltip">
+                <div class="tooltip-content">
+                  {{ t('messages.date.scrollTooltip') }}
+                  <q-icon name="close" size="14px" class="tooltip-close" @click="closeTooltip" />
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </transition>
             <template v-if="range">
               <div class="row column q-mb-sm q-mt-auto">
                 <div class="fs-12 text-grey h-30 row items-center q-mt-sm">{{ t('messages.date.start') }}</div>
@@ -179,9 +188,10 @@
 </template>
 
 <script lang="ts">
-import { computed, CSSProperties, defineComponent, PropType, type SlotsType, reactive, ref, watch, nextTick } from 'vue';
+import { computed, CSSProperties, defineComponent, PropType, type SlotsType, reactive, ref, watch, nextTick, onMounted } from 'vue';
 import { date, QDateProps, QField, QFieldProps, QPopupProxyProps, QPopupProxy, QDate, QInput, QBtn, QIcon } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
+import { getThirdComponentState, setThirdComponentState } from 'src/utils/storage.ts';
 
 // --- 类型定义 ---
 export interface TimeParts {
@@ -274,18 +284,51 @@ export default defineComponent({
     // 标志位：区分代码更新还是用户点击
     const isProgrammaticUpdate = ref(false);
 
+    // 气泡提示
+    const showScrollTooltip = ref(false);
+    let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
+
+    // 初始化气泡提示状态
+    onMounted(() => {
+      try {
+        const stateStr = getThirdComponentState();
+        if (stateStr) {
+          const state = JSON.parse(stateStr);
+          showScrollTooltip.value = state.datetimeTooltipVisible !== false;
+        } else {
+          showScrollTooltip.value = true;
+        }
+      } catch (e) {
+        showScrollTooltip.value = true;
+      }
+    });
+
+    // 关闭气泡提示
+    const closeTooltip = () => {
+      showScrollTooltip.value = false;
+      if (tooltipTimer) {
+        clearTimeout(tooltipTimer);
+        tooltipTimer = null;
+      }
+      try {
+        const stateStr = getThirdComponentState();
+        let state = stateStr ? JSON.parse(stateStr) : {};
+        state.datetimeTooltipVisible = false;
+        setThirdComponentState(JSON.stringify(state));
+      } catch (e) {
+        setThirdComponentState(JSON.stringify({ datetimeTooltipVisible: false }));
+      }
+    };
+
     // Range State
     const currentRange = ref<DateTimeRangeValue>({ from: null, to: null });
-    const currentRangeDate = ref<QDateRangeValue | string>({
-      from: date.formatDate(new Date(), DATE_MASK_QDATE),
-      to: date.formatDate(new Date(), DATE_MASK_QDATE),
-    });
+    const currentRangeDate = ref<QDateRangeValue | string>('');
     const fromTimeParts = reactive<TimeParts>(parseTimeParts(null));
     const toTimeParts = reactive<TimeParts>(parseTimeParts(null));
 
     // Single State
     const currentSingle = ref<SingleDateTimeValue>(null);
-    const currentSingleDate = ref<string>(date.formatDate(new Date(), DATE_MASK_QDATE));
+    const currentSingleDate = ref<string>('');
     const singleTimeParts = reactive<TimeParts>(parseTimeParts(null));
 
     const computedValue = computed({
@@ -306,22 +349,22 @@ export default defineComponent({
 
         const dFrom = toDate(rangeVal.from);
         Object.assign(fromTimeParts, parseTimeParts(rangeVal.from));
-        const fromDateStr = dFrom ? date.formatDate(dFrom, DATE_MASK_QDATE) : date.formatDate(new Date(), DATE_MASK_QDATE);
+        const fromDateStr = dFrom ? date.formatDate(dFrom, DATE_MASK_QDATE) : '';
 
         const dTo = toDate(rangeVal.to);
         Object.assign(toTimeParts, parseTimeParts(rangeVal.to));
-        const toDateStr = dTo ? date.formatDate(dTo, DATE_MASK_QDATE) : fromDateStr;
+        const toDateStr = dTo ? date.formatDate(dTo, DATE_MASK_QDATE) : '';
 
         currentRange.value = {
           from: dFrom ? date.formatDate(dFrom, DATETIME_MASK) : null,
           to: dTo ? date.formatDate(dTo, DATETIME_MASK) : null,
         };
-        currentRangeDate.value = { from: fromDateStr, to: toDateStr };
+        currentRangeDate.value = fromDateStr && toDateStr ? { from: fromDateStr, to: toDateStr } : '';
       } else {
         const dVal = toDate(val as any);
         Object.assign(singleTimeParts, parseTimeParts(val as any));
         currentSingle.value = dVal ? date.formatDate(dVal, DATETIME_MASK) : null;
-        currentSingleDate.value = dVal ? date.formatDate(dVal, DATE_MASK_QDATE) : date.formatDate(new Date(), DATE_MASK_QDATE);
+        currentSingleDate.value = dVal ? date.formatDate(dVal, DATE_MASK_QDATE) : '';
       }
 
       // 下一帧关闭保护
@@ -490,6 +533,14 @@ export default defineComponent({
       if (props.disable || props.readonly) return;
       syncStateFromModel();
       popupVisible.value = true;
+
+      // 显示气泡提示
+      if (showScrollTooltip.value) {
+        if (tooltipTimer) clearTimeout(tooltipTimer);
+        tooltipTimer = setTimeout(() => {
+          closeTooltip();
+        }, 2000);
+      }
     };
 
     const onHidePopup: QPopupProxyProps['onHide'] = (evt) => {
@@ -524,6 +575,8 @@ export default defineComponent({
       singleTimeParts,
       onHidePopup,
       slots,
+      showScrollTooltip,
+      closeTooltip,
     };
   },
 });

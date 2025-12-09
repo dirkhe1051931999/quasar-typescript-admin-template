@@ -10,7 +10,7 @@ export default {
     pleasePressEnterEnter: 'Please press Enter to enter',
     pleaseSelect: 'Please select',
     noData: 'No data',
-    date: { start: 'Start Date', end: 'End Date', confirm: 'Confirm', hour: 'Hour', minute: 'Minute', second: 'Second' },
+    date: { start: 'Start Date', end: 'End Date', confirm: 'Confirm', hour: 'Hour', minute: 'Minute', second: 'Second', scrollTooltip: 'You can scroll the mouse wheel to change the time value' },
     loading: 'Loading...',
     formRules: {
       required: 'Required',
@@ -26,6 +26,7 @@ export default {
       invalidInput: 'Invalid input',
       alreadyExists: 'Already exists',
       positiveInt: 'Value must be a positive integer',
+      nonNegativeInt: 'Value must be a non-negative integer',
       duplicateItemNotAllowed: 'Duplicate item not allowed, {value} already exists',
     },
     jQFile: {

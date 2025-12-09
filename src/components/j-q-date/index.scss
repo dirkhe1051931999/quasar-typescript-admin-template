@@ -116,3 +116,70 @@
     }
   }
 }
+
+.datetime-scroll-tooltip {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  z-index: 9999;
+  pointer-events: auto;
+
+  .tooltip-content {
+    position: relative;
+    background: var(--j-color-primary);
+    color: white;
+    padding: 8px 32px 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tooltip-close {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: white;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .tooltip-arrow {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 6px 0 6px;
+    border-color: var(--j-color-primary) transparent transparent transparent;
+  }
+}
+
+.tooltip-fade-enter-active,
+.tooltip-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tooltip-fade-enter-from {
+  opacity: 0;
+}
+
+.tooltip-fade-leave-to {
+  opacity: 0;
+}
+
+.tooltip-fade-enter-to,
+.tooltip-fade-leave-from {
+  opacity: 1;
+}

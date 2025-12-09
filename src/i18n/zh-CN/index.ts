@@ -10,7 +10,7 @@ export default {
     pleasePressEnterEnter: '请按回车键确认',
     pleaseSelect: '请选择',
     noData: '无数据',
-    date: { start: '起始时间', end: '结束时间', confirm: '确认', hour: '时', minute: '分', second: '秒' },
+    date: { start: '起始时间', end: '结束时间', confirm: '确认', hour: '时', minute: '分', second: '秒', scrollTooltip: '可以滚动鼠标滚轮改变时间值' },
     loading: '加载中...',
     formRules: {
       required: '必填',
@@ -26,6 +26,7 @@ export default {
       invalidInput: '无效输入',
       alreadyExists: '已存在',
       positiveInt: '值必须是正整数',
+      nonNegativeInt: '值必须是非负整数',
       duplicateItemNotAllowed: '不允许重复项，{value} 已存在',
     },
     jQFile: {
@@ -35,6 +36,6 @@ export default {
       unsupportFileFormat: '不支持的文件格式',
       maxFileSizeIs: '最大文件大小为 {max} MB',
     },
-    pagination: { pieces_page: '每页条数', goto: '跳转', total: '总条数' },
+    pagination: { pieces_page: '每页条数', goto: '跳转', total: '总数' },
   },
 };

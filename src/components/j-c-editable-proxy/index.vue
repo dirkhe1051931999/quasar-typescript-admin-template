@@ -1,5 +1,5 @@
 <template>
-  <div class="row items-center no-wrap jc-editable-proxy">
+  <div class="row items-end no-wrap jc-editable-proxy">
     <div class="q-pr-sm">
       <slot name="display">
         <span>{{ modelValue }}</span>

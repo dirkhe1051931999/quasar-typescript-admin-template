@@ -30,19 +30,42 @@
         </q-th>
       </template>
       <template v-for="col in computedSlotBodyCellColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
-        <q-td :props="props">
+        <q-td :props="props" :style="col.limitWidth ? getCellStyle(col) : ''">
           <slot :name="`body-cell-${col.name}`" v-bind="props" />
         </q-td>
       </template>
+      <template v-for="col in computedWhiteSpaceColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
+        <q-td :props="props" :style="getCellStyle(col)">
+          <div :class="getCellClass(col)" :ref="(el) => setEllipsisRef(el, `${col.name}-${props.row[rowKey]}`)">
+            {{ formatColumnValue(col, props.value) }}
+          </div>
+          <q-tooltip v-if="shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+            {{ formatColumnValue(col, props.value) }}
+          </q-tooltip>
+        </q-td>
+      </template>
       <template v-for="col in computedClickableColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
-        <q-td :props="props">
+        <q-td :props="props" :style="getCellStyle(col)">
           <template v-if="isClickable(col, props.value, props.row)">
-            <span class="link-type" @click="handleColumnClick(col, props.row)">
+            <div
+              class="link-type"
+              :class="getCellClass(col)"
+              :ref="col.whiteSpace ? (el) => setEllipsisRef(el, `${col.name}-${props.row[rowKey]}`) : undefined"
+              @click="handleColumnClick(col, props.row)"
+            >
               {{ formatColumnValue(col, props.value) }}
-            </span>
+            </div>
+            <q-tooltip v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+              {{ formatColumnValue(col, props.value) }}
+            </q-tooltip>
           </template>
           <template v-else>
-            {{ formatColumnValue(col, props.value) }}
+            <div :class="getCellClass(col)" :ref="col.whiteSpace ? (el) => setEllipsisRef(el, `${col.name}-${props.row[rowKey]}`) : undefined">
+              {{ formatColumnValue(col, props.value) }}
+            </div>
+            <q-tooltip v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+              {{ formatColumnValue(col, props.value) }}
+            </q-tooltip>
           </template>
         </q-td>
       </template>
@@ -114,16 +137,17 @@ export default defineComponent({
     /* params */
     const { t } = useI18n();
     const JQTableRef = ref(null);
-    const self_selected = ref<any[]>([]);
+    const innerSelected = ref<any[]>([]);
+    const ellipsisRefs = ref<Map<string, HTMLElement>>(new Map());
     const hasSlot = (slotName: string) => Reflect.has(slots, slotName);
     /* computed */
     const computedSelected = computed({
       get() {
-        return props.selected ?? self_selected.value;
+        return props.selected ?? innerSelected.value;
       },
       set(val) {
         emit('update:selected', val);
-        (self_selected.value as any) = val;
+        (innerSelected.value as any) = val;
       },
     });
     const computedTableHeaderClass = computed(() => {
@@ -139,6 +163,11 @@ export default defineComponent({
     });
     const computedClickableColumns = computed(() => {
       return (props.columns?.filter(({ onClick }: any) => onClick) || []) as any[];
+    });
+    const computedWhiteSpaceColumns = computed(() => {
+      return (props.columns?.filter(({ whiteSpace, onClick, name }: any) => {
+        return whiteSpace && !onClick && !Reflect.has(slots, `body-cell-${name}`);
+      }) || []) as any[];
     });
     const { paginationInfo, getPaginationParam, getNum, setNum, setTotal, setSize } = usePagination();
     const clacPagination = computed(() => ({
@@ -186,6 +215,57 @@ export default defineComponent({
       return value !== null && value !== undefined;
     };
 
+    // 获取列的最大宽度
+    const getMaxWidth = () => {
+      return window.innerWidth <= 1440 ? 300 : 500;
+    };
+
+    // 获取单元格样式
+    const getCellStyle = (col: any) => {
+      if (!col.whiteSpace && !col.limitWidth) return {};
+
+      const maxWidth = getMaxWidth();
+      return {
+        width: `${maxWidth}px`,
+        maxWidth: `${maxWidth}px`,
+        minWidth: `${maxWidth}px`,
+      };
+    };
+
+    // 获取单元格内容的 class
+    const getCellClass = (col: any) => {
+      if (!col.whiteSpace) return '';
+
+      const lines = Math.min(Math.max(1, Number(col.whiteSpace) || 1), 3);
+      return `cell-ellipsis cell-ellipsis--${lines}`;
+    };
+
+    // 获取 tooltip 样式
+    const getTooltipStyle = () => {
+      const maxWidth = getMaxWidth();
+      return {
+        maxWidth: `${maxWidth}px`,
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+        overflowWrap: 'break-word',
+      };
+    };
+
+    // 设置元素引用
+    const setEllipsisRef = (el: any, key: string) => {
+      if (el) {
+        ellipsisRefs.value.set(key, el);
+      }
+    };
+
+    // 判断是否需要显示 tooltip（检测内容是否溢出）
+    const shouldShowTooltip = (key: string) => {
+      const el = ellipsisRefs.value.get(key);
+      if (!el) return false;
+
+      // 检测是否有横向或纵向溢出
+      return el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight;
+    };
     /* expose 给 ref 用的 */
     expose({
       JQTableRef,
@@ -208,6 +288,7 @@ export default defineComponent({
       computedSlotHeaderCellColumns,
       computedSlotBodyCellColumns,
       computedClickableColumns,
+      computedWhiteSpaceColumns,
       paginationInfo,
       getPaginationParam,
       getNum,
@@ -221,6 +302,11 @@ export default defineComponent({
       formatColumnValue,
       handleColumnClick,
       isClickable,
+      getCellStyle,
+      getCellClass,
+      getTooltipStyle,
+      setEllipsisRef,
+      shouldShowTooltip,
     };
   },
 });
