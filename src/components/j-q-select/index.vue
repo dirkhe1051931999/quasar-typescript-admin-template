@@ -302,6 +302,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-@use './index';
-</style>
+<style lang="scss"></style>

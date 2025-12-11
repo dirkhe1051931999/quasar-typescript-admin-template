@@ -32,17 +32,17 @@ export default defineComponent({
   props: {
     title: { type: String, default: '' },
     content: { type: String, default: '' },
-    confirmText: { type: String, default: '' },
-    cancelText: { type: String, default: '' },
+    confirmButtonText: { type: String, default: '' },
+    cancelButtonText: { type: String, default: '' },
   },
   setup(props) {
     const { t } = useI18n();
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent();
     const computedConfirmText = computed(() => {
-      return props.confirmText || t('action.confirm');
+      return props.confirmButtonText || t('action.confirm');
     });
     const computedCancelText = computed(() => {
-      return props.cancelText || t('action.cancel');
+      return props.cancelButtonText || t('action.cancel');
     });
 
     return {

@@ -36,6 +36,6 @@ export default {
       unsupportFileFormat: 'Unsupported file format',
       maxFileSizeIs: 'Maximum file size: {max} MB',
     },
-    pagination: { pieces_page: 'Pieces/page', goto: 'Goto', total: 'Total' },
+    pagination: { pieces_page: 'Pieces/page', goto: 'Goto', total: 'Total {total} items' },
   },
 };

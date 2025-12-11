@@ -51,6 +51,7 @@
   font-size: 14px;
   cursor: pointer;
   user-select: none;
+  border: 1px solid var(--j-color-grey-light);
 
   &:hover {
     background: var(--j-color-primary);
@@ -132,7 +133,7 @@
 
   // 黑色标签
   &.black {
-    background: var(--j-color-grey-medium);
+    background: var(--j-color-grey-light);
     color: var(--j-color-dark);
   }
 }

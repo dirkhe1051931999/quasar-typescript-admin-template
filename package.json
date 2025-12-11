@@ -13,6 +13,9 @@
     "build": "vite build",
     "build-all": "npm run build:colors && npm run build:svg && vite build",
     "dev": "npm run build:colors && npm run build:svg && vite build --watch",
+    "yalc:publish": "npm run build-all && npx yalc push",
+    "yalc:push": "npm run build-all && npx yalc push",
+    "yalc:dev": "node yalc-dev.js",
     "patch": "npm version patch && npm run p",
     "minor": "npm version minor && npm run p",
     "major": "npm version major && npm run p"

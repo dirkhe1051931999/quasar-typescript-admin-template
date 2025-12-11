@@ -48,7 +48,7 @@
 <script lang="ts">
 import type { CSSProperties, PropType, SlotsType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
-import { date, QDateProps, QField, QFieldProps, QPopupProxyProps, QPopupProxy, QDate, QIcon } from 'quasar';
+import { date, QDate, QDateProps, QField, QFieldProps, QIcon, QPopupProxy, QPopupProxyProps } from 'quasar';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 // --- 类型定义 ---
@@ -169,6 +169,38 @@ export default defineComponent({
         return val as string;
       },
       set(val) {
+        // --- 自动处理时分秒 ---
+        // 当只选年月日时，非 range 模式时分秒设为 00:00:00
+        // range 模式：起始时间 00:00:00，结束时间 23:59:59
+        let processedValue = val;
+
+        if (val) {
+          if (props.range && typeof val === 'object' && val !== null) {
+            // 范围选择模式
+            const rangeVal = val as { from: string; to: string };
+            if (rangeVal.from && rangeVal.to) {
+              // 起始时间设为 00:00:00，结束时间设为 23:59:59
+              const fromDate = date.extractDate(rangeVal.from, props.mask || 'YYYY-MM-DD');
+              const toDate = date.extractDate(rangeVal.to, props.mask || 'YYYY-MM-DD');
+
+              processedValue = {
+                from: date.formatDate(date.startOfDate(fromDate, 'day'), DATETIME_MASK),
+                to: date.formatDate(date.endOfDate(toDate, 'day'), DATETIME_MASK),
+              };
+            }
+          } else if (!props.range && typeof val === 'string') {
+            // 单选模式：时分秒设为 00:00:00
+            const dateVal = date.extractDate(val, props.mask || 'YYYY-MM-DD');
+            processedValue = date.formatDate(date.startOfDate(dateVal, 'day'), DATETIME_MASK);
+          } else if (props.range && typeof val === 'string') {
+            // 范围选择：时分秒设为 00:00:00 和 23:59:59
+            const dateVal = date.extractDate(val, props.mask || 'YYYY-MM-DD');
+            processedValue = {
+              from: date.formatDate(date.startOfDate(dateVal, 'day'), DATETIME_MASK),
+              to: date.formatDate(date.endOfDate(dateVal, 'day'), DATETIME_MASK),
+            };
+          }
+        }
         emit('update:modelValue', val);
         // 如果有值，且不相等（防抖），且不是范围选择的一半状态（范围选择时 val 可能是 object），关闭弹窗
         // 注意：范围选择时，q-date 会多次 emit，直到选完。

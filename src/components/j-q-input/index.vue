@@ -104,7 +104,8 @@ export default defineComponent({
       return {
         'input-password': props.customType === 'password' && !isContentVisible.value,
         'j-q-input--table': props.label,
-        'j-q-input--form': !props.label,
+        'j-q-input--form': !props.label && props.type !== 'textarea',
+        'j-q-input--textarea': props.type === 'textarea' && !props.label,
       };
     });
     watch(

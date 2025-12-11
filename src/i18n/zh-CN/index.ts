@@ -36,6 +36,6 @@ export default {
       unsupportFileFormat: '不支持的文件格式',
       maxFileSizeIs: '最大文件大小为 {max} MB',
     },
-    pagination: { pieces_page: '每页条数', goto: '跳转', total: '总数' },
+    pagination: { pieces_page: '条/页', goto: '跳转', total: '共 {total} 条' },
   },
 };

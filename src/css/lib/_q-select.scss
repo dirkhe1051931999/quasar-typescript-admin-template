@@ -120,6 +120,33 @@
         padding-top: 0 !important;
       }
     }
+
+    .q-field__native {
+      span:not(.select-selected-item) {
+        max-width: 150px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      .q-field__input {
+        max-width: 50px !important;
+      }
+    }
+  }
+
+  &.proxy-select {
+    &.q-field--dense {
+      .q-field__native {
+        span:not(.select-selected-item) {
+          max-width: 120px !important;
+        }
+
+        .q-field__input {
+          max-width: 20px !important;
+        }
+      }
+    }
   }
 }
 
@@ -141,6 +168,19 @@
 
       .q-field__control-input {
         padding-top: 0 !important;
+      }
+    }
+
+    .q-field__native {
+      span:not(.select-selected-item) {
+        max-width: 80% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      .q-field__input {
+        max-width: 20% !important;
       }
     }
   }

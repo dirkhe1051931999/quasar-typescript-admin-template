@@ -2,7 +2,7 @@
   <div>
     <div class="row items-center justify-end">
       <div style="margin-top: 4px">
-        <span>{{ t('messages.pagination.total') }}: {{ internalInfo.rowsNumber }}</span>
+        <span>{{ t('messages.pagination.total', { total: internalInfo.rowsNumber }) }}</span>
       </div>
       <q-select
         class="my-pagination"

@@ -66,6 +66,23 @@ pnpm add rtcpt
 }
 ```
 
+### Quasar 插件要求
+
+使用 rtcpt 组件库时，需要在你的应用中注册以下 Quasar 插件：
+
+```typescript
+import { Quasar, Notify, Dialog } from 'quasar'
+
+app.use(Quasar, {
+  plugins: {
+    Notify,  // 必需：用于消息提示
+    Dialog   // 必需：用于对话框
+  }
+})
+```
+
+**注意**：rtcpt 组件库不依赖 `LoadingBar` 插件，你可以根据自己的需求选择是否在应用中使用它来显示HTTP请求的加载进度条。
+
 ---
 
 ## 🚀 快速开始
@@ -83,15 +100,19 @@ import 'rtcpt/rtcpt-styles.css'
 
 ```typescript
 import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import { Quasar, Notify, Dialog } from 'quasar'
 import { rtcptInit } from 'rtcpt'
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
 
+// 配置 Quasar，注册必需的插件
 app.use(Quasar, {
-  // Quasar 配置
+  plugins: {
+    Notify,  // 必需
+    Dialog   // 必需
+  }
 })
 
 // 初始化 rtcpt

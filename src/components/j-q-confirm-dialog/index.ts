@@ -1,9 +1,13 @@
 import type { QVueGlobals } from 'quasar';
 import ConfirmDialogComponent from './index.vue';
 
-type ShowParams = {
+export type ShowParams = {
   title: string;
   content: string;
+  confirmButtonText?: string;
+  cancelButtonText?: string;
+  showCancelButton?: boolean;
+  color?: string;
 };
 
 // 接口定义保持不变
@@ -26,21 +30,26 @@ class GlobalConfirm implements IGlobalConfirm {
   /**
    * 弹出自定义确认对话框，返回一个 Promise，resolve(true) 表示确定，resolve(false) 表示取消/关闭。
    */
-  public async show({ title, content }: ShowParams): Promise<boolean> {
+  public async show({ title, color, content, confirmButtonText, cancelButtonText, showCancelButton }: ShowParams): Promise<boolean> {
     if (!quasarInstance?.dialog) {
       console.error('[JQConfirmDialog] Quasar Dialog plugin not available. Make sure rtcptInit has been called.');
       return Promise.resolve(false);
     }
 
     return new Promise((resolve) => {
-      quasarInstance!.dialog({
-        component: ConfirmDialogComponent,
-        cancel: true,
-        componentProps: {
-          title,
-          content,
-        },
-      })
+      quasarInstance!
+        .dialog({
+          component: ConfirmDialogComponent,
+          cancel: showCancelButton === undefined ? true : showCancelButton,
+          componentProps: {
+            title,
+            color,
+            content,
+            confirmButtonText,
+            cancelButtonText,
+            cancel: showCancelButton === undefined ? true : showCancelButton,
+          },
+        })
         .onOk(() => {
           resolve(true);
         })

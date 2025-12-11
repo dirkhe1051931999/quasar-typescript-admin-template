@@ -39,13 +39,12 @@ export const DialogProvider = {
     }
 
     // 动态导入 Quasar 和插件（避免静态导入问题）
-    const { Quasar, Notify, Dialog, LoadingBar, Loading } = await import('quasar');
+    const { Quasar, Notify, Dialog, Loading } = await import('quasar');
     
     app.use(Quasar, {
       plugins: {
         Notify,
         Dialog,
-        LoadingBar,
         Loading,
       },
       animations: 'all' as any,
