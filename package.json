@@ -6,7 +6,6 @@
   "module": "dist/rtcpt.es.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "private": false,
   "scripts": {
     "p": "npm publish",
     "build:colors": "node generate-colors.js",
