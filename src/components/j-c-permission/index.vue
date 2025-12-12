@@ -16,6 +16,7 @@ import { computed, defineComponent, inject, type PropType, ref, type Ref, type S
 type PermissionCode = string;
 
 // 导出注入的 key，方便外部使用
+export const PAGE_ACTION_PERMISSION_KEY = Symbol('pageActionPermissionId');
 export const PAGE_PERMISSION_KEY = Symbol('pagePermissionId');
 
 export default defineComponent({
@@ -49,12 +50,21 @@ export default defineComponent({
       type: Array as PropType<PermissionCode[]>,
       default: undefined,
     },
+
+    /**
+     * 操作权限码列表（优先用 props 传入的，如果没有则用全局注入的）
+     */
+    pageActionPermissionId: {
+      type: Array as PropType<PermissionCode[]>,
+      default: undefined,
+    },
   },
   slots: Object as SlotsType<{
     default: void;
   }>,
   setup(props) {
     // 尝试注入全局权限码列表
+    const globalActionPermissionIds = inject<Ref<PermissionCode[]>>(PAGE_ACTION_PERMISSION_KEY, ref([]));
     const globalPermissionIds = inject<Ref<PermissionCode[]>>(PAGE_PERMISSION_KEY, ref([]));
 
     // 优先用 props 传入的权限码列表，如果没有则用全局注入的
@@ -63,6 +73,13 @@ export default defineComponent({
         return props.pagePermissionId;
       }
       return globalPermissionIds.value || [];
+    });
+
+    const effectiveActionPermissionIds = computed(() => {
+      if (props.pageActionPermissionId && props.pageActionPermissionId.length > 0) {
+        return props.pageActionPermissionId;
+      }
+      return globalActionPermissionIds.value || [];
     });
 
     /**
@@ -76,7 +93,7 @@ export default defineComponent({
         return true;
       }
       // 2. 调用实际的权限判断方法
-      return effectivePermissionIds.value.includes(code);
+      return effectivePermissionIds.value.includes(code) || effectiveActionPermissionIds.value.includes(code);
     });
 
     /**

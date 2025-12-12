@@ -4,6 +4,9 @@ export default {
     cancel: 'Cancel',
     query: 'Query',
     reset: 'Reset',
+    expandAll: 'Expand',
+    collapseAll: 'Collapse',
+    viewAll: 'View All',
   },
   messages: {
     pleaseEnter: 'Please enter',
@@ -36,6 +39,7 @@ export default {
       unsupportFileFormat: 'Unsupported file format',
       maxFileSizeIs: 'Maximum file size: {max} MB',
     },
+
     pagination: { pieces_page: 'Pieces/page', goto: 'Goto', total: 'Total {total} items' },
   },
 };

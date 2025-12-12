@@ -185,3 +185,40 @@
     }
   }
 }
+
+// ------------------------------------------------------------------
+// 修正 j-q-select--sm 模式 (高度 36px)
+// 和 --form 模式一样，只是高度改为 36px
+// ------------------------------------------------------------------
+.j-q-select--sm {
+  &:not(.q-select--multiple) {
+    @include field-control-reset(36px, 0, 36px, 0px);
+  }
+
+  &.q-field--dense {
+    // 标签浮动 (labeled) 状态修正
+    &.q-field--labeled {
+      .q-field__control {
+        // 关键修正：内容区域高度是 36px - 14px = 22px
+        line-height: 22px;
+      }
+
+      .q-field__control-input {
+        padding-top: 0 !important;
+      }
+    }
+
+    .q-field__native {
+      span:not(.select-selected-item) {
+        max-width: 80% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      .q-field__input {
+        max-width: 20% !important;
+      }
+    }
+  }
+}

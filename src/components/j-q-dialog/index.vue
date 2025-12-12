@@ -27,6 +27,7 @@
           <div>
             <q-card-section class="dialog-body" :style="{ 'min-height': typeof minHeight === 'string' ? minHeight : `${minHeight}px` }">
               <component v-if="component" :is="component" v-bind="computedComponentBind" v-on="componentOn" ref="dynamicCompRef" />
+              <component v-else-if="content" :is="content" />
               <slot />
             </q-card-section>
             <q-card-section v-if="showFooter" class="q-pa-none dialog-footer">
@@ -72,6 +73,7 @@ export default defineComponent({
     allowFocusOutside: { type: Boolean, default: true },
     showFooter: { type: Boolean, default: true },
     component: {},
+    content: {},
     componentBind: { type: Object },
     componentOn: { type: Object },
     closeOnEsc: { type: Boolean, default: true },

@@ -4,6 +4,9 @@ export default {
     cancel: '取消',
     query: '搜索',
     reset: '重置',
+    expandAll: '展开',
+    collapseAll: '收起',
+    viewAll: '查看全部',
   },
   messages: {
     pleaseEnter: '请输入',

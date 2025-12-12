@@ -92,6 +92,29 @@
   }
 }
 
+// ------------------------------------------------------------------
+// 修正 j-q-input--sm 模式 (高度 36px)
+// 和 --form 模式一样，只是高度改为 36px
+// ------------------------------------------------------------------
+.j-q-input--sm {
+  // 传入 0 作为基础 padding-top (36px 高度下的居中/预留值)
+  @include field-control-reset(36px, 0);
+
+  &.q-field--dense {
+    // 标签浮动 (labeled) 状态修正
+    &.q-field--labeled {
+      .q-field__control {
+        // 关键修正：内容区域高度是 36px - 14px = 22px
+        line-height: 22px;
+      }
+
+      .q-field__control-input {
+        padding-top: 0 !important;
+      }
+    }
+  }
+}
+
 .j-q-input--textarea {
   &.q-field--dense {
     // textarea 需要自动高度，不应该固定高度

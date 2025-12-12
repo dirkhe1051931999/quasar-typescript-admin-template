@@ -4,10 +4,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, type PropType, ref } from 'vue';
-import { copyToClipboard } from 'quasar';
+import { copyToClipboard, QIcon } from 'quasar';
 
 export default defineComponent({
   name: 'JCCopy',
+  components: {
+    QIcon,
+  },
   props: {
     text: {
       type: [String, Number, Object] as PropType<any>,

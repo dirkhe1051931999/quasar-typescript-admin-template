@@ -3,7 +3,8 @@
     ref="qSelectRef"
     :class="{
       'j-q-select--table': label,
-      'j-q-select--form': !label,
+      'j-q-select--form': !label && !smInput,
+      'j-q-input--sm': smInput && !label,
     }"
     autocomplete="off"
     class="j-q-select"
@@ -128,6 +129,7 @@ export default defineComponent({
     useInput: { type: Boolean as PropType<QSelectProps['useInput']> },
     valueDisplayFn: { type: Function as PropType<TValueDisplayFn> },
     loading: { type: Boolean as PropType<QSelectProps['loading']> },
+    smInput: { type: Boolean, default: false },
   },
   emits: {
     'update:modelValue': (value: TModelValue) => true,

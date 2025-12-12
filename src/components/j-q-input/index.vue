@@ -66,6 +66,7 @@ export default defineComponent({
     rules: { type: Array as () => QInputProps['rules'] },
     type: { type: String as PropType<QInputProps['type']> },
     customType: { type: String as PropType<TCustomType>, default: 'text', required: false },
+    smInput: { type: Boolean, default: false },
   },
   emits: {
     change: (value: TModelValue): true => true,
@@ -104,8 +105,9 @@ export default defineComponent({
       return {
         'input-password': props.customType === 'password' && !isContentVisible.value,
         'j-q-input--table': props.label,
-        'j-q-input--form': !props.label && props.type !== 'textarea',
-        'j-q-input--textarea': props.type === 'textarea' && !props.label,
+        'j-q-input--form': !props.label && props.type !== 'textarea' && !props.smInput,
+        'j-q-input--textarea': props.type === 'textarea' && !props.label && !props.smInput,
+        'j-q-input--sm': props.smInput && !props.label,
       };
     });
     watch(

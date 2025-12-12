@@ -1,7 +1,17 @@
 import { createApp, nextTick } from 'vue';
 import JQDialog from './index.vue';
+import { formRules as formRulesCore } from './form-rules';
+import { t as globalT } from 'src/composables/useI18n';
 
 const dialogMapStore = new Map<string, { app: any; appInstance: any }>();
+
+/**
+ * 表单验证规则
+ * @param t - 可选的国际化翻译函数，如果不传则使用全局的 t 函数
+ */
+export function formRules(t?: any) {
+  return formRulesCore(t || globalT);
+}
 
 interface DialogProviderOptions {
   router?: any;
@@ -40,7 +50,7 @@ export const DialogProvider = {
 
     // 动态导入 Quasar 和插件（避免静态导入问题）
     const { Quasar, Notify, Dialog, Loading } = await import('quasar');
-    
+
     app.use(Quasar, {
       plugins: {
         Notify,

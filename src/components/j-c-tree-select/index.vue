@@ -34,7 +34,15 @@
     <q-popup-proxy v-model="popupVisible" style="border-top-left-radius: 4px; border-top-right-radius: 4px">
       <div class="j-c-tree-select-popup">
         <div v-if="filterable" class="j-c-tree-select-popup__header">
-          <j-q-input v-model="inputValue" @update:model-value="onUpdateInputValue" :placeholder="t('messages.pleaseEnter')" :readonly="readonly" :disable="disable" class="text-to-input"></j-q-input>
+          <j-q-input
+            v-model="inputValue"
+            @update:model-value="onUpdateInputValue"
+            :placeholder="t('messages.pleaseEnter')"
+            :readonly="readonly"
+            :disable="disable"
+            class="text-to-input"
+            sm-input
+          ></j-q-input>
         </div>
         <div class="j-c-tree-select-popup__main">
           <j-c-tree

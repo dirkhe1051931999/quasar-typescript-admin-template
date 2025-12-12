@@ -1,6 +1,6 @@
 import { App, isRef, ref, Ref } from 'vue';
 import { DialogProvider } from '../components/j-q-dialog/index';
-import { PAGE_PERMISSION_KEY } from '../components/j-c-permission/index.vue';
+import { PAGE_ACTION_PERMISSION_KEY, PAGE_PERMISSION_KEY } from '../components/j-c-permission/index.vue';
 import { myIcons } from './custom-svg';
 import { setCssVar } from 'quasar';
 import type { QVueGlobals } from 'quasar';
@@ -17,6 +17,7 @@ export interface RtcptInitOptions {
   store?: any;
   i18n?: any;
   pagePermissionIds?: Ref<string[]> | string[];
+  pageActionPermissionIds?: Ref<string[]> | string[];
   defaultLanguage?: Locale; // 默认语言
   colors?: ColorConfig; // 自定义颜色配置
 }
@@ -31,6 +32,7 @@ export interface RtcptInitOptions {
  *
  * const app = createApp(App);
  * const pagePermissionIds = ref(['operation-all', 'user-edit']);
+ * const pageActionPermissionIds = ref(['action-edit', 'action-delete']);
  *
  * rtcptInit({
  *   app,
@@ -38,6 +40,7 @@ export interface RtcptInitOptions {
  *   store,
  *   i18n,
  *   pagePermissionIds,
+ *   pageActionPermissionIds,
  *   defaultLanguage: 'en-US',  // 设置默认语言
  *   colors: {
  *     primary: '#FF5722',  // 自定义主色
@@ -47,7 +50,7 @@ export interface RtcptInitOptions {
  * ```
  */
 export function rtcptInit(options: RtcptInitOptions): void {
-  const { app, router, store, i18n, pagePermissionIds, defaultLanguage, colors } = options;
+  const { app, router, store, i18n, pagePermissionIds, pageActionPermissionIds, defaultLanguage, colors } = options;
 
   // 保存 Quasar 实例供 useI18n 使用
   const $q = app.config.globalProperties.$q;
@@ -97,6 +100,13 @@ export function rtcptInit(options: RtcptInitOptions): void {
     const permissionIdsRef = isRef(pagePermissionIds) ? pagePermissionIds : ref(pagePermissionIds);
     console.log('[rtcpt] Permission IDs provided:', permissionIdsRef.value);
     app.provide(PAGE_PERMISSION_KEY, permissionIdsRef);
+  }
+
+  // 提供操作权限 IDs
+  if (pageActionPermissionIds) {
+    const actionPermissionIdsRef = isRef(pageActionPermissionIds) ? pageActionPermissionIds : ref(pageActionPermissionIds);
+    console.log('[rtcpt] Action Permission IDs provided:', actionPermissionIdsRef.value);
+    app.provide(PAGE_ACTION_PERMISSION_KEY, actionPermissionIdsRef);
   }
 
   // 应用自定义颜色到 CSS 变量（传入 $q 实例）

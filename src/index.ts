@@ -1,8 +1,10 @@
 // ============ Components ============
 // j-c series
+import JCCopy from './components/j-c-copy/index.vue';
 import JCDuoListEditor from './components/j-c-duo-list-editor/index.vue';
 import JCEditableProxy from './components/j-c-editable-proxy/index.vue';
 import JCFallback from './components/j-c-fallback/index.vue';
+import JCFoldableList from './components/j-c-foldable-list/index.vue';
 import JCFormatLookup from './components/j-c-format-lookup/index.vue';
 import JCListEditor from './components/j-c-list-editor/index.vue';
 import JCPermission from './components/j-c-permission/index.vue';
@@ -38,6 +40,11 @@ import JQTable from './components/j-q-table/index.vue';
 import JQTooltip from './components/j-q-tooltip/index.vue';
 import JQMessage from './components/j-q-message/index.ts';
 import JQConfirmDialog from 'components/j-q-confirm-dialog/index.ts';
+// Import all utility functions
+import { transformTreeUseLabelAndValue } from './components/j-c-tree/index';
+import { generateDownloadFileName, JQDownloadFile } from './components/j-q-file/download';
+import * as toolUtils from './utils/tool';
+import { formRules } from 'components/j-q-dialog/index.ts';
 
 // ============ Utilities & Services ============
 export { DialogProvider } from './components/j-q-dialog/index';
@@ -45,12 +52,7 @@ export { rtcptInit } from './utils/init';
 export type { RtcptInitOptions, ColorConfig } from './utils/init';
 
 // Export permission injection key
-export { PAGE_PERMISSION_KEY } from './components/j-c-permission/index.vue';
-
-// Import all utility functions
-import { transformTreeUseLabelAndValue } from './components/j-c-tree/index';
-import { JQDownloadFile, generateDownloadFileName } from './components/j-q-file/download';
-import * as toolUtils from './utils/tool';
+export { PAGE_PERMISSION_KEY, PAGE_ACTION_PERMISSION_KEY } from './components/j-c-permission/index.vue';
 
 // Export as jqTool namespace
 export const jqTool = {
@@ -58,6 +60,7 @@ export const jqTool = {
   JQDownloadFile,
   generateDownloadFileName,
   ...toolUtils,
+  formRules,
 };
 
 // ============ i18n ============
@@ -69,9 +72,11 @@ export {
   JQMessage,
   JQConfirmDialog,
   // j-c series
+  JCCopy,
   JCDuoListEditor,
   JCEditableProxy,
   JCFallback,
+  JCFoldableList,
   JCFormatLookup,
   JCListEditor,
   JCPermission,
