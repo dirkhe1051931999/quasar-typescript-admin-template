@@ -245,6 +245,7 @@ export default defineComponent({
       const maxWidth = getMaxWidth();
       return {
         maxWidth: `${maxWidth}px`,
+        width: `${maxWidth}px`,
         whiteSpace: 'normal',
         wordBreak: 'break-word',
         overflowWrap: 'break-word',

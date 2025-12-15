@@ -1,6 +1,6 @@
 <template>
   <div class="row items-end no-wrap jc-editable-proxy">
-    <div class="q-pr-sm">
+    <div class="q-pr-sm display-value">
       <slot name="display">
         <span>{{ modelValue }}</span>
       </slot>
@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, type SlotsType, ref, watch } from 'vue';
-import { QPopupProxy, QIcon, QCard, QCardSection, QCardActions, QBtn } from 'quasar';
+import { defineComponent, PropType, ref, type SlotsType, watch } from 'vue';
+import { QBtn, QCard, QCardActions, QCardSection, QIcon, QPopupProxy } from 'quasar';
 import JCPermission from '../j-c-permission/index.vue';
 import { useI18n } from '../../composables/useI18n';
 
@@ -72,7 +72,11 @@ export default defineComponent({
   emits: ['update:modelValue', 'saved', 'confirm'],
   slots: Object as SlotsType<{
     display: void;
-    editor: { tempValue: ModelValueType; updateTempValue: (val: ModelValueType) => void; setEditorRef: (ref: QInputRef | null) => void };
+    editor: {
+      tempValue: ModelValueType;
+      updateTempValue: (val: ModelValueType) => void;
+      setEditorRef: (ref: QInputRef | null) => void;
+    };
   }>,
   setup(props, { emit }) {
     const { t } = useI18n();
@@ -166,5 +170,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .jc-editable-proxy {
   display: inline-flex;
+
+  .display-value {
+    word-break: break-all;
+  }
 }
 </style>
