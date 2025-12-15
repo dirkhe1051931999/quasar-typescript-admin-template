@@ -22,6 +22,7 @@
     @change="change"
     @filter="filterFn"
     @new-value="handleNewValue"
+    @blur="handleBlur"
     clear-icon="app:clear"
     :use-chips="useChips"
     :error="!!newValueErrorMessage"
@@ -43,8 +44,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, watch } from 'vue';
-import { QSelect, QIcon } from 'quasar';
 import type { QInputProps, QSelectProps } from 'quasar';
+import { QIcon, QSelect } from 'quasar';
 import { executeValidation, formRules, parseRuleString } from '../j-q-dialog/form-rules';
 import { useI18n } from 'src/composables/useI18n.ts';
 
@@ -140,6 +141,10 @@ export default defineComponent({
       emit('change', val);
     };
 
+    const handleBlur = () => {
+      newValueErrorMessage.value = '';
+    };
+
     expose({
       validate: () => qSelectRef.value?.validate() ?? false,
       resetValidation: () => qSelectRef.value?.resetValidation(),
@@ -153,6 +158,7 @@ export default defineComponent({
       filterFn,
       handleNewValue,
       handleUpdateModelValue,
+      handleBlur,
       change,
       slotNames,
     };

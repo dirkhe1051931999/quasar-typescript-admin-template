@@ -116,6 +116,7 @@ export default defineComponent({
     maxlength: { type: [String, Number] },
     maxValues: { type: [String, Number] as PropType<QSelectProps['maxValues']> },
     multiple: { type: Boolean },
+    closeOnSelect: { type: Boolean, default: false },
     noErrorIcon: { type: Boolean as PropType<QSelectProps['noErrorIcon']>, default: true },
     options: { type: Array as () => any[], default: () => [] },
     optionLabel: { type: String, default: 'label' },
@@ -270,12 +271,8 @@ export default defineComponent({
     watch(
       innerValue,
       (newValue, oldValue) => {
-        if (props.multiple && qSelectRef.value) {
-          const isNewValueSelected = Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length > oldValue.length;
-          if (
-            (Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length !== oldValue.length) ||
-            (Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length !== oldValue.length)
-          ) {
+        if (props.multiple && props.closeOnSelect && qSelectRef.value) {
+          if (Array.isArray(newValue) && Array.isArray(oldValue) && newValue.length !== oldValue.length) {
             qSelectRef.value.hidePopup();
           }
         }

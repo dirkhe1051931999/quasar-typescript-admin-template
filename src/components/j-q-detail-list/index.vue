@@ -1,6 +1,6 @@
 <template>
   <div class="row" :class="gutter">
-    <template v-for="item in items" :key="item.name">
+    <template v-for="item in visibleItems" :key="item.name">
       <div :class="[`col-${item.span || 6}`]" class="detail-item-container">
         <div class="q-mb-xs text-grey text-caption row items-center">
           {{ item.label }}
@@ -42,6 +42,7 @@ export interface DetailItem {
   displayKey?: string;
   tip?: string;
   format: (value: any) => any;
+  visible?: boolean | ((row: TDetailData) => boolean);
 }
 
 type TDetailData = Record<string, any>;
@@ -69,6 +70,19 @@ export default defineComponent({
   },
   slots: Object as SlotsType<Record<`item-value-${string}`, { value: any; item: DetailItem; data: TDetailData; fieldName: string }>>,
   setup(props, { slots }) {
+    const isItemVisible = (item: DetailItem): boolean => {
+      if (item.visible === undefined || item.visible === null) return true;
+      if (typeof item.visible === 'boolean') return item.visible;
+      if (typeof item.visible === 'function') {
+        return item.visible(props.data);
+      }
+      return true;
+    };
+
+    const visibleItems = computed(() => {
+      return props.items.filter((item) => isItemVisible(item));
+    });
+
     const computedSlotItems = computed(() => {
       return props.items.filter((item) => {
         return Reflect.has(slots, `item-value-${item.name}`);
@@ -116,6 +130,7 @@ export default defineComponent({
     };
 
     return {
+      visibleItems,
       getOptionClass,
       computedSlotItems,
       getDefaultValue,

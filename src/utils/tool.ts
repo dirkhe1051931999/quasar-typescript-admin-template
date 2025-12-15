@@ -221,3 +221,46 @@ export function defaultDataFormat(
 
   return defaultFormat(sizeFormatter, fallbackValue);
 }
+
+/**
+ * 流量数据格式化函数2，输入如果是 【unit】/ 1024 是整数，则转换为父级的单位，如果不是整数，则保留当前单位。
+ * 1. 使用 defaultFormat 处理 falsy 值 (显示 '--'，0 除外)。
+ * 2. 智能单位转换：如果值能被 1024 整除，自动向上转换单位（MB → GB → TB）。
+ * 3. 如果不能整除，保持原始单位。
+ */
+export function defaultAutoDataFormat(
+  fallbackValue: string = '--',
+  options?: {
+    digits?: number;
+    unit?: TSizeUnit;
+  }
+) {
+  const sizeFormatter = (val: any) => {
+    const SIZE_UNITS: TSizeUnit[] = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let size = typeof val === 'string' ? Number(val) : val;
+    let currentUnit = options?.unit || 'B';
+
+    let unitIndex = SIZE_UNITS.indexOf(currentUnit);
+    if (unitIndex === -1) {
+      unitIndex = 0;
+      currentUnit = 'B';
+    }
+
+    while (unitIndex < SIZE_UNITS.length - 1) {
+      if (size % 1024 === 0) {
+        size = size / 1024;
+        unitIndex++;
+        currentUnit = SIZE_UNITS[unitIndex];
+      } else {
+        break;
+      }
+    }
+
+    const digits = options?.digits ?? 2;
+    const formattedNumber = size.toFixed(digits);
+
+    return `${formattedNumber} ${currentUnit}`;
+  };
+
+  return defaultFormat(sizeFormatter, fallbackValue);
+}
