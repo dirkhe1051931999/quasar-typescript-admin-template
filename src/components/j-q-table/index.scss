@@ -158,3 +158,25 @@ $table-nodata-placeholder-url: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA
     white-space: normal;
   }
 }
+
+// ------------------------------------------------------------------
+// 4. Tooltip 最大宽度样式 (使用 class 因为 Quasar 会过滤掉内联 maxWidth)
+// ------------------------------------------------------------------
+
+// Tooltip 最大宽度
+.j-tooltip--small {
+  max-width: 300px !important;
+}
+
+.j-tooltip--large {
+  max-width: 500px !important;
+}
+
+// limitWidth 列的最大宽度限制（使用媒体查询响应式）
+.cell-limit-width {
+  max-width: 500px;
+
+  @media (max-width: 1440px) {
+    max-width: 300px;
+  }
+}

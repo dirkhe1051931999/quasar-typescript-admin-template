@@ -30,8 +30,18 @@
         </q-th>
       </template>
       <template v-for="col in computedSlotBodyCellColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
-        <q-td :props="props" :style="col.limitWidth ? getCellStyle(col) : ''">
-          <slot :name="`body-cell-${col.name}`" v-bind="props" />
+        <q-td :props="props">
+          <div v-if="col.limitWidth" class="cell-limit-width">
+            <slot :name="`body-cell-${col.name}`" v-bind="props" />
+          </div>
+          <slot v-else :name="`body-cell-${col.name}`" v-bind="props" />
+        </q-td>
+      </template>
+      <template v-for="col in computedLimitWidthColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
+        <q-td :props="props">
+          <div class="cell-limit-width">
+            {{ formatColumnValue(col, props.value) }}
+          </div>
         </q-td>
       </template>
       <template v-for="col in computedWhiteSpaceColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
@@ -39,7 +49,7 @@
           <div :class="getCellClass(col)" :ref="(el) => setEllipsisRef(el, `${col.name}-${props.row[rowKey]}`)">
             {{ formatColumnValue(col, props.value) }}
           </div>
-          <q-tooltip v-if="shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+          <q-tooltip v-if="shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" :class="getTooltipClass()" anchor="top middle" self="bottom middle" :offset="[10, 10]">
             {{ formatColumnValue(col, props.value) }}
           </q-tooltip>
         </q-td>
@@ -55,7 +65,14 @@
             >
               {{ formatColumnValue(col, props.value) }}
             </div>
-            <q-tooltip v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+            <q-tooltip
+              v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)"
+              :style="getTooltipStyle()"
+              :class="getTooltipClass()"
+              anchor="top middle"
+              self="bottom middle"
+              :offset="[10, 10]"
+            >
               {{ formatColumnValue(col, props.value) }}
             </q-tooltip>
           </template>
@@ -63,7 +80,14 @@
             <div :class="getCellClass(col)" :ref="col.whiteSpace ? (el) => setEllipsisRef(el, `${col.name}-${props.row[rowKey]}`) : undefined">
               {{ formatColumnValue(col, props.value) }}
             </div>
-            <q-tooltip v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)" :style="getTooltipStyle()" anchor="top middle" self="bottom middle">
+            <q-tooltip
+              v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)"
+              :style="getTooltipStyle()"
+              :class="getTooltipClass()"
+              anchor="top middle"
+              self="bottom middle"
+              :offset="[10, 10]"
+            >
               {{ formatColumnValue(col, props.value) }}
             </q-tooltip>
           </template>
@@ -169,6 +193,12 @@ export default defineComponent({
         return whiteSpace && !onClick && !Reflect.has(slots, `body-cell-${name}`);
       }) || []) as any[];
     });
+    // 只有 limitWidth 的列（没有 whiteSpace、onClick、slot）
+    const computedLimitWidthColumns = computed(() => {
+      return (props.columns?.filter(({ limitWidth, whiteSpace, onClick, name }: any) => {
+        return limitWidth && !whiteSpace && !onClick && !Reflect.has(slots, `body-cell-${name}`);
+      }) || []) as any[];
+    });
     const { paginationInfo, getPaginationParam, getNum, setNum, setTotal, setSize } = usePagination();
     const clacPagination = computed(() => ({
       rowsPerPage: 0,
@@ -222,7 +252,7 @@ export default defineComponent({
 
     // 获取单元格样式
     const getCellStyle = (col: any) => {
-      if (!col.whiteSpace && !col.limitWidth) return {};
+      if (!col.whiteSpace) return {};
 
       const maxWidth = getMaxWidth();
       return {
@@ -242,14 +272,17 @@ export default defineComponent({
 
     // 获取 tooltip 样式
     const getTooltipStyle = () => {
-      const maxWidth = getMaxWidth();
       return {
-        maxWidth: `${maxWidth}px`,
-        width: `${maxWidth}px`,
         whiteSpace: 'normal',
         wordBreak: 'break-word',
         overflowWrap: 'break-word',
       };
+    };
+
+    // 获取 tooltip 的 class (用于设置 max-width，因为 Quasar 会过滤掉内联样式中的 maxWidth)
+    const getTooltipClass = () => {
+      const maxWidth = getMaxWidth();
+      return maxWidth <= 300 ? 'j-tooltip--small' : 'j-tooltip--large';
     };
 
     // 设置元素引用
@@ -290,6 +323,7 @@ export default defineComponent({
       computedSlotBodyCellColumns,
       computedClickableColumns,
       computedWhiteSpaceColumns,
+      computedLimitWidthColumns,
       paginationInfo,
       getPaginationParam,
       getNum,
@@ -306,6 +340,7 @@ export default defineComponent({
       getCellStyle,
       getCellClass,
       getTooltipStyle,
+      getTooltipClass,
       setEllipsisRef,
       shouldShowTooltip,
     };
