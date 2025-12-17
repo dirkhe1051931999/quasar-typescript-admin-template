@@ -27,7 +27,7 @@ export default defineComponent({
 
     const iconName = computed(() => (copied.value ? 'check' : 'app:copy'));
 
-    const iconColor = computed(() => (copied.value ? 'green' : undefined));
+    const iconColor = computed(() => (copied.value ? 'grey' : undefined));
 
     const handleCopy = async () => {
       if (copied.value) {

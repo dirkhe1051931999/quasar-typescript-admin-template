@@ -239,6 +239,10 @@ export function defaultAutoDataFormat(
     const SIZE_UNITS: TSizeUnit[] = ['B', 'KB', 'MB', 'GB', 'TB'];
     let size = typeof val === 'string' ? Number(val) : val;
     let currentUnit = options?.unit || 'B';
+    const digits = options?.digits ?? 2;
+    if (size === 0) {
+      return `${size.toFixed(digits)} ${currentUnit}`;
+    }
 
     let unitIndex = SIZE_UNITS.indexOf(currentUnit);
     if (unitIndex === -1) {
@@ -256,9 +260,7 @@ export function defaultAutoDataFormat(
       }
     }
 
-    const digits = options?.digits ?? 2;
     const formattedNumber = size.toFixed(digits);
-
     return `${formattedNumber} ${currentUnit}`;
   };
 

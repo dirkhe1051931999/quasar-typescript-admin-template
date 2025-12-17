@@ -7,6 +7,7 @@ import JCFallback from './components/j-c-fallback/index.vue';
 import JCFoldableList from './components/j-c-foldable-list/index.vue';
 import JCFormatLookup from './components/j-c-format-lookup/index.vue';
 import JCListEditor from './components/j-c-list-editor/index.vue';
+import JCMoreMenu from './components/j-c-more-menu/index.vue';
 import JCPermission from './components/j-c-permission/index.vue';
 import JCTabs from './components/j-c-tabs/index.vue';
 import JCTitleLine from './components/j-c-title-line/index.vue';
@@ -79,6 +80,7 @@ export {
   JCFoldableList,
   JCFormatLookup,
   JCListEditor,
+  JCMoreMenu,
   JCPermission,
   JCTabs,
   JCTitleLine,

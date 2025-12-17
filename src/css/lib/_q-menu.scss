@@ -80,6 +80,31 @@
   }
 }
 
+// ===== styling-menu-action (used by JCMoreMenu preset="action") =====
+.q-menu[styling-menu-action] {
+  border-radius: 2px !important;
+  padding: 8px !important;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08) !important;
+
+  .q-list {
+    .q-item {
+      height: 48px;
+      overflow: hidden;
+      border-radius: 4px;
+      transition: none !important;
+
+      .q-focus-helper {
+        display: none;
+      }
+
+      &:hover {
+        opacity: 1;
+        background: #f5f6fa !important;
+      }
+    }
+  }
+}
+
 .q-list[styling-list] {
   padding: 8px 0;
 
