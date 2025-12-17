@@ -1,0 +1,51 @@
+# npm publish ignore list
+# Note: this project already uses `files` in package.json to whitelist publish output.
+# This file is an extra safety net to keep dev-only artifacts out of the tarball.
+
+# Dependencies / package manager caches
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+
+# Test / coverage / reports
+coverage/
+.nyc_output/
+report.*.json
+
+# Build caches (keep dist/!)
+.cache/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+lib-cov/
+
+# Local env files (never publish secrets)
+.env
+.env.*
+
+# Local publish artifacts
+*.tgz
+yalc.lock
+.yalc/
+
+# Repo metadata
+.github/
+
+
