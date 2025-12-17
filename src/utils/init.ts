@@ -1,13 +1,13 @@
 import { App, isRef, ref, Ref } from 'vue';
 import { DialogProvider } from '../components/j-q-dialog/index';
 import { PAGE_ACTION_PERMISSION_KEY, PAGE_PERMISSION_KEY } from '../components/j-c-permission/index.vue';
-import { myIcons } from './custom-svg';
-import { setCssVar } from 'quasar';
+import { ClosePopup, setCssVar } from 'quasar';
 import type { QVueGlobals } from 'quasar';
 import defaultColors from '../config/colors.json';
 import { setQuasarInstance, setLocale, type Locale } from '../composables/useI18n';
 import JQMessage from '../components/j-q-message/index';
 import JQConfirmDialog from '../components/j-q-confirm-dialog/index';
+import { composeIconMapFn, rtcptIconMapFn } from './icon-map';
 
 export type ColorConfig = Partial<typeof defaultColors>;
 
@@ -52,6 +52,9 @@ export interface RtcptInitOptions {
 export function rtcptInit(options: RtcptInitOptions): void {
   const { app, router, store, i18n, pagePermissionIds, pageActionPermissionIds, defaultLanguage, colors } = options;
 
+  // 注册 rtcpt 依赖的 Quasar directives（外部项目只要调用 rtcptInit 即可）
+  registerQuasarDirectives(app);
+
   // 保存 Quasar 实例供 useI18n 使用
   const $q = app.config.globalProperties.$q;
   if ($q) {
@@ -75,17 +78,8 @@ export function rtcptInit(options: RtcptInitOptions): void {
     console.log(`[rtcpt] Default language set to: ${defaultLanguage}`);
   }
 
-  // 配置 Quasar 自定义图标映射函数
-  const iconMapFn = (iconName: string) => {
-    const iconPath = 'img:';
-    const iconFile = myIcons[iconName];
-    if (iconFile !== void 0) {
-      return {
-        icon: iconPath + iconFile,
-      };
-    }
-    return void 0;
-  };
+  // rtcpt 内置 iconMapFn（base64 svg）
+  const iconMapFn = rtcptIconMapFn;
 
   // 配置 DialogProvider，把 iconMapFn 传进去
   DialogProvider.configure({
@@ -116,7 +110,11 @@ export function rtcptInit(options: RtcptInitOptions): void {
 
   console.log('[rtcpt] Initialization started...');
   // 配置主应用的 Quasar 自定义图标映射
-  app.config.globalProperties.$q.iconMapFn = iconMapFn;
+  // 这里不强行覆盖现有的 iconMapFn：如果外部项目已经设置过（例如主题图标），
+  // 就把 rtcpt 的映射作为 fallback 合并进去，避免出现 app:copyText 等图标丢失。
+  if ($q) {
+    ($q as any).iconMapFn = composeIconMapFn(($q as any).iconMapFn, iconMapFn);
+  }
 
   console.log('[rtcpt] Initialization completed successfully.');
 }
@@ -175,4 +173,14 @@ function validateQuasarPlugins($q: QVueGlobals): void {
   if (missingPlugins.length > 0) {
     console.warn(`[rtcpt] Missing required Quasar plugins: ${missingPlugins.join(', ')}. ` + `Please register them in your main app with app.use(Quasar, { plugins: { Notify, Dialog } })`);
   }
+}
+
+/**
+ * 注册 rtcpt 组件内部用到的 Quasar directives
+ * - v-close-popup -> ClosePopup
+ */
+function registerQuasarDirectives(app: App): void {
+  const directives = (app as any)?._context?.directives as Record<string, any> | undefined;
+  if (directives?.['close-popup']) return;
+  app.directive('close-popup', ClosePopup);
 }

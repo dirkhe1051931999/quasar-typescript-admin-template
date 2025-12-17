@@ -21,6 +21,40 @@ interface DialogProviderOptions {
   iconMapFn?: (iconName: string) => any;
 }
 
+export type DialogPosition = 'standard' | 'right' | 'top' | 'bottom' | 'left';
+
+export interface JQDialogRegisterProps {
+  allowFocusOutside?: boolean;
+  showFooter?: boolean;
+  /** 控制确认按钮显示/隐藏（默认 true） */
+  showConfirm?: boolean;
+
+  component?: any;
+  content?: any;
+  componentBind?: Record<string, any>;
+  componentOn?: Record<string, any>;
+
+  closeOnEsc?: boolean;
+  closeOnMask?: boolean;
+  position?: DialogPosition;
+  showHeader?: boolean;
+  title?: string;
+  maxWidth?: string | number;
+  minHeight?: string | number;
+}
+
+export interface JQDialogExposed {
+  open: () => void;
+  close: () => void;
+  setLoading: (loading: boolean) => void;
+  changeCancelText: (text: string) => void;
+  changeConfirmText: (text: string) => void;
+  /** 命令式控制确认按钮显示/隐藏 */
+  setShowConfirm: (show: boolean) => void;
+  /** 绑定一个 Ref/ComputedRef<boolean>，用于响应式控制确认按钮显示/隐藏 */
+  bindShowConfirm: (source: { value: boolean }) => void;
+}
+
 let globalOptions: DialogProviderOptions = {};
 
 export const DialogProvider = {
@@ -31,7 +65,7 @@ export const DialogProvider = {
     globalOptions = options;
   },
 
-  async register(props: any) {
+  async register(props: JQDialogRegisterProps) {
     const dialogId = Math.random().toString(36).slice(2);
     const app = createApp(JQDialog, { ...props, dialogId });
 

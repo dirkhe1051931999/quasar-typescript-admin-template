@@ -32,7 +32,7 @@
             </q-card-section>
             <q-card-section v-if="showFooter" class="q-pa-none dialog-footer">
               <q-btn :label="cancelText" unelevated no-caps @click="handleClickCancel" outline />
-              <q-btn :label="confirmText" color="primary" :ripple="false" unelevated no-caps @click="handleClickConfirm" />
+              <q-btn v-if="confirmBtnVisible" :label="confirmText" color="primary" :ripple="false" unelevated no-caps @click="handleClickConfirm" />
             </q-card-section>
           </div>
         </template>
@@ -48,8 +48,8 @@
   </q-dialog>
 </template>
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, type PropType, type SlotsType, ref } from 'vue';
-import { QDialog, QCard, QCardSection, QInnerLoading, QBtn, ClosePopup } from 'quasar';
+import { computed, defineComponent, getCurrentInstance, type PropType, ref, type SlotsType } from 'vue';
+import { ClosePopup, QBtn, QCard, QCardSection, QDialog, QInnerLoading } from 'quasar';
 import { DialogProvider } from './index';
 import { formRules } from './form-rules';
 import { beforeFileEnter } from './file';
@@ -72,6 +72,7 @@ export default defineComponent({
   props: {
     allowFocusOutside: { type: Boolean, default: true },
     showFooter: { type: Boolean, default: true },
+    showConfirm: { type: Boolean, default: true },
     component: {},
     content: {},
     componentBind: { type: Object },
@@ -95,6 +96,7 @@ export default defineComponent({
     const visible = ref(false);
     const getDataLoading = ref(false);
     const dynamicCompRef = ref(null);
+    const confirmBtnVisible = ref(props.showConfirm);
     const currentDialogInstance = getCurrentInstance();
     const { t } = useI18n();
     let cancelText = ref(t('action.cancel'));
@@ -103,7 +105,16 @@ export default defineComponent({
     const beforeFile = beforeFileEnter;
     const computedComponentBind = computed(() => ({
       ...props.componentBind,
-      dialogInstance: { open, close, setLoading, changeCancelText, changeConfirmText, rules, beforeFile },
+      dialogInstance: {
+        open,
+        close,
+        setLoading,
+        changeCancelText,
+        changeConfirmText,
+        setConfirmVisible,
+        rules,
+        beforeFile,
+      },
     }));
     const computedDialogWidth = computed(() => {
       return props.maxWidth && props.position === 'standard'
@@ -140,10 +151,13 @@ export default defineComponent({
     const setLoading = (data: boolean) => {
       getDataLoading.value = data;
     };
+    const setConfirmVisible = (data: boolean) => {
+      confirmBtnVisible.value = data;
+    };
     const destroy = () => {
       props.dialogId && DialogProvider.destroy(props.dialogId);
     };
-    expose({ open, close, setLoading, changeCancelText, changeConfirmText, rules });
+    expose({ open, close, setLoading, setConfirmVisible, changeCancelText, changeConfirmText, rules });
     return {
       persistent,
       dynamicCompRef,
@@ -158,6 +172,8 @@ export default defineComponent({
       destroy,
       handleClickCancel,
       handleClickConfirm,
+      confirmBtnVisible,
+      setConfirmVisible,
       rules,
       t,
     };

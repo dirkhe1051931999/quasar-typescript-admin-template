@@ -4,16 +4,7 @@
       <slot name="trigger">
         <q-icon class="cursor-pointer" name="more_vert" :size="triggerSize" />
       </slot>
-
-      <q-menu
-        :fit="computedFit"
-        :class="computedMenuClass"
-        :offset="computedOffset"
-        :anchor="computedAnchor"
-        :self="computedSelf"
-        :styling-menu-option="preset === 'option'"
-        :styling-menu-action="preset === 'action'"
-      >
+      <q-menu :fit="computedFit" :class="computedMenuClass" :offset="computedOffset" :anchor="computedAnchor" :self="computedSelf" v-bind="computedMenuAttrs">
         <q-list :dense="dense" :style="computedListStyle">
           <template v-for="(action, index) in actions" :key="action.key ?? index">
             <j-c-permission :rm-dom="action.rmDom ?? true" :code="action.permissionCode ?? null" :default-content="action.defaultContent ?? '--'">
@@ -89,10 +80,6 @@ export default defineComponent({
       type: Array as PropType<JCMoreMenuAction<any>[]>,
       default: () => [],
     },
-    /**
-     * option: 使用全局 `styling-menu-option` 皮肤（默认 fit + padding 风格）
-     * action: 使用全局 `styling-menu-action` 皮肤（支持 offset/anchor/self/minWidth）
-     */
     preset: {
       type: String as PropType<'option' | 'action'>,
       default: 'option',
@@ -132,10 +119,6 @@ export default defineComponent({
       type: [String, Array, Object] as PropType<any>,
       default: undefined,
     },
-    /**
-     * 外部翻译函数（推荐传业务侧的 $t 或 useI18n().t）
-     * - 如果不传，i18nKey 会回退使用组件库内置的 t()
-     */
     translate: {
       type: Function as PropType<TranslateFn | undefined>,
       default: undefined,
@@ -189,6 +172,12 @@ export default defineComponent({
       return props.menuClass ?? undefined;
     });
 
+    const computedMenuAttrs = computed<Record<string, string | undefined>>(() => {
+      if (props.preset === 'option') return { 'styling-menu-option': '' };
+      if (props.preset === 'action') return { 'styling-menu-action': '' };
+      return {};
+    });
+
     const getActionLabel = (action: JCMoreMenuAction<any>) => {
       if (typeof action.label === 'function') return action.label({ item: props.item, action });
       if (typeof action.label === 'string' && action.label) return action.label;
@@ -214,6 +203,7 @@ export default defineComponent({
       computedSelf,
       computedListStyle,
       computedMenuClass,
+      computedMenuAttrs,
       getActionLabel,
       handleActionClick,
     };

@@ -51,6 +51,8 @@ import { formRules } from 'components/j-q-dialog/index.ts';
 export { DialogProvider } from './components/j-q-dialog/index';
 export { rtcptInit } from './utils/init';
 export type { RtcptInitOptions, ColorConfig } from './utils/init';
+export { rtcptIconMapFn, composeIconMapFn } from './utils/icon-map';
+export type { IconMapFn } from './utils/icon-map';
 
 // Export permission injection key
 export { PAGE_PERMISSION_KEY, PAGE_ACTION_PERMISSION_KEY } from './components/j-c-permission/index.vue';

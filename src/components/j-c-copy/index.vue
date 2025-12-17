@@ -25,7 +25,7 @@ export default defineComponent({
     const copied = ref(false);
     let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const iconName = computed(() => (copied.value ? 'check' : 'app:copy'));
+    const iconName = computed(() => (copied.value ? 'check' : 'app:rt-copy'));
 
     const iconColor = computed(() => (copied.value ? 'grey' : undefined));
 

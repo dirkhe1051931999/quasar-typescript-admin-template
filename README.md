@@ -97,6 +97,25 @@ rtcptInit({
 app.mount('#app')
 ```
 
+### IconMapFn (important)
+
+`rtcptInit` registers rtcpt's built-in custom icons (e.g. `app:clear`, `app:copyText`) via Quasar's `iconMapFn`.
+
+If your app later assigns `this.$q.iconMapFn = (...) => ...` (common for theme/brand icons), it can **override** rtcpt's mapping and cause `app:*` icons to render as plain text.
+
+Recommended: **compose** your theme iconMap with rtcpt's fallback:
+
+```typescript
+import { composeIconMapFn, rtcptIconMapFn } from 'rtcpt'
+
+const prev = this.$q.iconMapFn
+const themeIconMapFn = (iconName: string) => {
+  // return { icon: 'img:...' } when matched, otherwise return void 0
+}
+
+this.$q.iconMapFn = composeIconMapFn(themeIconMapFn as any, prev as any, rtcptIconMapFn as any)
+```
+
 ### 3. Use Components
 
 ```vue
@@ -537,12 +556,54 @@ const openDialog = () => dialogRef.value.open()
 </script>
 ```
 
+Hide confirm button (footer still shown):
+
+```vue
+<j-q-dialog ref="dialogRef" title="View Only" :show-confirm="false">
+  <div>Readonly content</div>
+</j-q-dialog>
+```
+
+Control confirm button via `dialogRef` (reactive/computed):
+
+```vue
+<j-q-dialog ref="dialogRef" title="User Info">
+  <div>Dialog content</div>
+</j-q-dialog>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+
+const dialogRef = ref<any>()
+const readonlyMode = ref(false)
+const showConfirm = computed(() => !readonlyMode.value)
+
+const open = () => {
+  dialogRef.value.open()
+  dialogRef.value.bindShowConfirm(showConfirm)
+  // or: dialogRef.value.setShowConfirm(false)
+}
+</script>
+```
+
 Sidebar mode:
 
 ```vue
 <j-q-dialog ref="dialogRef" title="Details" position="right">
   <div>Sidebar content</div>
 </j-q-dialog>
+```
+
+DialogProvider usage:
+
+```ts
+import { DialogProvider } from 'rtcpt'
+
+DialogProvider.register({
+  title: 'Preview',
+  showFooter: true,
+  showConfirm: false
+})
 ```
 
 ### JQMessage

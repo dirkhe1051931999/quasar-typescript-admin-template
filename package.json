@@ -12,6 +12,7 @@
     "build:svg": "node generate-custom-svg.js",
     "build": "vite build",
     "build-all": "npm run build:colors && npm run build:svg && vite build",
+    "prepack": "npm run build-all",
     "dev": "npm run build:colors && npm run build:svg && vite build --watch",
     "yalc:publish": "npm run build-all && npx yalc push",
     "yalc:push": "npm run build-all && npx yalc push",
@@ -62,7 +63,5 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "rtcpt": "link:.yalc/rtcpt"
-  }
+  "dependencies": {}
 }
