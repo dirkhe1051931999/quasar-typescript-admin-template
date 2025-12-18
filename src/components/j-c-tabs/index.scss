@@ -22,6 +22,15 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
     opacity: $color-disabled-opacity-high;
     pointer-events: none;
   }
+
+  &--wrap {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  &--expand {
+    width: 100%;
+  }
 }
 
 // =================================================================
@@ -39,6 +48,23 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
   border-bottom: 1px solid $color-border;
   z-index: 1;
 
+  &.j-c-tabs--wrap {
+    height: auto;
+    min-height: 48px;
+    row-gap: 8px;
+  }
+
+  &.j-c-tabs--expand {
+    gap: 0;
+
+    li {
+      flex: 1 1 0;
+      justify-content: center;
+      margin-right: 0;
+      min-width: 0;
+    }
+  }
+
   li {
     height: 100%;
     display: flex;
@@ -49,6 +75,7 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
     padding: 0;
     background: none;
     border: none;
+    min-width: 0;
 
     &:last-child {
       margin-right: 0;
@@ -86,17 +113,34 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
 
 .j-c-tabs:not(.j-c-tabs--flat):not(.j-c-tabs--line) {
   display: flex;
-  height: 32px;
+  height: 36px;
   box-sizing: border-box;
   border-bottom: solid 1px $color-border;
+  align-items: flex-end;
+  column-gap: 5px;
+
+  &.j-c-tabs--wrap {
+    height: auto;
+    min-height: 36px;
+    gap: 8px 5px;
+    align-items: flex-start;
+  }
+
+  &.j-c-tabs--expand {
+    li {
+      flex: 1 1 0;
+      justify-content: center;
+      min-width: 0;
+    }
+  }
 
   &.empty {
     border-bottom: none;
   }
 
   li {
+    height: 36px;
     padding: 4px 12px;
-    margin-left: 5px;
     display: flex;
     align-items: center;
     background: $color-active-bg-tab;
@@ -106,6 +150,8 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
     border-bottom: none;
     cursor: pointer;
     user-select: none;
+    min-width: 0;
+    box-sizing: border-box;
 
     &.action-list {
       padding-left: 0;
@@ -113,10 +159,6 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
       border-top: none;
       border-left: none;
       border-right: none;
-    }
-
-    &:nth-of-type(1) {
-      margin-left: 0;
     }
 
     &.active {
@@ -152,27 +194,61 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
 // =================================================================
 
 .j-c-tabs--flat {
-  padding: 2px;
+  padding: 4px;
   height: 36px;
+  max-height: 36px;
   border-radius: 4px;
-  line-height: 36px;
   background: $color-light-bg;
   display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  &.j-c-tabs--wrap {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    gap: 8px 4px;
+  }
+
+  &.j-c-tabs--expand {
+    display: flex;
+    width: 100%;
+
+    li {
+      flex: 1 1 0;
+      justify-content: center;
+      min-width: 0;
+    }
+  }
+
+  &.j-c-tabs--wrap.j-c-tabs--expand {
+    li {
+      flex: 0 0 auto;
+    }
+  }
 
   li {
-    height: 32px;
-    line-height: 32px;
-    padding: 0 18px;
+    height: 28px;
+    max-height: 28px;
+    line-height: 28px;
+    padding: 0 12px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     user-select: none;
     margin-left: 0;
     background: transparent;
+    min-width: 0;
+    border-radius: 6px;
 
     &:not(.active):not(.is-disabled):hover {
       background: $color-hover-bg;
-      border-radius: 2px;
     }
 
     &.active {
@@ -181,6 +257,7 @@ $color-disabled-opacity-low: 0.5; // 禁用单个标签的透明度
       color: $color-primary;
       position: static;
       border: none;
+      font-weight: 500;
 
       &:after {
         content: none;
