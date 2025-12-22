@@ -7,18 +7,20 @@ export default defineConfig({
     plugins: [
         vue(),
         dts({
-            // 合并所有类型声明到单个文件，减小体积
-            rollupTypes: true,
+            // 注意: rollupTypes 在处理重导出时可能有问题，暂时关闭
+            rollupTypes: false,
             tsconfigPath: './tsconfig.json',
             // 优化类型文件生成
             insertTypesEntry: true,
-            copyDtsFiles: false,
+            copyDtsFiles: true,
             // 排除不必要的文件
             exclude: ['**/*.spec.ts', '**/*.test.ts', '**/tests/**'],
             // 静态导入，提升性能
             staticImport: true,
             // 清理输出目录
             cleanVueFileName: true,
+            // 指定入口文件
+            entryRoot: 'src',
         })
     ],
     resolve: {

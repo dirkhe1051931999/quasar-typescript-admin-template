@@ -62,7 +62,8 @@ export const jqTool = {
 };
 
 // ============ i18n ============
-export { useI18n, setLocale, getLocale, t } from './composables/useI18n';
+export { useI18n, setLocale, getLocale } from './composables/useI18n';
+export { t } from './composables/useI18n';
 export type { Locale } from './i18n';
 
 // ============ Components Export ============
