@@ -7,6 +7,7 @@ export default {
     expandAll: 'Expand',
     collapseAll: 'Collapse',
     viewAll: 'View All',
+    loading: 'Loading...',
   },
   messages: {
     pleaseEnter: 'Please enter',

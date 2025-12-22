@@ -7,6 +7,7 @@ export default {
     expandAll: '展开',
     collapseAll: '收起',
     viewAll: '查看全部',
+    loading: '加载中...',
   },
   messages: {
     pleaseEnter: '请输入',

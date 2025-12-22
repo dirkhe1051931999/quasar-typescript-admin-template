@@ -114,6 +114,6 @@ export default defineComponent({
 .j-q-popover {
   max-width: 400px;
   border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px 0px #d7dbec;
 }
 </style>

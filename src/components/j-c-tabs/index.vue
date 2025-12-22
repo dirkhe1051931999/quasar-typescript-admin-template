@@ -26,6 +26,7 @@
         </slot>
       </li>
     </ul>
+    <slot />
   </div>
 </template>
 <script lang="ts">

@@ -302,16 +302,16 @@ File upload:
 
 ### JQTable
 
-> `JQTable` 是基于 Quasar 的 `QTable` 封装的企业表格组件，内置了自定义分页（组件内部隐藏了 `QTable` 自带分页），并额外支持：
+> `JQTable` is an enterprise table component based on Quasar's `QTable`, with built-in custom pagination (the component internally hides `QTable`'s native pagination), and additionally supports:
 >
-> - **列点击**：通过 `columns[].onClick` 让单元格变为可点击链接
-> - **长文本省略**：通过 `columns[].whiteSpace`（1~3）做多行省略 + 溢出自动 tooltip
-> - **宽度限制**：通过 `columns[].limitWidth` 限制最大宽度（响应式 500/300px）
-> - **ref 方法**：通过 `ref` 暴露分页与滚动控制（例如 `setTotal` / `setNum` / `scrollTop`）
+> - **Column click**: Use `columns[].onClick` to make cells clickable links
+> - **Long text ellipsis**: Use `columns[].whiteSpace` (1~3) for multi-line ellipsis + auto tooltip on overflow
+> - **Width limit**: Use `columns[].limitWidth` to limit max width (responsive 500/300px)
+> - **ref methods**: Expose pagination and scroll controls via `ref` (e.g., `setTotal` / `setNum` / `scrollTop`)
 
 #### Usage
 
-最常见的用法是**服务端分页**：你监听 `pagination-change`，请求数据后更新 `rows`，并调用 `setTotal(total)` 更新总数（否则分页不会显示）。
+The most common usage is **server-side pagination**: you listen to `pagination-change`, fetch data then update `rows`, and call `setTotal(total)` to update the total count (otherwise pagination won't display).
 
 ```vue
 <template>
@@ -330,7 +330,7 @@ import { ref } from 'vue'
 
 type Row = { id: number; name: string; email: string; status: 'active' | 'disabled' }
 
-// 仅用于示例说明：列结构兼容 QTable columns，并额外支持 whiteSpace/limitWidth/onClick/clickable
+// For example purposes: column structure is compatible with QTable columns, with additional support for whiteSpace/limitWidth/onClick/clickable
 type TableColumn = Record<string, any> & {
   name: string
   whiteSpace?: 1 | 2 | 3
@@ -372,7 +372,7 @@ const handlePaginationChange = async (pagination: { page: number; rowsPerPage: n
 
 #### Custom cell slot
 
-和 Quasar 的 `QTable` 一样，你可以通过 `body-cell-{colName}` 来自定义列渲染：
+Like Quasar's `QTable`, you can customize column rendering using `body-cell-{colName}`:
 
 ```vue
 <template #body-cell-status="props">
@@ -385,67 +385,67 @@ const handlePaginationChange = async (pagination: { page: number; rowsPerPage: n
 </template>
 ```
 
-#### Column extensions（相比 QTable 的增强字段）
+#### Column extensions (enhanced fields compared to QTable)
 
-- **`whiteSpace?: 1 | 2 | 3`**：多行省略，内容溢出时自动显示 tooltip（建议用于文本列）
-- **`limitWidth?: boolean`**：限制最大宽度（响应式 500px / 300px），并包裹到 `.cell-limit-width`
-- **`onClick?: (row) => void`**：让该列呈现“链接样式”，点击触发回调
-- **`clickable?: (value, row) => boolean`**：配合 `onClick`，按条件决定该单元格是否可点（默认：`null/undefined` 不可点）
+- **`whiteSpace?: 1 | 2 | 3`**: Multi-line ellipsis, auto show tooltip on content overflow (recommended for text columns)
+- **`limitWidth?: boolean`**: Limit max width (responsive 500px / 300px), wrapped in `.cell-limit-width`
+- **`onClick?: (row) => void`**: Make the column render as "link style", trigger callback on click
+- **`clickable?: (value, row) => boolean`**: Works with `onClick`, conditionally decide if the cell is clickable (default: `null/undefined` not clickable)
 
-示例（固定列）：给 column 的 `classes/headerClasses` 增加 `table-cell--fix-left` / `table-cell--fix-right`。
+Example (fixed columns): Add `table-cell--fix-left` / `table-cell--fix-right` to column's `classes/headerClasses`.
 
-#### API（Quasar 风格）
+#### API (Quasar style)
 
 ##### Props
 
-| Name                     | Type                        | Default | Description                                                                               |
-| ------------------------ | --------------------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `columns`                | `any[]`                     | `[]`    | 列定义（兼容 `QTable` columns，并支持扩展字段 `whiteSpace/limitWidth/onClick/clickable`） |
-| `rows`                   | `any[]`                     | `[]`    | 表格数据                                                                                  |
-| `rowKey`                 | `string \| ((row) => any)`  | `'id'`  | 行唯一键                                                                                  |
-| `loading`                | `boolean`                   | `false` | 加载态（显示内置 loading）                                                                |
-| `flat`                   | `boolean`                   | `true`  | 透传给 `QTable`                                                                           |
-| `dense`                  | `boolean`                   | `false` | 透传给 `QTable`                                                                           |
-| `hidePagination`         | `boolean`                   | `false` | 隐藏底部分页                                                                              |
-| `selected`               | `any[] \| null`             | `null`  | 选中行（v-model:selected）。不传则组件内部自管                                            |
-| `tableClass`             | `string \| object \| any[]` | -       | 附加到 `QTable` 的 class                                                                  |
-| `tableHeaderClass`       | `string \| object \| any[]` | -       | 透传给 `QTable` 的 `table-header-class`                                                   |
-| `autoScrollOnChangePage` | `boolean`                   | `true`  | 翻页/改 pageSize 后自动滚动到表格顶部                                                     |
-| `autoHeight`             | `boolean`                   | `false` | 预留字段（样式类 `table--auto-height` 需要你通过 `tableClass` 自行加上）                  |
+| Name                     | Type                        | Default | Description                                                                                                           |
+| ------------------------ | --------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
+| `columns`                | `any[]`                     | `[]`    | Column definitions (compatible with `QTable` columns, with additional support for `whiteSpace/limitWidth/onClick/clickable`) |
+| `rows`                   | `any[]`                     | `[]`    | Table data                                                                                                            |
+| `rowKey`                 | `string \| ((row) => any)`  | `'id'`  | Unique row key                                                                                                        |
+| `loading`                | `boolean`                   | `false` | Loading state (shows built-in loading)                                                                                |
+| `flat`                   | `boolean`                   | `true`  | Passed through to `QTable`                                                                                            |
+| `dense`                  | `boolean`                   | `false` | Passed through to `QTable`                                                                                            |
+| `hidePagination`         | `boolean`                   | `false` | Hide bottom pagination                                                                                                |
+| `selected`               | `any[] \| null`             | `null`  | Selected rows (v-model:selected). If not provided, the component manages internally                                   |
+| `tableClass`             | `string \| object \| any[]` | -       | Class attached to `QTable`                                                                                            |
+| `tableHeaderClass`       | `string \| object \| any[]` | -       | Passed through to `QTable` as `table-header-class`                                                                    |
+| `autoScrollOnChangePage` | `boolean`                   | `true`  | Auto scroll to table top after page change or pageSize change                                                         |
+| `autoHeight`             | `boolean`                   | `false` | Reserved field (you need to manually add style class `table--auto-height` via `tableClass`)                           |
 
 ##### Events
 
-| Name                | Payload                             | Description                  |
-| ------------------- | ----------------------------------- | ---------------------------- |
-| `update:selected`   | `any[]`                             | v-model:selected 更新        |
-| `pagination-change` | `{ page, rowsPerPage, rowsNumber }` | 分页改变（来自内置分页组件） |
+| Name                | Payload                             | Description                                        |
+| ------------------- | ----------------------------------- | -------------------------------------------------- |
+| `update:selected`   | `any[]`                             | v-model:selected update                            |
+| `pagination-change` | `{ page, rowsPerPage, rowsNumber }` | Pagination change (from built-in pagination component) |
 
 ##### Slots
 
-| Name                 | Scope                      | Description          |
-| -------------------- | -------------------------- | -------------------- |
-| `top`                | -                          | `QTable` top 区域    |
-| `header`             | `QTable` header scope      | 自定义表头整行       |
-| `body`               | `QTable` body scope        | 自定义表体整行       |
-| `append`             | -                          | 表格底部追加内容     |
-| `header-cell-{name}` | `QTable` header-cell scope | 自定义某列表头单元格 |
-| `body-cell-{name}`   | `QTable` body-cell scope   | 自定义某列单元格     |
+| Name                 | Scope                      | Description                          |
+| -------------------- | -------------------------- | ------------------------------------ |
+| `top`                | -                          | `QTable` top area                    |
+| `header`             | `QTable` header scope      | Customize entire header row          |
+| `body`               | `QTable` body scope        | Customize entire body row            |
+| `append`             | -                          | Append content at table bottom       |
+| `header-cell-{name}` | `QTable` header-cell scope | Customize specific column header cell |
+| `body-cell-{name}`   | `QTable` body-cell scope   | Customize specific column cell       |
 
 ##### Exposed (via `ref`)
 
-| Name                    | Type                                      | Description                             |
-| ----------------------- | ----------------------------------------- | --------------------------------------- |
-| `setTotal(total)`       | `(total?: number) => void`                | 设置总条数（分页显示依赖 `rowsNumber`） |
-| `setNum(page)`          | `(page?: number) => void`                 | 设置当前页（默认 1）                    |
-| `setSize(rowsPerPage)`  | `(rowsPerPage?: number) => void`          | 设置每页条数                            |
-| `getPaginationParam()`  | `() => { page; rowsPerPage; rowsNumber }` | 获取分页参数                            |
-| `scrollTop()`           | `() => void`                              | 平滑滚动到表格顶部                      |
-| `ROWS_PER_PAGE_OPTIONS` | `number[]`                                | 默认每页条数选项                        |
-| `DEFAULT_ROWS_PER_PAGE` | `number`                                  | 默认每页条数（15）                      |
+| Name                    | Type                                      | Description                                                 |
+| ----------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| `setTotal(total)`       | `(total?: number) => void`                | Set total count (pagination display depends on `rowsNumber`) |
+| `setNum(page)`          | `(page?: number) => void`                 | Set current page (default 1)                                |
+| `setSize(rowsPerPage)`  | `(rowsPerPage?: number) => void`          | Set rows per page                                           |
+| `getPaginationParam()`  | `() => { page; rowsPerPage; rowsNumber }` | Get pagination parameters                                   |
+| `scrollTop()`           | `() => void`                              | Smooth scroll to table top                                  |
+| `ROWS_PER_PAGE_OPTIONS` | `number[]`                                | Default rows per page options                               |
+| `DEFAULT_ROWS_PER_PAGE` | `number`                                  | Default rows per page (15)                                  |
 
-### JQDetailList（detail-list）
+### JQDetailList (detail-list)
 
-> 项目中的 detail-list（你提到的 `j-c-list`）组件实际为 `JQDetailList`（标签：`<j-q-detail-list />`），用于把「对象详情」按栅格布局展示，并支持 options 映射、日期格式化、条件显示、以及按字段自定义渲染。
+> The detail-list component in the project (referred to as `j-c-list`) is actually `JQDetailList` (tag: `<j-q-detail-list />`), used to display object details in grid layout, with support for options mapping, date formatting, conditional display, and custom rendering by field.
 
 #### Usage
 
@@ -480,26 +480,26 @@ const detail = ref({
 
 const items: DetailItem[] = [
   { name: 'id', label: 'ID', span: 6 },
-  { name: 'name', label: '姓名', span: 6, tip: '用户在系统中的显示名' },
+  { name: 'name', label: 'Name', span: 6, tip: 'User display name in the system' },
   {
     name: 'status',
-    label: '状态',
+    label: 'Status',
     span: 6,
     options: [
-      { value: 'active', label: '启用', class: 'text-positive' },
-      { value: 'disabled', label: '停用', class: 'text-grey' }
+      { value: 'active', label: 'Enabled', class: 'text-positive' },
+      { value: 'disabled', label: 'Disabled', class: 'text-grey' }
     ],
     findByKey: 'value',
     displayKey: 'label'
   },
-  { name: 'createdAt', label: '创建时间', span: 6, date: 'YYYY-MM-DD HH:mm:ss' }
+  { name: 'createdAt', label: 'Created At', span: 6, date: 'YYYY-MM-DD HH:mm:ss' }
 ]
 </script>
 ```
 
 #### Custom item slot
 
-你可以用 `item-value-{name}` 精准覆盖某个字段的展示：
+You can use `item-value-{name}` to precisely override the display of a specific field:
 
 ```vue
 <j-q-detail-list :items="items" :data="detail">
@@ -509,37 +509,37 @@ const items: DetailItem[] = [
 </j-q-detail-list>
 ```
 
-#### API（Quasar 风格）
+#### API (Quasar style)
 
 ##### Props
 
-| Name     | Type                  | Default             | Description              |
-| -------- | --------------------- | ------------------- | ------------------------ |
-| `items`  | `DetailItem[]`        | -                   | 展示配置（必填）         |
-| `data`   | `Record<string, any>` | -                   | 详情数据对象（必填）     |
-| `gutter` | `string`              | `'q-col-gutter-md'` | 外层 row 的 gutter class |
+| Name     | Type                  | Default             | Description                       |
+| -------- | --------------------- | ------------------- | --------------------------------- |
+| `items`  | `DetailItem[]`        | -                   | Display configuration (required)  |
+| `data`   | `Record<string, any>` | -                   | Detail data object (required)     |
+| `gutter` | `string`              | `'q-col-gutter-md'` | Gutter class for outer row        |
 
 ##### Slots
 
-| Name                | Scope                              | Description                 |
-| ------------------- | ---------------------------------- | --------------------------- |
-| `item-value-{name}` | `{ value, item, data, fieldName }` | 自定义某个字段的 value 渲染 |
+| Name                | Scope                              | Description                         |
+| ------------------- | ---------------------------------- | ----------------------------------- |
+| `item-value-{name}` | `{ value, item, data, fieldName }` | Customize value rendering for a specific field |
 
-##### `DetailItem` 字段说明
+##### `DetailItem` Field Description
 
-| Field        | Type                            | Description                                        |
-| ------------ | ------------------------------- | -------------------------------------------------- |
-| `name`       | `string`                        | 字段名（对应 `data[name]`）                        |
-| `label`      | `string`                        | 标题                                               |
-| `span`       | `number`                        | 栅格列宽（`col-{span}`），默认 6                   |
-| `align`      | `'left' \| 'center' \| 'right'` | value 对齐方式，默认 left                          |
-| `tip`        | `string`                        | 标题旁的提示 tooltip                               |
-| `visible`    | `boolean \| (data) => boolean`  | 控制该项是否显示                                   |
-| `format`     | `(value) => any`                | 自定义格式化（优先于 date/options）                |
-| `date`       | `true \| string`                | 日期格式化：`true` 用默认格式；string 则用指定格式 |
-| `options`    | `Record<string, any>[]`         | 值映射列表（如字典）                               |
-| `findByKey`  | `string`                        | 在 `options` 中按哪个 key 匹配 value               |
-| `displayKey` | `string`                        | 显示 `options` 的哪个 key，默认 `'label'`          |
+| Field        | Type                            | Description                                                                 |
+| ------------ | ------------------------------- | --------------------------------------------------------------------------- |
+| `name`       | `string`                        | Field name (corresponds to `data[name]`)                                    |
+| `label`      | `string`                        | Title                                                                       |
+| `span`       | `number`                        | Grid column width (`col-{span}`), default 6                                 |
+| `align`      | `'left' \| 'center' \| 'right'` | Value alignment, default left                                               |
+| `tip`        | `string`                        | Tooltip next to title                                                       |
+| `visible`    | `boolean \| (data) => boolean`  | Control whether this item is displayed                                      |
+| `format`     | `(value) => any`                | Custom formatting (takes priority over date/options)                        |
+| `date`       | `true \| string`                | Date formatting: `true` uses default format; string uses specified format   |
+| `options`    | `Record<string, any>[]`         | Value mapping list (like a dictionary)                                      |
+| `findByKey`  | `string`                        | Which key in `options` to match the value by                                |
+| `displayKey` | `string`                        | Which key from `options` to display, default `'label'`                      |
 
 ### JQDialog
 

@@ -188,7 +188,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-$shadow-color: rgba(19, 21, 35, 0.08);
+$shadow-color: #d7dbec;
 $bg-color: var(--j-color-white);
 $bg-hover-color: var(--j-color-grey-lighter);
 .j-q-autocomplete {
