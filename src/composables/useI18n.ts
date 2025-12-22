@@ -1,5 +1,5 @@
 import { ref, Ref } from 'vue';
-import { messages, Locale } from '../i18n';
+import { getMessages, Locale, I18nMessages } from '../i18n';
 import type { QVueGlobals } from 'quasar';
 
 // 重新导出 Locale 类型供外部使用
@@ -12,6 +12,7 @@ const quasarLangModules = {
 };
 
 const currentLocale: Ref<Locale> = ref<Locale>('zh-CN');
+const currentMessages: Ref<I18nMessages | null> = ref(null);
 
 // 存储 Quasar 实例的引用
 let quasarInstance: QVueGlobals | null = null;
@@ -53,14 +54,23 @@ function interpolate(template: string, variables?: Record<string, any>): string 
 }
 
 export function t(key: string, variables?: Record<string, any>): string {
-  const locale = currentLocale.value;
-  const message = messages[locale];
-  const template = getValueByPath(message, key);
+  if (!currentMessages.value) {
+    console.warn('[rtcpt] i18n messages not loaded yet, please call setLocale first');
+    return key;
+  }
+  const template = getValueByPath(currentMessages.value, key);
   return interpolate(template, variables);
 }
 
-export function setLocale(locale: Locale): void {
+export async function setLocale(locale: Locale): Promise<void> {
   currentLocale.value = locale;
+
+  // 动态加载语言包
+  try {
+    currentMessages.value = await getMessages(locale);
+  } catch (error) {
+    console.error(`[rtcpt] Failed to load locale messages for ${locale}:`, error);
+  }
 
   // 同步更新 Quasar locale
   const loadQuasarLang = quasarLangModules[locale];
@@ -70,7 +80,7 @@ export function setLocale(locale: Locale): void {
         quasarInstance!.lang.set(langModule.default);
       })
       .catch((error) => {
-        console.error(`Failed to load Quasar locale for ${locale}:`, error);
+        console.error(`[rtcpt] Failed to load Quasar locale for ${locale}:`, error);
       });
   }
 }

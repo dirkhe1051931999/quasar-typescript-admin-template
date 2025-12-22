@@ -72,10 +72,16 @@ export function rtcptInit(options: RtcptInitOptions): void {
     console.warn('[rtcpt] Quasar instance not found. Make sure you have installed Quasar.');
   }
 
-  // 设置默认语言
+  // 设置默认语言（异步加载）
   if (defaultLanguage) {
-    setLocale(defaultLanguage);
-    console.log(`[rtcpt] Default language set to: ${defaultLanguage}`);
+    setLocale(defaultLanguage).catch((error) => {
+      console.error(`[rtcpt] Failed to set default language:`, error);
+    });
+  } else {
+    // 如果没有指定默认语言，加载 zh-CN
+    setLocale('zh-CN').catch((error) => {
+      console.error(`[rtcpt] Failed to load default locale:`, error);
+    });
   }
 
   // rtcpt 内置 iconMapFn（base64 svg）

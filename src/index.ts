@@ -14,13 +14,8 @@ import JCTitleLine from './components/j-c-title-line/index.vue';
 import JCTree from './components/j-c-tree/index.vue';
 import JCTreeSelect from './components/j-c-tree-select/index.vue';
 
-// j-ch series (Charts)
-import JChBar from './components/j-ch-bar/index.vue';
-import JChBarLine from './components/j-ch-bar-line/index.vue';
-import JChBubble from './components/j-ch-bubble/index.vue';
-import JChLine from './components/j-ch-line/index.vue';
-import JChPieDoughnut from './components/j-ch-pie-doughnut/index.vue';
-import JChRadar from './components/j-ch-radar/index.vue';
+// j-ch series (Charts) - 从独立入口导入
+export { JChBar, JChBarLine, JChBubble, JChLine, JChPieDoughnut, JChRadar } from './charts';
 
 // j-q series (Quasar)
 import JQAutocomplete from './components/j-q-autocomplete/index.vue';
@@ -88,13 +83,6 @@ export {
   JCTitleLine,
   JCTree,
   JCTreeSelect,
-  // j-ch series
-  JChBar,
-  JChBarLine,
-  JChBubble,
-  JChLine,
-  JChPieDoughnut,
-  JChRadar,
   // j-q series
   JQAutocomplete,
   JQConfirm,
@@ -113,3 +101,5 @@ export {
   JQTable,
   JQTooltip,
 };
+
+// 注意: j-ch 图表组件已从 './charts' 导出，可以按需导入

@@ -29,7 +29,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/rtcpt.es.js",
-      "require": "./dist/rtcpt.umd.js"
+      "require": "./dist/rtcpt.cjs.js"
+    },
+    "./charts": {
+      "types": "./dist/charts.d.ts",
+      "import": "./dist/charts.es.js",
+      "require": "./dist/charts.cjs.js"
     },
     "./rtcpt.css": "./dist/index.css",
     "./rtcpt-styles.css": "./dist/rtcpt-styles.css",

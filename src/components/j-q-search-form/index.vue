@@ -9,7 +9,7 @@
               <q-btn color="primary" :loading="queryLoading" no-caps type="submit" unelevated @click="handleClickQuery">
                 {{ t('action.query') }}
               </q-btn>
-              <q-btn v-if="resetVisible" class="operation-reset" text-color="inherit" :loading="resetLoading" no-caps unelevated @click="handleClickReset">
+              <q-btn v-if="resetVisible" class="operation-reset" :loading="resetLoading" no-caps unelevated @click="handleClickReset" outline>
                 {{ t('action.reset') }}
               </q-btn>
             </div>

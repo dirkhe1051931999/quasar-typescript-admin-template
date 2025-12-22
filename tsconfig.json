@@ -19,12 +19,22 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
+
+    /* Declaration */
     "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
+
+    /* Path mapping */
     "paths": {
       "src/*": ["./src/*"],
       "components/*": ["./src/components/*"]
-    }
+    },
+
+    /* Optimization */
+    "removeComments": true,
+    "importHelpers": false
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

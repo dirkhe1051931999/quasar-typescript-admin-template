@@ -1,6 +1,4 @@
-import zhCN from './zh-CN';
-import enUS from './en-US';
-
+// 动态导入语言包，实现按需加载
 export type Locale = 'zh-CN' | 'en-US';
 
 export interface I18nMessages {
@@ -10,10 +8,27 @@ export interface I18nMessages {
   };
 }
 
-export const messages: Record<Locale, I18nMessages> = {
-  'zh-CN': zhCN,
-  'en-US': enUS,
+// 懒加载语言包
+export const loadLocaleMessages = async (locale: Locale): Promise<I18nMessages> => {
+  const modules = {
+    'zh-CN': () => import('./zh-CN'),
+    'en-US': () => import('./en-US'),
+  };
+  
+  const module = await modules[locale]();
+  return module.default;
 };
 
-export { zhCN, enUS };
+// 缓存已加载的语言包
+const loadedMessages: Partial<Record<Locale, I18nMessages>> = {};
+
+export const getMessages = async (locale: Locale): Promise<I18nMessages> => {
+  if (!loadedMessages[locale]) {
+    loadedMessages[locale] = await loadLocaleMessages(locale);
+  }
+  return loadedMessages[locale]!;
+};
+
+// 兼容性导出：同步方式（用于类型检查）
+export const messages: Record<Locale, I18nMessages> = {} as any;
 
