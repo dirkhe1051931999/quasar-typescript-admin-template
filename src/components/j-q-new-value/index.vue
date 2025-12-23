@@ -69,6 +69,7 @@ export default defineComponent({
     addRulesName: { type: String as PropType<string>, default: '' },
     useChips: { type: Boolean as PropType<QSelectProps['useChips']>, default: false },
     allowDuplicates: { type: Boolean as PropType<boolean>, default: false },
+    maxlength: { type: Number as PropType<number>, default: -1 },
   },
   emits: {
     change: (value: TModelValue) => true,
@@ -91,6 +92,12 @@ export default defineComponent({
       const trimmedValue = inputValue.trim();
       newValueErrorMessage.value = '';
       if (trimmedValue.length > 0) {
+        // 检查是否超过最大长度限制
+        if (props.maxlength > 0 && innerModel.value && (innerModel.value as string[]).length >= props.maxlength) {
+          newValueErrorMessage.value = t('messages.formRules.maxLengthExceeded', { max: props.maxlength });
+          qSelectRef.value?.focus();
+          return;
+        }
         if (!props.allowDuplicates && innerModel.value && (innerModel.value as string[]).includes(trimmedValue)) {
           newValueErrorMessage.value = t('messages.formRules.duplicateItemNotAllowed', { value: trimmedValue });
           qSelectRef.value?.focus();

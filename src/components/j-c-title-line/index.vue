@@ -1,10 +1,13 @@
 <template>
   <div>
-    <p class="title-line">
+    <div class="title-line">
       <span>
         {{ label }}
+        <span class="title-line__extra" v-if="hasSlot('default')">
+          <slot />
+        </span>
       </span>
-    </p>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -18,8 +21,11 @@ export default defineComponent({
   slots: Object as SlotsType<{
     default: void;
   }>,
-  setup() {
-    return {};
+  setup(props, { slots }) {
+    const hasSlot = (slotName: string) => Reflect.has(slots, slotName);
+    return {
+      hasSlot,
+    };
   },
 });
 </script>
@@ -28,7 +34,6 @@ export default defineComponent({
 $color-white: var(--j-color-white);
 $bg-grey: var(--j-color-grey-light);
 .title-line {
-  font-weight: 600;
   position: relative;
 
   span {
@@ -37,6 +42,14 @@ $bg-grey: var(--j-color-grey-light);
     z-index: 20;
     position: relative;
     font-size: 14px;
+    font-weight: 600;
+  }
+
+  .title-line__extra {
+    background-color: $color-white;
+    position: relative;
+    z-index: 20;
+    font-weight: normal;
   }
 
   &:after {

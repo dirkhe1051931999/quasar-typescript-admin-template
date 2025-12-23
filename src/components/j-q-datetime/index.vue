@@ -267,6 +267,8 @@ export default defineComponent({
     rules: Array as () => QFieldProps['rules'],
     valueDisplayFn: Function as PropType<TValueDisplayFn>,
     range: { type: Boolean, default: false },
+    endhhmmss: { type: Array as unknown as PropType<[string, string, string]>, default: () => ['00', '00', '00'] },
+    showTooltip: { type: Boolean, default: false },
   },
   emits: ['hide', 'update:modelValue'],
   slots: Object as SlotsType<{
@@ -284,22 +286,33 @@ export default defineComponent({
     // 标志位：区分代码更新还是用户点击
     const isProgrammaticUpdate = ref(false);
 
+    // 获取默认的结束时间
+    const getDefaultEndTime = (): TimeParts => ({
+      h: parseInt(props.endhhmmss[0], 10) || 0,
+      m: parseInt(props.endhhmmss[1], 10) || 0,
+      s: parseInt(props.endhhmmss[2], 10) || 0,
+    });
+
     // 气泡提示
     const showScrollTooltip = ref(false);
     let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
 
     // 初始化气泡提示状态
     onMounted(() => {
-      try {
-        const stateStr = getThirdComponentState();
-        if (stateStr) {
-          const state = JSON.parse(stateStr);
-          showScrollTooltip.value = state.datetimeTooltipVisible !== false;
-        } else {
+      if (props.showTooltip) {
+        try {
+          const stateStr = getThirdComponentState();
+          if (stateStr) {
+            const state = JSON.parse(stateStr);
+            showScrollTooltip.value = state.datetimeTooltipVisible !== false;
+          } else {
+            showScrollTooltip.value = true;
+          }
+        } catch (e) {
           showScrollTooltip.value = true;
         }
-      } catch (e) {
-        showScrollTooltip.value = true;
+      } else {
+        showScrollTooltip.value = false;
       }
     });
 
@@ -352,12 +365,18 @@ export default defineComponent({
         const fromDateStr = dFrom ? date.formatDate(dFrom, DATE_MASK_QDATE) : '';
 
         const dTo = toDate(rangeVal.to);
-        Object.assign(toTimeParts, parseTimeParts(rangeVal.to));
+        const parsedToTime = parseTimeParts(rangeVal.to);
+        // 如果结束时间是 00:00:00（默认值），则使用 prop 指定的默认时间
+        if (parsedToTime.h === 0 && parsedToTime.m === 0 && parsedToTime.s === 0 && dTo) {
+          Object.assign(toTimeParts, getDefaultEndTime());
+        } else {
+          Object.assign(toTimeParts, parsedToTime);
+        }
         const toDateStr = dTo ? date.formatDate(dTo, DATE_MASK_QDATE) : '';
 
         currentRange.value = {
           from: dFrom ? date.formatDate(dFrom, DATETIME_MASK) : null,
-          to: dTo ? date.formatDate(dTo, DATETIME_MASK) : null,
+          to: dTo ? combineDateTime(toDateStr, toTimeParts) : null,
         };
         currentRangeDate.value = fromDateStr && toDateStr ? { from: fromDateStr, to: toDateStr } : '';
       } else {
@@ -388,14 +407,29 @@ export default defineComponent({
 
           if (oldVal && typeof oldVal === 'object' && oldVal !== null) {
             if (newFrom !== oldVal.from) Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
-            if (newTo !== oldVal.to) Object.assign(toTimeParts, { h: 0, m: 0, s: 0 });
-          } else if (typeof oldVal === 'string') {
+            if (newTo !== oldVal.to) Object.assign(toTimeParts, getDefaultEndTime());
+          } else {
+            // 第一次选择或从空字符串变化，设置开始时间为 00:00:00，结束时间为默认值
             Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
+            Object.assign(toTimeParts, getDefaultEndTime());
           }
 
           if (newFrom && newTo) {
-            currentRange.value.from = combineDateTime(newFrom, fromTimeParts);
-            currentRange.value.to = combineDateTime(newTo, toTimeParts);
+            const fromDateTime = combineDateTime(newFrom, fromTimeParts);
+            const toDateTime = combineDateTime(newTo, toTimeParts);
+            currentRange.value.from = fromDateTime;
+            currentRange.value.to = toDateTime;
+
+            // 立即同步到 modelValue，确保 display 显示正确
+            if (fromDateTime && toDateTime) {
+              const f = toDate(fromDateTime);
+              const t = toDate(toDateTime);
+              if (f && t && f.getTime() > t.getTime()) {
+                computedValue.value = { from: toDateTime, to: fromDateTime };
+              } else {
+                computedValue.value = { from: fromDateTime, to: toDateTime };
+              }
+            }
           }
         } else if (typeof newVal === 'string' && oldVal && typeof oldVal === 'object') {
           Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
@@ -487,7 +521,7 @@ export default defineComponent({
       if (props.range) {
         currentRange.value = { from: null, to: null };
         Object.assign(fromTimeParts, { h: 0, m: 0, s: 0 });
-        Object.assign(toTimeParts, { h: 0, m: 0, s: 0 });
+        Object.assign(toTimeParts, getDefaultEndTime());
         currentRangeDate.value = { from: '', to: '' };
       } else {
         currentSingle.value = null;

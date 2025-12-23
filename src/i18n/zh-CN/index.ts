@@ -32,6 +32,7 @@ export default {
       positiveInt: '值必须是正整数',
       nonNegativeInt: '值必须是非负整数',
       duplicateItemNotAllowed: '不允许重复项，{value} 已存在',
+      maxLengthExceeded: '最多添加 {max} 项',
     },
     jQFile: {
       click_or_drag_file: '点击或拖拽文件到此处上传',

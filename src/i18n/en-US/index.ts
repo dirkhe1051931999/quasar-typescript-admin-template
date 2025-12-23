@@ -32,6 +32,7 @@ export default {
       positiveInt: 'Value must be a positive integer',
       nonNegativeInt: 'Value must be a non-negative integer',
       duplicateItemNotAllowed: 'Duplicate item not allowed, {value} already exists',
+      maxLengthExceeded: 'Maximum {max} items allowed',
     },
     jQFile: {
       click_or_drag_file: 'Click to upload',
