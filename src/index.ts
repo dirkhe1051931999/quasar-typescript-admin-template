@@ -41,6 +41,7 @@ import { transformTreeUseLabelAndValue } from './components/j-c-tree/index';
 import { generateDownloadFileName, JQDownloadFile } from './components/j-q-file/download';
 import * as toolUtils from './utils/tool';
 import { formRules } from 'components/j-q-dialog/index.ts';
+import * as formUtils from './components/j-q-dialog/form';
 
 // ============ Utilities & Services ============
 export { DialogProvider } from './components/j-q-dialog/index';
@@ -59,6 +60,7 @@ export const jqTool = {
   generateDownloadFileName,
   ...toolUtils,
   formRules,
+  formUtils,
 };
 
 // ============ i18n ============
