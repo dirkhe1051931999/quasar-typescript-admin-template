@@ -42,6 +42,7 @@ import { generateDownloadFileName, JQDownloadFile } from './components/j-q-file/
 import * as toolUtils from './utils/tool';
 import { formRules } from 'components/j-q-dialog/index.ts';
 import * as formUtils from './components/j-q-dialog/form';
+import type { JQToolType } from './types';
 
 // ============ Utilities & Services ============
 export { DialogProvider } from './components/j-q-dialog/index';
@@ -53,8 +54,14 @@ export type { IconMapFn } from './utils/icon-map';
 // Export permission injection key
 export { PAGE_PERMISSION_KEY, PAGE_ACTION_PERMISSION_KEY } from './components/j-c-permission/index.vue';
 
-// Export as jqTool namespace
-export const jqTool = {
+// Export formUtils separately for direct access
+export { formUtils };
+
+// Export JQToolType for external use
+export type { JQToolType };
+
+// Export as jqTool namespace with proper typing
+export const jqTool: JQToolType = {
   transformTreeUseLabelAndValue,
   JQDownloadFile,
   generateDownloadFileName,

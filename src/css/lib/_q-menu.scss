@@ -2,6 +2,40 @@
   box-shadow: 0px 4px 8px 0px #D7DBEC;
   border-radius: 4px;
 }
+
+.select-popup-content.height1 {
+  max-height: 30vh !important;
+  padding: 8px 0;
+
+  .q-item {
+    min-height: 0;
+    padding: 0 8px !important;
+
+    .q-item__section {
+      padding: 6px 12px;
+      border-radius: 4px !important;
+
+      &:hover {
+        background: #f5f6fa;
+      }
+    }
+
+    .q-focus-helper {
+      display: none;
+    }
+  }
+
+  .q-item[no-option] {
+    .q-item__section {
+      padding: inherit;
+
+      &:hover {
+        background: inherit;
+      }
+    }
+  }
+}
+
 .q-menu[styling-menu-option] {
   .q-list {
     padding: 8px 0;
@@ -15,7 +49,7 @@
         border-radius: 4px !important;
 
         &:hover {
-          background: var(--j-color-grey-lighter);
+          background: #f5f6fa;
         }
       }
 
@@ -80,31 +114,6 @@
   }
 }
 
-// ===== styling-menu-action (used by JCMoreMenu preset="action") =====
-.q-menu[styling-menu-action] {
-  border-radius: 2px !important;
-  padding: 8px !important;
-  box-shadow: 0px 4px 8px 0px #D7DBEC !important;
-
-  .q-list {
-    .q-item {
-      height: 48px;
-      overflow: hidden;
-      border-radius: 4px;
-      transition: none !important;
-
-      .q-focus-helper {
-        display: none;
-      }
-
-      &:hover {
-        opacity: 1;
-        background: #f5f6fa !important;
-      }
-    }
-  }
-}
-
 .q-list[styling-list] {
   padding: 8px 0;
 
@@ -117,7 +126,7 @@
       border-radius: 4px !important;
 
       &:hover {
-        background: var(--j-color-grey-lighter);
+        background: #f5f6fa;
       }
     }
 
@@ -136,35 +145,26 @@
   }
 }
 
-.select-popup-content.height1 {
-  max-height: 30vh !important;
-  padding: 8px 0;
+.q-menu[navigation-switch] {
+  .q-list {
+    .q-item {
+      min-height: 0 !important;
+      padding: 0 8px !important;
 
-  .q-item {
-    min-height: 0;
-    padding: 0 8px !important;
+      .q-item__section {
+        padding: 12px !important;
 
-    .q-item__section {
-      padding: 6px 12px;
-      border-radius: 4px !important;
-
-      &:hover {
-        background: var(--j-color-grey-lighter);
+        .q-item__label {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 200px !important;
+        }
       }
-    }
-
-    .q-focus-helper {
-      display: none;
     }
   }
 
-  .q-item[no-option] {
-    .q-item__section {
-      padding: inherit;
-
-      &:hover {
-        background: inherit;
-      }
-    }
+  &.scroll {
+    max-height: 30vh;
   }
 }
