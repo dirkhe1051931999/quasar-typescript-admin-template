@@ -106,7 +106,7 @@
 </template>
 <script lang="ts">
 import { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, usePagination } from './pagination';
-import { computed, defineComponent, PropType, type SlotsType, ref } from 'vue';
+import { computed, defineComponent, PropType, type SlotsType, ref, nextTick, watch } from 'vue';
 import { QTable, QTh, QTd, QInnerLoading } from 'quasar';
 import Pagination from './pagination.vue';
 import { useI18n } from 'src/composables/useI18n.ts';
@@ -163,6 +163,7 @@ export default defineComponent({
     const JQTableRef = ref(null);
     const innerSelected = ref<any[]>([]);
     const ellipsisRefs = ref<Map<string, HTMLElement>>(new Map());
+    const tooltipVisibility = ref<Map<string, boolean>>(new Map());
     const hasSlot = (slotName: string) => Reflect.has(slots, slotName);
     /* computed */
     const computedSelected = computed({
@@ -289,17 +290,64 @@ export default defineComponent({
     const setEllipsisRef = (el: any, key: string) => {
       if (el) {
         ellipsisRefs.value.set(key, el);
+        // 在下一个 tick 更新 tooltip 可见性，避免在渲染期间访问 DOM
+        nextTick(() => {
+          updateTooltipVisibility(key);
+        });
       }
     };
 
-    // 判断是否需要显示 tooltip（检测内容是否溢出）
-    const shouldShowTooltip = (key: string) => {
+    // 更新 tooltip 可见性状态（在安全的时机调用）
+    const updateTooltipVisibility = (key: string) => {
       const el = ellipsisRefs.value.get(key);
-      if (!el) return false;
+      if (!el) {
+        tooltipVisibility.value.set(key, false);
+        return;
+      }
 
       // 检测是否有横向或纵向溢出
-      return el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight;
+      const isOverflowing = el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight;
+      tooltipVisibility.value.set(key, isOverflowing);
     };
+
+    // 判断是否需要显示 tooltip（从缓存中读取，避免直接访问 DOM）
+    const shouldShowTooltip = (key: string) => {
+      return tooltipVisibility.value.get(key) || false;
+    };
+
+    // 批量更新所有 tooltip 可见性
+    const updateAllTooltips = () => {
+      nextTick(() => {
+        ellipsisRefs.value.forEach((_, key) => {
+          updateTooltipVisibility(key);
+        });
+      });
+    };
+
+    // 监听 rows 变化，重新计算 tooltip 可见性
+    watch(
+      () => props.rows,
+      () => {
+        // 清空旧的引用
+        ellipsisRefs.value.clear();
+        tooltipVisibility.value.clear();
+        // 等待 DOM 更新后重新计算
+        updateAllTooltips();
+      },
+      { deep: true }
+    );
+
+    // 监听 loading 状态，在加载完成后更新 tooltip
+    watch(
+      () => props.loading,
+      (newLoading, oldLoading) => {
+        if (oldLoading && !newLoading) {
+          // 从 loading 变为非 loading，更新所有 tooltip
+          updateAllTooltips();
+        }
+      }
+    );
+
     /* expose 给 ref 用的 */
     expose({
       JQTableRef,
@@ -316,6 +364,7 @@ export default defineComponent({
     /* return 给 template 用的 */
     return {
       t,
+      JQTableRef,
       computedSelected,
       hasSlot,
       computedTableHeaderClass,
