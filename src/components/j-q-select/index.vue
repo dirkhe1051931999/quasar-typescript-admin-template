@@ -174,11 +174,14 @@ export default defineComponent({
       return props.options;
     });
 
+    // 使用 computed 并显式依赖 options 和 innerValue
     const computedDisplayValue = computed(() => {
+      // 显式读取 options 的 length 和内容，确保响应式追踪
+      const options = props.options;
+      const optionsLength = options.length;
       let val = innerValue.value;
 
       if (props.valueDisplayFn) {
-        // 用类型断言确保返回字符串
         return props.valueDisplayFn(val) as string;
       }
 
@@ -193,19 +196,24 @@ export default defineComponent({
 
         const labels = valArray.map((item: any) => {
           if (computedEmitValue.value) {
-            // emit-value 模式下，item 是值，需要查找对象
-            const option = props.options.find((option) => option?.[props.optionValue] === item);
+            const option = options.find((option) => option?.[props.optionValue] === item);
+            if (!option && optionsLength === 0) {
+              return '';
+            }
             return option?.[props.optionLabel] ?? item;
           }
           // 非 emit-value 模式下，item 是对象
           return item?.[props.optionLabel] ?? item;
         });
-        return labels.join(', ');
+        return labels.filter(Boolean).join(', ');
       }
 
       // 单选逻辑
       if (computedEmitValue.value) {
-        const option = props.options.find((option) => option?.[props.optionValue] === val);
+        const option = options.find((option) => option?.[props.optionValue] === val);
+        if (!option && optionsLength === 0) {
+          return '';
+        }
         return option?.[props.optionLabel] ?? val;
       }
       return val?.[props.optionLabel] ?? val;

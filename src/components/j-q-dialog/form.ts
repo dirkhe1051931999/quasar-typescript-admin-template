@@ -16,6 +16,18 @@ export function val2Str<T>(value: T): string | T {
   if (typeof value === 'bigint') {
     return value.toString();
   }
+  // 处理 BigNumber 对象（bignumber.js, decimal.js 等大数库）
+  if (typeof value === 'object' && value !== null) {
+    // 检查是否有 toString 方法（BigNumber 对象都有）
+    if (typeof (value as any).toString === 'function') {
+      // 检查是否是 BigNumber 类型（通过构造函数名称或特征属性）
+      const constructor = (value as any).constructor?.name;
+      if (constructor === 'BigNumber' || constructor === 'Decimal' || 
+          's' in value && 'e' in value && 'c' in value) {
+        return (value as any).toString();
+      }
+    }
+  }
   return value;
 }
 
