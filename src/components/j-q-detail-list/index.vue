@@ -1,5 +1,6 @@
 <template>
-  <div class="row" :class="gutter">
+  <!-- 上下布局 -->
+  <div v-if="layout === 'vertical'" class="row" :class="gutter">
     <template v-for="item in visibleItems" :key="item.name">
       <div :class="[`col-${item.span || 6}`]" class="detail-item-container">
         <div class="q-mb-xs text-grey text-caption row items-center">
@@ -19,6 +20,62 @@
           <template v-else>
             <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
           </template>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- 左右布局 - space-between -->
+  <div v-else-if="layout === 'horizontal-between'" class="row horizontal-between-container" :class="gutter">
+    <template v-for="item in visibleItems" :key="item.name">
+      <div :class="[`col-${item.span || 6}`]">
+        <div class="item item-between">
+          <div class="label row items-center">
+            {{ item.label }}
+            <template v-if="item.tip">
+              <q-icon name="app:question" size="14px" class="q-ml-xs tip-icon">
+                <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px">
+                  {{ item.tip }}
+                </q-tooltip>
+              </q-icon>
+            </template>
+          </div>
+          <div class="value">
+            <template v-if="slots[`item-value-${item.name}`]">
+              <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
+            </template>
+            <template v-else>
+              <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
+            </template>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- 左右布局 - 左对齐 -->
+  <div v-else-if="layout === 'horizontal-left'" class="row horizontal-left-container" :class="gutter" :style="containerStyle">
+    <template v-for="item in visibleItems" :key="item.name">
+      <div :class="[`col-${item.span || 6}`]">
+        <div class="item item-left">
+          <div class="label row items-center">
+            {{ item.label }}
+            <template v-if="item.tip">
+              <q-icon name="app:question" size="14px" class="q-ml-xs tip-icon">
+                <q-tooltip anchor="top middle" self="bottom middle" :offset="[10, 10]" max-width="300px">
+                  {{ item.tip }}
+                </q-tooltip>
+              </q-icon>
+            </template>
+          </div>
+          <div class="value">
+            <template v-if="slots[`item-value-${item.name}`]">
+              <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
+            </template>
+            <template v-else>
+              <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
+            </template>
+          </div>
         </div>
       </div>
     </template>
@@ -67,6 +124,14 @@ export default defineComponent({
       type: String,
       default: 'q-col-gutter-md',
     },
+    layout: {
+      type: String as PropType<'vertical' | 'horizontal-between' | 'horizontal-left'>,
+      default: 'vertical',
+    },
+    labelWidth: {
+      type: String,
+      default: '100px',
+    },
   },
   slots: Object as SlotsType<Record<`item-value-${string}`, { value: any; item: DetailItem; data: TDetailData; fieldName: string }>>,
   setup(props, { slots }) {
@@ -81,6 +146,15 @@ export default defineComponent({
 
     const visibleItems = computed(() => {
       return props.items.filter((item) => isItemVisible(item));
+    });
+
+    const containerStyle = computed(() => {
+      if (props.layout === 'horizontal-left') {
+        return {
+          '--label-width': props.labelWidth,
+        };
+      }
+      return {};
     });
 
     const computedSlotItems = computed(() => {
@@ -135,6 +209,7 @@ export default defineComponent({
       computedSlotItems,
       getDefaultValue,
       slots,
+      containerStyle,
     };
   },
 });
@@ -143,5 +218,54 @@ export default defineComponent({
 <style lang="scss" scoped>
 .detail-item-container {
   min-width: 0;
+}
+
+// 左右布局 - space-between
+.horizontal-between-container {
+  .item-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    .label {
+      color: #7e84a3;
+      font-size: 12px;
+    }
+
+    .value {
+      text-align: right;
+    }
+  }
+}
+
+// 左右布局 - 左对齐
+.horizontal-left-container {
+  .item-left {
+    display: grid;
+    grid-template-columns: var(--label-width, 100px) 1fr;
+    align-items: center;
+    padding-bottom: 12px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    .label {
+      color: #7e84a3;
+      font-size: 12px;
+    }
+
+    .value {
+      max-width: 400px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 }
 </style>
