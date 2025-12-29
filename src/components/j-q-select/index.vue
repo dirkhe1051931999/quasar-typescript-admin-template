@@ -32,7 +32,7 @@
     :rules="rules"
     :title="title ?? computedDisplayValue"
     :use-chips="useChips"
-    :use-input="filterable ?? useInput"
+    :use-input="computedUseInput"
     :loading="loading"
     @filter="filter"
     :hide-dropdown-icon="readonly"
@@ -86,7 +86,7 @@
 <script lang="ts">
 import type { QSelectProps } from 'quasar';
 import { QSelect, QSpinner, QItem, QItemSection, QIcon } from 'quasar';
-import { computed, defineComponent, PropType, ref, SlotsType, watch } from 'vue';
+import { computed, defineComponent, PropType, ref, SlotsType, watch, onMounted, nextTick } from 'vue';
 import { useI18n } from 'src/composables/useI18n.ts';
 
 type TModelValue = QSelectProps['modelValue'];
@@ -148,6 +148,7 @@ export default defineComponent({
   setup(props, { emit, slots, expose }) {
     const qSelectRef = ref<QSelect | null>(null);
     const { t } = useI18n();
+    const hasEllipsis = ref(false);
     const innerValue = computed<TModelValue>({
       get() {
         if (props.multiple && (props.modelValue === null || props.modelValue === undefined)) {
@@ -276,6 +277,41 @@ export default defineComponent({
       props.popupContentClass && (val += ` ${props.popupContentClass}`);
       return val;
     });
+
+    // 检测文本是否显示省略号
+    const checkEllipsis = () => {
+      nextTick(() => {
+        if (qSelectRef.value) {
+          const selectEl = qSelectRef.value.$el as HTMLElement;
+          const displayEl = selectEl?.querySelector('.q-field__native span') as HTMLElement;
+          if (displayEl) {
+            hasEllipsis.value = displayEl.scrollWidth > displayEl.clientWidth;
+          }
+        }
+      });
+    };
+
+    // 计算 use-input 属性
+    const computedUseInput = computed(() => {
+      // 如果是 filterable 且显示省略号，则返回 false
+      if (props.filterable && hasEllipsis.value) {
+        return false;
+      }
+      return props.filterable ?? props.useInput;
+    });
+
+    // 监听 innerValue 和 computedDisplayValue 变化，重新检测省略号
+    watch([innerValue, computedDisplayValue], () => {
+      if (props.filterable) {
+        checkEllipsis();
+      }
+    });
+
+    onMounted(() => {
+      if (props.filterable) {
+        checkEllipsis();
+      }
+    });
     watch(
       innerValue,
       (newValue, oldValue) => {
@@ -298,6 +334,7 @@ export default defineComponent({
       innerValue,
       computedEmitValue,
       computedDisplayValue,
+      computedUseInput,
       getSelectedItemLabelByIndex,
       getSelectedItemOptionByIndex,
       filter,

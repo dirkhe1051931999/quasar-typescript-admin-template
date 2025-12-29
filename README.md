@@ -337,6 +337,8 @@ type TableColumn = Record<string, any> & {
   limitWidth?: boolean
   onClick?: (row: any) => void
   clickable?: (value: any, row: any) => boolean
+  cellMaxWidth?: number
+  cellMaxWidthSmall?: number
 }
 
 const tableRef = ref<any>()
@@ -370,6 +372,158 @@ const handlePaginationChange = async (pagination: { page: number; rowsPerPage: n
 </script>
 ```
 
+#### whiteSpace (Multi-line Text Ellipsis)
+
+The `whiteSpace` property controls how text is displayed in table cells with automatic ellipsis and tooltip support.
+
+**Usage:**
+- Set `whiteSpace: 1` for single-line ellipsis (default behavior)
+- Set `whiteSpace: 2` for two-line ellipsis
+- Set `whiteSpace: 3` for three-line ellipsis
+
+**Features:**
+- Automatically applies ellipsis when content overflows
+- Shows tooltip on hover when content is truncated
+- Tooltip max-width adapts based on cell width (300px for small screens, 500px for large screens)
+- Works with both regular columns and clickable columns (`onClick`)
+
+**Example:**
+
+```vue
+const columns = [
+  { 
+    name: 'description', 
+    label: 'Description', 
+    field: 'description',
+    whiteSpace: 2  // Two-line ellipsis
+  },
+  { 
+    name: 'title', 
+    label: 'Title', 
+    field: 'title',
+    whiteSpace: 1  // Single-line ellipsis
+  },
+  { 
+    name: 'content', 
+    label: 'Content', 
+    field: 'content',
+    whiteSpace: 3  // Three-line ellipsis
+  }
+]
+```
+
+**Note:** When using `whiteSpace`, the cell width is automatically set based on `cellMaxWidth` / `cellMaxWidthSmall` (table-level or column-level). The cell will have fixed width, max-width, and min-width set to the same value.
+
+#### limitWidth (Max Width Limitation)
+
+The `limitWidth` property limits the maximum width of table cells, preventing them from expanding too wide.
+
+**Usage:**
+- Set `limitWidth: true` on a column to enable width limitation
+- The cell content will be wrapped in a `.cell-limit-width` container
+- Responsive behavior: 500px on large screens (>1440px), 300px on small screens (≤1440px)
+
+**Features:**
+- Uses CSS variable `--cell-max-width` (default: 500px) for large screens
+- Uses CSS variable `--cell-max-width-small` (default: 300px) for small screens
+- Can be customized at table-level via `cellMaxWidth` / `cellMaxWidthSmall` props
+- Can be customized at column-level via `cellMaxWidth` / `cellMaxWidthSmall` properties (column-level takes priority)
+
+**Example:**
+
+```vue
+<template>
+  <!-- Table-level configuration -->
+  <j-q-table
+    :columns="columns"
+    :rows="rows"
+    :cell-max-width="600"
+    :cell-max-width-small="400"
+  />
+</template>
+
+<script setup>
+const columns = [
+  { 
+    name: 'email', 
+    label: 'Email', 
+    field: 'email',
+    limitWidth: true  // Uses table-level defaults (600px/400px)
+  },
+  { 
+    name: 'url', 
+    label: 'URL', 
+    field: 'url',
+    limitWidth: true,
+    cellMaxWidth: 800,        // Column-level override for large screens
+    cellMaxWidthSmall: 500    // Column-level override for small screens
+  }
+]
+</script>
+```
+
+**Note:** `limitWidth` can be combined with `whiteSpace` when using custom slots (`body-cell-{name}`). When both are used without custom slots, `whiteSpace` takes precedence and `limitWidth` is ignored.
+
+#### cellMaxWidth / cellMaxWidthSmall (Max Width Configuration)
+
+These properties control the maximum width for cells that use `whiteSpace` or `limitWidth`.
+
+**Table-level Props:**
+- `cellMaxWidth` (default: `500`): Maximum width in pixels for large screens (>1440px)
+- `cellMaxWidthSmall` (default: `300`): Maximum width in pixels for small screens (≤1440px)
+
+**Column-level Properties:**
+- `cellMaxWidth`: Column-specific max width for large screens (overrides table-level)
+- `cellMaxWidthSmall`: Column-specific max width for small screens (overrides table-level)
+
+**Priority:** Column-level configuration takes priority over table-level configuration.
+
+**Example:**
+
+```vue
+<template>
+  <j-q-table
+    :columns="columns"
+    :rows="rows"
+    :cell-max-width="600"
+    :cell-max-width-small="400"
+  />
+</template>
+
+<script setup>
+const columns = [
+  {
+    name: 'description',
+    label: 'Description',
+    field: 'description',
+    whiteSpace: 2,
+    // Uses table-level: 600px (large) / 400px (small)
+  },
+  {
+    name: 'content',
+    label: 'Content',
+    field: 'content',
+    whiteSpace: 3,
+    cellMaxWidth: 800,        // Override: 800px for large screens
+    cellMaxWidthSmall: 500   // Override: 500px for small screens
+  },
+  {
+    name: 'url',
+    label: 'URL',
+    field: 'url',
+    limitWidth: true,
+    cellMaxWidth: 700,       // Override: 700px for large screens
+    // cellMaxWidthSmall not set, uses table-level: 400px for small screens
+  }
+]
+</script>
+```
+
+**How it works:**
+- For `whiteSpace` columns: Sets `width`, `max-width`, and `min-width` of the cell (`<td>`) directly
+- For `limitWidth` columns: Sets CSS variable `--cell-max-width` or `--cell-max-width-small` on the `.cell-limit-width` wrapper div
+- Screen size detection: Uses `window.innerWidth <= 1440` to determine small vs large screen
+
 #### Custom cell slot
 
 Like Quasar's `QTable`, you can customize column rendering using `body-cell-{colName}`:
@@ -385,10 +539,14 @@ Like Quasar's `QTable`, you can customize column rendering using `body-cell-{col
 </template>
 ```
 
+**Note:** When using custom slots with `limitWidth`, the slot content will be wrapped in a `.cell-limit-width` div automatically.
+
 #### Column extensions (enhanced fields compared to QTable)
 
-- **`whiteSpace?: 1 | 2 | 3`**: Multi-line ellipsis, auto show tooltip on content overflow (recommended for text columns)
-- **`limitWidth?: boolean`**: Limit max width (responsive 500px / 300px), wrapped in `.cell-limit-width`
+- **`whiteSpace?: 1 | 2 | 3`**: Multi-line ellipsis, auto show tooltip on content overflow (recommended for text columns). Sets fixed cell width based on `cellMaxWidth` / `cellMaxWidthSmall`.
+- **`limitWidth?: boolean`**: Limit max width (responsive 500px / 300px by default), wrapped in `.cell-limit-width`. Can be customized via table-level or column-level `cellMaxWidth` / `cellMaxWidthSmall`.
+- **`cellMaxWidth?: number`**: Column-level max width for large screens (>1440px). Overrides table-level `cellMaxWidth` prop.
+- **`cellMaxWidthSmall?: number`**: Column-level max width for small screens (≤1440px). Overrides table-level `cellMaxWidthSmall` prop.
 - **`onClick?: (row) => void`**: Make the column render as "link style", trigger callback on click
 - **`clickable?: (value, row) => boolean`**: Works with `onClick`, conditionally decide if the cell is clickable (default: `null/undefined` not clickable)
 
@@ -400,7 +558,7 @@ Example (fixed columns): Add `table-cell--fix-left` / `table-cell--fix-right` to
 
 | Name                     | Type                        | Default | Description                                                                                                           |
 | ------------------------ | --------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
-| `columns`                | `any[]`                     | `[]`    | Column definitions (compatible with `QTable` columns, with additional support for `whiteSpace/limitWidth/onClick/clickable`) |
+| `columns`                | `any[]`                     | `[]`    | Column definitions (compatible with `QTable` columns, with additional support for `whiteSpace/limitWidth/onClick/clickable/cellMaxWidth/cellMaxWidthSmall`) |
 | `rows`                   | `any[]`                     | `[]`    | Table data                                                                                                            |
 | `rowKey`                 | `string \| ((row) => any)`  | `'id'`  | Unique row key                                                                                                        |
 | `loading`                | `boolean`                   | `false` | Loading state (shows built-in loading)                                                                                |
@@ -412,6 +570,8 @@ Example (fixed columns): Add `table-cell--fix-left` / `table-cell--fix-right` to
 | `tableHeaderClass`       | `string \| object \| any[]` | -       | Passed through to `QTable` as `table-header-class`                                                                    |
 | `autoScrollOnChangePage` | `boolean`                   | `true`  | Auto scroll to table top after page change or pageSize change                                                         |
 | `autoHeight`             | `boolean`                   | `false` | Reserved field (you need to manually add style class `table--auto-height` via `tableClass`)                           |
+| `cellMaxWidth`           | `number`                    | `500`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on large screens (>1440px). Can be overridden at column level. |
+| `cellMaxWidthSmall`      | `number`                    | `300`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on small screens (≤1440px). Can be overridden at column level. |
 
 ##### Events
 

@@ -1,5 +1,11 @@
 <template>
-  <div class="j-q-table-container">
+  <div
+    class="j-q-table-container"
+    :style="{
+      '--cell-max-width': `${cellMaxWidth}px`,
+      '--cell-max-width-small': `${cellMaxWidthSmall}px`,
+    }"
+  >
     <q-table
       ref="JQTableRef"
       v-model:selected="computedSelected"
@@ -31,7 +37,7 @@
       </template>
       <template v-for="col in computedSlotBodyCellColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
         <q-td :props="props">
-          <div v-if="col.limitWidth" class="cell-limit-width">
+          <div v-if="col.limitWidth" class="cell-limit-width" :style="getCellLimitWidthStyle(col)">
             <slot :name="`body-cell-${col.name}`" v-bind="props" />
           </div>
           <slot v-else :name="`body-cell-${col.name}`" v-bind="props" />
@@ -39,7 +45,7 @@
       </template>
       <template v-for="col in computedLimitWidthColumns" :key="col.name" v-slot:[`body-cell-${col.name}`]="props">
         <q-td :props="props">
-          <div class="cell-limit-width">
+          <div class="cell-limit-width" :style="getCellLimitWidthStyle(col)">
             {{ formatColumnValue(col, props.value) }}
           </div>
         </q-td>
@@ -68,7 +74,7 @@
             <q-tooltip
               v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)"
               :style="getTooltipStyle()"
-              :class="getTooltipClass()"
+              :class="getTooltipClass(col)"
               anchor="top middle"
               self="bottom middle"
               :offset="[10, 10]"
@@ -83,7 +89,7 @@
             <q-tooltip
               v-if="col.whiteSpace && shouldShowTooltip(`${col.name}-${props.row[rowKey]}`)"
               :style="getTooltipStyle()"
-              :class="getTooltipClass()"
+              :class="getTooltipClass(col)"
               anchor="top middle"
               self="bottom middle"
               :offset="[10, 10]"
@@ -133,6 +139,8 @@ export default defineComponent({
   props: {
     autoHeight: { type: Boolean, default: false },
     autoScrollOnChangePage: { type: Boolean, default: true },
+    cellMaxWidth: { type: Number, default: 500 },
+    cellMaxWidthSmall: { type: Number, default: 300 },
     columns: { type: Array as PropType<any[]>, default: () => [] },
     dense: { type: Boolean, default: false },
     flat: { type: Boolean, default: true },
@@ -246,21 +254,52 @@ export default defineComponent({
       return value !== null && value !== undefined;
     };
 
-    // 获取列的最大宽度
-    const getMaxWidth = () => {
-      return window.innerWidth <= 1440 ? 300 : 500;
+    // 获取列的最大宽度（支持 column 级别配置，优先级高于 table 级别）
+    const getMaxWidth = (col?: any) => {
+      const isSmallScreen = window.innerWidth <= 1440;
+
+      // 如果 column 有配置，优先使用 column 的配置
+      if (col) {
+        if (isSmallScreen && col.cellMaxWidthSmall !== undefined) {
+          return col.cellMaxWidthSmall;
+        }
+        if (!isSmallScreen && col.cellMaxWidth !== undefined) {
+          return col.cellMaxWidth;
+        }
+      }
+
+      // 否则使用 table 级别的配置
+      return isSmallScreen ? props.cellMaxWidthSmall : props.cellMaxWidth;
     };
 
     // 获取单元格样式
     const getCellStyle = (col: any) => {
       if (!col.whiteSpace) return {};
 
-      const maxWidth = getMaxWidth();
+      const maxWidth = getMaxWidth(col);
       return {
         width: `${maxWidth}px`,
         maxWidth: `${maxWidth}px`,
         minWidth: `${maxWidth}px`,
       };
+    };
+
+    // 获取 cell-limit-width 的样式（支持 column 级别配置）
+    const getCellLimitWidthStyle = (col: any) => {
+      const isSmallScreen = window.innerWidth <= 1440;
+
+      // 如果 column 有配置，使用 column 的配置
+      if (col) {
+        if (isSmallScreen && col.cellMaxWidthSmall !== undefined) {
+          return { '--cell-max-width-small': `${col.cellMaxWidthSmall}px` };
+        }
+        if (!isSmallScreen && col.cellMaxWidth !== undefined) {
+          return { '--cell-max-width': `${col.cellMaxWidth}px` };
+        }
+      }
+
+      // 否则返回空对象，使用 table 级别的 CSS 变量
+      return {};
     };
 
     // 获取单元格内容的 class
@@ -281,8 +320,8 @@ export default defineComponent({
     };
 
     // 获取 tooltip 的 class (用于设置 max-width，因为 Quasar 会过滤掉内联样式中的 maxWidth)
-    const getTooltipClass = () => {
-      const maxWidth = getMaxWidth();
+    const getTooltipClass = (col?: any) => {
+      const maxWidth = getMaxWidth(col);
       return maxWidth <= 300 ? 'j-tooltip--small' : 'j-tooltip--large';
     };
 
@@ -388,6 +427,7 @@ export default defineComponent({
       isClickable,
       getCellStyle,
       getCellClass,
+      getCellLimitWidthStyle,
       getTooltipStyle,
       getTooltipClass,
       setEllipsisRef,

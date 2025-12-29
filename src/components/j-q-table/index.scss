@@ -172,11 +172,11 @@ $table-nodata-placeholder-url: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA
   max-width: 500px !important;
 }
 
-// limitWidth 列的最大宽度限制（使用媒体查询响应式）
+// limitWidth 列的最大宽度限制（使用 CSS 变量，支持动态配置）
 .cell-limit-width {
-  max-width: 500px;
+  max-width: var(--cell-max-width, 500px);
 
   @media (max-width: 1440px) {
-    max-width: 300px;
+    max-width: var(--cell-max-width-small, 300px);
   }
 }
