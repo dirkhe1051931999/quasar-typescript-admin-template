@@ -3,12 +3,12 @@ import { useI18n } from 'src/composables/useI18n.ts';
 
 export type IEnterFileType = {
   size: number;
-  type: string[];
+  accept: string[];
 };
 
-export function beforeFileEnter(files: File[], config: IEnterFileType = { size: 5, type: ['xls', 'xlsx'] }) {
+export function beforeFileEnter(files: File[], config: IEnterFileType = { size: 5, accept: ['xls', 'xlsx'] }) {
   const file = files[0];
-  const { size, type } = config;
+  const { size, accept } = config;
   const { t } = useI18n();
   if (size < file.size / Math.pow(1024, size)) {
     globalMessage.show({
@@ -19,7 +19,7 @@ export function beforeFileEnter(files: File[], config: IEnterFileType = { size: 
   }
   let format = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
   format = format.replace('.', '');
-  if (type.indexOf(format) === -1) {
+  if (accept.indexOf(format) === -1) {
     globalMessage.show({
       content: t('messages.jQFile.unsupportFileFormat'),
       type: 'error',
