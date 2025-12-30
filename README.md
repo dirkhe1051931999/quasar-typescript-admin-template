@@ -55,16 +55,63 @@ app.use(Quasar, {
 
 ## Quick Start
 
-### 1. Import Styles
+This guide will help you get started with RTCPT in your Vue 3 project.
 
-In your main entry file (like `main.ts`):
+### Prerequisites
+
+- Vue 3.x
+- Quasar Framework 2.x
+- TypeScript (recommended)
+- Node.js 16+ and npm/yarn/pnpm
+
+### 1. Installation
+
+Install RTCPT and its peer dependencies:
+
+```bash
+npm install rtcpt quasar vue@^3.0.0
+# or
+yarn add rtcpt quasar vue@^3.0.0
+# or
+pnpm add rtcpt quasar vue@^3.0.0
+```
+
+### 2. Import Styles
+
+In your main entry file (like `main.ts` or `main.js`), import RTCPT styles **before** initializing your app:
 
 ```typescript
+// main.ts
 import 'rtcpt/rtcpt.css'
 import 'rtcpt/rtcpt-styles.css'
 ```
 
-### 2. Initialize
+**Note:** Make sure to import styles before any component imports to ensure proper styling order.
+
+### 3. Configure Quasar
+
+RTCPT requires certain Quasar plugins to be registered. Configure Quasar in your main entry file:
+
+```typescript
+import { createApp } from 'vue'
+import { Quasar, Notify, Dialog } from 'quasar'
+import quasarIconSet from 'quasar/icon-set/material-icons'
+import 'quasar/src/css/index.sass'
+
+const app = createApp(App)
+
+app.use(Quasar, {
+  plugins: {
+    Notify,  // Required for JQMessage
+    Dialog   // Required for JQDialog, JQConfirmDialog
+  },
+  iconSet: quasarIconSet
+})
+```
+
+### 4. Initialize RTCPT
+
+Initialize RTCPT with your app instance and router:
 
 ```typescript
 import { createApp } from 'vue'
@@ -72,9 +119,11 @@ import { Quasar, Notify, Dialog } from 'quasar'
 import { rtcptInit } from 'rtcpt'
 import App from './App.vue'
 import router from './router'
+import { ref } from 'vue'
 
 const app = createApp(App)
 
+// Configure Quasar
 app.use(Quasar, {
   plugins: {
     Notify,
@@ -82,14 +131,24 @@ app.use(Quasar, {
   }
 })
 
+// Initialize RTCPT
 rtcptInit({
   app,
   router,
-  // optional: permission config
-  pagePermissionIds: ref(['operation-all', 'user-edit']),
-  // optional: custom colors
+  // Optional: Permission configuration
+  // Provide a reactive ref for permission IDs
+  pagePermissionIds: ref(['operation-all', 'user-edit', 'user-view']),
+  
+  // Optional: Custom color theme
   colors: {
     primary: '#1976D2',
+    secondary: '#26A69A',
+    accent: '#9C27B0',
+    positive: '#21BA45',
+    negative: '#C10015',
+    info: '#31CCEC',
+    warning: '#F2C037',
+    dark: '#1D1D1D',
     grey: '#666666'
   }
 })
@@ -97,56 +156,285 @@ rtcptInit({
 app.mount('#app')
 ```
 
-### IconMapFn (important)
+**Configuration Options:**
 
-`rtcptInit` registers rtcpt's built-in custom icons (e.g. `app:clear`, `app:copyText`) via Quasar's `iconMapFn`.
+| Option              | Type            | Required | Description                      |
+| ------------------- | --------------- | -------- | -------------------------------- |
+| `app`               | `App`           | ✅ Yes    | Vue app instance                 |
+| `router`            | `Router`        | ✅ Yes    | Vue Router instance              |
+| `pagePermissionIds` | `Ref<string[]>` | No       | Reactive ref for permission IDs  |
+| `colors`            | `ColorConfig`   | No       | Custom color theme configuration |
 
-If your app later assigns `this.$q.iconMapFn = (...) => ...` (common for theme/brand icons), it can **override** rtcpt's mapping and cause `app:*` icons to render as plain text.
+### 5. IconMapFn Configuration (Important)
 
-Recommended: **compose** your theme iconMap with rtcpt's fallback:
+`rtcptInit` registers RTCPT's built-in custom icons (e.g. `app:clear`, `app:copyText`) via Quasar's `iconMapFn`.
+
+**⚠️ Important:** If your app later assigns a custom `iconMapFn` (common for theme/brand icons), it can **override** RTCPT's mapping and cause `app:*` icons to render as plain text.
+
+**Solution:** Compose your theme iconMap with RTCPT's fallback:
 
 ```typescript
 import { composeIconMapFn, rtcptIconMapFn } from 'rtcpt'
 
-const prev = this.$q.iconMapFn
-const themeIconMapFn = (iconName: string) => {
-  // return { icon: 'img:...' } when matched, otherwise return void 0
+// In your component or composable
+const setupCustomIcons = () => {
+  const prev = this.$q.iconMapFn
+  
+  const themeIconMapFn = (iconName: string) => {
+    // Your custom icon mapping logic
+    if (iconName.startsWith('custom:')) {
+      return { icon: `img:/icons/${iconName.replace('custom:', '')}.svg` }
+    }
+    return void 0
+  }
+  
+  // Compose: theme → previous → rtcpt fallback
+  this.$q.iconMapFn = composeIconMapFn(
+    themeIconMapFn as any,
+    prev as any,
+    rtcptIconMapFn as any
+  )
 }
-
-this.$q.iconMapFn = composeIconMapFn(themeIconMapFn as any, prev as any, rtcptIconMapFn as any)
 ```
 
-### 3. Use Components
+**Icon Composition Order:**
+1. Your custom theme icons (highest priority)
+2. Previous iconMapFn (if any)
+3. RTCPT built-in icons (fallback)
+
+### 6. Use Components
+
+Now you can use RTCPT components in your Vue components:
+
+#### Basic Form Components
 
 ```vue
 <template>
-  <div>
+  <div class="q-pa-md">
     <j-q-input 
-      v-model="value" 
+      v-model="username" 
       label="Username"
+      placeholder="Enter your username"
       :rules="[val => !!val || 'Username is required']"
     />
     
     <j-q-select
       v-model="selectedValue"
       :options="options"
-      label="Select"
+      option-label="label"
+      option-value="value"
+      label="Select an option"
+    />
+    
+    <j-q-date 
+      v-model="date" 
+      label="Select date" 
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { JQInput, JQSelect } from 'rtcpt'
+import { JQInput, JQSelect, JQDate } from 'rtcpt'
 
-const value = ref('')
+const username = ref('')
 const selectedValue = ref(null)
+const date = ref('')
+
 const options = ref([
   { label: 'Option 1', value: 1 },
-  { label: 'Option 2', value: 2 }
+  { label: 'Option 2', value: 2 },
+  { label: 'Option 3', value: 3 }
 ])
 </script>
 ```
+
+#### Data Display Components
+
+```vue
+<template>
+  <div class="q-pa-md">
+    <!-- Detail List -->
+    <j-q-detail-list :items="detailItems" :data="userData" />
+    
+    <!-- Table -->
+    <j-q-table
+      ref="tableRef"
+      :columns="columns"
+      :rows="rows"
+      :loading="loading"
+      row-key="id"
+      @pagination-change="handlePaginationChange"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { JQDetailList, JQTable } from 'rtcpt'
+import type { DetailItem } from 'rtcpt'
+
+const userData = ref({
+  id: 1,
+  name: 'John Doe',
+  email: 'john@example.com'
+})
+
+const detailItems: DetailItem[] = [
+  { name: 'id', label: 'ID', span: 6, format: (v) => v },
+  { name: 'name', label: 'Name', span: 6, format: (v) => v },
+  { name: 'email', label: 'Email', span: 12, format: (v) => v }
+]
+
+const tableRef = ref()
+const loading = ref(false)
+const rows = ref([])
+
+const columns = [
+  { name: 'id', label: 'ID', field: 'id', align: 'left' },
+  { name: 'name', label: 'Name', field: 'name', align: 'left' }
+]
+
+const handlePaginationChange = async (pagination: any) => {
+  loading.value = true
+  // Fetch data...
+  loading.value = false
+}
+</script>
+```
+
+#### Utility Components
+
+```vue
+<template>
+  <div class="q-pa-md">
+    <!-- Copy to clipboard -->
+    <span>API Key: {{ apiKey }}</span>
+    <j-c-copy :text="apiKey" />
+    
+    <!-- Permission wrapper -->
+    <j-c-permission permission-id="user-edit">
+      <q-btn label="Edit" @click="handleEdit" />
+    </j-c-permission>
+    
+    <!-- Confirm dialog -->
+    <q-btn label="Delete" @click="handleDelete" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { JCCopy, JCPermission, JQConfirmDialog } from 'rtcpt'
+
+const apiKey = ref('sk-1234567890abcdef')
+
+const handleEdit = () => {
+  // Edit logic
+}
+
+const handleDelete = async () => {
+  const confirmed = await JQConfirmDialog.show({
+    title: 'Confirm Delete',
+    content: 'Are you sure you want to delete this item?',
+    isDelete: true
+  })
+  
+  if (confirmed) {
+    // Delete logic
+  }
+}
+</script>
+```
+
+### 7. TypeScript Support
+
+RTCPT is fully typed with TypeScript. Import types as needed:
+
+```typescript
+import type { DetailItem } from 'rtcpt'
+import type { TableColumn } from 'rtcpt' // If using custom table columns
+```
+
+### 8. Common Patterns
+
+#### Global Message Notifications
+
+```typescript
+import { JQMessage } from 'rtcpt'
+
+// Success message
+JQMessage.show({ type: 'success', content: 'Operation completed!' })
+
+// Error message
+JQMessage.show({ type: 'error', content: 'Something went wrong' })
+
+// Warning message
+JQMessage.show({ type: 'warn', content: 'Please check your input' })
+```
+
+#### Permission-Based Rendering
+
+```vue
+<template>
+  <j-c-permission permission-id="user-edit">
+    <q-btn label="Edit" @click="edit" />
+  </j-c-permission>
+  
+  <j-c-permission permission-id="user-delete">
+    <q-btn label="Delete" color="negative" @click="delete" />
+  </j-c-permission>
+</template>
+```
+
+#### Dialog Usage
+
+```vue
+<template>
+  <j-q-dialog ref="dialogRef" title="User Form" :max-width="600">
+    <div>Dialog content here</div>
+  </j-q-dialog>
+  
+  <q-btn label="Open Dialog" @click="openDialog" />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { JQDialog } from 'rtcpt'
+
+const dialogRef = ref()
+
+const openDialog = () => {
+  dialogRef.value?.open()
+}
+</script>
+```
+
+### Troubleshooting
+
+**Icons not showing (`app:*` icons render as text):**
+- Make sure you're composing iconMapFn correctly (see IconMapFn Configuration above)
+- Check that `rtcptInit` is called before any custom iconMapFn assignment
+
+**Styles not applying:**
+- Ensure RTCPT styles are imported before component imports
+- Check that Quasar styles are imported correctly
+- Verify CSS import order in your main entry file
+
+**Components not found:**
+- Make sure RTCPT is installed: `npm list rtcpt`
+- Verify imports are correct: `import { ComponentName } from 'rtcpt'`
+- Check that `rtcptInit` was called successfully
+
+**Permission components not working:**
+- Ensure `pagePermissionIds` is provided as a reactive ref in `rtcptInit`
+- Verify permission IDs match your backend/API permission system
+
+### Next Steps
+
+- Explore [Component Examples](#component-examples) for detailed usage
+- Check [API Documentation](#components) for component props and methods
+- Review [Theming](#theming) for custom color configuration
+- See [Utilities](#utilities) for helper functions
 
 ---
 
@@ -556,58 +844,69 @@ Example (fixed columns): Add `table-cell--fix-left` / `table-cell--fix-right` to
 
 ##### Props
 
-| Name                     | Type                        | Default | Description                                                                                                           |
-| ------------------------ | --------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
+| Name                     | Type                        | Default | Description                                                                                                                                                 |
+| ------------------------ | --------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `columns`                | `any[]`                     | `[]`    | Column definitions (compatible with `QTable` columns, with additional support for `whiteSpace/limitWidth/onClick/clickable/cellMaxWidth/cellMaxWidthSmall`) |
-| `rows`                   | `any[]`                     | `[]`    | Table data                                                                                                            |
-| `rowKey`                 | `string \| ((row) => any)`  | `'id'`  | Unique row key                                                                                                        |
-| `loading`                | `boolean`                   | `false` | Loading state (shows built-in loading)                                                                                |
-| `flat`                   | `boolean`                   | `true`  | Passed through to `QTable`                                                                                            |
-| `dense`                  | `boolean`                   | `false` | Passed through to `QTable`                                                                                            |
-| `hidePagination`         | `boolean`                   | `false` | Hide bottom pagination                                                                                                |
-| `selected`               | `any[] \| null`             | `null`  | Selected rows (v-model:selected). If not provided, the component manages internally                                   |
-| `tableClass`             | `string \| object \| any[]` | -       | Class attached to `QTable`                                                                                            |
-| `tableHeaderClass`       | `string \| object \| any[]` | -       | Passed through to `QTable` as `table-header-class`                                                                    |
-| `autoScrollOnChangePage` | `boolean`                   | `true`  | Auto scroll to table top after page change or pageSize change                                                         |
-| `autoHeight`             | `boolean`                   | `false` | Reserved field (you need to manually add style class `table--auto-height` via `tableClass`)                           |
-| `cellMaxWidth`           | `number`                    | `500`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on large screens (>1440px). Can be overridden at column level. |
-| `cellMaxWidthSmall`      | `number`                    | `300`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on small screens (≤1440px). Can be overridden at column level. |
+| `rows`                   | `any[]`                     | `[]`    | Table data                                                                                                                                                  |
+| `rowKey`                 | `string \| ((row) => any)`  | `'id'`  | Unique row key                                                                                                                                              |
+| `loading`                | `boolean`                   | `false` | Loading state (shows built-in loading)                                                                                                                      |
+| `flat`                   | `boolean`                   | `true`  | Passed through to `QTable`                                                                                                                                  |
+| `dense`                  | `boolean`                   | `false` | Passed through to `QTable`                                                                                                                                  |
+| `hidePagination`         | `boolean`                   | `false` | Hide bottom pagination                                                                                                                                      |
+| `selected`               | `any[] \| null`             | `null`  | Selected rows (v-model:selected). If not provided, the component manages internally                                                                         |
+| `tableClass`             | `string \| object \| any[]` | -       | Class attached to `QTable`                                                                                                                                  |
+| `tableHeaderClass`       | `string \| object \| any[]` | -       | Passed through to `QTable` as `table-header-class`                                                                                                          |
+| `autoScrollOnChangePage` | `boolean`                   | `true`  | Auto scroll to table top after page change or pageSize change                                                                                               |
+| `autoHeight`             | `boolean`                   | `false` | Reserved field (you need to manually add style class `table--auto-height` via `tableClass`)                                                                 |
+| `cellMaxWidth`           | `number`                    | `500`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on large screens (>1440px). Can be overridden at column level.                               |
+| `cellMaxWidthSmall`      | `number`                    | `300`   | Maximum width (px) for cells with `whiteSpace` or `limitWidth` on small screens (≤1440px). Can be overridden at column level.                               |
 
 ##### Events
 
-| Name                | Payload                             | Description                                        |
-| ------------------- | ----------------------------------- | -------------------------------------------------- |
-| `update:selected`   | `any[]`                             | v-model:selected update                            |
+| Name                | Payload                             | Description                                            |
+| ------------------- | ----------------------------------- | ------------------------------------------------------ |
+| `update:selected`   | `any[]`                             | v-model:selected update                                |
 | `pagination-change` | `{ page, rowsPerPage, rowsNumber }` | Pagination change (from built-in pagination component) |
 
 ##### Slots
 
-| Name                 | Scope                      | Description                          |
-| -------------------- | -------------------------- | ------------------------------------ |
-| `top`                | -                          | `QTable` top area                    |
-| `header`             | `QTable` header scope      | Customize entire header row          |
-| `body`               | `QTable` body scope        | Customize entire body row            |
-| `append`             | -                          | Append content at table bottom       |
+| Name                 | Scope                      | Description                           |
+| -------------------- | -------------------------- | ------------------------------------- |
+| `top`                | -                          | `QTable` top area                     |
+| `header`             | `QTable` header scope      | Customize entire header row           |
+| `body`               | `QTable` body scope        | Customize entire body row             |
+| `append`             | -                          | Append content at table bottom        |
 | `header-cell-{name}` | `QTable` header-cell scope | Customize specific column header cell |
-| `body-cell-{name}`   | `QTable` body-cell scope   | Customize specific column cell       |
+| `body-cell-{name}`   | `QTable` body-cell scope   | Customize specific column cell        |
 
 ##### Exposed (via `ref`)
 
-| Name                    | Type                                      | Description                                                 |
-| ----------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| Name                    | Type                                      | Description                                                  |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------ |
 | `setTotal(total)`       | `(total?: number) => void`                | Set total count (pagination display depends on `rowsNumber`) |
-| `setNum(page)`          | `(page?: number) => void`                 | Set current page (default 1)                                |
-| `setSize(rowsPerPage)`  | `(rowsPerPage?: number) => void`          | Set rows per page                                           |
-| `getPaginationParam()`  | `() => { page; rowsPerPage; rowsNumber }` | Get pagination parameters                                   |
-| `scrollTop()`           | `() => void`                              | Smooth scroll to table top                                  |
-| `ROWS_PER_PAGE_OPTIONS` | `number[]`                                | Default rows per page options                               |
-| `DEFAULT_ROWS_PER_PAGE` | `number`                                  | Default rows per page (15)                                  |
+| `setNum(page)`          | `(page?: number) => void`                 | Set current page (default 1)                                 |
+| `setSize(rowsPerPage)`  | `(rowsPerPage?: number) => void`          | Set rows per page                                            |
+| `getPaginationParam()`  | `() => { page; rowsPerPage; rowsNumber }` | Get pagination parameters                                    |
+| `scrollTop()`           | `() => void`                              | Smooth scroll to table top                                   |
+| `ROWS_PER_PAGE_OPTIONS` | `number[]`                                | Default rows per page options                                |
+| `DEFAULT_ROWS_PER_PAGE` | `number`                                  | Default rows per page (15)                                   |
 
 ### JQDetailList (detail-list)
 
-> The detail-list component in the project (referred to as `j-c-list`) is actually `JQDetailList` (tag: `<j-q-detail-list />`), used to display object details in grid layout, with support for options mapping, date formatting, conditional display, and custom rendering by field.
+> A flexible and feature-rich component for displaying object details in various layouts. Supports options mapping, date formatting, conditional display, custom rendering, click handlers, and multi-line text truncation.
 
-#### Usage
+#### Features
+
+- 🎨 **Multiple Layouts**: Vertical, horizontal-between, and horizontal-left layouts
+- 📝 **Text Truncation**: Configurable multi-line text truncation with ellipsis (`whiteSpace`)
+- 🖱️ **Click Handlers**: Built-in support for clickable items (`onClick`, `clickable`)
+- 🎯 **Options Mapping**: Map values to display labels using options array
+- 📅 **Date Formatting**: Built-in date formatting support
+- 🎨 **Custom Rendering**: Use slots for custom field rendering
+- 👁️ **Conditional Display**: Show/hide fields based on data conditions
+- 💡 **Tooltips**: Support for field tips and automatic tooltip on text overflow
+
+#### Basic Usage
 
 ```vue
 <template>
@@ -616,31 +915,19 @@ Example (fixed columns): Add `table-cell--fix-left` / `table-cell--fix-right` to
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
-type DetailItem = {
-  name: string
-  label: string
-  span?: number
-  align?: 'left' | 'right' | 'center'
-  date?: boolean | string
-  options?: Record<string, any>[]
-  findByKey?: string
-  displayKey?: string
-  tip?: string
-  format?: (value: any) => any
-  visible?: boolean | ((data: Record<string, any>) => boolean)
-}
+import type { DetailItem } from 'components/j-q-detail-list/index.vue'
 
 const detail = ref({
   id: 1,
   name: 'Alice',
   status: 'active',
-  createdAt: '2025-12-01 10:20:30'
+  createdAt: '2025-12-01 10:20:30',
+  description: 'A long description that might overflow...'
 })
 
 const items: DetailItem[] = [
-  { name: 'id', label: 'ID', span: 6 },
-  { name: 'name', label: 'Name', span: 6, tip: 'User display name in the system' },
+  { name: 'id', label: 'ID', span: 6, format: (v) => v },
+  { name: 'name', label: 'Name', span: 6, tip: 'User display name in the system', format: (v) => v },
   {
     name: 'status',
     label: 'Status',
@@ -650,56 +937,384 @@ const items: DetailItem[] = [
       { value: 'disabled', label: 'Disabled', class: 'text-grey' }
     ],
     findByKey: 'value',
-    displayKey: 'label'
+    displayKey: 'label',
+    format: (v) => v
   },
-  { name: 'createdAt', label: 'Created At', span: 6, date: 'YYYY-MM-DD HH:mm:ss' }
+  { name: 'createdAt', label: 'Created At', span: 6, date: 'YYYY-MM-DD HH:mm:ss', format: (v) => v },
+  { name: 'description', label: 'Description', span: 12, whiteSpace: 3, format: (v) => v }
 ]
 </script>
 ```
 
-#### Custom item slot
+#### Layouts
 
-You can use `item-value-{name}` to precisely override the display of a specific field:
+The component supports three layout types:
+
+**1. Vertical Layout (default)**
+
+Labels are displayed above values in a grid layout:
 
 ```vue
-<j-q-detail-list :items="items" :data="detail">
-  <template #item-value-status="{ value }">
-    <q-badge :color="value === 'active' ? 'positive' : 'grey'" :label="value" />
-  </template>
-</j-q-detail-list>
+<j-q-detail-list :items="items" :data="data" layout="vertical" />
+```
+
+**2. Horizontal Between Layout**
+
+Labels and values are displayed side by side with space-between alignment:
+
+```vue
+<j-q-detail-list :items="items" :data="data" layout="horizontal-between" />
+```
+
+**3. Horizontal Left Layout**
+
+Labels and values are displayed side by side with left alignment. Label width is configurable:
+
+```vue
+<j-q-detail-list 
+  :items="items" 
+  :data="data" 
+  layout="horizontal-left" 
+  label-width="120px" 
+/>
+```
+
+#### whiteSpace (Multi-line Text Truncation)
+
+The `whiteSpace` property controls how text is displayed with automatic ellipsis and tooltip support.
+
+**Usage:**
+- `whiteSpace: 1` - Single-line ellipsis (default)
+- `whiteSpace: 2` - Two-line ellipsis
+- `whiteSpace: 3` - Three-line ellipsis
+
+**Features:**
+- Automatically applies ellipsis when content overflows
+- Shows tooltip on hover when content is truncated
+- Works with all layout types
+
+**Example:**
+
+```vue
+const items: DetailItem[] = [
+  {
+    name: 'description',
+    label: 'Description',
+    span: 12,
+    whiteSpace: 3,  // Show max 3 lines before ellipsis
+    format: (v) => v
+  },
+  {
+    name: 'summary',
+    label: 'Summary',
+    span: 12,
+    whiteSpace: 2,  // Show max 2 lines before ellipsis
+    format: (v) => v
+  }
+]
+```
+
+#### Click Handlers (onClick & clickable)
+
+Make items clickable with custom click handlers.
+
+**Usage:**
+
+```vue
+<script setup lang="ts">
+const toDevicePage = (deviceId: string) => {
+  console.log('Navigate to device:', deviceId)
+  // router.push(`/devices/${deviceId}`)
+}
+
+const items: DetailItem[] = [
+  {
+    name: 'deviceId',
+    label: 'Device ID',
+    span: 6,
+    onClick: (value) => toDevicePage(value),
+    clickable: true,  // Always clickable
+    format: (v) => v
+  },
+  {
+    name: 'status',
+    label: 'Status',
+    span: 6,
+    onClick: (value) => console.log('Status clicked:', value),
+    clickable: (row) => row.status === 'online',  // Dynamic: only clickable when online
+    format: (v) => v
+  }
+]
+</script>
+```
+
+**Behavior:**
+- When `clickable` is `true`: Item is always clickable
+- When `clickable` is `false`: Item is never clickable
+- When `clickable` is a function: Dynamic check based on data: `(row: TDetailData) => boolean`
+- When `clickable` is `undefined`: Clickable if `onClick` is provided (default behavior)
+- Clickable items display with primary color and pointer cursor
+- Clickable items use `display: inline-block` for proper click area
+
+#### Options Mapping
+
+Map raw values to display labels using options array:
+
+```vue
+const items: DetailItem[] = [
+  {
+    name: 'status',
+    label: 'Status',
+    span: 6,
+    options: [
+      { value: 'active', label: 'Active', class: 'text-positive' },
+      { value: 'inactive', label: 'Inactive', class: 'text-grey' },
+      { value: 'pending', label: 'Pending', class: 'text-warning' }
+    ],
+    findByKey: 'value',      // Match data.status against option.value
+    displayKey: 'label',      // Display option.label (default)
+    format: (v) => v
+  }
+]
+```
+
+The matched option can also have a `class` property for custom styling.
+
+#### Conditional Display
+
+Show/hide fields based on data conditions:
+
+```vue
+const items: DetailItem[] = [
+  { name: 'id', label: 'ID', span: 6, format: (v) => v },
+  {
+    name: 'paidAt',
+    label: 'Paid At',
+    span: 6,
+    date: 'YYYY-MM-DD HH:mm:ss',
+    visible: (row) => row.status === 'paid',  // Only show when paid
+    format: (v) => v
+  },
+  {
+    name: 'cancelledAt',
+    label: 'Cancelled At',
+    span: 6,
+    date: 'YYYY-MM-DD HH:mm:ss',
+    visible: (row) => row.status === 'cancelled',  // Only show when cancelled
+    format: (v) => v
+  }
+]
+```
+
+#### Custom Rendering with Slots
+
+Use `item-value-{name}` slot to customize rendering for specific fields:
+
+```vue
+<template>
+  <j-q-detail-list :items="items" :data="detail">
+    <template #item-value-status="{ value, item, data, fieldName }">
+      <q-badge :color="value === 'active' ? 'positive' : 'grey'" :label="value" />
+    </template>
+    
+    <template #item-value-image="{ value }">
+      <q-img :src="value" style="width: 100px; height: 100px" />
+    </template>
+    
+    <template #item-value-price="{ value }">
+      <span class="text-h6 text-primary">${{ value.toFixed(2) }}</span>
+    </template>
+  </j-q-detail-list>
+</template>
+```
+
+**Slot Props:**
+- `value`: The raw value from data object
+- `item`: The DetailItem configuration object
+- `data`: The entire data object
+- `fieldName`: The field name (same as `item.name`)
+
+#### Complete Examples
+
+**Example 1: User Profile with Clickable ID**
+
+```vue
+<template>
+  <j-q-detail-list :items="items" :data="userData" />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { DetailItem } from 'components/j-q-detail-list/index.vue'
+
+const userData = ref({
+  id: 1001,
+  username: 'johndoe',
+  email: 'john@example.com',
+  role: 'admin',
+  createdAt: '2024-01-15 10:30:00'
+})
+
+const toUserPage = (userId: string) => {
+  console.log('Navigate to user:', userId)
+}
+
+const items: DetailItem[] = [
+  {
+    name: 'id',
+    label: 'User ID',
+    span: 6,
+    onClick: (value) => toUserPage(value),
+    clickable: true,
+    format: (v) => v
+  },
+  { name: 'username', label: 'Username', span: 6, format: (v) => v },
+  { name: 'email', label: 'Email', span: 6, format: (v) => v },
+  {
+    name: 'role',
+    label: 'Role',
+    span: 6,
+    options: [
+      { value: 'admin', label: 'Administrator' },
+      { value: 'user', label: 'User' }
+    ],
+    findByKey: 'value',
+    format: (v) => v
+  },
+  { name: 'createdAt', label: 'Created', span: 6, date: true, format: (v) => v }
+]
+</script>
+```
+
+**Example 2: Article with Multi-line Content**
+
+```vue
+<template>
+  <j-q-detail-list :items="items" :data="articleData" />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { DetailItem } from 'components/j-q-detail-list/index.vue'
+
+const articleData = ref({
+  title: 'Article Title',
+  content: 'This is a very long article content that will be truncated after 3 lines with ellipsis...',
+  summary: 'Short summary text'
+})
+
+const items: DetailItem[] = [
+  { name: 'title', label: 'Title', span: 12, format: (v) => v },
+  {
+    name: 'content',
+    label: 'Content',
+    span: 12,
+    whiteSpace: 3,  // Show max 3 lines before ellipsis
+    format: (v) => v
+  },
+  { name: 'summary', label: 'Summary', span: 12, whiteSpace: 2, format: (v) => v }
+]
+</script>
+```
+
+**Example 3: Horizontal Layout**
+
+```vue
+<template>
+  <j-q-detail-list 
+    :items="items" 
+    :data="data" 
+    layout="horizontal-left"
+    label-width="150px"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { DetailItem } from 'components/j-q-detail-list/index.vue'
+
+const data = ref({
+  field1: 'Value 1',
+  field2: 'Value 2',
+  field3: 'Value 3'
+})
+
+const items: DetailItem[] = [
+  { name: 'field1', label: 'Field 1', span: 6, format: (v) => v },
+  { name: 'field2', label: 'Field 2', span: 6, format: (v) => v },
+  { name: 'field3', label: 'Field 3', span: 6, format: (v) => v }
+]
+</script>
 ```
 
 #### API (Quasar style)
 
 ##### Props
 
-| Name     | Type                  | Default             | Description                       |
-| -------- | --------------------- | ------------------- | --------------------------------- |
-| `items`  | `DetailItem[]`        | -                   | Display configuration (required)  |
-| `data`   | `Record<string, any>` | -                   | Detail data object (required)     |
-| `gutter` | `string`              | `'q-col-gutter-md'` | Gutter class for outer row        |
+| Name         | Type                                                      | Default             | Description                              |
+| ------------ | --------------------------------------------------------- | ------------------- | ---------------------------------------- |
+| `items`      | `DetailItem[]`                                            | -                   | Display configuration (required)         |
+| `data`       | `Record<string, any>`                                     | -                   | Detail data object (required)            |
+| `layout`     | `'vertical' \| 'horizontal-between' \| 'horizontal-left'` | `'vertical'`        | Layout type for displaying items         |
+| `gutter`     | `string`                                                  | `'q-col-gutter-md'` | CSS class for column gutter spacing      |
+| `labelWidth` | `string`                                                  | `'100px'`           | Label width for `horizontal-left` layout |
 
 ##### Slots
 
-| Name                | Scope                              | Description                         |
-| ------------------- | ---------------------------------- | ----------------------------------- |
+| Name                | Scope                              | Description                                    |
+| ------------------- | ---------------------------------- | ---------------------------------------------- |
 | `item-value-{name}` | `{ value, item, data, fieldName }` | Customize value rendering for a specific field |
 
-##### `DetailItem` Field Description
+##### `DetailItem` Interface
 
-| Field        | Type                            | Description                                                                 |
-| ------------ | ------------------------------- | --------------------------------------------------------------------------- |
-| `name`       | `string`                        | Field name (corresponds to `data[name]`)                                    |
-| `label`      | `string`                        | Title                                                                       |
-| `span`       | `number`                        | Grid column width (`col-{span}`), default 6                                 |
-| `align`      | `'left' \| 'center' \| 'right'` | Value alignment, default left                                               |
-| `tip`        | `string`                        | Tooltip next to title                                                       |
-| `visible`    | `boolean \| (data) => boolean`  | Control whether this item is displayed                                      |
-| `format`     | `(value) => any`                | Custom formatting (takes priority over date/options)                        |
-| `date`       | `true \| string`                | Date formatting: `true` uses default format; string uses specified format   |
-| `options`    | `Record<string, any>[]`         | Value mapping list (like a dictionary)                                      |
-| `findByKey`  | `string`                        | Which key in `options` to match the value by                                |
-| `displayKey` | `string`                        | Which key from `options` to display, default `'label'`                      |
+```typescript
+export interface DetailItem {
+  name: string                    // Field name in data object (required)
+  label: string                  // Display label (required)
+  span?: number                  // Column span (1-12, default: 6)
+  align?: 'left' | 'right' | 'center'  // Text alignment (default: 'left', only applies to vertical layout)
+  date?: boolean | string        // Date formatting: true for default format, string for custom format
+  options?: Record<string, any>[] // Options array for value mapping
+  findByKey?: string             // Key to find option in options array
+  displayKey?: string            // Key to display from matched option (default: 'label')
+  tip?: string                   // Tooltip text shown next to label
+  whiteSpace?: number            // Maximum lines before ellipsis (default: 1)
+  onClick?: (value: string) => void  // Click handler function
+  clickable?: boolean | ((row: TDetailData) => boolean)  // Whether item is clickable
+  format: (value: any) => any    // Value formatter function (required)
+  visible?: boolean | ((row: TDetailData) => boolean)  // Show/hide condition
+}
+```
+
+##### `DetailItem` Field Descriptions
+
+| Field        | Type                            | Description                                                               |
+| ------------ | ------------------------------- | ------------------------------------------------------------------------- |
+| `name`       | `string`                        | Field name (corresponds to `data[name]`) - **required**                   |
+| `label`      | `string`                        | Display label - **required**                                              |
+| `span`       | `number`                        | Grid column width (`col-{span}`), default 6                               |
+| `align`      | `'left' \| 'center' \| 'right'` | Value alignment, default left (only applies to `vertical` layout)         |
+| `tip`        | `string`                        | Tooltip text shown next to label with a question icon                     |
+| `visible`    | `boolean \| (data) => boolean`  | Control whether this item is displayed                                    |
+| `format`     | `(value) => any`                | Custom formatting function - **required**                                 |
+| `date`       | `true \| string`                | Date formatting: `true` uses default format; string uses specified format |
+| `options`    | `Record<string, any>[]`         | Value mapping list (like a dictionary)                                    |
+| `findByKey`  | `string`                        | Which key in `options` to match the value by                              |
+| `displayKey` | `string`                        | Which key from `options` to display, default `'label'`                    |
+| `whiteSpace` | `number`                        | Maximum lines before ellipsis (1, 2, or 3), default 1                     |
+| `onClick`    | `(value: string) => void`       | Click handler function that receives the formatted value string           |
+| `clickable`  | `boolean \| (row) => boolean`   | Whether item is clickable. If function, dynamic check based on data       |
+
+#### Notes
+
+- Empty values (`null`, `undefined`, `''`) are displayed as `'--'`
+- The `format` function is always called, even for empty values
+- Options mapping happens before formatting
+- Date formatting happens after options mapping and custom formatting
+- Click handlers receive the final formatted string value
+- Custom slots override default rendering completely
+- When `clickable` is `undefined` and `onClick` is provided, the item is clickable by default
+- Clickable items automatically use `display: inline-block` for proper click area
 
 ### JQDialog
 

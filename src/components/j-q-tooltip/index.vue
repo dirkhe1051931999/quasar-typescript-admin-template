@@ -70,7 +70,7 @@ export default defineComponent({
 }
 
 .ellipsis-multi {
-  display: -webkit-box;
+  display: -webkit-box !important;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

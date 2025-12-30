@@ -13,12 +13,12 @@
             </q-icon>
           </template>
         </div>
-        <div class="detail-value text-body2" :class="[`text-${item.align || 'left'}`]">
+        <div class="detail-value text-body2" :class="[`text-${item.align || 'left'}`, { clickable: isClickable(item) }]" @click="handleClick(item)">
           <template v-if="slots[`item-value-${item.name}`]">
             <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
           </template>
           <template v-else>
-            <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
+            <j-q-tooltip :content="getDefaultValue(item)" :lines="item.whiteSpace || 1" :class="getOptionClass(item)"></j-q-tooltip>
           </template>
         </div>
       </div>
@@ -40,12 +40,12 @@
               </q-icon>
             </template>
           </div>
-          <div class="value">
+          <div class="value" :class="{ clickable: isClickable(item) }" @click="handleClick(item)">
             <template v-if="slots[`item-value-${item.name}`]">
               <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
             </template>
             <template v-else>
-              <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
+              <j-q-tooltip :content="getDefaultValue(item)" :lines="item.whiteSpace || 1" :class="getOptionClass(item)"></j-q-tooltip>
             </template>
           </div>
         </div>
@@ -68,12 +68,12 @@
               </q-icon>
             </template>
           </div>
-          <div class="value">
+          <div class="value" :class="{ clickable: isClickable(item) }" @click="handleClick(item)">
             <template v-if="slots[`item-value-${item.name}`]">
               <slot :name="`item-value-${item.name}`" :value="data[item.name]" :item="item" :data="data" :field-name="item.name" />
             </template>
             <template v-else>
-              <j-q-tooltip :content="getDefaultValue(item)" :class="getOptionClass(item)"></j-q-tooltip>
+              <j-q-tooltip :content="getDefaultValue(item)" :lines="item.whiteSpace || 1" :class="getOptionClass(item)"></j-q-tooltip>
             </template>
           </div>
         </div>
@@ -98,6 +98,9 @@ export interface DetailItem {
   findByKey?: string;
   displayKey?: string;
   tip?: string;
+  whiteSpace?: number; // 最大行数，超过后显示省略号，默认为1
+  onClick?: (value: string) => void; // 点击监听函数
+  clickable?: boolean | ((row: TDetailData) => boolean); // 是否可点击，可以是 boolean 或 Function
   format: (value: any) => any;
   visible?: boolean | ((row: TDetailData) => boolean);
 }
@@ -203,6 +206,24 @@ export default defineComponent({
       return foundItem ? foundItem.class : '';
     };
 
+    // 判断是否可点击
+    const isClickable = (item: DetailItem): boolean => {
+      if (!item.onClick) return false;
+      if (item.clickable === undefined || item.clickable === null) return true;
+      if (typeof item.clickable === 'boolean') return item.clickable;
+      if (typeof item.clickable === 'function') {
+        return item.clickable(props.data);
+      }
+      return false;
+    };
+
+    // 处理点击事件
+    const handleClick = (item: DetailItem) => {
+      if (!isClickable(item) || !item.onClick) return;
+      const value = getDefaultValue(item);
+      item.onClick(value);
+    };
+
     return {
       visibleItems,
       getOptionClass,
@@ -210,6 +231,8 @@ export default defineComponent({
       getDefaultValue,
       slots,
       containerStyle,
+      isClickable,
+      handleClick,
     };
   },
 });
@@ -218,6 +241,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .detail-item-container {
   min-width: 0;
+}
+
+.detail-value.clickable {
+  display: inline-block;
+  cursor: pointer;
+  color: var(--j-color-primary);
 }
 
 // 左右布局 - space-between
@@ -239,6 +268,12 @@ export default defineComponent({
 
     .value {
       text-align: right;
+
+      &.clickable {
+        display: inline-block;
+        cursor: pointer;
+        color: var(--j-color-primary);
+      }
     }
   }
 }
@@ -262,9 +297,12 @@ export default defineComponent({
 
     .value {
       max-width: 400px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+
+      &.clickable {
+        display: inline-block;
+        cursor: pointer;
+        color: var(--j-color-primary);
+      }
     }
   }
 }
