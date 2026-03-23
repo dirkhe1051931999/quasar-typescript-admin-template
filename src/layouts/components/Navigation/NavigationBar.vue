@@ -44,7 +44,7 @@ import { useI18n } from 'vue-i18n';
 import { AppModule } from 'src/store/modules/app';
 import { UserModule } from 'src/store/modules/user';
 import setting from 'src/setting.json';
-import { Locale, setLocale } from 'rtcpt';
+import { Locale, setLocale } from 'qcpt';
 
 export default defineComponent({
   name: 'NavigationBar',

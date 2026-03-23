@@ -1,14 +1,14 @@
 <template>
-  <div class="full-width full-height overflow-hidden absolute left-0 top-0 row">
+  <div class="login-page-root full-width full-height overflow-hidden absolute left-0 top-0 row">
     <div class="row items-center justify-center full-width">
       <!-- 修改密码 -->
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'changePassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
-          <div class="q-pa-lg">
+          <div class="q-pa-lg auth-panel">
             <div class="f-bold bold text-h5 q-pb-md">Change password</div>
             <div class="q-pb-lg text-body1">Please enter the following information to change your password</div>
-            <q-form ref="changePasswordForm">
-              <div class="q-mb-md">
+            <q-form ref="changePasswordForm" class="auth-form">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">* Username</label>
                 </div>
@@ -25,7 +25,7 @@
                   :rules="changePasswordRules.username"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">* Old password</label>
                 </div>
@@ -46,7 +46,7 @@
                   @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="q-mr-sm">* New password</label>
                 </div>
@@ -68,7 +68,7 @@
                   @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">* Confirm Password</label>
                 </div>
@@ -90,11 +90,11 @@
                   @update:model-value="resetPasswordForm.rePassword = resetPasswordForm.rePassword.replace(/[\u4e00-\u9fa5]/gi, '')"
                 />
               </div>
-              <q-btn class="full-width q-my-lg" @click.prevent="handlerChangePassword" label="Confirm" color="primary" />
+              <q-btn class="full-width q-my-lg auth-submit-btn" @click.prevent="handlerChangePassword" label="Confirm" color="primary" />
             </q-form>
             <div class="text-center">
               Already have an account?
-              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
+              <span class="link-type" @click="resetPasswordToSignIn"> Sign In </span>
             </div>
           </div>
         </div>
@@ -102,11 +102,11 @@
       <!-- 发邮件忘记密码 -->
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'forgotPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
-          <div class="q-pa-lg">
+          <div class="q-pa-lg auth-panel">
             <div class="f-bold bold text-h5 q-pb-md">Forgot password</div>
             <div class="q-pb-lg text-body1">Please enter your username and email address to reset your password.</div>
-            <q-form ref="forgotPasswordForm">
-              <div class="q-mb-md">
+            <q-form ref="forgotPasswordForm" class="auth-form">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">* Username</label>
                 </div>
@@ -123,7 +123,7 @@
                   :rules="forgotPasswordRules.username"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">* Email4</label>
                 </div>
@@ -140,11 +140,11 @@
                   :rules="forgotPasswordRules.email"
                 />
               </div>
-              <q-btn class="full-width q-my-lg" @click.prevent="handlerForgetPassword" label="Confirm" color="primary" />
+              <q-btn class="full-width q-my-lg auth-submit-btn" @click.prevent="handlerForgetPassword" label="Confirm" color="primary" />
             </q-form>
             <div class="text-center">
               Already have an account?
-              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
+              <span class="link-type" @click="resetPasswordToSignIn"> Sign In </span>
             </div>
           </div>
         </div>
@@ -152,11 +152,11 @@
       <!-- 重置密码 -->
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'resetPassword'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
-          <div class="q-pa-lg">
+          <div class="q-pa-lg auth-panel">
             <div class="f-bold bold text-h5 q-pb-md">Reset Password</div>
             <div class="q-pb-lg text-body1">Please reset your password.</div>
-            <q-form ref="resetPasswordForm">
-              <div class="q-mb-md">
+            <q-form ref="resetPasswordForm" class="auth-form">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="q-mr-sm">* Password</label>
                 </div>
@@ -178,7 +178,7 @@
                   :rules="resetPasswordRules.password"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-pb-md q-pt-xs f-bold">
                   <label>* Confirm password</label>
                 </div>
@@ -200,11 +200,11 @@
                   :rules="resetPasswordRules.rePassword"
                 />
               </div>
-              <q-btn class="full-width q-my-lg" @click.prevent="handlerResetPassword" label="Confirm" color="primary" />
+              <q-btn class="full-width q-my-lg auth-submit-btn" @click.prevent="handlerResetPassword" label="Confirm" color="primary" />
             </q-form>
             <div class="text-center">
               Already have an account?
-              <span class="detail-link-type" @click="resetPasswordToSignIn"> Sign In </span>
+              <span class="link-type" @click="resetPasswordToSignIn"> Sign In </span>
             </div>
           </div>
         </div>
@@ -212,12 +212,12 @@
       <!-- 登录 -->
       <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12 q-m-auto row" style="z-index: 1000" v-if="pageType === 'signIn'">
         <div class="col-md-8 col-lg-8 col-xl-6 col-sm-8 col-xs-8 q-mx-auto">
-          <div class="q-pa-lg">
+          <div class="q-pa-lg auth-panel">
             <div class="f-bold bold text-h5 q-pb-md">Sign In</div>
             <div class="text-body1 lh-24">Please enter your username and password.</div>
             <p class="text-grey q-pb-lg">(Login by typing in any username, code and password)</p>
-            <q-form>
-              <div class="q-mb-md">
+            <q-form class="auth-form">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-pb-xs text-weight-medium">
                   <label>Username</label>
                 </div>
@@ -234,7 +234,7 @@
                   clear-icon="app:clear"
                 />
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label>Code</label>
                 </div>
@@ -277,11 +277,11 @@
                   </div>
                 </div>
               </div>
-              <div class="q-mb-md">
+              <div class="q-mb-md auth-form-item">
                 <div class="row q-py-xs text-weight-medium">
                   <label class="w-p-30">Password</label>
-                  <div class="text-right w-p-70">
-                    <span class="detail-link-type" @click="pageType = 'forgotPassword'">Forgot password?</span>
+                  <div class="text-right q-ml-auto">
+                    <span class="link-type" @click="pageType = 'forgotPassword'">Forgot password?</span>
                   </div>
                 </div>
                 <q-input
@@ -301,9 +301,9 @@
                   clear-icon="app:clear"
                 />
               </div>
-              <q-btn class="full-width q-my-lg" @click.prevent="handlerSignIn" label="Sign In" color="primary" />
+              <q-btn class="full-width q-my-lg auth-submit-btn" @click.prevent="handlerSignIn" label="Sign In" color="primary" />
               <div class="text-center">
-                <span class="detail-link-type" @click="pageType = 'changePassword'">Change password? </span>
+                <span class="link-type" @click="pageType = 'changePassword'">Change password? </span>
               </div>
             </q-form>
           </div>
@@ -322,7 +322,7 @@ import { isValidEmail, isValidPassword } from 'src/utils/validate';
 import { getToken } from 'src/utils/storage';
 import { PermissionModule } from 'src/store/modules/permission';
 import setting from 'src/setting.json';
-import { JQMessage } from 'rtcpt';
+import { JQMessage } from 'qcpt';
 
 @Component({ name: 'LoginPage2' })
 export default class LoginPage2 extends Vue {
@@ -701,4 +701,29 @@ export default class LoginPage2 extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.login-page-root {
+  background: #f5f5f5;
+  color: var(--j-color-dark);
+}
+
+.auth-panel {
+  background: var(--j-color-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px #d8d8d8;
+  padding: 24px !important;
+}
+
+.f-bold.bold.text-h5 {
+  color: var(--j-color-dark);
+  margin-bottom: 8px;
+}
+
+.auth-form-item {
+  margin-bottom: 12px !important;
+}
+
+.auth-submit-btn {
+  margin: 16px 0 !important;
+}
+</style>

@@ -1,16 +1,16 @@
 import { boot } from 'quasar/wrappers';
 import 'src/router/permission';
-import 'rtcpt/rtcpt.css';
-import 'rtcpt/rtcpt-styles.css';
+import 'qcpt/qcpt.css';
+import 'qcpt/qcpt-styles.css';
 import { Platform } from 'quasar';
-import { rtcptInit } from 'rtcpt';
+import { qcptInit } from 'qcpt';
 import router from 'src/router/index';
 import store from 'src/store/index';
 import { i18n } from 'src/boot/i18n';
 import { pagePermissionIds } from 'src/boot/pagePermission';
 
 export default boot(({ app }: { app: any }) => {
-  rtcptInit({
+  qcptInit({
     app,
     router,
     store,

@@ -113,7 +113,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-facing-decorator';
 import { getCurrentInstance } from 'vue';
-import { JQMessage, JQConfirmDialog, JQDatetime, JCListEditor, JQFormLabel, JQOptionGroup, JQDate, JQFile, JQSelect, JQInput } from 'rtcpt';
+import { JQMessage, JQConfirmDialog, JQDatetime, JCListEditor, JQFormLabel, JQOptionGroup, JQDate, JQFile, JQSelect, JQInput } from 'qcpt';
 import { cloneDeep } from 'lodash';
 
 @Component({

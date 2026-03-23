@@ -6,7 +6,7 @@ import router from 'src/router';
 import { Loading } from 'quasar';
 import { AppModule } from 'src/store/modules/app';
 import JSONbig from 'json-bigint';
-import { JQMessage } from 'rtcpt';
+import { JQMessage } from 'qcpt';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

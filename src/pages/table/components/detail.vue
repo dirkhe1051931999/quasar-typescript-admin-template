@@ -14,7 +14,7 @@ import { Component, Vue } from 'vue-facing-decorator';
 import DetailBaseComponent from './detail-base.vue';
 import DetailWorldMapComponent from './detail-world.vue';
 import DetailChartComponent from './detail-chart.vue';
-import { JCTabs } from 'rtcpt';
+import { JCTabs } from 'qcpt';
 
 @Component({
   name: 'TableDetailComponent',

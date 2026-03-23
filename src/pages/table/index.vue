@@ -69,7 +69,7 @@
 import { Component } from 'vue-facing-decorator';
 import TableSelectionMixin from './mixins/selected';
 import { defineAsyncComponent, getCurrentInstance } from 'vue';
-import { DialogProvider, JCDuoListEditor, JCPermission, JCTreeSelect, JQAutocomplete, JQConfirm, JQDate, JQDatetime, JQInput, JQSearchForm, JQSelect, JQTable, jqTool, JQTooltip } from 'rtcpt';
+import { DialogProvider, JCDuoListEditor, JCPermission, JCTreeSelect, JQAutocomplete, JQConfirm, JQDate, JQDatetime, JQInput, JQSearchForm, JQSelect, JQTable, jqTool, JQTooltip } from 'qcpt';
 
 @Component({
   name: 'TablePage',

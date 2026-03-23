@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { JChBar, JChRadar, JChBubble, JChPieDoughnut, JChBarLine, JCTitleLine, JChLine } from 'rtcpt';
+import { JChBar, JChRadar, JChBubble, JChPieDoughnut, JChBarLine, JCTitleLine, JChLine } from 'qcpt';
 
 @Component({
   name: 'DetailChartComponent',

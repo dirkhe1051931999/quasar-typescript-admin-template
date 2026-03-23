@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { JCTitleLine, JQDetailList, JQTable, jqTool, JQTooltip } from 'rtcpt';
+import { JCTitleLine, JQDetailList, JQTable, jqTool, JQTooltip } from 'qcpt';
 
 @Component({
   name: 'DetailBaseComponent',

@@ -6308,6 +6308,11 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
+qcpt@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/qcpt/-/qcpt-0.1.2.tgz#82077fd3f2bc86d760160bc9b38661db6e6a0b20"
+  integrity sha512-YXnIjLxPbHqG5LHO5ptCuIT0QTK/5grBi+PJ9dc/e01CEUT5NO9QNzuY//CRhTvqSMj7BOh8iORDfvm3N4Uqpw==
+
 qs@6.13.0:
   version "6.13.0"
   resolved "https://registry.npmmirror.com/qs/-/qs-6.13.0.tgz"
@@ -6545,17 +6550,6 @@ rollup-plugin-visualizer@^5.12.0:
     picomatch "^4.0.2"
     source-map "^0.7.4"
     yargs "^17.5.1"
-
-rtcpt@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.npmmirror.com/rtcpt/-/rtcpt-0.4.6.tgz#acfdb4ab05f4748d47c234cc950444714531dd78"
-  integrity sha512-F2+UBHHNYoew+NNlHErRyPMdOPEO/gvAFN34hgltPlBtjFCBeMkYfxBgfetM4mWLt3803AS+3DBSjqgkldaZOQ==
-  dependencies:
-    rtcpt "link:../../Users/Administrator/AppData/Local/Yarn/Cache/v6/npm-rtcpt-0.4.6-acfdb4ab05f4748d47c234cc950444714531dd78-integrity/node_modules/rtcpt/.yalc/rtcpt"
-
-"rtcpt@link:.yalc/rtcpt":
-  version "0.0.0"
-  uid ""
 
 rtlcss@4.3.0:
   version "4.3.0"
@@ -7834,7 +7828,7 @@ word-wrap@^1.2.5:
   resolved "https://registry.npmmirror.com/word-wrap/-/word-wrap-1.2.5.tgz"
   integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npmmirror.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -7847,15 +7841,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-6.2.0.tgz"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmmirror.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
