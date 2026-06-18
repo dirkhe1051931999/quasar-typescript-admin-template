@@ -138,6 +138,22 @@ npm run svg
 npm run build
 ```
 
+### Publish V3 Admin Webpack
+
+GitHub Actions publishes the `v3-admin-webpack` branch to:
+
+```text
+https://dirkhe1051931999.github.io/v3-admin/
+```
+
+The workflow uses `RELEASE_TOKEN` from Actions secrets and variables to push the built files into the `v3-admin` directory of `dirkhe1051931999/dirkhe1051931999.github.io`.
+
+The production public path is configured by `src/setting.json`:
+
+```json
+"publicPath": "/v3-admin/"
+```
+
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://quasar.dev/quasar-cli-webpack/quasar-config-file).

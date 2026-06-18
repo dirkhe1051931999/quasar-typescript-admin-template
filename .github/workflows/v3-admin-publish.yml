@@ -1,0 +1,61 @@
+name: Publish V3 Admin Webpack
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["v3-admin-webpack"]
+
+concurrency:
+  group: v3-admin-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "18.16.0"
+          cache: yarn
+
+      - name: Enable Yarn
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build SPA
+        run: npm run build
+
+      - name: Checkout pages repo
+        uses: actions/checkout@v5
+        with:
+          repository: dirkhe1051931999/dirkhe1051931999.github.io
+          token: ${{ secrets.RELEASE_TOKEN }}
+          path: pages-repo
+
+      - name: Publish to pages repo
+        run: |
+          rm -rf pages-repo/v3-admin
+          mkdir -p pages-repo/v3-admin
+          cp -R dist/v3-admin/. pages-repo/v3-admin/
+
+          cd pages-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- v3-admin
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "chore: publish v3-admin webpack"
+            git push
+          fi
