@@ -154,6 +154,8 @@ The production public path is configured by `src/setting.json`:
 "publicPath": "/v3-admin/"
 ```
 
+Layout component paths are case-sensitive in the Linux GitHub Actions runner. Keep sidebar imports under `src/layouts/components/Sidebar` with the same uppercase `Sidebar` directory casing.
+
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://quasar.dev/quasar-cli-webpack/quasar-config-file).

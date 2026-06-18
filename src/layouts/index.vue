@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import SidebarComponent from 'layouts/components/sidebar/Sidebar.vue';
+import SidebarComponent from 'layouts/components/Sidebar/Sidebar.vue';
 import NavigationBar from 'layouts/components/Navigation/NavigationBar.vue';
 import TagsView from 'layouts/components/tags/TagsView.vue';
 import { AppModule } from 'src/store/modules/app';
